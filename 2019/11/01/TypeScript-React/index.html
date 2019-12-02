@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>TypeScript + React | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="TypeScript Basics! operator  if (a!.b!.c) { }&#96;&amp;lt;&#x2F;pre&amp;gt;&amp;lt;!--kg-card-end: code--&amp;gt;  compiles to JS: &amp;lt;!--kg-card-begin: code--&amp;gt;&amp;lt;pre&amp;gt;&#96;if (a.b.c) { }&#96;&amp;lt;&#x2F;pre&amp;gt;&amp;lt;!--kg-card-end: cod">
+<meta name="keywords" content="React,React Hooks,TypeScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TypeScript + React">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;01&#x2F;TypeScript-React&#x2F;index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="TypeScript Basics! operator  if (a!.b!.c) { }&#96;&amp;lt;&#x2F;pre&amp;gt;&amp;lt;!--kg-card-end: code--&amp;gt;  compiles to JS: &amp;lt;!--kg-card-begin: code--&amp;gt;&amp;lt;pre&amp;gt;&#96;if (a.b.c) { }&#96;&amp;lt;&#x2F;pre&amp;gt;&amp;lt;!--kg-card-end: cod">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-12-02T16:42:22.500Z">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-TypeScript-React" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/11/01/TypeScript-React/" class="article-date">
+  <time datetime="2019-11-01T16:13:00.000Z" itemprop="datePublished">2019-11-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/React-Hooks/">React Hooks</a>►<a class="article-category-link" href="/blog/categories/React/TypeScript/">TypeScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      TypeScript + React
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="TypeScript-Basics"><a href="#TypeScript-Basics" class="headerlink" title="TypeScript Basics"></a>TypeScript Basics</h1><h2 id="operator"><a href="#operator" class="headerlink" title="! operator"></a>! operator</h2><!--kg-card-begin: code-->
+
+<pre><code>if (a!.b!.c) { }`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+compiles to JS:
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`if (a.b.c) { }`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+## ? operator
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`let x = foo?.bar.baz();`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+compiles to JS:
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`let x = (foo === null || foo === undefined) ?
+    undefined :
+    foo.bar.baz();`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+And:
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`if (someObj?.bar) {
+    // ...
+}`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+is equivalent in JS to:
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`if (someObj &amp;amp;&amp;amp; someObj.someProperty) {
+    // ...
+}`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+TS:
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`interface Content {
+    getUrl?: () =&amp;gt; string;
+    url?: string;
+}
+interface Data {
+    content?: Content;
+}
+let data: Data | undefined;
+const url: string | undefined = data?.content?.getUrl?.();
+const url2: string | undefined = data?.content?.url;`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+# Common Operators and Signatures
+
+### Type intersection operator (&amp;amp;)
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`class WithLoading extends React.Component&amp;lt;P &amp;amp; WithLoadingProps&amp;gt; { ... }`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+### Generic function
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`const funcComponent = &amp;lt;P extends object&amp;gt;(Component: React.ComponentType&amp;lt;P&amp;gt;): ... =&amp;gt; { ... }`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+### Type cast
+
+A type cast (props as P) is required when passing props forward from TypeScript v3.2 onwards, due to a likely bug in TypeScript.
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`return loading ? &amp;lt;LoadingSpinner /&amp;gt; : &amp;lt;Component {...props as P} /&amp;gt;;`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+# Examples
+
+Worth to read:</code></pre><ul>
+<li><p>about HOCs: <a href="https://medium.com/@jrwebdev/react-higher-order-component-patterns-in-typescript-42278f7590fb" target="_blank" rel="noopener">https://medium.com/@jrwebdev/react-higher-order-component-patterns-in-typescript-42278f7590fb</a></p>
+<h2 id="Higher-Order-Components"><a href="#Higher-Order-Components" class="headerlink" title="Higher Order Components"></a>Higher Order Components</h2><h3 id="Higher-Order-Component-in-JS"><a href="#Higher-Order-Component-in-JS" class="headerlink" title="Higher Order Component in JS"></a>Higher Order Component in JS</h3><!--kg-card-begin: code--><pre>`const withLoading = Component =&gt;
+<p>  class WithLoading extends React.Component {</p>
+<pre><code>render() {
+  const { loading, ...props } = this.props;
+  return loading ? &amp;lt;LoadingSpinner /&amp;gt; : &amp;lt;Component {...props} /&amp;gt;;
+}</code></pre><p>  };`</pre><!--kg-card-end: code--></p>
+<h3 id="Higher-Order-Component-in-TS"><a href="#Higher-Order-Component-in-TS" class="headerlink" title="Higher Order Component in TS"></a>Higher Order Component in TS</h3><!--kg-card-begin: code--><pre>`interface WithLoadingProps {
+<p>  loading: boolean;<br>}</p>
+<p>const withLoading = &lt;P extends object&gt;(Component: React.ComponentType&lt;P&gt;) =&gt;<br>  class WithLoading extends React.Component&lt;P &amp; WithLoadingProps&gt; {</p>
+<pre><code>render() {
+  const { loading, ...props } = this.props;
+  return loading ? &amp;lt;LoadingSpinner /&amp;gt; : &amp;lt;Component {...props as P} /&amp;gt;;
+}</code></pre><p>  };`</pre><!--kg-card-end: code--></p>
+<h3 id="Function-Higher-Order-Component-in-TS"><a href="#Function-Higher-Order-Component-in-TS" class="headerlink" title="Function Higher Order Component in TS"></a>Function Higher Order Component in TS</h3><!--kg-card-begin: code--><pre>`const withLoading = &lt;P extends object&gt;(
+<p>  Component: React.ComponentType&lt;P&gt;<br>): React.FC&lt;P &amp; WithLoadingProps&gt; =&gt; ({<br>  loading,<br>  …props<br>}: WithLoadingProps) =&gt;<br>  loading ? &lt;LoadingSpinner /&gt; : &lt;Component {…props as P} /&gt;;`</pre><!--kg-card-end: code--></p>
+<h3 id="Render-Prop-Component"><a href="#Render-Prop-Component" class="headerlink" title="Render Prop Component"></a>Render Prop Component</h3><!--kg-card-begin: code--><figure class="kg-card kg-code-card"><pre>`interface InjectedCounterProps {
+<p>  value: number;<br>  onIncrement(): void;<br>  onDecrement(): void;<br>}</p>
+<p>interface MakeCounterProps {<br>  minValue?: number;<br>  maxValue?: number;<br>  children(props: InjectedCounterProps): JSX.Element;<br>}</p>
+<p>interface MakeCounterState {<br>  value: number;<br>}</p>
+<p>class MakeCounter extends React.Component&lt;MakeCounterProps, MakeCounterState&gt; {<br>  state: MakeCounterState = {</p>
+<pre><code>value: 0,</code></pre><p>  };</p>
+<p>  increment = () =&gt; {</p>
+<pre><code>this.setState(prevState =&amp;gt; ({
+  value:
+    prevState.value === this.props.maxValue
+      ? prevState.value
+      : prevState.value + 1,
+}));</code></pre><p>  };</p>
+<p>  decrement = () =&gt; {</p>
+<pre><code>this.setState(prevState =&amp;gt; ({
+  value:
+    prevState.value === this.props.minValue
+      ? prevState.value
+      : prevState.value - 1,
+}));</code></pre><p>  };</p>
+<p>  render() {</p>
+<pre><code>return this.props.children({
+  value: this.state.value,
+  onIncrement: this.increment,
+  onDecrement: this.decrement,
+});</code></pre><p>  }<br>}`</pre><figcaption><a href="https://gist.github.com/jrwebdev/b8fea9723d4f86743c29a1888dbbe090#file-make-counter-render-prop-tsx" target="_blank" rel="noopener">make-counter-render-prop.tsx</a></figcaption></figure><!--kg-card-end: code--></p>
+<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><!--kg-card-begin: code--><figure class="kg-card kg-code-card"><pre>`interface CounterProps extends InjectedCounterProps {
+<p>  style: React.CSSProperties;<br>}</p>
+<p>const Counter = (props: CounterProps) =&gt; (<br>  &lt;div style={props.style}&gt;</p>
+<pre><code>&amp;lt;button onClick={props.onDecrement}&amp;gt; - &amp;lt;/button&amp;gt;
+{props.value}
+&amp;lt;button onClick={props.onIncrement}&amp;gt; + &amp;lt;/button&amp;gt;</code></pre><p>  &lt;/div&gt;<br>);</p>
+<p>interface WrappedCounterProps extends CounterProps {<br>  minValue?: number;<br>  maxValue?: number;<br>}</p>
+<p>const WrappedCounter = ({<br>  minValue,<br>  maxValue,<br>  …props<br>}: WrappedCounterProps) =&gt; (<br>  &lt;MakeCounter minValue={minValue} maxValue={maxValue}&gt;</p>
+<pre><code>{injectedProps =&amp;gt; &amp;lt;Counter {...props} {...injectedProps} /&amp;gt;}</code></pre><p>  &lt;/MakeCounter&gt;<br>);`</pre><figcaption><a href="https://gist.github.com/jrwebdev/c0392dfc25d3fc30893f324a89c8a16d#file-wrapped-counter-tsx" target="_blank" rel="noopener">wrapped-counter.tsx</a></figcaption></figure><!--kg-card-end: code--></p>
+<h3 id="Wrapping-Render-Prop-as-HOC"><a href="#Wrapping-Render-Prop-as-HOC" class="headerlink" title="Wrapping Render Prop as HOC"></a>Wrapping Render Prop as HOC</h3><!--kg-card-begin: code--><pre>`import { Subtract, Omit } from 'utility-types';
+<p>import MakeCounter, { MakeCounterProps, InjectedCounterProps } from ‘./MakeCounter’;</p>
+<p>type MakeCounterHocProps = Omit&lt;MakeCounterProps, ‘children’&gt;;</p>
+<p>const makeCounter = &lt;P extends InjectedCounterProps&gt;(<br>  Component: React.ComponentType&lt;P&gt;<br>): React.SFC&lt;Subtract&lt;P, InjectedCounterProps&gt; &amp; MakeCounterHocProps&gt; =&gt; ({<br>  minValue,<br>  maxValue,<br>  …props<br>}: MakeCounterHocProps) =&gt; (<br>  &lt;MakeCounter minValue={minValue} maxValue={maxValue}&gt;</p>
+<pre><code>{injectedProps =&amp;gt; &amp;lt;Component {...props as P} {...injectedProps} /&amp;gt;}</code></pre><p>  &lt;/MakeCounter&gt;<br>);`</pre><!--kg-card-end: code--></p>
+<p>Source: <a href="https://medium.com/@jrwebdev/react-render-props-in-typescript-b561b00bc67c" target="_blank" rel="noopener">https://medium.com/@jrwebdev/react-render-props-in-typescript-b561b00bc67c</a></p>
+<h2 id="React-Hooks"><a href="#React-Hooks" class="headerlink" title="React Hooks"></a>React Hooks</h2><h3 id="Function-Components-with-Hooks-in-TS-example"><a href="#Function-Components-with-Hooks-in-TS-example" class="headerlink" title="Function Components with Hooks in TS example"></a>Function Components with Hooks in TS example</h3><!--kg-card-begin: code--><pre>`// import useState next to FunctionComponent
+<p>import React, { FunctionComponent, useState } from ‘react’;</p>
+<p>// our components props accept a number for the initial value<br>const Counter:FunctionComponent&lt;{ initial?: number }&gt; = ({ initial = 0 }) =&gt; {<br>  // since we pass a number here, clicks is going to be a number.<br>  // setClicks is a function that accepts either a number or a function returning<br>  // a number<br>  const [clicks, setClicks] = useState(initial);<br>  return &lt;&gt;</p>
+<pre><code>&amp;lt;p&amp;gt;Clicks: {clicks}&amp;lt;/p&amp;gt;
+&amp;lt;button onClick={() =&amp;gt; setClicks(clicks+1)}&amp;gt;+&amp;lt;/button&amp;gt;
+&amp;lt;button onClick={() =&amp;gt; setClicks(clicks-1)}&amp;gt;-&amp;lt;/button&amp;gt;</code></pre><p>  &lt;/&gt;<br>}<br>`</pre><!--kg-card-end: code--></p>
+<h1 id="Details-about-React-Hooks-with-TypeScript"><a href="#Details-about-React-Hooks-with-TypeScript" class="headerlink" title="Details about React Hooks with TypeScript"></a>Details about React Hooks with TypeScript</h1></li>
+<li><p>Examples how to use with TS: <a href="https://fettblog.eu/typescript-react/hooks/" target="_blank" rel="noopener">https://fettblog.eu/typescript-react/hooks/</a></p>
+</li>
+<li><p>TS advanced: <a href="https://medium.com/@jrwebdev/react-hooks-in-typescript-88fce7001d0d" target="_blank" rel="noopener">https://medium.com/@jrwebdev/react-hooks-in-typescript-88fce7001d0d</a></p>
+</li>
+<li><p>super advanced: <a href="https://levelup.gitconnected.com/usetypescript-a-complete-guide-to-react-hooks-and-typescript-db1858d1fb9c" target="_blank" rel="noopener">https://levelup.gitconnected.com/usetypescript-a-complete-guide-to-react-hooks-and-typescript-db1858d1fb9c</a><!--kg-card-begin: code--><pre><code>const Counter:FunctionComponent&amp;lt;{ initial?: number }&amp;gt; = ({ initial = 0 }) =&amp;gt; {
+  ...
+}</code></pre><!--kg-card-end: code--></p>
+<h3 id="with-useState"><a href="#with-useState" class="headerlink" title="with useState"></a>with <code>useState</code></h3><!--kg-card-begin: code--><pre>`// explicitly setting the types
+<p>const [value, setValue] = useState&lt;number | undefined&gt;(undefined);<br>const [value, setValue] = useState&lt;Array&lt;number&gt;&gt;([]);</p>
+<p>interface MyObject {<br>  foo: string;<br>  bar?: number;<br>}<br>const [value, setValue] = useState&lt;MyObject&gt;({ foo: ‘hello’ });<br>`</pre><!--kg-card-end: code--></p>
+<h3 id="with-useRef"><a href="#with-useRef" class="headerlink" title="with useRef"></a>with <code>useRef</code></h3><!--kg-card-begin: code--><pre>`const inputEl = useRef&lt;HTMLInputElement&gt;(null);
+<p>`</pre><!--kg-card-end: code--></p>
+<h3 id="with-useContext"><a href="#with-useContext" class="headerlink" title="with useContext"></a>with <code>useContext</code></h3><!--kg-card-begin: code--><pre>`type Theme = 'light' | 'dark';
+<p>const ThemeContext = createContext&lt;Theme&gt;(‘dark’);<br>`</pre><!--kg-card-end: code--></p>
+<h3 id="with-useReducer"><a href="#with-useReducer" class="headerlink" title="with useReducer"></a>with <code>useReducer</code></h3><!--kg-card-begin: code--><pre>`interface State {
+<p>  value: number;<br>}</p>
+<p>type Action =<br>  | { type: ‘increment’ }<br>  | { type: ‘decrement’ }<br>  | { type: ‘incrementAmount’; amount: number };</p>
+<p>const counterReducer = (state: State, action: Action) =&gt; {<br>  switch (action.type) {</p>
+<pre><code>case &apos;increment&apos;:
+  return { value: state.value + 1 };
+case &apos;decrement&apos;:
+  return { value: state.value - 1 };
+case &apos;incrementAmount&apos;:
+  return { value: state.value + action.amount };
+default:
+  throw new Error();</code></pre><p>  }<br>};</p>
+<p>const [state, dispatch] = useReducer(counterReducer, { value: 0 });</p>
+<p>dispatch({ type: ‘increment’ });<br>dispatch({ type: ‘decrement’ });<br>dispatch({ type: ‘incrementAmount’, amount: 10 });</p>
+<p>// TypeScript compilation error<br>dispatch({ type: ‘invalidActionType’ });</p>
+</li>
+</ul>
+<!--kg-card-end: code-->
+
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/01/TypeScript-React/" data-id="ck3onwew1001uzps3dzdyg0ri" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2019/11/01/Frontend-React-various-notes/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Frontend &amp; React - various notes
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2019/10/24/Node-js-basics/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Node.js basics</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/React-Hooks/">React Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Softwafe-Engineering/">Softwafe Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Softwafe-Engineering/Tests/">Tests</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Backend/" style="font-size: 12.5px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/Frontend/" style="font-size: 10px;">Frontend</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/Node-js/" style="font-size: 12.5px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12.5px;">OOP</a> <a href="/blog/tags/React/" style="font-size: 17.5px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.5px;">React Hooks</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 15px;">Software Engineering</a> <a href="/blog/tags/Tests/" style="font-size: 12.5px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 10px;">TypeScript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2019/11/01/Frontend-React-various-notes/">Frontend &amp; React - various notes</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/11/01/TypeScript-React/">TypeScript + React</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/10/24/Node-js-basics/">Node.js basics</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/09/22/JavaScript-CommonJS-vs-AMD/">JavaScript CommonJS vs AMD</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/09/22/JavaScript-performance-time-measurement-of-function-calls/">JavaScript - performance / time measurement of function calls</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

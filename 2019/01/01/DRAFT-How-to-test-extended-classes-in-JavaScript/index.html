@@ -5,13 +5,17 @@
   
 
   
-  <title>Archives | Hexo</title>
+  <title>[DRAFT] How to test extended classes in JavaScript | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;archives&#x2F;index.html">
+  <meta name="description" content="https:&#x2F;&#x2F;blog.arkency.com&#x2F;2014&#x2F;09&#x2F;unit-tests-vs-class-tests&#x2F; https:&#x2F;&#x2F;martinfowler.com&#x2F;bliki&#x2F;UnitTest.html testowanie tylko “publicznych” metod klas&#x2F;obiektów pozwala zaoszczędzić czas na refaktor poprz">
+<meta name="keywords" content="Tests,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[DRAFT] How to test extended classes in JavaScript">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;01&#x2F;01&#x2F;DRAFT-How-to-test-extended-classes-in-JavaScript&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="https:&#x2F;&#x2F;blog.arkency.com&#x2F;2014&#x2F;09&#x2F;unit-tests-vs-class-tests&#x2F; https:&#x2F;&#x2F;martinfowler.com&#x2F;bliki&#x2F;UnitTest.html testowanie tylko “publicznych” metod klas&#x2F;obiektów pozwala zaoszczędzić czas na refaktor poprz">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-12-02T16:42:22.500Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/blog/atom.xml" title="Hexo" type="application/atom+xml">
@@ -59,216 +63,70 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/blog/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2019/11/01/Frontend-React-various-notes/" class="archive-article-date">
-  <time datetime="2019-11-01T17:55:26.000Z" itemprop="datePublished">Nov 1</time>
+        <section id="main"><article id="post-DRAFT-How-to-test-extended-classes-in-JavaScript" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/01/01/DRAFT-How-to-test-extended-classes-in-JavaScript/" class="article-date">
+  <time datetime="2019-01-01T10:00:00.000Z" itemprop="datePublished">2019-01-01</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Tests/">Tests</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2019/11/01/Frontend-React-various-notes/">Frontend &amp; React - various notes</a>
+    <h1 class="article-title" itemprop="name">
+      [DRAFT] How to test extended classes in JavaScript
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2019/11/01/TypeScript-React/" class="archive-article-date">
-  <time datetime="2019-11-01T16:13:00.000Z" itemprop="datePublished">Nov 1</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2019/11/01/TypeScript-React/">TypeScript + React</a>
-    </h1>
-  
+        <ul>
+<li><a href="https://blog.arkency.com/2014/09/unit-tests-vs-class-tests/" target="_blank" rel="noopener">https://blog.arkency.com/2014/09/unit-tests-vs-class-tests/</a></li>
+<li><a href="https://martinfowler.com/bliki/UnitTest.html" target="_blank" rel="noopener">https://martinfowler.com/bliki/UnitTest.html</a></li>
+<li>testowanie tylko “publicznych” metod klas/obiektów pozwala zaoszczędzić czas na refaktor poprzez brak konieczności zmiany istniejących testów, zapewniając że główna logika API działa dobrze — Existing tests not only helped him to assert correctness of the new solution but more importantly they did not stand in his way during the refactoring. As he admitted, he wouldn’t get it done as quickly as he did had he had to address failing unit tests throughout the process.</li>
+<li>test “class” units because pragmatically it makes our tests much more stable — like, you don’t need to change test if you extracted something to a method or splitted one coupled class to two. Do you really want to test against structure of your code, or against what the code does? I choose latter solution.</li>
+<li>About the “Integration Test” and “Unit Test” from Martin Fowler:<br>“Object-oriented design tends to treat a class as the unit, procedural or functional approaches might consider a single function as a unit. But really it’s a situational thing — the team decides what makes sense to be a unit for the purposes of their understanding of the system and its testing. Although I start with the notion of the unit being a class, I often take a bunch of closely related classes and treat them as a single unit. Rarely I might take a subset of methods in a class as a unit. However you define it doesn’t really matter.” <a href="https://martinfowler.com/bliki/UnitTest.html" target="_blank" rel="noopener">https://martinfowler.com/bliki/UnitTest.html</a></li>
+<li>Tests are meant to protect you from regressions and you don’t get that value when you need to update the tests whenever the implementation changes. For the same reason it destroys the point of Red-Green-Refactor approach.</li>
+<li>Now, would I see value in having a test for the Pricing class directly? Having more tests is good, right? Well, no — tests are code. The more code you have the more you need to maintain. It makes a bigger cost. It also builds a more complex mental model. Low-level tests are often causing more troubles than profit.</li>
+</ul>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2019/10/24/Node-js-basics/" class="archive-article-date">
-  <time datetime="2019-10-24T22:33:05.000Z" itemprop="datePublished">Oct 24</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2019/10/24/Node-js-basics/">Node.js basics</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2019/09/22/JavaScript-CommonJS-vs-AMD/" class="archive-article-date">
-  <time datetime="2019-09-22T18:17:59.000Z" itemprop="datePublished">Sep 22</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/01/DRAFT-How-to-test-extended-classes-in-JavaScript/" data-id="ck3onweta0000zps333kx5b17" class="article-share-link">Share</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2019/09/22/JavaScript-CommonJS-vs-AMD/">JavaScript CommonJS vs AMD</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2019/09/22/JavaScript-performance-time-measurement-of-function-calls/" class="archive-article-date">
-  <time datetime="2019-09-22T18:13:48.000Z" itemprop="datePublished">Sep 22</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2019/09/22/JavaScript-performance-time-measurement-of-function-calls/">JavaScript - performance / time measurement of function calls</a>
-    </h1>
-  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2019/01/01/DRAFT-OOP-SOLID/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [DRAFT] OOP - SOLID
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2019/07/05/JavaScript-parseInt-vs-Number-comparision/" class="archive-article-date">
-  <time datetime="2019-07-05T23:00:00.000Z" itemprop="datePublished">Jul 5</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2019/07/05/JavaScript-parseInt-vs-Number-comparision/">JavaScript - `parseInt` vs `Number` comparision</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2019/07/03/Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps/" class="archive-article-date">
-  <time datetime="2019-07-03T14:25:41.000Z" itemprop="datePublished">Jul 3</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2019/07/03/Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps/">Why the test pyramid is a bullshit - guide to testing towards modern frontend and backend apps</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2019/01/01/DRAFT-Node-js-notes/" class="archive-article-date">
-  <time datetime="2019-01-01T10:00:00.000Z" itemprop="datePublished">Jan 1</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2019/01/01/DRAFT-Node-js-notes/">[DRAFT] Node.js notes</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2019/01/01/DRAFT-PL-C-OOP/" class="archive-article-date">
-  <time datetime="2019-01-01T10:00:00.000Z" itemprop="datePublished">Jan 1</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2019/01/01/DRAFT-PL-C-OOP/">[DRAFT] [PL] C# &amp; OOP</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2019/01/01/DRAFT-Software-Engineering-notes/" class="archive-article-date">
-  <time datetime="2019-01-01T10:00:00.000Z" itemprop="datePublished">Jan 1</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2019/01/01/DRAFT-Software-Engineering-notes/">[DRAFT] Software Engineering notes</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/blog/archives/page/2/">2</a><a class="extend next" rel="next" href="/blog/archives/page/2/">Next &amp;raquo;</a>
-  </nav>
 
 </section>
         
