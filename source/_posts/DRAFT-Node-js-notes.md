@@ -1,5 +1,5 @@
 ---
-title: '[DRAFT] Node.js notes'
+title: '[DRAFT] Node.js - ACLs, authentication, JWT, API Key validation, ElasticSearch'
 tags:
   - Backend
   - Node.js

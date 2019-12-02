@@ -4,11 +4,14 @@ tags:
   - Tests
   - Software Engineering
 categories:
-  - [Softwafe Engineering, Tests]
+  - [Software Engineering, Tests]
 date: 2019-07-03 14:25:41
 ---
 
-<!--kg-card-begin: image--><figure class="kg-card kg-image-card kg-card-hascaption">![](https://cdn-images-1.medium.com/max/1600/0*4W87Ed6xZGIuHp4E.png)<figcaption>_source _[_https://martinfowler.com/bliki/TestPyramid.html_](https://martinfowler.com/bliki/TestPyramid.html)</figcaption></figure><!--kg-card-end: image-->> TL;DR; The shape and levels of the test pyramid highly depends on your application (and it mustn’t be a pyramid!) but there are known anti-patterns.
+![](https://cdn-images-1.medium.com/max/1600/0*4W87Ed6xZGIuHp4E.png)
+_image source_: [_https://martinfowler.com/bliki/TestPyramid.html_](https://martinfowler.com/bliki/TestPyramid.html)
+
+TL;DR; The shape and levels of the test pyramid highly depends on your application (and it mustn’t be a pyramid!) but there are known anti-patterns.
 
 In this guide I want to address the types of testing of web apps especially in the face of the increase of the popularity of Single Page Applications and microservices, the diversified terminology and how we can refer to the well-known test pyramid which will be also covered here. I want to answer question what’s the good approach to test frontend and backend apps that are created by us today but in general and not in relevance to any specific tools.
 
@@ -34,16 +37,17 @@ However I think there is no one correct answer. It’s just fine to have agreed 
 
 Good advice from [Ham Vocke on the Martin Fowler’s w](https://martinfowler.com/articles/practical-test-pyramid.html)ebsite is to don’t reflect internal code structure within unit tests and tests only for behavior that is observable, so think:
 
-_if I enter values _`_x_`_ and _`_y_`_, will the result be _`_z_`_?_
+_if I enter values `x` and `y`, will the result be `z`?_
 
 instead of
 
-_if I enter _`_x_`_ and _`_y_`_, will the method call class A first, then call class B and then return the result of class A plus the result of class B?_
+_if I enter `x` and `y`, will the method call class A first, then call class B and then return the result of class A plus the result of class B?_
 
 so we can easily refactor and make changes within our codebases.
 
 Often we tend to have test coverage as high as it is needed to fell confident that our codebase is not highly liable to bugs. I here recommend [Kent Beck opinion](https://stackoverflow.com/questions/153234/how-deep-are-your-unit-tests/153565#153565) about how thorough our tests should be.
-<!--kg-card-begin: image--><figure class="kg-card kg-image-card kg-card-hascaption">![](https://cdn-images-1.medium.com/max/1600/1*NCbDeRM2IwxofXPcu6CejA.png)<figcaption>source [https://auth0.com/blog/testing-react-applications-with-jest/](https://auth0.com/blog/testing-react-applications-with-jest/)</figcaption></figure><!--kg-card-end: image-->
+![](https://cdn-images-1.medium.com/max/1600/1*NCbDeRM2IwxofXPcu6CejA.png)
+source [https://auth0.com/blog/testing-react-applications-with-jest/](https://auth0.com/blog/testing-react-applications-with-jest/)
 
 #### Integration tests
 
@@ -60,43 +64,49 @@ But basically what differs them from integration tests? We still test integratio
 ### The test pyramid
 
 The test pyramid was first mentioned in Mike Cohn’s book _Succeeding with Agile_. He recommends that applications should be covered by a lot of unit tests which is the base of our tests. Then we write integration (service) tests and the peak is made from E2E (UI) tests. These are all of the type functional and automated tests.
-<!--kg-card-begin: image--><figure class="kg-card kg-image-card kg-card-hascaption">![](https://cdn-images-1.medium.com/max/1600/0*4W87Ed6xZGIuHp4E.png)<figcaption>_source _[_https://martinfowler.com/bliki/TestPyramid.html_](https://martinfowler.com/bliki/TestPyramid.html)</figcaption></figure><!--kg-card-end: image-->
+![](https://cdn-images-1.medium.com/max/1600/0*4W87Ed6xZGIuHp4E.png)
+_image source_: [_https://martinfowler.com/bliki/TestPyramid.html_](https://martinfowler.com/bliki/TestPyramid.html)
 
 I like also to look at the test pyramid upside down **as a bug filter** where bugs not detected on a one stage are going to be detected on the next stage.
-<!--kg-card-begin: image--><figure class="kg-card kg-image-card kg-card-hascaption">![](https://cdn-images-1.medium.com/max/1600/1*kwXazFfzwPHWpJ0oZ8gHDw.png)<figcaption>the testing pyramid as a filter, source [https://twitter.com/noahsussman/status/836612175707930625](https://twitter.com/noahsussman/status/836612175707930625)</figcaption></figure><!--kg-card-end: image-->
+![](https://cdn-images-1.medium.com/max/1600/1*kwXazFfzwPHWpJ0oZ8gHDw.png)
+_the testing pyramid as a filter, image source:_ [https://twitter.com/noahsussman/status/836612175707930625](https://twitter.com/noahsussman/status/836612175707930625)
 
 The test pyramid was the answer for the issue of having a lot of E2E/UI tests that were for example recorded by a special software. They are causing a definite increase time of building, are really brittle — prone to every change in the UI and gives deficient feedback about encountered errors. So you should write much more unit tests which are faster and then you catch other on a thin layer of E2E tests which cover as much main features as they can. The anti-pattern where our codebase is barely covered with unit tests make a shape of an ice cream cone which is overflowing with manual and automated GUI tests. Unfortunately, it’s a common situation in many projects. Effects are tragic, after few years of no writing tests adding 50 lines of code make them as much time-consuming as adding 5000 or 50000 lines in the past what is painful for developers and not understood by business. Release process takes longer due to slow GUI testing and still lets slip bugs that causes lot of frustration for end users who finally will abandon your product. Finally, inevitably the development of the app will be suspended and all sources addressed for bug fixing and refactoring. It’s your responsibility to write as much unit tests early on in the project. Although in cases of pressure from upper management, it’s your duty to fight for paying off technical debt as early as you can negotiate to prevent such situations.
-<!--kg-card-begin: image--><figure class="kg-card kg-image-card kg-card-hascaption">![](https://cdn-images-1.medium.com/max/1600/1*k1na189FYze-QKwpWekQVw.png)<figcaption>the ice-cream cone anti-pattern, source: [https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/](https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/)</figcaption></figure><!--kg-card-end: image-->
+![](https://cdn-images-1.medium.com/max/1600/1*k1na189FYze-QKwpWekQVw.png)
+_the ice-cream cone anti-pattern, image source:_ [https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/](https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/)
 
 As you can see in the diagram of the ice cream cone anti-pattern, there is also the addition of manual tests to the original test pyramid. Currently, it’s often pattern to extend the original test pyramid which is fully automated by adding some manual tests. I believe manual tests are necessary to test newly introduced bugs and some cases that can’t be covered by automated tests.
-<!--kg-card-begin: image--><figure class="kg-card kg-image-card kg-card-hascaption">![](https://cdn-images-1.medium.com/max/1600/1*6HTj6mBJAcME722MW-tb1g.png)<figcaption>source: [https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/](https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/)</figcaption></figure><!--kg-card-end: image-->
+_![](https://cdn-images-1.medium.com/max/1600/1*6HTj6mBJAcME722MW-tb1g.png)
+image source:_ [https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/](https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/)
 
 As the service tests layer is split often into 3 layers in object-oriented serverside apps: API, Integration and Component, how can we treat modern frontend apps and is there any right pyramid for that?
 
 #### **Frontend testing**
-<!--kg-card-begin: image--><figure class="kg-card kg-image-card kg-card-hascaption">![](https://cdn-images-1.medium.com/max/1600/1*TuU-H8ZK2YQf80WOksLqwQ.png)<figcaption>two-level test pyramid may be a solution for frontend&nbsp;apps</figcaption></figure><!--kg-card-end: image-->
+![](https://cdn-images-1.medium.com/max/1600/1*TuU-H8ZK2YQf80WOksLqwQ.png)
+two-level test pyramid may be a solution for frontend&nbsp;apps
 
 The pyramid where we have only two layers: unit and E2E tests with isolated integration tests seems pretty straightforward and still may be accurate to some types of apps which have no services to integrate. It may happen that there are needed some integration tests but there will be less of them than E2E tests. In this approach, while testing a frontend app, we treat logic, stores and UI components always as separated units. However, there is also another “pyramid” worth mentioning, that was presented by Kent C. Dodds is **the testing trophy**:
-<!--kg-card-begin: image--><figure class="kg-card kg-image-card kg-card-hascaption">![](https://cdn-images-1.medium.com/max/1600/0*ucVRlPUm_9nM6F29)<figcaption>The Testing Trophy for frontend apps, source: [https://twitter.com/kentcdodds/status/960723172591992832/photo/1](https://twitter.com/kentcdodds/status/960723172591992832/photo/1)</figcaption></figure><!--kg-card-end: image-->
+![](https://cdn-images-1.medium.com/max/1600/0*ucVRlPUm_9nM6F29)
+The Testing Trophy for frontend apps, source: [https://twitter.com/kentcdodds/status/960723172591992832/photo/1](https://twitter.com/kentcdodds/status/960723172591992832/photo/1)
 
 By static tests he means code linters and formatters and also type checkers (in JavaScript he mentioned flow but you can use TypeScript instead). They catch typos and type errors as you write and modify code. In this approach he proposes to write more integration tests between components and logic because these two are often brittle. A button in a component works but action it’s handling and mutating some data may not. He says integration tests strike a great balance on the trade-offs between confidence, speed and expense. Is it good approach? Does it look for you like the universal solution for frontend apps nowadays? I believe this style of testing may work for some apps, but for others not. Without understanding your codebase, common issues and then deciding about the approach to testing, following these patterns may make you go wrong way.
 
 **Microservices testing**
 > More modern software development organisations have found ways of scaling their development efforts by spreading the development of a system across different teams. Individual teams build individual, loosely coupled services without stepping on each others toes and integrate these services into a big, cohesive system. The more recent buzz around microservices focuses on exactly that.
-> The Practical Test Pyramid, Ham Vocke, [https://martinfowler.com/articles/practical-test-pyramid.html](https://martinfowler.com/articles/practical-test-pyramid.html)
+
+> _The Practical Test Pyramid, Ham Vocke, [https://martinfowler.com/articles/practical-test-pyramid.html](https://martinfowler.com/articles/practical-test-pyramid.html)_
 
 Another pyramid which I encountered during my research was related to microservices architecture. André Schaffer in [his article on Spotify Labs blog](https://labs.spotify.com/2018/01/11/testing-of-microservices/) presented the microservices testing honeycomb:
-<!--kg-card-begin: image--><figure class="kg-card kg-image-card kg-card-hascaption">![](https://cdn-images-1.medium.com/max/1600/0*bHkfFls3yRSgrRVT)<figcaption>The Microservices Testing Honeycomb, source [https://labs.spotify.com/2018/01/11/testing-of-microservices/](https://labs.spotify.com/2018/01/11/testing-of-microservices/)</figcaption></figure><!--kg-card-end: image-->
+![](https://cdn-images-1.medium.com/max/1600/0*bHkfFls3yRSgrRVT)
+The Microservices Testing Honeycomb, source [https://labs.spotify.com/2018/01/11/testing-of-microservices/](https://labs.spotify.com/2018/01/11/testing-of-microservices/)
 
 In this approach we focus on integration tests. We want to be sure that our services work together well and the implementation details of them are not so important. They should be easy to change and refactor without causing bugs in another services. He mentions that trade-off is a decrease in execution of tests however he believes the time is paid off by a faster coding and ease of maintenance. I’d say that in this approach we treat services as units. The type of tests where we test APIs between services we call **contract tests**.
 
 ### Summary
 
 As we went through several types of tests pyramid, I almost sure you’ve noticed the correlation between tests and the app we want to test. And basically it’s the essence: we shouldn’t follow any patterns before thinking and understanding what we want to test. However, writing tests is crucial. As fast as you understand it, your life will be more pleasant in case of development of your growing app.
-<!--kg-card-begin: hr-->
 
-* * *
-<!--kg-card-end: hr-->
+---
 
 Sources:
 
