@@ -61,6 +61,452 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/07/03/Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps/" class="article-date">
+  <time datetime="2019-07-03T14:25:41.000Z" itemprop="datePublished">2019-07-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/07/03/Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps/">Why the test pyramid is a bullshit - guide to testing towards modern frontend and backend apps</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://cdn-images-1.medium.com/max/1600/0*4W87Ed6xZGIuHp4E.png" alt=""><br><em>image source</em>: <a href="https://martinfowler.com/bliki/TestPyramid.html" target="_blank" rel="noopener"><em>https://martinfowler.com/bliki/TestPyramid.html</em></a></p>
+<p>TL;DR; The shape and levels of the test pyramid highly depends on your application (and it mustn’t be a pyramid!) but there are known anti-patterns.</p>
+<p>In this guide I want to address the types of testing of web apps especially in the face of the increase of the popularity of Single Page Applications and microservices, the diversified terminology and how we can refer to the well-known test pyramid which will be also covered here. I want to answer question what’s the good approach to test frontend and backend apps that are created by us today but in general and not in relevance to any specific tools.</p>
+<p>After reading this article I hope you’ll find why following patterns it’s not always a good solution. I tried to make a precise research about it but if you see anything that can be improved or where I got wrong, please write a comment about it.</p>
+<h3 id="Intro-—-purpose-of-testing"><a href="#Intro-—-purpose-of-testing" class="headerlink" title="Intro — purpose of testing"></a>Intro — purpose of testing</h3><p>We test to verify that a software we develop meets client’s requirements and works as expected. More often to just check if we hadn’t broken something due to our last changes in codebase. Although, when our software is getting more complex, we are not able to test all possible broken cases manually. I’d say, we are able to test it manually but it’s so time-consuming and boring that for sure it will lead to overlook a lot of bugs because of the human factor. That’s why we start to automate and write them. It gives us confidence that we made no mistake in the path of a use case and the automation speeds up the whole process. Both developers and QA engineers write tests. Anyway, we still need to do manual tests because not everything can be covered with automation, so we have also QA manual testers.</p>
+<h3 id="The-not-well-known-three"><a href="#The-not-well-known-three" class="headerlink" title="The (not)well-known three"></a>The (not)well-known three</h3><p>Before we start to talk about the test pyramid let’s introduce the basic three types of tests used within the test pyramid.</p>
+<h4 id="Unit-tests"><a href="#Unit-tests" class="headerlink" title="Unit tests"></a>Unit tests</h4><p>Unit tests are mostly written by developers and are done in the manner of white-box testing. We have to keep them simple, easy to debug and isolated which means less cases to cover by testing a one method/function at the same time. If we for example test 3 functions at the same time which returns different booleans values then it may give us 2<em>2</em>2 = 8 different cases to test. Unit tests gives us fast feedback because units are tested separately in isolated environment with mocked dependencies.</p>
+<h4 id="But-what-the-heck-is-a-unit"><a href="#But-what-the-heck-is-a-unit" class="headerlink" title="But what the heck is a unit?"></a>But what the heck is a unit?</h4><p>That is highly dependent on adopted approach to programming. In object-oriented programming (OOP) a unit mostly means a class and main approach is to test public methods of classes. We don’t reason about private methods which are used by the public ones because we treat a class like an indivisible unit. But there are also approaches where people treat single methods as units and that also may be fine in some cases. In the functional programming (FP) we test all functions separately as a function is our smallest unit. We just want to make sure that depending on parameters which we used to call our function it then returns the expected values.</p>
+<p>However I think there is no one correct answer. It’s just fine to have agreed on a one term used within your team and stick to it. For me, what we call a unit, it’s just an agreement.</p>
+<p>Good advice from <a href="https://martinfowler.com/articles/practical-test-pyramid.html" target="_blank" rel="noopener">Ham Vocke on the Martin Fowler’s w</a>ebsite is to don’t reflect internal code structure within unit tests and tests only for behavior that is observable, so think:</p>
+<p><em>if I enter values <code>x</code> and <code>y</code>, will the result be <code>z</code>?</em></p>
+<p>instead of</p>
+<p><em>if I enter <code>x</code> and <code>y</code>, will the method call class A first, then call class B and then return the result of class A plus the result of class B?</em></p>
+<p>so we can easily refactor and make changes within our codebases.</p>
+<p>Often we tend to have test coverage as high as it is needed to fell confident that our codebase is not highly liable to bugs. I here recommend <a href="https://stackoverflow.com/questions/153234/how-deep-are-your-unit-tests/153565#153565" target="_blank" rel="noopener">Kent Beck opinion</a> about how thorough our tests should be.<br><img src="https://cdn-images-1.medium.com/max/1600/1*NCbDeRM2IwxofXPcu6CejA.png" alt=""><br>source <a href="https://auth0.com/blog/testing-react-applications-with-jest/" target="_blank" rel="noopener">https://auth0.com/blog/testing-react-applications-with-jest/</a></p>
+<h4 id="Integration-tests"><a href="#Integration-tests" class="headerlink" title="Integration tests"></a>Integration tests</h4><p>That’s a type of tests that makes the most confusion for me. Let’s say we have a React app, what integration tests should cover? What in the case of a monolith serverside app? What in the case of microservices architecture? Is writing some automatic tests on our app’s UI the integration testing? Some definitions say that integration tests are for processes and components but what exactly is a process or a component? They have different meanings regarding an app we’re currently testing and there is no clear answer. We can do integration tests of our whole environment (client, server side, database, etc.) but it tends to be called the end to end testing. For me testing few main parts of whole system together like database and server was integration testing and that’s how I’ve been thinking of them a long time from what I’ve learned on university studies and what you’ll find mostly on the Internet. However, in the microservices world we often tend to write tests of integration between our several serverside-services apps. Hence, some people call integration tests as <strong>components or services tests</strong>. I feel there is no one right term since there are lot of variations and they are mostly related to the architecture of a system. One approach is to test a lot of parts of our system at once and another just to test two parts of a system at once. One part can be from external service but it’s used by our system and needs it to work properly so it’s an inseparable part of our system and needs to be tested just the same as the parts that we created ourselves. We can still treat integration tests as white box tests since we test components of our box like server and database which are the part of our whole box — so we know something about the structure of our box. Still, some people call them black box and that’s still may be fine as we treat for example backend and database as something we don’t know implementation details. Let’s postpone more concerns about them until we I think through the test pyramid.</p>
+<h4 id="End-to-end-tests-E2E"><a href="#End-to-end-tests-E2E" class="headerlink" title="End to end tests (E2E)"></a>End to end tests (E2E)</h4><p>Called also sometimes UI tests but not always meaning the same. In the case of web apps end to end tests are performed on working instance of our application what involves also the serverside part. They are usually executed in a browser and they perform operations that simulates popular user paths within our app.</p>
+<p>Opposite to unit and integration tests they don’t give us exact feedback. They just inform us overall what parts of UI fail no referring back to the frontend or the backend code. Each failing part needs to be manually checked first for errors before reporting a bug. That tests are hard to debug and slow, so we often don’t cover the whole app with them. They are a lot more expensive because writing an automation takes 10 to 50 times more than writing a scenario of a manual test.</p>
+<p>But basically what differs them from integration tests? We still test integration between parts of our system — modules of our code, UI with frontend logic, frontend integration with backend. Is it different category or just more general type of integration tests? I’ll leave you with those doubts ;)</p>
+<h3 id="The-test-pyramid"><a href="#The-test-pyramid" class="headerlink" title="The test pyramid"></a>The test pyramid</h3><p>The test pyramid was first mentioned in Mike Cohn’s book <em>Succeeding with Agile</em>. He recommends that applications should be covered by a lot of unit tests which is the base of our tests. Then we write integration (service) tests and the peak is made from E2E (UI) tests. These are all of the type functional and automated tests.<br><img src="https://cdn-images-1.medium.com/max/1600/0*4W87Ed6xZGIuHp4E.png" alt=""><br><em>image source</em>: <a href="https://martinfowler.com/bliki/TestPyramid.html" target="_blank" rel="noopener"><em>https://martinfowler.com/bliki/TestPyramid.html</em></a></p>
+<p>I like also to look at the test pyramid upside down <strong>as a bug filter</strong> where bugs not detected on a one stage are going to be detected on the next stage.<br><img src="https://cdn-images-1.medium.com/max/1600/1*kwXazFfzwPHWpJ0oZ8gHDw.png" alt=""><br><em>the testing pyramid as a filter, image source:</em> <a href="https://twitter.com/noahsussman/status/836612175707930625" target="_blank" rel="noopener">https://twitter.com/noahsussman/status/836612175707930625</a></p>
+<p>The test pyramid was the answer for the issue of having a lot of E2E/UI tests that were for example recorded by a special software. They are causing a definite increase time of building, are really brittle — prone to every change in the UI and gives deficient feedback about encountered errors. So you should write much more unit tests which are faster and then you catch other on a thin layer of E2E tests which cover as much main features as they can. The anti-pattern where our codebase is barely covered with unit tests make a shape of an ice cream cone which is overflowing with manual and automated GUI tests. Unfortunately, it’s a common situation in many projects. Effects are tragic, after few years of no writing tests adding 50 lines of code make them as much time-consuming as adding 5000 or 50000 lines in the past what is painful for developers and not understood by business. Release process takes longer due to slow GUI testing and still lets slip bugs that causes lot of frustration for end users who finally will abandon your product. Finally, inevitably the development of the app will be suspended and all sources addressed for bug fixing and refactoring. It’s your responsibility to write as much unit tests early on in the project. Although in cases of pressure from upper management, it’s your duty to fight for paying off technical debt as early as you can negotiate to prevent such situations.<br><img src="https://cdn-images-1.medium.com/max/1600/1*k1na189FYze-QKwpWekQVw.png" alt=""><br><em>the ice-cream cone anti-pattern, image source:</em> <a href="https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/" target="_blank" rel="noopener">https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/</a></p>
+<p>As you can see in the diagram of the ice cream cone anti-pattern, there is also the addition of manual tests to the original test pyramid. Currently, it’s often pattern to extend the original test pyramid which is fully automated by adding some manual tests. I believe manual tests are necessary to test newly introduced bugs and some cases that can’t be covered by automated tests.<br><em><img src="https://cdn-images-1.medium.com/max/1600/1*6HTj6mBJAcME722MW-tb1g.png" alt=""><br>image source:</em> <a href="https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/" target="_blank" rel="noopener">https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/</a></p>
+<p>As the service tests layer is split often into 3 layers in object-oriented serverside apps: API, Integration and Component, how can we treat modern frontend apps and is there any right pyramid for that?</p>
+<h4 id="Frontend-testing"><a href="#Frontend-testing" class="headerlink" title="Frontend testing"></a><strong>Frontend testing</strong></h4><p><img src="https://cdn-images-1.medium.com/max/1600/1*TuU-H8ZK2YQf80WOksLqwQ.png" alt=""><br>two-level test pyramid may be a solution for frontend&nbsp;apps</p>
+<p>The pyramid where we have only two layers: unit and E2E tests with isolated integration tests seems pretty straightforward and still may be accurate to some types of apps which have no services to integrate. It may happen that there are needed some integration tests but there will be less of them than E2E tests. In this approach, while testing a frontend app, we treat logic, stores and UI components always as separated units. However, there is also another “pyramid” worth mentioning, that was presented by Kent C. Dodds is <strong>the testing trophy</strong>:<br><img src="https://cdn-images-1.medium.com/max/1600/0*ucVRlPUm_9nM6F29" alt=""><br>The Testing Trophy for frontend apps, source: <a href="https://twitter.com/kentcdodds/status/960723172591992832/photo/1" target="_blank" rel="noopener">https://twitter.com/kentcdodds/status/960723172591992832/photo/1</a></p>
+<p>By static tests he means code linters and formatters and also type checkers (in JavaScript he mentioned flow but you can use TypeScript instead). They catch typos and type errors as you write and modify code. In this approach he proposes to write more integration tests between components and logic because these two are often brittle. A button in a component works but action it’s handling and mutating some data may not. He says integration tests strike a great balance on the trade-offs between confidence, speed and expense. Is it good approach? Does it look for you like the universal solution for frontend apps nowadays? I believe this style of testing may work for some apps, but for others not. Without understanding your codebase, common issues and then deciding about the approach to testing, following these patterns may make you go wrong way.</p>
+<p><strong>Microservices testing</strong></p>
+<blockquote>
+<p>More modern software development organisations have found ways of scaling their development efforts by spreading the development of a system across different teams. Individual teams build individual, loosely coupled services without stepping on each others toes and integrate these services into a big, cohesive system. The more recent buzz around microservices focuses on exactly that.</p>
+</blockquote>
+<blockquote>
+<p><em>The Practical Test Pyramid, Ham Vocke, <a href="https://martinfowler.com/articles/practical-test-pyramid.html" target="_blank" rel="noopener">https://martinfowler.com/articles/practical-test-pyramid.html</a></em></p>
+</blockquote>
+<p>Another pyramid which I encountered during my research was related to microservices architecture. André Schaffer in <a href="https://labs.spotify.com/2018/01/11/testing-of-microservices/" target="_blank" rel="noopener">his article on Spotify Labs blog</a> presented the microservices testing honeycomb:<br><img src="https://cdn-images-1.medium.com/max/1600/0*bHkfFls3yRSgrRVT" alt=""><br>The Microservices Testing Honeycomb, source <a href="https://labs.spotify.com/2018/01/11/testing-of-microservices/" target="_blank" rel="noopener">https://labs.spotify.com/2018/01/11/testing-of-microservices/</a></p>
+<p>In this approach we focus on integration tests. We want to be sure that our services work together well and the implementation details of them are not so important. They should be easy to change and refactor without causing bugs in another services. He mentions that trade-off is a decrease in execution of tests however he believes the time is paid off by a faster coding and ease of maintenance. I’d say that in this approach we treat services as units. The type of tests where we test APIs between services we call <strong>contract tests</strong>.</p>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>As we went through several types of tests pyramid, I almost sure you’ve noticed the correlation between tests and the app we want to test. And basically it’s the essence: we shouldn’t follow any patterns before thinking and understanding what we want to test. However, writing tests is crucial. As fast as you understand it, your life will be more pleasant in case of development of your growing app.</p>
+<hr>
+<p>Sources:</p>
+<ul>
+<li>Mike Cohn, Succeeding with Agile: Software Development Using Scrum, Addison-Wesley Professional, 2009</li>
+<li>Testing of Microservices, André Schaffer, <a href="https://labs.spotify.com/2018/01/11/testing-of-microservices/" target="_blank" rel="noopener">https://labs.spotify.com/2018/01/11/testing-of-microservices/</a></li>
+<li>What is functional testing with example?, Neha Sharma, <a href="https://www.quora.com/What-is-functional-testing-with-example/answer/Neha-Sharma-3421" target="_blank" rel="noopener">https://www.quora.com/What-is-functional-testing-with-example/answer/Neha-Sharma-3421</a></li>
+<li>3 typy testów, które musisz zrozumieć, by robić efektywne TDD, Wojciech Zawistowski, <a href="https://it.esky.pl/programowanie/3-typy-testow-ktore-musisz-zrozumiec-by-robic-efektywne-tdd/" target="_blank" rel="noopener">https://it.esky.pl/programowanie/3-typy-testow-ktore-musisz-zrozumiec-by-robic-efektywne-tdd/</a></li>
+<li>White-box testing, Wikipedia, <a href="https://en.wikipedia.org/wiki/White-box_testing" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/White-box_testing</a></li>
+<li>Black Box Testing, Software testing fundamentals, <a href="http://softwaretestingfundamentals.com/black-box-testing/" target="_blank" rel="noopener">http://softwaretestingfundamentals.com/black-box-testing/</a></li>
+<li>How deep are your unit tests?, Kent Beck, <a href="https://stackoverflow.com/questions/153234/how-deep-are-your-unit-tests/153565#153565" target="_blank" rel="noopener">https://stackoverflow.com/questions/153234/how-deep-are-your-unit-tests/153565#153565</a></li>
+<li>Błędy popełniane przy automatyzacji testów, Radek Smilgin, <a href="http://testerzy.pl/baza-wiedzy/bledy-popelniane-przy-automatyzacji-testow" target="_blank" rel="noopener">http://testerzy.pl/baza-wiedzy/bledy-popelniane-przy-automatyzacji-testow</a></li>
+<li>TestPyramid, Martin Fowler, <a href="https://martinfowler.com/bliki/TestPyramid.html" target="_blank" rel="noopener">https://martinfowler.com/bliki/TestPyramid.html</a></li>
+<li>Test Pyramid as a Risk Filter, Amit Kulkarni, <a href="https://amtoya.com/blogs/test-pyramid-as-a-risk-filter/" target="_blank" rel="noopener">https://amtoya.com/blogs/test-pyramid-as-a-risk-filter/</a></li>
+<li>Piramida automatyzacji testów, Code Coverage, <a href="http://pisz-kod.pl/2018/06/07/piramida-automatyzacji-testow-code-coverage/" target="_blank" rel="noopener">http://pisz-kod.pl/2018/06/07/piramida-automatyzacji-testow-code-coverage/</a></li>
+<li>The testing pyramid, Automation Panda, <a href="https://automationpanda.com/2018/08/01/the-testing-pyramid/" target="_blank" rel="noopener">https://automationpanda.com/2018/08/01/the-testing-pyramid/</a></li>
+<li>The Evolution of the Testing Pyramid, James Willett, <a href="https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/" target="_blank" rel="noopener">https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/</a></li>
+<li>Functional Testing Vs Non-Functional Testing: What’s the Difference?, <a href="https://www.guru99.com/functional-testing-vs-non-functional-testing.html" target="_blank" rel="noopener">https://www.guru99.com/functional-testing-vs-non-functional-testing.html</a></li>
+<li>What is functional testing with example?, <a href="https://www.quora.com/What-is-functional-testing-with-example" target="_blank" rel="noopener">https://www.quora.com/What-is-functional-testing-with-example</a></li>
+<li>Acceptance Testing, Software testing fundamentals, <a href="http://softwaretestingfundamentals.com/acceptance-testing/" target="_blank" rel="noopener">http://softwaretestingfundamentals.com/acceptance-testing/</a></li>
+<li>Sanity Testing Vs Smoke Testing: Introduction &amp; Differences, <a href="https://www.guru99.com/smoke-sanity-testing.html" target="_blank" rel="noopener">https://www.guru99.com/smoke-sanity-testing.html</a></li>
+<li>Functional Testing, <a href="https://www.techopedia.com/definition/19509/functional-testing" target="_blank" rel="noopener">https://www.techopedia.com/definition/19509/functional-testing</a></li>
+<li>Snapshot testing, <a href="https://jestjs.io/docs/en/snapshot-testing" target="_blank" rel="noopener">https://jestjs.io/docs/en/snapshot-testing</a></li>
+<li>Write tests. Not too many. Mostly integration., Kent C. Dodds, <a href="https://blog.kentcdodds.com/write-tests-not-too-many-mostly-integration-5e8c7fff591c" target="_blank" rel="noopener">https://blog.kentcdodds.com/write-tests-not-too-many-mostly-integration-5e8c7fff591c</a></li>
+<li>Performance Testing Tutorial: What is, Types, Metrics &amp; Example, <a href="https://www.guru99.com/performance-testing.html" target="_blank" rel="noopener">https://www.guru99.com/performance-testing.html</a></li>
+<li>Load Testing Tutorial: What is? How to? (with Examples), <a href="https://www.guru99.com/load-testing-tutorial.html" target="_blank" rel="noopener">https://www.guru99.com/load-testing-tutorial.html</a></li>
+<li>Manual Testing Tutorial for Beginners: Concepts, Types, Tool, <a href="https://www.guru99.com/manual-testing.html" target="_blank" rel="noopener">https://www.guru99.com/manual-testing.html</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/03/Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps/" data-id="ck3or21rz0037x8qybfn62me4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-DRAFT-React-rendering-and-reconciliation-algorithm" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/01/01/DRAFT-React-rendering-and-reconciliation-algorithm/" class="article-date">
+  <time datetime="2019-01-01T10:00:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/Basics/">Basics</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/01/01/DRAFT-React-rendering-and-reconciliation-algorithm/">[DRAFT] React rendering and reconciliation algorithm</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://reactjs.org/docs/reconciliation.html" target="_blank" rel="noopener">https://reactjs.org/docs/reconciliation.html</a></p>
+<ul>
+<li>React implements a heuristic O(n) algorithm to compare rendered tree nodes</li>
+<li>Two elements of different types will produce different trees</li>
+<li>The developer can hint at which child elements may be stable across different renders with a <code>key</code> prop</li>
+<li>When a component updates, the instance stays the same, so that state is maintained across renders</li>
+<li>Keys should be stable, predictable, and unique. Unstable keys (like those produced by <code>Math.random()</code>) will cause many component instances and DOM nodes to be unnecessarily recreated, which can cause performance degradation and lost state in child components</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/01/DRAFT-React-rendering-and-reconciliation-algorithm/" data-id="ck3or21om0006x8qycc3p45sr" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-DRAFT-PL-C-OOP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/01/01/DRAFT-PL-C-OOP/" class="article-date">
+  <time datetime="2019-01-01T10:00:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/01/01/DRAFT-PL-C-OOP/">[DRAFT] [PL] C# &amp; OOP</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Poniższe notatki to głównie skrót i spis pojęć z kursu dostępnego na stronie <a href="https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku" target="_blank" rel="noopener">https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku</a> i <a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty</a> , uzupełniony o inne źródła.</p>
+<h2 id="Cechy-C"><a href="#Cechy-C" class="headerlink" title="Cechy C#:"></a>Cechy C#:</h2><ul>
+<li>warunki logiczne (boolean conditions)</li>
+<li>garbage collector<ul>
+<li>TODO: jak działa?</li>
+</ul>
+</li>
+<li>standardowe biblioteki<ul>
+<li>TODO: na przykład jakie?</li>
+</ul>
+</li>
+<li>właściwości i zdarzenia (properties, events)</li>
+<li>delegaty oraz zarządzanie zdarzeniami (Delegates, Events Management)</li>
+<li>łatwość używania typów generycznych (Generics)</li>
+<li>kompilacja warunkowa</li>
+<li>wielowątkowość</li>
+<li>LINQ i wyrażenia lambda (lambda expressions)</li>
+<li>deklaracje przestrzeni nazw</li>
+</ul>
+<hr>
+<h1 id="Czesc-1"><a href="#Czesc-1" class="headerlink" title="Część 1"></a>Część 1</h1><p><a href="https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku" target="_blank" rel="noopener">https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku</a></p>
+<h2 id="Notatki-z-C"><a href="#Notatki-z-C" class="headerlink" title="Notatki z C#:"></a>Notatki z C#:</h2><ul>
+<li>główna metoda całego programu to <code>Main</code></li>
+</ul>
+<p><strong>Podstawowe części języka:</strong></p>
+<ul>
+<li>instrukcje i wyrażenia</li>
+<li>komentarze</li>
+<li>kompilowanie i wykonywanie</li>
+<li>słowa kluczowe</li>
+</ul>
+<p><strong>Typy:</strong></p>
+<ul>
+<li>typy wartościowe (value types) - w tym również struct</li>
+<li>typy referencyjne (reference types)</li>
+<li>typy wskaźnikowe (pointer types)</li>
+<li>konwersja niejawna (implicit type conversion)</li>
+<li>konwersja jawna (explicit type conversion)</li>
+<li>zmienne, typy integralne (integral types)</li>
+<li>typy zmiennoprzecinkowe (floating point types)</li>
+<li>typy dziesiętne (decimal types)</li>
+<li>typy logiczne (boolean types)</li>
+<li>typy puste (nullable types)</li>
+</ul>
+<p><strong>Stałe i literały:</strong></p>
+<ul>
+<li>Stałe odnoszą się do wartości, których program nie może zmieniać w trakcie wykonywania. Te stałe wartości nazywane są również literałami. Stałe traktowane są jak zwykłe zmienne z zaznaczeniem, że ich wartości nie mogą być modyfikowane.</li>
+<li>literały całkowite (integer literals)</li>
+<li>literały zmiennoprzecinkowe (floating-point literals)</li>
+<li>literały znakowe (character literals)</li>
+<li>literały łańcuchowe (string literals)</li>
+</ul>
+<p><strong>Operatory:</strong></p>
+<ul>
+<li>operatory arytmetyczne</li>
+<li>operatory relacyjne</li>
+<li>operatory logiczne</li>
+<li>operatory bitowe</li>
+<li>operatory przypisania</li>
+<li>różne inne operatory</li>
+</ul>
+<p><strong>Sterowanie:</strong></p>
+<ul>
+<li>instrukcja warunkowa if</li>
+<li>instrukcja warunkowa if..else</li>
+<li>zagnieżdżona instrukcja warunkowa if</li>
+<li>instrukcja wyboru switch</li>
+<li>zagnieżdżona instrukcja wyboru switch</li>
+<li>pętla while</li>
+<li>pętla for</li>
+<li>pętla do..while</li>
+<li>polecenie break</li>
+<li>polecenie continue</li>
+</ul>
+<p><strong>Parametry, inne typy i tablice:</strong></p>
+<ul>
+<li>parametry typu wartościowego, referencyjnego, wyjściowego</li>
+<li>typy puste</li>
+<li>tablice wielowymiarowe</li>
+<li>tablice postrzępione</li>
+<li>klasa <code>Array</code></li>
+</ul>
+<p><strong>Klasy:</strong></p>
+<ul>
+<li><strong>Klasa</strong> może dziedziczyć z jednej klasy, ale może implementować wiele interfejsów</li>
+<li><strong>metody</strong> klasy (methods)</li>
+<li><strong>pola</strong> klasy (fields)</li>
+<li><strong>właściwości</strong> klasy (properties) - Właściwości nie służą do przechowywania wartości. Przy pomocy accesorów <strong>mają dostęp do pól</strong>, które reprezentują.</li>
+</ul>
+<hr>
+<p><strong>Class member, np. pole lub metoda</strong></p>
+<p>Class members, in C#, are the members of a class that represent the data and behavior of a class.</p>
+<p>Class members are members declared in the class and all those (excluding constructors and destructors) declared in all classes in its inheritance hierarchy.</p>
+<p><strong>Class members</strong> can be of the following types:</p>
+<ul>
+<li><strong>Constants</strong> representing constant values</li>
+<li><strong>Fields</strong> representing variables</li>
+<li><strong>Methods</strong> providing services like calculation or other actions on its members</li>
+<li><strong>Properties</strong> that define the class features and include actions to fetch and modify them</li>
+<li><strong>Events</strong> generated to communicate between different classes /objects</li>
+<li><strong>Indexers</strong> that help in accessing class instances similar to arrays</li>
+<li><strong>Operators</strong> that define semantics when used in expressions with class instances</li>
+<li><strong>Instance constructors</strong> to initialize members of class instances</li>
+<li><strong>Static constructor</strong> to initialize the class itself</li>
+<li><strong>Destructors</strong> to execute actions necessary to be performed before class instances are discarded</li>
+<li>Types that are local to the class (nested type)</li>
+</ul>
+<p><strong>Class members are initialized in constructors</strong> which can be overloaded with different signatures. For classes that do not have constructor, <strong>a default constructor that initializes the class members (to default values) will be generated</strong>.</p>
+<p>Source: <a href="https://www.techopedia.com/definition/25589/class-members-c-sharp" target="_blank" rel="noopener">https://www.techopedia.com/definition/25589/class-members-c-sharp</a></p>
+<hr>
+<p><strong>Dalej o klasach:</strong></p>
+<ul>
+<li>instancje klasy</li>
+<li><strong>hermetyzacja/enkapsulacja,</strong> inaczej <strong>data hiding</strong> (or more accurately <strong>encapsulation</strong>)</li>
+<li><strong>modyfikatory dostępu</strong> w C# jako część hermetyzacji - public, private, protected, internal, protected internal</li>
+<li>typy wyliczeniowe <strong>enum</strong> - wartościowy typ danych - wartości, których nie można dziedziczyć oraz przekazać przez dziedzicznie</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> DniTygodnia</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  Poniedzialek = <span class="number">1</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  Wtorek,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  Sroda,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  Czwartek,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">  Piatek,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">  Sobota,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">  Niedziela</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+
+<ul>
+<li>struktury <strong>struct</strong> - W języku C# struktura to <strong>wartościowy</strong> typ danych.</li>
+</ul>
+<hr>
+<p><strong>Klasy i struktury</strong> mają następujące różnice:</p>
+<ul>
+<li>klasy są typem referencyjnym a struktury typem wartościowym;</li>
+<li>struktury nie wspierają dziedziczenia;</li>
+<li>struktury nie mogą mieć domyślnego konstruktora.</li>
+</ul>
+<hr>
+<p>  <strong>Dalej o klasach:</strong></p>
+<ul>
+<li><strong>konstruktor</strong> i <strong>destruktor</strong> klasy</li>
+<li><strong>statyczne składniki</strong> klasy</li>
+</ul>
+<p>Składniki statyczne możemy zdefiniować za pomocą słowa kluczowego <strong>static</strong>. Jeżeli zadeklarujemy składową jako statyczną nie ważne jak wiele obiektów klasy utworzymy, <strong>istnieje zawsze tylko jedna kopia składowej statycznej.</strong></p>
+<ul>
+<li><strong>klasa statyczna</strong></li>
+</ul>
+<p>Możemy utworzyć statyczną klasę. Klasa taka mówi, iż nie została napisana po to, aby tworzyć nowe obiekty. Nawet, gdybyśmy chcieli utworzyć nowy obiekt klasy statycznej kompilator zgłosi błąd. Mogą być wywołane bez tworzenia instancji danej klasy. </p>
+<ul>
+<li>dziedziczenie - <strong>inheritance</strong></li>
+<li>klasa bazowa i pochodna - <strong>base/parent</strong> and <strong>derived/child class</strong></li>
+<li>polimorfizm - <strong>polymorphism</strong></li>
+<li><strong>statyczny polimorfizm,</strong> tj. przeciążanie metod i przeciążanie operatorów</li>
+<li><strong>polimorfizm dynamiczny, czyli klasy abstrakcyjne i metody wirtualne</strong></li>
+</ul>
+<p>Polimorfizm dynamiczny jest realizowany za pomocą klas abstrakcyjnych oraz metod wirtualnych. Metoda może mieć różne implementacje dla różnych klas.</p>
+<hr>
+<p><strong>Klasa abstrakcyjna</strong>. Klasa taka zawiera abstrakcyjne metody, których implementacja zależy od wykorzystania w poszczególnych klasach pochodnych. </p>
+<p>Poniżej lista zasad, o których należy pamiętać, tworząc klasy abstrakcyjne:</p>
+<ul>
+<li>nie można utworzyć instancji klasy abstrakcyjnej;</li>
+<li>nie można zadeklarować metody abstrakcyjnej poza klasą abstrakcyjną;</li>
+<li>kiedy klasa opatrzona jest modyfikatorem dostępu sealed nie może być dziedziczona. Dodatkowo, klasa abstrakcyjna nie może być zdefiniowana jako sealed.</li>
+</ul>
+<hr>
+<ul>
+<li><strong>metody wirtualne</strong></li>
+</ul>
+<p>Jeżeli masz zdefiniowaną metodę w klasie bazowej, ale chcesz, żeby została zaimplementowana w klasach pochodnych możesz do tego celu zastosować metody wirtualne.</p>
+<ul>
+<li><strong>interfejsy</strong></li>
+</ul>
+<p>Język C# nie obsługuje wielokrotnego dziedziczenia. <strong>Klasa może dziedziczyć po jednej klasie bazowej, ale może implementować wiele interfejsów</strong>.</p>
+<p><strong>Inne cechy C#:</strong></p>
+<ul>
+<li>przestrzenie nazw</li>
+<li>dyrektywy preprocesora</li>
+<li>wyrażenia regularne</li>
+<li>obsługa wyjątków</li>
+<li>odczyt i zapis pliku</li>
+</ul>
+<hr>
+<h1 id="Czesc-2"><a href="#Czesc-2" class="headerlink" title="Część 2"></a>Część 2</h1><p><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty</a></p>
+<p><strong>Indeksery:</strong></p>
+<ul>
+<li><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Indeksery" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Indeksery</a></li>
+<li><strong>Indeksery</strong> pozwalają na indeksowanie obiektów w taki sam sposób jak ma to miejsce w tablicach.</li>
+<li>przeciążanie indekserów</li>
+</ul>
+<p><strong>Delegaty:</strong></p>
+<ul>
+<li><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Delegaty" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Delegaty</a></li>
+<li><strong>Delegaty</strong> to referencyjny typ danych, który przechowuje referencje do metody.</li>
+<li><strong>Delegaty złożone</strong> - Delegat złożony wywołuje dwa delegaty tak jakby były złączone. Operacja taka to tzw. <strong>multicasting</strong>.</li>
+<li>W JS nie ma typu delegatów, przekazujemy funkcje przez referencje do zmiennej.</li>
+</ul>
+<p><strong>Zdarzenia:</strong></p>
+<ul>
+<li><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Zdarzenia" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Zdarzenia</a></li>
+<li>Klasa, w której definiujemy nasze zdarzenie to tzw. „<strong>publisher</strong>”. Z kolej klasa, która odbiera to zdarzenie to tzw. „<strong>subscriber</strong>”.</li>
+</ul>
+<p><strong>Kolekcje:</strong></p>
+<ul>
+<li><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Kolekcje" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Kolekcje</a></li>
+<li><strong>ArrayList</strong> reprezentuje uporządkowaną kolekcję obiektu, który może być indeksowany indywidualnie. Wykorzystuje klucz do dostępu do elementu kolekcji.</li>
+<li><strong>Kolekcje</strong>: ArrayList, Hashtable, SortedList, Stack, Queue</li>
+</ul>
+<p><strong>Typy generyczne:</strong></p>
+<ul>
+<li><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Typy_generyczne" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Typy_generyczne</a></li>
+<li><strong>Typy generyczne</strong> pozwalają na opóźnienie w dostarczeniu specyfikacji typu danych w elementach takich jak klasy czy metody do momentu użycia ich w trakcie wykonywania programu. Innymi słowy, typy generyczne pozwalają na napisanie klasy lub metody, która może działać z każdym typem danych.</li>
+</ul>
+<p><strong>Refleksja:</strong></p>
+<ul>
+<li><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Refleksja" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Refleksja</a></li>
+<li>jest możliwe pobranie informacji dotyczących używanych typów w trakcie wykonywania programu – za pomocą <strong>mechanizmu refleksji</strong>.</li>
+</ul>
+<p><strong>Unsafe code:</strong></p>
+<ul>
+<li><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Unsafe_code" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Unsafe_code</a></li>
+<li><strong>Kod niezabezpieczony</strong> lub też kod <strong>niekontrolowany</strong> to blok <strong>kodu używający wskaźników</strong>.</li>
+</ul>
+<h1 id="Czesc-3"><a href="#Czesc-3" class="headerlink" title="Część 3"></a>Część 3</h1><p>Inne materiały i informacje</p>
+<h2 id="Implicit-Interface-Implementation-vs-Explicit-Interface-Implementation"><a href="#Implicit-Interface-Implementation-vs-Explicit-Interface-Implementation" class="headerlink" title="Implicit Interface Implementation vs Explicit Interface Implementation"></a>Implicit Interface Implementation vs Explicit Interface Implementation</h2><ul>
+<li><strong>Implicit</strong>: you access the interface methods and properties as <strong>if they were part of the class</strong>.</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span> : <span class="title">ITest</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="keyword">string</span> Id <span class="comment">// Generated by Implement Interface</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">get</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(); &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">Test t = <span class="keyword">new</span> Test();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">t.Id; <span class="comment">// OK</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">((ITest)t).Id; <span class="comment">// OK</span></span></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Explicit</strong>: you can only access methods and properties <strong>when treating the class as the implemented interface</strong>.</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span> : <span class="title">ITest</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">string</span> ITest.Id <span class="comment">// Generated by Implement Interface Explicitly</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">get</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(); &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">Test t = <span class="keyword">new</span> Test();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">t.Id; <span class="comment">// Not OK</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">((ITest)t).Id; <span class="comment">// OK</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">ITest it = t;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">it.Id; <span class="comment">// OK</span></span></pre></td></tr></table></figure>
+
+
+<p><strong><em>It allows you to implement two interfaces that define the same method</em></strong>. However, if you explicitly implement the interface, the methods can only be accessed when the variable is typed to that explicit interface.</p>
+<p>In terms of “when” you have to implement an interface explicitly, it is <strong>when your class already has a method with the same signature</strong> as one of the methods of your interface, or when your class implements <strong>several interfaces that share methods with the same signatures</strong> but incompatible contracts. Source: <a href="https://softwareengineering.stackexchange.com/questions/136319/whats-the-difference-between-implementing-an-interface-explicitly-or-implicitly" target="_blank" rel="noopener">https://softwareengineering.stackexchange.com/questions/136319/whats-the-difference-between-implementing-an-interface-explicitly-or-implicitly</a></p>
+<p>More about explicit interface implementation: <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/explicit-interface-implementation" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/explicit-interface-implementation</a></p>
+<h2 id="Casting-struct-to-interface"><a href="#Casting-struct-to-interface" class="headerlink" title="Casting struct to interface"></a>Casting struct to interface</h2><p>The fact that a struct can implement an interface is well known and so is the fact that casting a value type into an interface <strong>leads to boxing of the value type.</strong> This is because methods in interfaces are defined as virtual and to resolve virtual references, vtable (method table) look up is required. <strong>Since value types do not have pointers to vtable they are first boxed into a reference type</strong> and then the look up happens. <a href="https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/" target="_blank" rel="noopener">https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/</a></p>
+<p>Po polsku, chodzi o to, że kiedy jako <code>struct</code> zaimplementujemy jakiś <code>interface</code> , to <code>struct</code> będzie zapakowany w dodatkowy obiekt. Metody wywoływane na instancji tego <code>struct</code>, który jest rzutowany na <code>interface</code> , na przykład:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">Employee employee = <span class="keyword">new</span> Employee(<span class="string">"Cool Guy"</span>, <span class="number">65</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">IPromotion p = employee;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">Console.WriteLine(employee);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">p.promote();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">Console.WriteLine(employee);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//Cool Guy (65)</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//Cool Guy (65)</span></span></pre></td></tr></table></figure>
+
+<p>modyfikują wartości tego dodatkowego obiektu, a nie w oryginalnym obiekcie <code>employee</code>. Jeśli zmienimy <code>struct</code> na <code>class</code> to nie będzie tego boxowania, tworzenia dodatkowego obiektu i wszystko będzie działać jak należy. Wynika to z tego, że:</p>
+<ul>
+<li><strong>casting a value type into an interface leads to boxing of the value type</strong></li>
+<li>This is because methods in interfaces are defined as virtual and to resolve virtual references, vtable (method table) look up is required. Since value types do not have pointers to vtable they are first boxed into a reference type and then the look up happens.</li>
+</ul>
+<p>więcej tutaj: <a href="https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/" target="_blank" rel="noopener">https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/</a></p>
+<h2 id="Deadlocks"><a href="#Deadlocks" class="headerlink" title="Deadlocks"></a>Deadlocks</h2><ul>
+<li>TODO: jak dochodzi do deadlocków?</li>
+<li><strong>Transaction levels</strong>: snapshot, commitread</li>
+</ul>
+<h2 id="ASP-NET-MVC-ASP-NET-Core-MVC"><a href="#ASP-NET-MVC-ASP-NET-Core-MVC" class="headerlink" title="ASP.NET MVC, ASP.NET Core MVC:"></a>ASP.NET MVC, ASP.NET Core MVC:</h2><ul>
+<li>ASP.NET CORE <a href="https://docs.microsoft.com/pl-pl/aspnet/core/tutorials/first-mvc-app/?view=aspnetcore-2.2" target="_blank" rel="noopener">https://docs.microsoft.com/pl-pl/aspnet/core/tutorials/first-mvc-app/?view=aspnetcore-2.2</a></li>
+<li>ASP.NET <a href="https://docs.microsoft.com/pl-pl/aspnet/mvc/overview/getting-started/index" target="_blank" rel="noopener">https://docs.microsoft.com/pl-pl/aspnet/mvc/overview/getting-started/index</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/01/DRAFT-PL-C-OOP/" data-id="ck3or21ql002jx8qy3my07cvh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-DRAFT-When-a-JavaScript-Developer-steps-into-the-object-oriented-world-Classical-vs-Prototypal-Inheritance" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2019/01/01/DRAFT-When-a-JavaScript-Developer-steps-into-the-object-oriented-world-Classical-vs-Prototypal-Inheritance/" class="article-date">
@@ -362,275 +808,10 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/01/DRAFT-When-a-JavaScript-Developer-steps-into-the-object-oriented-world-Classical-vs-Prototypal-Inheritance/" data-id="ck3onwevp001nzps3f2o5c7dv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/01/DRAFT-When-a-JavaScript-Developer-steps-into-the-object-oriented-world-Classical-vs-Prototypal-Inheritance/" data-id="ck3or21qo002kx8qyfojngd0e" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-DRAFT-React-rendering-and-reconciliation-algorithm" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/01/01/DRAFT-React-rendering-and-reconciliation-algorithm/" class="article-date">
-  <time datetime="2019-01-01T10:00:00.000Z" itemprop="datePublished">2019-01-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/Basics/">Basics</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/01/01/DRAFT-React-rendering-and-reconciliation-algorithm/">[DRAFT] React rendering and reconciliation algorithm</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="https://reactjs.org/docs/reconciliation.html" target="_blank" rel="noopener">https://reactjs.org/docs/reconciliation.html</a></p>
-<ul>
-<li>React implements a heuristic O(n) algorithm to compare rendered tree nodes</li>
-<li>Two elements of different types will produce different trees</li>
-<li>The developer can hint at which child elements may be stable across different renders with a <code>key</code> prop</li>
-<li>When a component updates, the instance stays the same, so that state is maintained across renders</li>
-<li>Keys should be stable, predictable, and unique. Unstable keys (like those produced by <code>Math.random()</code>) will cause many component instances and DOM nodes to be unnecessarily recreated, which can cause performance degradation and lost state in child components</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/01/DRAFT-React-rendering-and-reconciliation-algorithm/" data-id="ck3onwetz0006zps311hl36cp" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-DRAFT-React-Hooks-introduction-and-API-pitfalls" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/01/01/DRAFT-React-Hooks-introduction-and-API-pitfalls/" class="article-date">
-  <time datetime="2019-01-01T10:00:00.000Z" itemprop="datePublished">2019-01-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/Hooks/">Hooks</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/01/01/DRAFT-React-Hooks-introduction-and-API-pitfalls/">[DRAFT] React Hooks - introduction and API pitfalls</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>Hooks are** a new addition in React 16.8**. They let you use state and other React features without writing a class.</li>
-</ul>
-<h2 id="Hooks-list"><a href="#Hooks-list" class="headerlink" title="Hooks list"></a>Hooks list</h2><ul>
-<li>basic hooks: <code>useState</code>, <code>useEffect</code>, <code>useContext</code></li>
-<li>additional hooks: <code>useReducer</code>, <code>useCallback</code>, <code>useMemo</code>, <code>useRef</code>, <code>useImperativeHandle</code>, <code>useLayoutEffect</code>, <code>useDebugValue</code></li>
-</ul>
-<h3 id="Hook-setState"><a href="#Hook-setState" class="headerlink" title="Hook setState"></a>Hook <code>setState</code></h3><ul>
-<li><p>unlike the <code>setState</code> method found in class components, <code>useState</code> does not automatically merge update objects, so we have to manually set state for previous state values that we’re not intend to modify:<!--kg-card-begin: code--></p>
-<p>setState(prevState =&gt; {</p>
-<pre><code>// Object.assign would also work
-return {...prevState, ...updatedValues};</code></pre><p>});<br>`</pre><!--kg-card-end: code--></p>
-</li>
-<li><p>alternative to the <code>setState</code> hook is the <code>useReducer</code> hook, which is more suited for managing state objects that contain multiple sub-values and not simple primitives like numbers, strings.</p>
-</li>
-<li><p><code>setState</code> - if the initial state is the result of an expensive computation, you may provide a function instead, which will be executed only on the initial render:<!--kg-card-begin: code--><pre><code>const [state, setState] = useState(() =&amp;gt; {
-  const initialState = someExpensiveComputation(props);
-  return initialState;
-});</code></pre><!--kg-card-end: code--></p>
-<h3 id="Hook-useEffect"><a href="#Hook-useEffect" class="headerlink" title="Hook useEffect"></a>Hook <code>useEffect</code></h3></li>
-<li><p>you should call hooks at the top level of the render function, this means no conditional hooks:<!--kg-card-begin: code--><pre>`// BAD:<br>if (user.isAdmin) {</p>
-<pre><code>useEffect(() =&amp;gt; {
-    ...
-});</code></pre><p>};</p>
-<p>// GOOD:<br>useEffect(() =&gt; {</p>
-<pre><code>if (user.isAdmin) {
-    ...
-};</code></pre><p>});`</pre><!--kg-card-end: code--></p>
-</li>
-<li><p>a second argument to <code>useEffect</code> that is the array of values that the effect depends on, so in below example the effect will be executed only when <code>props.source</code> changes:<!--kg-card-begin: code--><pre>`useEffect(<br>  () =&gt; {</p>
-<pre><code>const subscription = props.source.subscribe();
-return () =&amp;gt; {
-  subscription.unsubscribe();
-};</code></pre><p>  },<br>  [props.source],<br>);<br>`</pre><!--kg-card-end: code--></p>
-<h3 id="Hook-useCallback"><a href="#Hook-useCallback" class="headerlink" title="Hook useCallback"></a>Hook <code>useCallback</code></h3></li>
-<li><p>returns a <a href="https://en.wikipedia.org/wiki/Memoization" target="_blank" rel="noopener">memoized</a> callback</p>
-</li>
-<li><p>will return a memoized version of the callback that only changes if one of the dependencies has changed<!--kg-card-begin: code--><pre>`const memoizedCallback = useCallback(</p>
-<pre><code>() =&amp;gt; {
-    doSomething(a, b);
-},
-[a, b],</code></pre><p>);`</pre><!--kg-card-end: code--></p>
-<h3 id="Hook-useMemo"><a href="#Hook-useMemo" class="headerlink" title="Hook useMemo"></a>Hook <code>useMemo</code></h3></li>
-<li><p>If you’re doing expensive calculations while rendering, you can optimize them with <code>useMemo</code>:<!--kg-card-begin: code--><pre>`const [c1, setC1] = useState(0);<br>const [c2, setC2] = useState(0);</p>
-<p>// This value will not be recomputed between re-renders<br>// unless the value of c1 changes<br>const sinOfC1: number = useMemo(() =&gt; Math.sin(c1) , [c1])`</pre><!--kg-card-end: code--></p>
-</li>
-<li><p><code>useMemo</code> is generalized version of  <code>useCallback</code> hook. <code>useMemo</code> is primarily used for caching values but can also be used for caching functions as <code>useCallback</code> is used for because <code>useCallback(fn, deps)</code> is equivalent to <code>useMemo(() =&amp;gt; fn, deps)</code>:<!--kg-card-begin: code--><pre>`// Some function ...<br>const f = () =&gt; { ... }</p>
-<p>// The following are functionally equivalent<br>const callbackF = useCallback(f, [])<br>const callbackF = useMemo(() =&gt; f, [])</p>
-<!--kg-card-end: code-->
-
-</li>
-</ul>
-<h2 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a>Sources</h2><ul>
-<li><a href="https://reactjs.org/docs/hooks-reference.html" target="_blank" rel="noopener">https://reactjs.org/docs/hooks-reference.html</a>*   <a href="https://hackernoon.com/why-react-hooks-a-developers-perspective-2aedb8511f38" target="_blank" rel="noopener">https://hackernoon.com/why-react-hooks-a-developers-perspective-2aedb8511f38</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/01/DRAFT-React-Hooks-introduction-and-API-pitfalls/" data-id="ck3onwetw0005zps3evsofqvp" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-DRAFT-OOP-SOLID" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/01/01/DRAFT-OOP-SOLID/" class="article-date">
-  <time datetime="2019-01-01T10:00:00.000Z" itemprop="datePublished">2019-01-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/01/01/DRAFT-OOP-SOLID/">[DRAFT] OOP - SOLID</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="S-SRP-Single-Responsibility-Principle"><a href="#S-SRP-Single-Responsibility-Principle" class="headerlink" title="S - SRP - Single Responsibility Principle"></a>S - SRP - Single Responsibility Principle</h1><ul>
-<li><p>class should have just a one purpose - so for example <code>Animal</code> class shouldn’t perform logs to different outputs or shouldn’t perform a role of database of animals</p>
-</li>
-<li><p>don’t:<!--kg-card-begin: code--></p>
-<p>class Animal {</p>
-<pre><code>constructor(name: string){ }
-getAnimalName() { }
-saveAnimal(a: Animal) { }</code></pre><p>}`</pre><!--kg-card-end: code--></p>
-</li>
-<li><p>do:<!--kg-card-begin: code--><pre>`class Animal {</p>
-<pre><code>constructor(name: string){ }
-getAnimalName() { }</code></pre><p>}<br>class AnimalDB {</p>
-<pre><code>getAnimal(a: Animal) { }
-saveAnimal(a: Animal) { }</code></pre><p>}`</pre><!--kg-card-end: code--></p>
-<h1 id="O-OCP-Open-Closed-Principle"><a href="#O-OCP-Open-Closed-Principle" class="headerlink" title="O - OCP - Open/Closed Principle"></a>O - OCP - <strong>Open/Closed Principle</strong></h1></li>
-<li><p>classes should be open for extensions (new methods) but <strong>closed for modifications</strong> (don’t change method) - I’d say, you can change methods but not the contract what they receive and return</p>
-</li>
-<li><p>I’d say this role is more about abstraction and use of inheritance, for example by having a base class <code>Animal</code> with method <code>makeSound</code>, which is going to be implemented by child classes <code>Lion</code> or <code>Snake</code></p>
-</li>
-<li><p>don’t:<!--kg-card-begin: code--><pre>`//...<br>function AnimalSound(a: Array&lt;Animal&gt;) {</p>
-<pre><code>for(int i = 0; i &amp;lt;= a.length; i++) {
-    if(a[i].name == &apos;lion&apos;)
-        log(&apos;roar&apos;);
-    if(a[i].name == &apos;mouse&apos;)
-        log(&apos;squeak&apos;);
-    if(a[i].name == &apos;snake&apos;)
-        log(&apos;hiss&apos;);
-}</code></pre><p>}<br>AnimalSound(animals);`</pre><!--kg-card-end: code--></p>
-</li>
-<li><p>You see, for every new animal, a new logic is added to the AnimalSound function. This is quite a simple example. When your application grows and becomes complex, you will see that the <code>if</code> statement would be repeated over and over again in the <code>AnimalSound</code> function each time a new animal is added, all over the application. Do instead:<!--kg-card-begin: code--><pre>`class Animal {</p>
-<pre><code>makeSound();
-//...</code></pre><p>}<br>class Lion extends Animal {</p>
-<pre><code>makeSound() {
-    return &apos;roar&apos;;
-}</code></pre><p>}<br>class Squirrel extends Animal {</p>
-<pre><code>makeSound() {
-    return &apos;squeak&apos;;
-}</code></pre><p>}<br>class Snake extends Animal {</p>
-<pre><code>makeSound() {
-    return &apos;hiss&apos;;
-}</code></pre><p>}<br>//...<br>function AnimalSound(a: Array&lt;Animal&gt;) {</p>
-<pre><code>for(int i = 0; i &amp;lt;= a.length; i++) {
-    log(a[i].makeSound());
-}</code></pre><p>}<br>AnimalSound(animals);`</pre><!--kg-card-end: code--></p>
-</li>
-<li><p>another example:<!--kg-card-begin: code--><pre>`class Discount {</p>
-<pre><code>giveDiscount() {
-    if(this.customer == &apos;fav&apos;) {
-        return this.price * 0.2;
-    }
-    if(this.customer == &apos;vip&apos;) {
-        return this.price * 0.4;
-    }
-}</code></pre><p>}`</pre><!--kg-card-end: code--></p>
-</li>
-<li><p>do instead:<!--kg-card-begin: code--><pre>`class Discount {</p>
-<pre><code>giveDiscount() {
-    return this.price * 0.2
-}</code></pre><p>}</p>
-<p>class VIPDiscount: Discount {</p>
-<pre><code>getDiscount() {
-    return super.getDiscount() * 2;
-}</code></pre><p>}</p>
-<!--kg-card-end: code-->
-
-</li>
-</ul>
-<h1 id="L-LSP-Liskov-Substitution-Principle"><a href="#L-LSP-Liskov-Substitution-Principle" class="headerlink" title="L - LSP - Liskov Substitution Principle"></a>L - LSP - <strong>Liskov Substitution Principle</strong></h1><ul>
-<li>if something uses a class, it should be able to use the class and the base class / child class of it</li>
-</ul>
-<h1 id="I-ISP-Interface-Segregation-Principle"><a href="#I-ISP-Interface-Segregation-Principle" class="headerlink" title="I - ISP - Interface Segregation Principle"></a>I - ISP - <strong>Interface Segregation Principle</strong></h1><ul>
-<li>you should write few interfaces instead of a big one interface that contains all the interfaces</li>
-</ul>
-<h1 id="D-DIP-Dependency-Inversion-Principle"><a href="#D-DIP-Dependency-Inversion-Principle" class="headerlink" title="D - DIP - Dependency Inversion Principle"></a>D - DIP - Dependency Inversion Principle</h1><ul>
-<li>you should create new class by placing in the constructor of it the interface of a class that the new class depends on</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/01/DRAFT-OOP-SOLID/" data-id="ck3onwett0003zps3a26kgsj3" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
 
     </footer>
   </div>
@@ -678,10 +859,155 @@ saveAnimal(a: Animal) { }</code></pre><p>}`</pre><!--kg-card-end: code--></p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/01/DRAFT-How-to-test-extended-classes-in-JavaScript/" data-id="ck3onweta0000zps333kx5b17" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/01/DRAFT-How-to-test-extended-classes-in-JavaScript/" data-id="ck3or21od0001x8qya02o3b7u" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-DRAFT-Node-js-notes" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/01/01/DRAFT-Node-js-notes/" class="article-date">
+  <time datetime="2019-01-01T10:00:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/blog/categories/Node-js/Basics/">Basics</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/01/01/DRAFT-Node-js-notes/">[DRAFT] Node.js - ACLs, authentication, JWT, API Key validation, ElasticSearch</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><ul>
+<li>go through some articles <a href="https://medium.com/@pankaj.panigrahi/list-of-node-js-articles-ededa6dd304b" target="_blank" rel="noopener">https://medium.com/@pankaj.panigrahi/list-of-node-js-articles-ededa6dd304b</a></li>
+<li>go through ACL / Roles and permissions</li>
+</ul>
+<h3 id="Libraries-for-automatically-parsing-the-data-most-commonly-through-middlewares"><a href="#Libraries-for-automatically-parsing-the-data-most-commonly-through-middlewares" class="headerlink" title="Libraries for automatically parsing the data, most commonly through middlewares"></a>Libraries for automatically parsing the data, most commonly through middlewares</h3><p>querystring, body, and cookies parsing</p>
+<h1 id="ACL-Roles-and-permissions"><a href="#ACL-Roles-and-permissions" class="headerlink" title="ACL / Roles and permissions"></a>ACL / Roles and permissions</h1><p>TODO:</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api" target="_blank" rel="noopener">https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api</a></li>
+<li><a href="https://gist.github.com/facultymatt/6370903" target="_blank" rel="noopener">https://gist.github.com/facultymatt/6370903</a></li>
+<li><a href="https://www.npmjs.com/package/accesscontrol" target="_blank" rel="noopener">https://www.npmjs.com/package/accesscontrol</a></li>
+</ul>
+<h1 id="Token-JWT-Authentication"><a href="#Token-JWT-Authentication" class="headerlink" title="Token/JWT Authentication"></a>Token/JWT Authentication</h1><h2 id="Authorization-header"><a href="#Authorization-header" class="headerlink" title="Authorization header"></a>Authorization header</h2><p>Example header is as below:</p>
+<p><code>Authorization: Bearer a1194981-b541-416e-935</code></p>
+<p>The header field should be “Authorization” and the first part of the value should be the keyword “Bearer” and then the second part separated by a space should contain the token.</p>
+<p>This is a standard given by W3C. The keyword “Bearer” was used to distinguish this from the existing Basic auth.</p>
+<h1 id="API-Key-validation"><a href="#API-Key-validation" class="headerlink" title="API Key validation"></a>API Key validation</h1><p>Simple example by using a dedicated api key header: <a href="https://medium.com/better-programming/getting-data-from-mongodb-creating-an-api-key-validation-middleware-in-express-944382205d3e" target="_blank" rel="noopener">https://medium.com/better-programming/getting-data-from-mongodb-creating-an-api-key-validation-middleware-in-express-944382205d3e</a></p>
+<h1 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h1><p>In theory: <a href="https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-1-164311327557" target="_blank" rel="noopener">https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-1-164311327557</a></p>
+<p>In practice in Node.js:<br><a href="https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-2-4c804427bc94" target="_blank" rel="noopener">https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-2-4c804427bc94</a></p>
+<p>Elasticsearch course on Udemy to buy and watch:<br><a href="https://www.udemy.com/course/elasticsearch-complete-guide/" target="_blank" rel="noopener">https://www.udemy.com/course/elasticsearch-complete-guide/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/01/DRAFT-Node-js-notes/" data-id="ck3or21oi0003x8qybjyq4qhv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-DRAFT-OOP-SOLID" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/01/01/DRAFT-OOP-SOLID/" class="article-date">
+  <time datetime="2019-01-01T10:00:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/01/01/DRAFT-OOP-SOLID/">[DRAFT] OOP - SOLID</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="S-SRP-Single-Responsibility-Principle"><a href="#S-SRP-Single-Responsibility-Principle" class="headerlink" title="S - SRP - Single Responsibility Principle"></a>S - SRP - Single Responsibility Principle</h1><ul>
+<li>class should have just a one purpose - so for example <code>Animal</code> class shouldn’t perform logs to different outputs or shouldn’t perform a role of database of animals</li>
+<li>don’t:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">constructor</span>(<span class="params">name: <span class="built_in">string</span></span>) &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    getAnimalName() &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    saveAnimal(a: Animal) &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<ul>
+<li>do:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">constructor</span>(<span class="params">name: <span class="built_in">string</span></span>) &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    getAnimalName() &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> AnimalDB &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    getAnimal(a: Animal) &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    saveAnimal(a: Animal) &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h1 id="O-OCP-Open-Closed-Principle"><a href="#O-OCP-Open-Closed-Principle" class="headerlink" title="O - OCP - Open/Closed Principle"></a>O - OCP - <strong>Open/Closed Principle</strong></h1><ul>
+<li>classes should be open for extensions (new methods) but <strong>closed for modifications</strong> (don’t change method) - I’d say, you can change methods but not the contract what they receive and return</li>
+<li>I’d say this role is more about abstraction and use of inheritance, for example by having a base class <code>Animal</code> with method <code>makeSound</code>, which is going to be implemented by child classes <code>Lion</code> or <code>Snake</code></li>
+<li>don’t:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">AnimalSound</span>(<span class="params">a: <span class="built_in">Array</span>&lt;Animal&gt;</span>) </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt;= a.length; i++) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">'lion'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">            log(<span class="string">'roar'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">'mouse'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">            log(<span class="string">'squeak'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">'snake'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        log(<span class="string">'hiss'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">AnimalSound(animals);</span></pre></td></tr></table></figure>
+
+<ul>
+<li>You see, for every new animal, a new logic is added to the AnimalSound function. This is quite a simple example. When your application grows and becomes complex, you will see that the <code>if</code> statement would be repeated over and over again in the <code>AnimalSound</code> function each time a new animal is added, all over the application. Do instead:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    makeSound();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">//...</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Lion <span class="keyword">extends</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    makeSound() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="string">'roar'</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Squirrel <span class="keyword">extends</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    makeSound() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="string">'squeak'</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Snake <span class="keyword">extends</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    makeSound() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="string">'hiss'</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">AnimalSound</span>(<span class="params">a: <span class="built_in">Array</span>&lt;Animal&gt;</span>) </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt;= a.length; i++) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">        log(a[i].makeSound());</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">AnimalSound(animals);</span></pre></td></tr></table></figure>
+
+<ul>
+<li>another example:</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Discount</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    giveDiscount() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.customer == <span class="string">"fav"</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.price * <span class="number">0.2</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.customer == <span class="string">"vip"</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.price * <span class="number">0.4</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<ul>
+<li>do instead:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Discount &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    giveDiscount() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.price * <span class="number">0.2</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> VIPDiscount: Discount &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    getDiscount() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.getDiscount() * <span class="number">2</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">&#125;;</span></pre></td></tr></table></figure>
+
+<h1 id="L-LSP-Liskov-Substitution-Principle"><a href="#L-LSP-Liskov-Substitution-Principle" class="headerlink" title="L - LSP - Liskov Substitution Principle"></a>L - LSP - <strong>Liskov Substitution Principle</strong></h1><ul>
+<li>if something uses a class, it should be able to use the class and the base class / child class of it</li>
+</ul>
+<h1 id="I-ISP-Interface-Segregation-Principle"><a href="#I-ISP-Interface-Segregation-Principle" class="headerlink" title="I - ISP - Interface Segregation Principle"></a>I - ISP - <strong>Interface Segregation Principle</strong></h1><ul>
+<li>you should write few interfaces instead of a big one interface that contains all the interfaces</li>
+</ul>
+<h1 id="D-DIP-Dependency-Inversion-Principle"><a href="#D-DIP-Dependency-Inversion-Principle" class="headerlink" title="D - DIP - Dependency Inversion Principle"></a>D - DIP - Dependency Inversion Principle</h1><ul>
+<li>you should create new class by placing in the constructor of it the interface of a class that the new class depends on</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/01/DRAFT-OOP-SOLID/" data-id="ck3or21ok0005x8qyho282h9p" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
 
     </footer>
   </div>
@@ -705,7 +1031,7 @@ saveAnimal(a: Animal) { }</code></pre><p>}`</pre><!--kg-card-end: code--></p>
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/React-Hooks/">React Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Softwafe-Engineering/">Softwafe Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Softwafe-Engineering/Tests/">Tests</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/React-Hooks/">React Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -725,7 +1051,7 @@ saveAnimal(a: Animal) { }</code></pre><p>}`</pre><!--kg-card-end: code--></p>
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Backend/" style="font-size: 12.5px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/Frontend/" style="font-size: 10px;">Frontend</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/Node-js/" style="font-size: 12.5px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12.5px;">OOP</a> <a href="/blog/tags/React/" style="font-size: 17.5px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.5px;">React Hooks</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 15px;">Software Engineering</a> <a href="/blog/tags/Tests/" style="font-size: 12.5px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 10px;">TypeScript</a>
+      <a href="/blog/tags/Backend/" style="font-size: 12.5px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/Frontend/" style="font-size: 10px;">Frontend</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/Node-js/" style="font-size: 12.5px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12.5px;">OOP</a> <a href="/blog/tags/React/" style="font-size: 17.5px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.5px;">React Hooks</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 15px;">Software Engineering</a> <a href="/blog/tags/Tests/" style="font-size: 12.5px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12.5px;">TypeScript</a>
     </div>
   </div>
 
@@ -734,7 +1060,7 @@ saveAnimal(a: Animal) { }</code></pre><p>}`</pre><!--kg-card-end: code--></p>
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
     </div>
   </div>
 
@@ -747,23 +1073,23 @@ saveAnimal(a: Animal) { }</code></pre><p>}`</pre><!--kg-card-end: code--></p>
       <ul>
         
           <li>
-            <a href="/blog/2019/11/01/Frontend-React-various-notes/">Frontend &amp; React - various notes</a>
+            <a href="/blog/2019/12/01/React-various-notes/">React - miscellaneous notes</a>
           </li>
         
           <li>
-            <a href="/blog/2019/11/01/TypeScript-React/">TypeScript + React</a>
+            <a href="/blog/2019/12/01/TypeScript-basics/">TypeScript basics</a>
           </li>
         
           <li>
-            <a href="/blog/2019/10/24/Node-js-basics/">Node.js basics</a>
+            <a href="/blog/2019/12/01/TypeScript-React/">TypeScript with React</a>
           </li>
         
           <li>
-            <a href="/blog/2019/09/22/JavaScript-CommonJS-vs-AMD/">JavaScript CommonJS vs AMD</a>
+            <a href="/blog/2019/12/01/React-Hooks-introduction-and-API-pitfalls/">React Hooks - introduction and API pitfalls</a>
           </li>
         
           <li>
-            <a href="/blog/2019/09/22/JavaScript-performance-time-measurement-of-function-calls/">JavaScript - performance / time measurement of function calls</a>
+            <a href="/blog/2019/12/01/Software-Engineering-notes/">Software Engineering notes</a>
           </li>
         
       </ul>

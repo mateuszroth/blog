@@ -5,17 +5,17 @@
   
 
   
-  <title>[DRAFT] Node.js notes | Hexo</title>
+  <title>[DRAFT] Node.js - ACLs, authentication, JWT, API Key validation, ElasticSearch | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="TODO go through some articles https:&#x2F;&#x2F;medium.com&#x2F;@pankaj.panigrahi&#x2F;list-of-node-js-articles-ededa6dd304b go through ACL &#x2F; Roles and permissions  Libraries for automatically parsing the data, most comm">
 <meta name="keywords" content="Backend,Node.js">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[DRAFT] Node.js notes">
+<meta property="og:title" content="[DRAFT] Node.js - ACLs, authentication, JWT, API Key validation, ElasticSearch">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;01&#x2F;01&#x2F;DRAFT-Node-js-notes&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="TODO go through some articles https:&#x2F;&#x2F;medium.com&#x2F;@pankaj.panigrahi&#x2F;list-of-node-js-articles-ededa6dd304b go through ACL &#x2F; Roles and permissions  Libraries for automatically parsing the data, most comm">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-12-02T16:42:22.500Z">
+<meta property="og:updated_time" content="2019-12-02T18:10:46.736Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/blog/atom.xml" title="Hexo" type="application/atom+xml">
@@ -81,7 +81,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      [DRAFT] Node.js notes
+      [DRAFT] Node.js - ACLs, authentication, JWT, API Key validation, ElasticSearch
     </h1>
   
 
@@ -112,7 +112,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/01/DRAFT-Node-js-notes/" data-id="ck3onwetm0001zps3e5ta9f54" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/01/DRAFT-Node-js-notes/" data-id="ck3or21oi0003x8qybjyq4qhv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
@@ -123,19 +123,19 @@
     
 <nav id="article-nav">
   
-    <a href="/blog/2019/07/03/Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/blog/2019/01/01/DRAFT-How-to-test-extended-classes-in-JavaScript/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Why the test pyramid is a bullshit - guide to testing towards modern frontend and backend apps
+          [DRAFT] How to test extended classes in JavaScript
         
       </div>
     </a>
   
   
-    <a href="/blog/2019/01/01/DRAFT-PL-C-OOP/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/blog/2019/01/01/DRAFT-OOP-SOLID/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">[DRAFT] [PL] C# &amp; OOP</div>
+      <div class="article-nav-title">[DRAFT] OOP - SOLID</div>
     </a>
   
 </nav>
@@ -151,7 +151,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/React-Hooks/">React Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Softwafe-Engineering/">Softwafe Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Softwafe-Engineering/Tests/">Tests</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/React-Hooks/">React Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -171,7 +171,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Backend/" style="font-size: 12.5px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/Frontend/" style="font-size: 10px;">Frontend</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/Node-js/" style="font-size: 12.5px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12.5px;">OOP</a> <a href="/blog/tags/React/" style="font-size: 17.5px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.5px;">React Hooks</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 15px;">Software Engineering</a> <a href="/blog/tags/Tests/" style="font-size: 12.5px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 10px;">TypeScript</a>
+      <a href="/blog/tags/Backend/" style="font-size: 12.5px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/Frontend/" style="font-size: 10px;">Frontend</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/Node-js/" style="font-size: 12.5px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12.5px;">OOP</a> <a href="/blog/tags/React/" style="font-size: 17.5px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.5px;">React Hooks</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 15px;">Software Engineering</a> <a href="/blog/tags/Tests/" style="font-size: 12.5px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12.5px;">TypeScript</a>
     </div>
   </div>
 
@@ -180,7 +180,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
     </div>
   </div>
 
@@ -193,23 +193,23 @@
       <ul>
         
           <li>
-            <a href="/blog/2019/11/01/Frontend-React-various-notes/">Frontend &amp; React - various notes</a>
+            <a href="/blog/2019/12/01/React-various-notes/">React - miscellaneous notes</a>
           </li>
         
           <li>
-            <a href="/blog/2019/11/01/TypeScript-React/">TypeScript + React</a>
+            <a href="/blog/2019/12/01/TypeScript-basics/">TypeScript basics</a>
           </li>
         
           <li>
-            <a href="/blog/2019/10/24/Node-js-basics/">Node.js basics</a>
+            <a href="/blog/2019/12/01/TypeScript-React/">TypeScript with React</a>
           </li>
         
           <li>
-            <a href="/blog/2019/09/22/JavaScript-CommonJS-vs-AMD/">JavaScript CommonJS vs AMD</a>
+            <a href="/blog/2019/12/01/React-Hooks-introduction-and-API-pitfalls/">React Hooks - introduction and API pitfalls</a>
           </li>
         
           <li>
-            <a href="/blog/2019/09/22/JavaScript-performance-time-measurement-of-function-calls/">JavaScript - performance / time measurement of function calls</a>
+            <a href="/blog/2019/12/01/Software-Engineering-notes/">Software Engineering notes</a>
           </li>
         
       </ul>

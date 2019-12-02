@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Poniższe notatki to głównie skrót i spis pojęć z kursu dostępnego na stronie https:&#x2F;&#x2F;www.plukasiewicz.net&#x2F;CSharp_dla_poczatkujacych&#x2F;Ogolnie_o_jezyku i https:&#x2F;&#x2F;www.plukasiewicz.net&#x2F;Csharp_dla_zaawansow">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-12-02T16:42:22.500Z">
+<meta property="og:updated_time" content="2019-12-02T18:10:46.736Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/blog/atom.xml" title="Hexo" type="application/atom+xml">
@@ -90,41 +90,25 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>Poniższe notatki to głównie skrót i spis pojęć z kursu dostępnego na stronie <a href="https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku" target="_blank" rel="noopener">https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku</a> i <a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty</a> , uzupełniony o inne źródła.</p>
-<h2 id="Cechy-C"><a href="#Cechy-C" class="headerlink" title="Cechy C#:"></a>Cechy C#:</h2><!--kg-card-begin: markdown-->
-
-<ul>
-<li><p>warunki logiczne (boolean conditions)</p>
-</li>
-<li><p>garbage collector</p>
-<ul>
+<h2 id="Cechy-C"><a href="#Cechy-C" class="headerlink" title="Cechy C#:"></a>Cechy C#:</h2><ul>
+<li>warunki logiczne (boolean conditions)</li>
+<li>garbage collector<ul>
 <li>TODO: jak działa?</li>
 </ul>
 </li>
-<li><p>standardowe biblioteki</p>
-<ul>
+<li>standardowe biblioteki<ul>
 <li>TODO: na przykład jakie?</li>
 </ul>
 </li>
-<li><p>właściwości i zdarzenia (properties, events)</p>
-</li>
-<li><p>delegaty oraz zarządzanie zdarzeniami (Delegates, Events Management)</p>
-</li>
-<li><p>łatwość używania typów generycznych (Generics)</p>
-</li>
-<li><p>kompilacja warunkowa</p>
-</li>
-<li><p>wielowątkowość</p>
-</li>
-<li><p>LINQ i wyrażenia lambda (lambda expressions)</p>
-</li>
-<li><p>deklaracje przestrzeni nazw</p>
-<!--kg-card-end: markdown--><!--kg-card-begin: hr-->
-
-</li>
+<li>właściwości i zdarzenia (properties, events)</li>
+<li>delegaty oraz zarządzanie zdarzeniami (Delegates, Events Management)</li>
+<li>łatwość używania typów generycznych (Generics)</li>
+<li>kompilacja warunkowa</li>
+<li>wielowątkowość</li>
+<li>LINQ i wyrażenia lambda (lambda expressions)</li>
+<li>deklaracje przestrzeni nazw</li>
 </ul>
 <hr>
-<!--kg-card-end: hr-->
-
 <h1 id="Czesc-1"><a href="#Czesc-1" class="headerlink" title="Część 1"></a>Część 1</h1><p><a href="https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku" target="_blank" rel="noopener">https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku</a></p>
 <h2 id="Notatki-z-C"><a href="#Notatki-z-C" class="headerlink" title="Notatki z C#:"></a>Notatki z C#:</h2><ul>
 <li>główna metoda całego programu to <code>Main</code></li>
@@ -191,16 +175,14 @@
 <ul>
 <li><strong>Klasa</strong> może dziedziczyć z jednej klasy, ale może implementować wiele interfejsów</li>
 <li><strong>metody</strong> klasy (methods)</li>
-<li>*<em>pola *</em>klasy (fields)</li>
-<li><strong>właściwości *<em>klasy (properties) - Właściwości nie służą do przechowywania wartości. Przy pomocy accesorów *</em>mają dostęp do pól</strong>, które reprezentują.<!--kg-card-begin: hr--></li>
+<li><strong>pola</strong> klasy (fields)</li>
+<li><strong>właściwości</strong> klasy (properties) - Właściwości nie służą do przechowywania wartości. Przy pomocy accesorów <strong>mają dostęp do pól</strong>, które reprezentują.</li>
 </ul>
 <hr>
-<!--kg-card-end: hr-->
-
 <p><strong>Class member, np. pole lub metoda</strong></p>
 <p>Class members, in C#, are the members of a class that represent the data and behavior of a class.</p>
 <p>Class members are members declared in the class and all those (excluding constructors and destructors) declared in all classes in its inheritance hierarchy.</p>
-<p>*<em>Class members *</em>can be of the following types:</p>
+<p><strong>Class members</strong> can be of the following types:</p>
 <ul>
 <li><strong>Constants</strong> representing constant values</li>
 <li><strong>Fields</strong> representing variables</li>
@@ -216,174 +198,136 @@
 </ul>
 <p><strong>Class members are initialized in constructors</strong> which can be overloaded with different signatures. For classes that do not have constructor, <strong>a default constructor that initializes the class members (to default values) will be generated</strong>.</p>
 <p>Source: <a href="https://www.techopedia.com/definition/25589/class-members-c-sharp" target="_blank" rel="noopener">https://www.techopedia.com/definition/25589/class-members-c-sharp</a></p>
-<!--kg-card-begin: hr-->
-
 <hr>
-<!--kg-card-end: hr-->
-
 <p><strong>Dalej o klasach:</strong></p>
 <ul>
-<li><p>instancje klasy</p>
-</li>
-<li><p><strong>hermetyzacja/enkapsulacja, **inaczej</strong> <strong>data hiding (or more accurately **encapsulation</strong>)</p>
-</li>
-<li><p><strong>modyfikatory dostępu</strong> w C# jako część hermetyzacji - public, private, protected, internal, protected internal</p>
-</li>
-<li><p>typy wyliczeniowe *<em>enum - *</em>wartościowy typ danych - wartości, których nie można dziedziczyć oraz przekazać przez dziedzicznie<!--kg-card-begin: code--></p>
-<p>enum DniTygodnia<br>{</p>
-<pre><code>Poniedzialek = 1,
-Wtorek,
-Sroda,
-Czwartek,
-Piatek,
-Sobota,
-Niedziela</code></pre><p>}`</pre><!--kg-card-end: code--></p>
-</li>
-<li><p>struktury <strong>struct - *<em>W języku C# struktura to *</em>wartościowy</strong> typ danych.<!--kg-card-begin: hr--></p>
-<hr>
-<!--kg-card-end: hr-->
+<li>instancje klasy</li>
+<li><strong>hermetyzacja/enkapsulacja,</strong> inaczej <strong>data hiding</strong> (or more accurately <strong>encapsulation</strong>)</li>
+<li><strong>modyfikatory dostępu</strong> w C# jako część hermetyzacji - public, private, protected, internal, protected internal</li>
+<li>typy wyliczeniowe <strong>enum</strong> - wartościowy typ danych - wartości, których nie można dziedziczyć oraz przekazać przez dziedzicznie</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> DniTygodnia</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  Poniedzialek = <span class="number">1</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  Wtorek,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  Sroda,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  Czwartek,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">  Piatek,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">  Sobota,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">  Niedziela</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
 
+
+<ul>
+<li>struktury <strong>struct</strong> - W języku C# struktura to <strong>wartościowy</strong> typ danych.</li>
+</ul>
+<hr>
 <p><strong>Klasy i struktury</strong> mają następujące różnice:</p>
-</li>
-<li><p>klasy są typem referencyjnym a struktury typem wartościowym;</p>
-</li>
-<li><p>struktury nie wspierają dziedziczenia;</p>
-</li>
-<li><p>struktury nie mogą mieć domyślnego konstruktora.<!--kg-card-begin: hr--></p>
+<ul>
+<li>klasy są typem referencyjnym a struktury typem wartościowym;</li>
+<li>struktury nie wspierają dziedziczenia;</li>
+<li>struktury nie mogą mieć domyślnego konstruktora.</li>
+</ul>
 <hr>
-<!--kg-card-end: hr-->
-
-<p><strong>Dalej o klasach:</strong></p>
-</li>
-<li><p><strong>konstruktor</strong> i <strong>destruktor</strong> klasy</p>
-</li>
-<li><p>*<em>statyczne składniki *</em>klasy</p>
+<p>  <strong>Dalej o klasach:</strong></p>
+<ul>
+<li><strong>konstruktor</strong> i <strong>destruktor</strong> klasy</li>
+<li><strong>statyczne składniki</strong> klasy</li>
+</ul>
 <p>Składniki statyczne możemy zdefiniować za pomocą słowa kluczowego <strong>static</strong>. Jeżeli zadeklarujemy składową jako statyczną nie ważne jak wiele obiektów klasy utworzymy, <strong>istnieje zawsze tylko jedna kopia składowej statycznej.</strong></p>
-</li>
-<li><p><strong>klasa statyczna</strong></p>
+<ul>
+<li><strong>klasa statyczna</strong></li>
+</ul>
 <p>Możemy utworzyć statyczną klasę. Klasa taka mówi, iż nie została napisana po to, aby tworzyć nowe obiekty. Nawet, gdybyśmy chcieli utworzyć nowy obiekt klasy statycznej kompilator zgłosi błąd. Mogą być wywołane bez tworzenia instancji danej klasy. </p>
-</li>
-<li><p>dziedziczenie - <strong>inheritance</strong></p>
-</li>
-<li><p>klasa bazowa i pochodna - <strong>base/parent **and</strong> derived/child class**</p>
-</li>
-<li><p>polimorfizm - <strong>polymorphism</strong></p>
-</li>
-<li><p>*<em>statyczny polimorfizm, *</em>tj. przeciążanie metod i przeciążanie operatorów</p>
-</li>
-<li><p><strong>polimorfizm dynamiczny, czyli klasy abstrakcyjne i metody wirtualne</strong></p>
+<ul>
+<li>dziedziczenie - <strong>inheritance</strong></li>
+<li>klasa bazowa i pochodna - <strong>base/parent</strong> and <strong>derived/child class</strong></li>
+<li>polimorfizm - <strong>polymorphism</strong></li>
+<li><strong>statyczny polimorfizm,</strong> tj. przeciążanie metod i przeciążanie operatorów</li>
+<li><strong>polimorfizm dynamiczny, czyli klasy abstrakcyjne i metody wirtualne</strong></li>
+</ul>
 <p>Polimorfizm dynamiczny jest realizowany za pomocą klas abstrakcyjnych oraz metod wirtualnych. Metoda może mieć różne implementacje dla różnych klas.</p>
-<!--kg-card-begin: hr-->
-
 <hr>
-<!--kg-card-end: hr-->
-
 <p><strong>Klasa abstrakcyjna</strong>. Klasa taka zawiera abstrakcyjne metody, których implementacja zależy od wykorzystania w poszczególnych klasach pochodnych. </p>
 <p>Poniżej lista zasad, o których należy pamiętać, tworząc klasy abstrakcyjne:</p>
-</li>
-<li><p>nie można utworzyć instancji klasy abstrakcyjnej;</p>
-</li>
-<li><p>nie można zadeklarować metody abstrakcyjnej poza klasą abstrakcyjną;</p>
-</li>
-<li><p>kiedy klasa opatrzona jest modyfikatorem dostępu sealed nie może być dziedziczona. Dodatkowo, klasa abstrakcyjna nie może być zdefiniowana jako sealed.<!--kg-card-begin: hr--></p>
+<ul>
+<li>nie można utworzyć instancji klasy abstrakcyjnej;</li>
+<li>nie można zadeklarować metody abstrakcyjnej poza klasą abstrakcyjną;</li>
+<li>kiedy klasa opatrzona jest modyfikatorem dostępu sealed nie może być dziedziczona. Dodatkowo, klasa abstrakcyjna nie może być zdefiniowana jako sealed.</li>
+</ul>
 <hr>
-<!--kg-card-end: hr-->
-</li>
-<li><p><strong>metody wirtualne</strong></p>
+<ul>
+<li><strong>metody wirtualne</strong></li>
+</ul>
 <p>Jeżeli masz zdefiniowaną metodę w klasie bazowej, ale chcesz, żeby została zaimplementowana w klasach pochodnych możesz do tego celu zastosować metody wirtualne.</p>
-</li>
-<li><p><strong>interfejsy</strong></p>
+<ul>
+<li><strong>interfejsy</strong></li>
+</ul>
 <p>Język C# nie obsługuje wielokrotnego dziedziczenia. <strong>Klasa może dziedziczyć po jednej klasie bazowej, ale może implementować wiele interfejsów</strong>.</p>
 <p><strong>Inne cechy C#:</strong></p>
-</li>
-<li><p>przestrzenie nazw</p>
-</li>
-<li><p>dyrektywy preprocesora</p>
-</li>
-<li><p>wyrażenia regularne</p>
-</li>
-<li><p>obsługa wyjątków</p>
-</li>
-<li><p>odczyt i zapis pliku<!--kg-card-begin: hr--></p>
+<ul>
+<li>przestrzenie nazw</li>
+<li>dyrektywy preprocesora</li>
+<li>wyrażenia regularne</li>
+<li>obsługa wyjątków</li>
+<li>odczyt i zapis pliku</li>
+</ul>
 <hr>
-<!--kg-card-end: hr-->
-
 <h1 id="Czesc-2"><a href="#Czesc-2" class="headerlink" title="Część 2"></a>Część 2</h1><p><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty</a></p>
 <p><strong>Indeksery:</strong></p>
-</li>
-<li><p><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Indeksery" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Indeksery</a></p>
-</li>
-<li><p><strong>Indeksery</strong> pozwalają na indeksowanie obiektów w taki sam sposób jak ma to miejsce w tablicach.</p>
-</li>
-<li><p>przeciążanie indekserów</p>
+<ul>
+<li><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Indeksery" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Indeksery</a></li>
+<li><strong>Indeksery</strong> pozwalają na indeksowanie obiektów w taki sam sposób jak ma to miejsce w tablicach.</li>
+<li>przeciążanie indekserów</li>
+</ul>
 <p><strong>Delegaty:</strong></p>
-</li>
-<li><p><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Delegaty" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Delegaty</a></p>
-</li>
-<li><p><strong>Delegaty</strong> to referencyjny typ danych, który przechowuje referencje do metody.</p>
-</li>
-<li><p><strong>Delegaty złożone *<em>- Delegat złożony wywołuje dwa delegaty tak jakby były złączone. Operacja taka to tzw. *</em>multicasting</strong>.</p>
-</li>
-<li><p>W JS nie ma typu delegatów, przekazujemy funkcje przez referencje do zmiennej.</p>
+<ul>
+<li><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Delegaty" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Delegaty</a></li>
+<li><strong>Delegaty</strong> to referencyjny typ danych, który przechowuje referencje do metody.</li>
+<li><strong>Delegaty złożone</strong> - Delegat złożony wywołuje dwa delegaty tak jakby były złączone. Operacja taka to tzw. <strong>multicasting</strong>.</li>
+<li>W JS nie ma typu delegatów, przekazujemy funkcje przez referencje do zmiennej.</li>
+</ul>
 <p><strong>Zdarzenia:</strong></p>
-</li>
-<li><p><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Zdarzenia" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Zdarzenia</a></p>
-</li>
-<li><p>Klasa, w której definiujemy nasze zdarzenie to tzw. „<strong>publisher</strong>”. Z kolej klasa, która odbiera to zdarzenie to tzw. „<strong>subscriber</strong>”.</p>
+<ul>
+<li><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Zdarzenia" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Zdarzenia</a></li>
+<li>Klasa, w której definiujemy nasze zdarzenie to tzw. „<strong>publisher</strong>”. Z kolej klasa, która odbiera to zdarzenie to tzw. „<strong>subscriber</strong>”.</li>
+</ul>
 <p><strong>Kolekcje:</strong></p>
-</li>
-<li><p><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Kolekcje" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Kolekcje</a></p>
-</li>
-<li><p><strong>ArrayList</strong> reprezentuje uporządkowaną kolekcję obiektu, który może być indeksowany indywidualnie. Wykorzystuje klucz do dostępu do elementu kolekcji.</p>
-</li>
-<li><p><strong>Kolekcje</strong>: ArrayList, Hashtable, SortedList, Stack, Queue</p>
+<ul>
+<li><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Kolekcje" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Kolekcje</a></li>
+<li><strong>ArrayList</strong> reprezentuje uporządkowaną kolekcję obiektu, który może być indeksowany indywidualnie. Wykorzystuje klucz do dostępu do elementu kolekcji.</li>
+<li><strong>Kolekcje</strong>: ArrayList, Hashtable, SortedList, Stack, Queue</li>
+</ul>
 <p><strong>Typy generyczne:</strong></p>
-</li>
-<li><p><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Typy_generyczne" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Typy_generyczne</a></p>
-</li>
-<li><p><strong>Typy generyczne</strong> pozwalają na opóźnienie w dostarczeniu specyfikacji typu danych w elementach takich jak klasy czy metody do momentu użycia ich w trakcie wykonywania programu. Innymi słowy, typy generyczne pozwalają na napisanie klasy lub metody, która może działać z każdym typem danych.</p>
+<ul>
+<li><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Typy_generyczne" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Typy_generyczne</a></li>
+<li><strong>Typy generyczne</strong> pozwalają na opóźnienie w dostarczeniu specyfikacji typu danych w elementach takich jak klasy czy metody do momentu użycia ich w trakcie wykonywania programu. Innymi słowy, typy generyczne pozwalają na napisanie klasy lub metody, która może działać z każdym typem danych.</li>
+</ul>
 <p><strong>Refleksja:</strong></p>
-</li>
-<li><p><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Refleksja" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Refleksja</a></p>
-</li>
-<li><p>jest możliwe pobranie informacji dotyczących używanych typów w trakcie wykonywania programu – za pomocą <strong>mechanizmu refleksji</strong>.</p>
+<ul>
+<li><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Refleksja" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Refleksja</a></li>
+<li>jest możliwe pobranie informacji dotyczących używanych typów w trakcie wykonywania programu – za pomocą <strong>mechanizmu refleksji</strong>.</li>
+</ul>
 <p><strong>Unsafe code:</strong></p>
-</li>
-<li><p><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Unsafe_code" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Unsafe_code</a></p>
-</li>
-<li><p><strong>Kod niezabezpieczony</strong> lub też kod <strong>niekontrolowany</strong> to blok <strong>kodu używający wskaźników</strong>.</p>
+<ul>
+<li><a href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Unsafe_code" target="_blank" rel="noopener">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Unsafe_code</a></li>
+<li><strong>Kod niezabezpieczony</strong> lub też kod <strong>niekontrolowany</strong> to blok <strong>kodu używający wskaźników</strong>.</li>
+</ul>
 <h1 id="Czesc-3"><a href="#Czesc-3" class="headerlink" title="Część 3"></a>Część 3</h1><p>Inne materiały i informacje</p>
-<h2 id="Implicit-Interface-Implementation-vs-Explicit-Interface-Implementation"><a href="#Implicit-Interface-Implementation-vs-Explicit-Interface-Implementation" class="headerlink" title="Implicit Interface Implementation vs Explicit Interface Implementation"></a>Implicit Interface Implementation vs Explicit Interface Implementation</h2></li>
-<li><p><strong>Implicit</strong>: you access the interface methods and properties as <strong>if they were part of the class</strong>.<!--kg-card-begin: code--><pre>`public class Test : ITest<br>{</p>
-<pre><code>public string Id // Generated by Implement Interface
-{
-    get { throw new NotImplementedException(); }
-}</code></pre><p>}</p>
-<p>Test t = new Test();<br>t.Id; // OK<br>((ITest)t).Id; // OK`</pre><!--kg-card-end: code--></p>
-</li>
-<li><p><strong>Explicit</strong>: you can only access methods and properties <strong>when treating the class as the implemented interface</strong>.<!--kg-card-begin: code--><pre>`public class Test : ITest<br>{</p>
-<pre><code>string ITest.Id // Generated by Implement Interface Explicitly
-{
-    get { throw new NotImplementedException(); }
-}</code></pre><p>}</p>
-<p>Test t = new Test();<br>t.Id; // Not OK<br>((ITest)t).Id; // OK</p>
-<p>ITest it = t;<br>it.Id; // OK`</pre><!--kg-card-end: code--></p>
+<h2 id="Implicit-Interface-Implementation-vs-Explicit-Interface-Implementation"><a href="#Implicit-Interface-Implementation-vs-Explicit-Interface-Implementation" class="headerlink" title="Implicit Interface Implementation vs Explicit Interface Implementation"></a>Implicit Interface Implementation vs Explicit Interface Implementation</h2><ul>
+<li><strong>Implicit</strong>: you access the interface methods and properties as <strong>if they were part of the class</strong>.</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span> : <span class="title">ITest</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="keyword">string</span> Id <span class="comment">// Generated by Implement Interface</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">get</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(); &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">Test t = <span class="keyword">new</span> Test();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">t.Id; <span class="comment">// OK</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">((ITest)t).Id; <span class="comment">// OK</span></span></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Explicit</strong>: you can only access methods and properties <strong>when treating the class as the implemented interface</strong>.</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span> : <span class="title">ITest</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">string</span> ITest.Id <span class="comment">// Generated by Implement Interface Explicitly</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">get</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(); &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">Test t = <span class="keyword">new</span> Test();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">t.Id; <span class="comment">// Not OK</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">((ITest)t).Id; <span class="comment">// OK</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">ITest it = t;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">it.Id; <span class="comment">// OK</span></span></pre></td></tr></table></figure>
+
+
 <p><strong><em>It allows you to implement two interfaces that define the same method</em></strong>. However, if you explicitly implement the interface, the methods can only be accessed when the variable is typed to that explicit interface.</p>
 <p>In terms of “when” you have to implement an interface explicitly, it is <strong>when your class already has a method with the same signature</strong> as one of the methods of your interface, or when your class implements <strong>several interfaces that share methods with the same signatures</strong> but incompatible contracts. Source: <a href="https://softwareengineering.stackexchange.com/questions/136319/whats-the-difference-between-implementing-an-interface-explicitly-or-implicitly" target="_blank" rel="noopener">https://softwareengineering.stackexchange.com/questions/136319/whats-the-difference-between-implementing-an-interface-explicitly-or-implicitly</a></p>
 <p>More about explicit interface implementation: <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/explicit-interface-implementation" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/explicit-interface-implementation</a></p>
 <h2 id="Casting-struct-to-interface"><a href="#Casting-struct-to-interface" class="headerlink" title="Casting struct to interface"></a>Casting struct to interface</h2><p>The fact that a struct can implement an interface is well known and so is the fact that casting a value type into an interface <strong>leads to boxing of the value type.</strong> This is because methods in interfaces are defined as virtual and to resolve virtual references, vtable (method table) look up is required. <strong>Since value types do not have pointers to vtable they are first boxed into a reference type</strong> and then the look up happens. <a href="https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/" target="_blank" rel="noopener">https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/</a></p>
 <p>Po polsku, chodzi o to, że kiedy jako <code>struct</code> zaimplementujemy jakiś <code>interface</code> , to <code>struct</code> będzie zapakowany w dodatkowy obiekt. Metody wywoływane na instancji tego <code>struct</code>, który jest rzutowany na <code>interface</code> , na przykład:</p>
-<!--kg-card-begin: code--><pre>`Employee employee = new Employee("Cool Guy", 65);
-<p>IPromotion p = employee;<br>Console.WriteLine(employee);<br>p.promote();<br>Console.WriteLine(employee);</p>
-<p>//Cool Guy (65)<br>//Cool Guy (65)</p>
-<!--kg-card-end: code-->
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">Employee employee = <span class="keyword">new</span> Employee(<span class="string">"Cool Guy"</span>, <span class="number">65</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">IPromotion p = employee;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">Console.WriteLine(employee);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">p.promote();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">Console.WriteLine(employee);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//Cool Guy (65)</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//Cool Guy (65)</span></span></pre></td></tr></table></figure>
 
-</li>
-</ul>
 <p>modyfikują wartości tego dodatkowego obiektu, a nie w oryginalnym obiekcie <code>employee</code>. Jeśli zmienimy <code>struct</code> na <code>class</code> to nie będzie tego boxowania, tworzenia dodatkowego obiektu i wszystko będzie działać jak należy. Wynika to z tego, że:</p>
-<blockquote>
-<p><strong>casting a value type into an interface leads to boxing of the value type</strong><br>This is because methods in interfaces are defined as virtual and to resolve virtual references, vtable (method table) look up is required. Since value types do not have pointers to vtable they are first boxed into a reference type and then the look up happens.</p>
-</blockquote>
+<ul>
+<li><strong>casting a value type into an interface leads to boxing of the value type</strong></li>
+<li>This is because methods in interfaces are defined as virtual and to resolve virtual references, vtable (method table) look up is required. Since value types do not have pointers to vtable they are first boxed into a reference type and then the look up happens.</li>
+</ul>
 <p>więcej tutaj: <a href="https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/" target="_blank" rel="noopener">https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/</a></p>
 <h2 id="Deadlocks"><a href="#Deadlocks" class="headerlink" title="Deadlocks"></a>Deadlocks</h2><ul>
 <li>TODO: jak dochodzi do deadlocków?</li>
@@ -397,7 +341,7 @@ Niedziela</code></pre><p>}`</pre><!--kg-card-end: code--></p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/01/DRAFT-PL-C-OOP/" data-id="ck3onwevc001kzps3hh50gdop" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/01/DRAFT-PL-C-OOP/" data-id="ck3or21ql002jx8qy3my07cvh" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li></ul>
@@ -408,19 +352,19 @@ Niedziela</code></pre><p>}`</pre><!--kg-card-end: code--></p>
     
 <nav id="article-nav">
   
-    <a href="/blog/2019/01/01/DRAFT-Node-js-notes/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/blog/2019/01/01/DRAFT-React-rendering-and-reconciliation-algorithm/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          [DRAFT] Node.js notes
+          [DRAFT] React rendering and reconciliation algorithm
         
       </div>
     </a>
   
   
-    <a href="/blog/2019/01/01/DRAFT-Software-Engineering-notes/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/blog/2019/01/01/DRAFT-When-a-JavaScript-Developer-steps-into-the-object-oriented-world-Classical-vs-Prototypal-Inheritance/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">[DRAFT] Software Engineering notes</div>
+      <div class="article-nav-title">[DRAFT] When a JavaScript Developer steps into the object-oriented world | Classical vs Prototypal Inheritance</div>
     </a>
   
 </nav>
@@ -436,7 +380,7 @@ Niedziela</code></pre><p>}`</pre><!--kg-card-end: code--></p>
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/React-Hooks/">React Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Softwafe-Engineering/">Softwafe Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Softwafe-Engineering/Tests/">Tests</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/React-Hooks/">React Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -456,7 +400,7 @@ Niedziela</code></pre><p>}`</pre><!--kg-card-end: code--></p>
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Backend/" style="font-size: 12.5px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/Frontend/" style="font-size: 10px;">Frontend</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/Node-js/" style="font-size: 12.5px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12.5px;">OOP</a> <a href="/blog/tags/React/" style="font-size: 17.5px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.5px;">React Hooks</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 15px;">Software Engineering</a> <a href="/blog/tags/Tests/" style="font-size: 12.5px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 10px;">TypeScript</a>
+      <a href="/blog/tags/Backend/" style="font-size: 12.5px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/Frontend/" style="font-size: 10px;">Frontend</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/Node-js/" style="font-size: 12.5px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12.5px;">OOP</a> <a href="/blog/tags/React/" style="font-size: 17.5px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.5px;">React Hooks</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 15px;">Software Engineering</a> <a href="/blog/tags/Tests/" style="font-size: 12.5px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12.5px;">TypeScript</a>
     </div>
   </div>
 
@@ -465,7 +409,7 @@ Niedziela</code></pre><p>}`</pre><!--kg-card-end: code--></p>
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
     </div>
   </div>
 
@@ -478,23 +422,23 @@ Niedziela</code></pre><p>}`</pre><!--kg-card-end: code--></p>
       <ul>
         
           <li>
-            <a href="/blog/2019/11/01/Frontend-React-various-notes/">Frontend &amp; React - various notes</a>
+            <a href="/blog/2019/12/01/React-various-notes/">React - miscellaneous notes</a>
           </li>
         
           <li>
-            <a href="/blog/2019/11/01/TypeScript-React/">TypeScript + React</a>
+            <a href="/blog/2019/12/01/TypeScript-basics/">TypeScript basics</a>
           </li>
         
           <li>
-            <a href="/blog/2019/10/24/Node-js-basics/">Node.js basics</a>
+            <a href="/blog/2019/12/01/TypeScript-React/">TypeScript with React</a>
           </li>
         
           <li>
-            <a href="/blog/2019/09/22/JavaScript-CommonJS-vs-AMD/">JavaScript CommonJS vs AMD</a>
+            <a href="/blog/2019/12/01/React-Hooks-introduction-and-API-pitfalls/">React Hooks - introduction and API pitfalls</a>
           </li>
         
           <li>
-            <a href="/blog/2019/09/22/JavaScript-performance-time-measurement-of-function-calls/">JavaScript - performance / time measurement of function calls</a>
+            <a href="/blog/2019/12/01/Software-Engineering-notes/">Software Engineering notes</a>
           </li>
         
       </ul>
