@@ -1,1 +1,1 @@
-[https://mateuszroth.github.io/blog/](Blog)
+[Blog](https://mateuszroth.github.io/blog/)
