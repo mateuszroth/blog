@@ -65,6 +65,66 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-JavaScript-parseInt-vs-Number-comparision" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/07/05/JavaScript-parseInt-vs-Number-comparision/" class="article-date">
+  <time datetime="2019-07-05T23:00:00.000Z" itemprop="datePublished">2019-07-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Basics/">Basics</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/07/05/JavaScript-parseInt-vs-Number-comparision/">JavaScript - `parseInt` vs `Number` comparision</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(string, radix);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="string">'123'</span>); <span class="comment">// a === 123 is false</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b = <span class="built_in">Number</span>(<span class="string">'123'</span>); <span class="comment">// b === 123 is true</span></span></pre></td></tr></table></figure>
+
+<ul>
+<li><code>parseInt</code> takes 2 arguments</li>
+</ul>
+<p><code>Number</code>:</p>
+<ul>
+<li>returns <code>NaN</code> for string <code>123sdfdsf</code></li>
+<li>returns <code>NaN</code> for <code>undefined</code>, <code>NaN</code> and <code>{}</code></li>
+<li>returns <code>0</code> for <code>false</code>, <code>null</code>, <code>&quot;&quot;</code>, <code>&quot; &quot;</code></li>
+<li>returns <code>1</code> for <code>true</code></li>
+</ul>
+<p><code>parseInt</code>:</p>
+<ul>
+<li>returns <code>123</code> for string <code>123sdfdsf</code></li>
+<li>returns <code>NaN</code> for all <code>false</code>, <code>null</code>, <code>&quot;&quot;</code>, <code>&quot; &quot;</code>, <code>true</code>, <code>{}</code>, <code>undefined</code> and <code>NaN</code></li>
+<li><code>parseInt</code> preferable for inputs where user can leave some additional characters</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2019/07/05/JavaScript-parseInt-vs-Number-comparision/" data-id="ckcqiycs7000e2cytg8pqd7jm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2019/07/03/Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps/" class="article-date">
@@ -159,7 +219,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/07/03/Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps/" data-id="ck8yqc61p0033yhtid5bjdkp9" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/07/03/Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps/" data-id="ckcqiycuc003b2cytgpkr8yj3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li></ul>
@@ -209,7 +269,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/DRAFT-React-rendering-and-reconciliation-algorithm/" data-id="ck8yqc5zx0006yhtidmky4qi8" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/DRAFT-React-rendering-and-reconciliation-algorithm/" data-id="ckcqiycs4000a2cyt1m7u84au" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li></ul>
@@ -499,7 +559,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/DRAFT-PL-C-OOP/" data-id="ck8yqc61c002jyhtian1p2jes" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/DRAFT-PL-C-OOP/" data-id="ckcqiyctt002r2cyt22q6evqo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li></ul>
@@ -812,7 +872,7 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/DRAFT-When-a-JavaScript-Developer-steps-into-the-object-oriented-world-Classical-vs-Prototypal-Inheritance/" data-id="ck8yqc61d002kyhti86dr2r7m" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/DRAFT-When-a-JavaScript-Developer-steps-into-the-object-oriented-world-Classical-vs-Prototypal-Inheritance/" data-id="ckcqiyctv002s2cytf99og5yy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li></ul>
@@ -863,7 +923,7 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/DRAFT-How-to-test-extended-classes-in-JavaScript/" data-id="ck8yqc5zq0001yhtihnp7gmui" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/DRAFT-How-to-test-extended-classes-in-JavaScript/" data-id="ckcqiycrw00012cyt5e9ca31l" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li></ul>
@@ -875,9 +935,9 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
 
 
   
-    <article id="post-DRAFT-Node-js-notes" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-DRAFT-Nodejs-notes" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/blog/2019/01/01/DRAFT-Node-js-notes/" class="article-date">
+    <a href="/blog/2019/01/01/DRAFT-Nodejs-notes/" class="article-date">
   <time datetime="2019-01-01T10:00:00.000Z" itemprop="datePublished">2019-01-01</time>
 </a>
     
@@ -893,7 +953,7 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/01/01/DRAFT-Node-js-notes/">[DRAFT] Node.js - ACLs, authentication, JWT, API Key validation, ElasticSearch</a>
+      <a class="article-title" href="/blog/2019/01/01/DRAFT-Nodejs-notes/">[DRAFT] Node.js - ACLs, authentication, JWT, API Key validation, ElasticSearch</a>
     </h1>
   
 
@@ -924,7 +984,7 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/DRAFT-Node-js-notes/" data-id="ck8yqc5zu0003yhtiaxv77gap" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/DRAFT-Nodejs-notes/" data-id="ckcqiycrz00032cyt3u6sceuq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
@@ -1008,7 +1068,7 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/DRAFT-OOP-SOLID/" data-id="ck8yqc5zw0005yhti2dxo7q3m" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/DRAFT-OOP-SOLID/" data-id="ckcqiycs200062cytd2ud552l" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
@@ -1035,7 +1095,7 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/React-Hooks/">React Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Scripts/">Scripts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/React-Hooks/">React Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -1055,7 +1115,7 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Backend/" style="font-size: 12.5px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/Frontend/" style="font-size: 10px;">Frontend</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/Node-js/" style="font-size: 12.5px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12.5px;">OOP</a> <a href="/blog/tags/React/" style="font-size: 17.5px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.5px;">React Hooks</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 15px;">Software Engineering</a> <a href="/blog/tags/Tests/" style="font-size: 12.5px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12.5px;">TypeScript</a>
+      <a href="/blog/tags/Backend/" style="font-size: 12.5px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/Frontend/" style="font-size: 10px;">Frontend</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/Node-js/" style="font-size: 15px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12.5px;">OOP</a> <a href="/blog/tags/React/" style="font-size: 17.5px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.5px;">React Hooks</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 15px;">Software Engineering</a> <a href="/blog/tags/Tests/" style="font-size: 12.5px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12.5px;">TypeScript</a>
     </div>
   </div>
 
