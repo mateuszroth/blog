@@ -3,9 +3,9 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Software & Web Development Notes
-subtitle: 'Mateusz Roth'
-description: ''
+title: Software Sensei Blog
+subtitle: about Software Engineering - focused on patterns, JavaScript, mobile...
+description:
 keywords:
 author: Mateusz Roth
 language: en

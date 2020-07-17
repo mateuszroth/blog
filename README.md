@@ -1,6 +1,9 @@
 [Blog](https://mateuszroth.github.io/blog/)
 
 ```
-hexo server
-hexo deploy
+npm start # to run on localhost:4000/blog
+```
+
+```
+npm run deploy # to deploy
 ```

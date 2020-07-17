@@ -5,7 +5,7 @@ tags:
   - JavaScript
 categories:
   - [Node.js, Scripts]
-date: 2019-11-01 17:55:26
+date: 2019-01-01 00:00:00
 ---
 # Node.js Scripts
 [Difference between a node module and a npm package](https://docs.npmjs.com/getting-started/packages): npm package might be not a single node module but it can consists of many node modules.

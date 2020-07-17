@@ -7,6 +7,8 @@ categories:
 date: 2019-01-01 10:00:00
 ---
 
+[Examples with JS code](https://blog.bitsrc.io/solid-principles-every-developer-should-know-b3bfa96bb688)
+
 # S - SRP - Single Responsibility Principle
 
 - class should have just a one purpose - so for example `Animal` class shouldn't perform logs to different outputs or shouldn't perform a role of database of animals
@@ -32,6 +34,7 @@ class AnimalDB {
     saveAnimal(a: Animal) {}
 }
 ```
+- animal class shouldn't be responsible for database management like saving
 
 # O - OCP - **Open/Closed Principle**
 
@@ -119,11 +122,17 @@ class VIPDiscount: Discount {
 # L - LSP - **Liskov Substitution Principle**
 
 - if something uses a class, it should be able to use the class and the base class / child class of it
+- sub-class must be substitutable for its super-class
+- PL: nie sprawdzamy typu klasy, wykorzystujemy metody wirtualne i implementujemy je różnie w róznych klasach, ale wywołujemy tak samo
 
 # I - ISP - **Interface Segregation Principle**
 
 - you should write few interfaces instead of a big one interface that contains all the interfaces
+- make fine grained interfaces that are client specific
+- clients should not be forced to depend upon interfaces that they do not use
+- PL: nie tworzymy metod, których nie będziemy mogli zaimplementować w klasach korzystających z interfejsu, np. przykład z `draw` vs `drawCircle`, `drawTriangle`
 
 # D - DIP - Dependency Inversion Principle
 
 - you should create new class by placing in the constructor of it the interface of a class that the new class depends on
+- PL: polegamy na interfejsach, nie ich implementacjach - aby można było podmienić lub zamockować

@@ -6,6 +6,10 @@ categories:
   - [React, Basics]
 date: 2019-12-01 17:55:26
 ---
+# General notes
+
+* treat components like pure functions and don't modify props
+
 # Terms
 
 ## Prop drilling
