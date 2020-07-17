@@ -7,6 +7,9 @@ categories:
 date: 2020-07-18 10:00:00
 ---
 
+# Truths
+- Product teams focusing on velocity may argue that in the future they will reach a place where they have time to circle back to fix technical debt. This is never true, there is always pressure. A team needs to consciously decide to make stability a part of value delivery, otherwise lack of stability will become part of the team’s culture.
+
 # Codebase architecture approaches
 * [Hexagonal Architecture](https://alistair.cockburn.us/hexagonal-architecture/)
 * [The Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html):

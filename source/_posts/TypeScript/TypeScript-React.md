@@ -5,7 +5,7 @@ tags:
   - React Hooks
   - TypeScript
 categories:
-  - [React, React Hooks]
+  - [React, Hooks]
   - [React, TypeScript]
 date: 2019-12-01 16:13:00
 ---
