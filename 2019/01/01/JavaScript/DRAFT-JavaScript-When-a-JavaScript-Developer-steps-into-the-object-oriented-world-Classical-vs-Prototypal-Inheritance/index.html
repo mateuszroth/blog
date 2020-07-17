@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>[DRAFT] When a JavaScript Developer steps into the object-oriented world | Classical vs Prototypal Inheritance | Software Sensei Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Benefits of prototypal inheritance over classical?, Aadit M Shah, https:&#x2F;&#x2F;stackoverflow.com&#x2F;a&#x2F;16872315  delegation inheritance via proto concatenation inheritance through copying object properties  Wh">
+<meta name="keywords" content="JavaScript,OOP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[DRAFT] When a JavaScript Developer steps into the object-oriented world | Classical vs Prototypal Inheritance">
+<meta property="og:url" content="https:&#x2F;&#x2F;mateuszroth.github.io&#x2F;blog&#x2F;2019&#x2F;01&#x2F;01&#x2F;JavaScript&#x2F;DRAFT-JavaScript-When-a-JavaScript-Developer-steps-into-the-object-oriented-world-Classical-vs-Prototypal-Inheritance&#x2F;index.html">
+<meta property="og:site_name" content="Software Sensei Blog">
+<meta property="og:description" content="Benefits of prototypal inheritance over classical?, Aadit M Shah, https:&#x2F;&#x2F;stackoverflow.com&#x2F;a&#x2F;16872315  delegation inheritance via proto concatenation inheritance through copying object properties  Wh">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-07-17T20:10:24.132Z">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Software Sensei Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/blog/" id="subtitle">about Software Engineering - focused on patterns, JavaScript, mobile...</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://mateuszroth.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JavaScript/DRAFT-JavaScript-When-a-JavaScript-Developer-steps-into-the-object-oriented-world-Classical-vs-Prototypal-Inheritance" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/01/01/JavaScript/DRAFT-JavaScript-When-a-JavaScript-Developer-steps-into-the-object-oriented-world-Classical-vs-Prototypal-Inheritance/" class="article-date">
+  <time datetime="2019-01-01T10:00:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/OOP/">OOP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [DRAFT] When a JavaScript Developer steps into the object-oriented world | Classical vs Prototypal Inheritance
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Benefits of prototypal inheritance over classical?, Aadit M Shah, <a href="https://stackoverflow.com/a/16872315" target="_blank" rel="noopener">https://stackoverflow.com/a/16872315</a></p>
+<ul>
+<li>delegation inheritance via <strong>proto</strong></li>
+<li>concatenation inheritance through copying object properties</li>
+</ul>
+<p>Why Prototypal Inheritance Matters, Aadit M Shah, <a href="http://aaditmshah.github.io/why-prototypal-inheritance-matters/" target="_blank" rel="noopener">http://aaditmshah.github.io/why-prototypal-inheritance-matters/</a></p>
+<p>Prototypal Inheritance, Douglas Crockford, <a href="http://crockford.com/javascript/prototypal.html" target="_blank" rel="noopener">http://crockford.com/javascript/prototypal.html</a></p>
+<p>Differential inheritance, Wikipedia, <a href="https://en.wikipedia.org/wiki/Differential_inheritance" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Differential_inheritance</a></p>
+<p>JavaScript The good parts, Douglas Crockford, <a href="https://www.amazon.com/dp/0596517742/?tag=stackoverflow17-20" target="_blank" rel="noopener">https://www.amazon.com/dp/0596517742/?tag=stackoverflow17-20</a></p>
+<p>JavaScript For Beginners: the ‘new’ operator, Brandon Morelli,<br><a href="https://codeburst.io/javascript-for-beginners-the-new-operator-cee35beb669e" target="_blank" rel="noopener">https://codeburst.io/javascript-for-beginners-the-new-operator-cee35beb669e</a></p>
+<p>JavaScript: The Keyword ‘This’ for Beginners <a href="https://codeburst.io/javascript-the-keyword-this-for-beginners-fb5238d99f85" target="_blank" rel="noopener">https://codeburst.io/javascript-the-keyword-this-for-beginners-fb5238d99f85</a></p>
+<p>old vs new JS inheritance class: <a href="https://medium.com/beginners-guide-to-mobile-web-development/super-and-extends-in-javascript-es6-understanding-the-tough-parts-6120372d3420" target="_blank" rel="noopener">https://medium.com/beginners-guide-to-mobile-web-development/super-and-extends-in-javascript-es6-understanding-the-tough-parts-6120372d3420</a></p>
+<p>JS class inheritance: <a href="https://javascript.info/class-inheritance" target="_blank" rel="noopener">https://javascript.info/class-inheritance</a></p>
+<p><a href="https://stackoverflow.com/a/18557503" target="_blank" rel="noopener">https://stackoverflow.com/a/18557503</a> in this article:</p>
+<ul>
+<li><ul>
+<li>why encapsulation is good presented on an example of online shop (discounts, changed to max 80%, for some resellers 90%)</li>
+</ul>
+</li>
+<li><ul>
+<li>This is also a bad design, a boilerplate antipattern</li>
+</ul>
+</li>
+<li>property vs private member/field</li>
+<li><ul>
+<li>In C#, transforming fields into properties is a breaking change, so public fields should be coded as Auto-Implemented Properties if your code might be used in separatedly compiled client.</li>
+</ul>
+</li>
+<li>In Javascript, the standard properties (data member with getter and setter described above) are defined by accessor descriptor (in the link you have in your question). Exclusively, you can use data descriptor (so you can’t use i.e. value and set on the same property).</li>
+</ul>
+<p>new keyword vs Object.create: <a href="https://stackoverflow.com/questions/4166616/understanding-the-difference-between-object-create-and-new-somefunction" target="_blank" rel="noopener">https://stackoverflow.com/questions/4166616/understanding-the-difference-between-object-create-and-new-somefunction</a></p>
+<p>How to not use prototype, _<em>generalization is always better than specialization_</em>: <a href="https://stackoverflow.com/a/21807662" target="_blank" rel="noopener">https://stackoverflow.com/a/21807662</a></p>
+<h3 id="Classical-inheritance-in-object-oriented-system-like-C-and-Java"><a href="#Classical-inheritance-in-object-oriented-system-like-C-and-Java" class="headerlink" title="Classical inheritance in object-oriented system like C# and Java"></a>Classical inheritance in object-oriented system like C# and Java</h3><p>I believe you already heard about classes and you know some basics like new objects are created during instantiation from classes. But classical inheritance is much more complicated and have terms that not exists in JavaScript:</p>
+<ul>
+<li>classes</li>
+<li>objects</li>
+<li>interfaces</li>
+<li>abstract classes</li>
+<li>final classes</li>
+<li>virtual base classes</li>
+<li>constructors</li>
+<li>destructors</li>
+</ul>
+<p>They were defined to achieve terms like:</p>
+<ul>
+<li>encapsulation</li>
+<li>inheritance</li>
+<li>polymorphism</li>
+<li></li>
+</ul>
+<p><a href="https://stackoverflow.com/questions/816071/prototype-based-vs-class-based-inheritance" target="_blank" rel="noopener">https://stackoverflow.com/questions/816071/prototype-based-vs-class-based-inheritance</a><br>Object oriented:</p>
+<ul>
+<li>encapsulation</li>
+<li>inheritance</li>
+<li>polymorphism</li>
+<li>in a “class-based” language, that copying happens at compile time</li>
+<li>in prototypal, there is no copying, we have reference to prototype and it’s methods</li>
+<li>instantiation vs copying reference to prototype</li>
+</ul>
+<h3 id="Prototypal-inheritance"><a href="#Prototypal-inheritance" class="headerlink" title="Prototypal inheritance"></a>Prototypal inheritance</h3><p>In a prototypal system, objects inherit from objects by the mechanism which is looking for methods in <code>__proto__</code>. The <code>__proto__</code> property is created on object when instantiated by using <code>new</code> keyword. When you define a new function or class, it has <code>prototype</code> defined instead.</p>
+<p>For example, let’s say we have <code>Woman</code> class which inherits from <code>Human</code> class in JavaScript. When you instantiate a <code>Woman</code> object then it would have <code>__proto__</code> pointing to <code>Human</code>. All class members defined in <code>Human</code> but not in <code>Woman</code> will be accessible in the instance of the <code>Woman</code> class because the object will look first in it’s own members for example for invoked method and if it is not present, it will go to <code>__proto__</code> and check if it’s is there, if not then it would go to <code>__proto__</code> of <code>__proto__</code> and so on.</p>
+<h3 id="Diamond-problem"><a href="#Diamond-problem" class="headerlink" title="Diamond problem"></a>Diamond problem</h3><p><a href="https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem</a></p>
+<h3 id="“Instantiation”-in-JavaScript"><a href="#“Instantiation”-in-JavaScript" class="headerlink" title="“Instantiation” in JavaScript"></a>“Instantiation” in JavaScript</h3><p>First way to instantiate an object is to do it from constructor function. It’s a function like every other function but we can define for it the <code>prototype</code> property which will be used as a <code>__proto__</code> property for newly created object by using <code>new</code> keyword.</p>
+<p>Ok, let’s slow down. First look how we declare constructor function:</p>
+<!--kg-card-begin: code-->
+
+<pre><code>function Person() {}`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+Yes, you’re right. It’s a function like every other function. Good practice is to start constructor function name from upper case to distinguish it from normal function but it’s not necessary.
+
+What is prototype of this function? By default it’s object which inherits from `Object` , so it’s `__proto__` property is set to `Object` . Also it has additional property `constructor`:
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`Person.prototype
+// { constructor: f, __proto__: Object }`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+But what is `constructor`? It’s property which points to our function which in our case is `Person` :
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`{
+    constructor: Person,
+    __proto__: Object
+}`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+I believe you already understand what’s the purpose of `__proto__` . But what’s the purpose of `constructor` ? It will just say us what function was used to create
+
+So let’s create a simple constructor function:
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`function Person(name) {
+  this.name = name;
+  console.log(this);
+  console.log(this.prototype);
+  console.log(this.__proto__);
+}
+Person.prototype.sayHello = function () { console.log(this.name); };
+const matt = new Person(&apos;Matt&apos;);
+matt.sayHello();
+// &apos;Matt&apos;`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+`prototype` is an object with `constructor` property that references to  the constructor function (`Person`). Every function has prototype with this property which points to that function:
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`function getHello () { return &apos;Hello World&apos; };
+getHello.prototype.constructor === getHello;
+// true`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+`prototype` is not available on the instances themselves (or other objects), but only on the constructor functions.
+
+The `constructor` property returns a reference to the `Object` constructor function that created the instance object.
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`function Person(name) {
+  this.name = name;
+}
+var person = new Person(&apos;Matt&apos;);
+person.constructor
+// function Person...`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+`Object.create` creates a new object which has it’s prototype set to the passed in object, i.e.:
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`const obj = {};
+const obj2 = Object.create(obj);
+obj2.__proto__ === obj;
+// true`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+The `Object.create` function untangles JavaScript’s constructor pattern, achieving true prototypal inheritance.
+
+So instead of creating classes, you make prototype objects, and then use the `Object.create` function to make new instances.
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`class Person {
+ constructor(name) {
+   this.name = name;
+   console.log(this);
+   console.log(this.prototype);
+ }
+ sayHello() {
+   console.log(this.name);
+ }
+}`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+— -
+
+function Person(name) {
+ this.name = name;
+ console.log(this);
+ console.log(this.prototype);
+}
+Person.prototype.sayHello = function() {
+ console.log(this.name);
+}
+Person(‘Matt’); // this wskazuje na window, przypisuje zatem ‘Matt’ do window.this
+new Person(‘Matt’); // this wskazuje na aktualny kontekst funkcji Person
+Object.create(Person); // tworzy kopię obiektu — funkcję, która jest kopią funkcji Person — prototypem jest funkcja Person
+Object.create(Person.prototype); // tworzy kopię obiektu na podstawie prototypu — prototypem jest obiekt Person
+ — -
+
+function Person(name) {
+ this.name = name;
+ console.log(this);
+ console.log(this.prototype);
+ this.sayHello = function() {
+ console.log(this.name);
+ }
+}
+
+- new zatem tworzy obiekt, który wskazuje na kontekst funkcji jako this
+- bez new, nie jest utworzony prototyp, a this wskazuje na window
+
+Person(‘matt’)
+&amp;gt;&amp;gt; Uncaught TypeError: Class constructor Person cannot be invoked without ‘new’
+typeof Person
+&amp;gt;&amp;gt; “function”
+const matt = Object.create(Person(“Matt”))
+&amp;gt;&amp;gt; Uncaught TypeError: Class constructor Person cannot be invoked without ‘new’
+
+* klasa ma typ funkcji
+* nie można wywoływać klas bez użycia `new`
+* klasa zwraca nowy obiekt
+* można utworzyć kopię obiektu zwracanego przez klasę za pomocą Object.create, tak skopiowany obiekt nie ma prototypu/this jeśli klasa go nie miała
+
+encapsulation
+polymorphism
+
+## ES6 class vs old function constructor approach
+
+Let&apos;s say we have a `Human` class:
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`class Human {
+  constructor (name) {
+    this.name = name; 
+  }
+}
+
+const human = new Human(&apos;Homo sapiens&apos;);`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+As function this would be:
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`function HumanFn(name) {
+  this.name = name;
+}
+const humanFn = new HumanFn(&apos;Homo sapiens&apos;);`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+As you can see, in the function approach we can instantiate an object from a function. Basically what `new` operator does in JS is it is creating a new object, sets the constructor of the object to the function (which is `HumanFn`), calls the constructor with the context of the newly created object and returns `this` if the constructor (function `HumanFn`) does not return nothing otherwise the thing that the constructor returns.
+
+Let&apos;s compare them once more in deep:
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`class Person {
+    constructor(name) {
+        this.name = name;
+    }
+}
+
+const matt = new Person(&apos;Matt&apos;); // works
+const john = new matt.constructor(&apos;John&apos;); // works the same as above
+const tom = matt.constructor(&apos;Tom&apos;); // error `Class constructor Person cannot be invoked without &apos;new&apos;``&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+In function approach it is slightly different:
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`function Person(name) {
+    this.name = name;
+}
+
+const matt = new Person(&apos;Matt&apos;); // works
+const john = new matt.constructor(&apos;John&apos;); // works as above
+const tom = Person(&apos;Tom&apos;); // tom is undefined
+const tom2 = matt.constructor(&apos;Tom&apos;); // tom2 is undefined`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+The difference is in line related to `tom`. `Person` is called as a function. Context of the invoked function is set to `window` instead of to a new object created by the `new` keyword as in previously created `matt` or `john`. 
+
+## Inheritance comparision
+
+We have ES6 class extended:
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`class Human {
+  constructor (name) {
+    this.name = name;
+  }
+  sayName () { console.log(this.name) };
+}
+
+class Woman extends Human {
+  gender = &apos;female&apos;
+}
+
+const eva = new Woman(&apos;Eva&apos;);`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+We do not need constructor above because if you do not specify a constructor method a default empty constructor is used. For derived classes, the default constructor is:
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`constructor(...args) {
+  super(...args);
+}`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+As function this would be:
+&lt;!--kg-card-begin: code--&gt;&lt;pre&gt;`function HumanFn(name) {
+    this.name = name;
+}
+HumanFn.prototype.sayName = function() { console.log(this.name) }
+
+function WomanFn(name) {
+      HumanFn.call(this, name);
+      this.gender = &apos;female&apos;;
+}
+WomanFn.prototype = Object.create(HumanFn.prototype);
+
+const evaFn = new WomanFn(&apos;Eva&apos;);`&lt;/pre&gt;&lt;!--kg-card-end: code--&gt;
+
+Instead of using `extends`, you need to set `WomanFn` prototype manually.
+
+## Interesting info about JS classes</code></pre><ul>
+<li>you can’t use <code>call</code> on not instantiated <code>class</code>, it will return error <code>Class constructor Human cannot be invoked without &#39;new&#39;</code></li>
+<li><code>static</code> methods can be called only on not instantiated <code>class</code>, no need to instantiate</li>
+<li><code>static</code> methods are not available on instantiated <code>class</code></li>
+<li><code>static</code> methods has no access to <code>this</code>, but we can call them for example by using <code>Human.sayHello.call(instantiatedHumanObject)</code></li>
+<li>As stated, if you do not specify a constructor method a default empty constructor is used. For derived classes, the default conxstructor is:<!--kg-card-begin: code--><pre>`constructor(...args) {<br>  super(...args);<br>}</li>
+</ul>
+<!--kg-card-end: code-->
+
+<h2 id="Object-methods"><a href="#Object-methods" class="headerlink" title="Object methods"></a>Object methods</h2><ul>
+<li><code>Object.defineProperty(objectOrContext, propertyName, propertyDescriptors)</code>*   descriptors: <code>configurable</code>, <code>enumerable</code>, <code>writable</code>, <code>set</code>, <code>get</code>, <code>value</code></li>
+<li>accessors: <code>get</code>, <code>set</code></li>
+<li><code>Object.setPrototypeOf(obj2, obj1)</code></li>
+<li><code>Object.getPrototypeOf(object)</code></li>
+<li><code>Object.getOwnPropertyNames(object)</code></li>
+<li><code>Object.getOwnPropertyDescriptor(object, property)</code></li>
+<li><code>Object.defineProperties(object, descriptors)</code></li>
+<li>prevents adding properties to an object: <code>Object.preventExtensions(object)</code>, <code>Object.isExtensible(object)</code>*   prevents changes of object properties (not values): <code>Object.seal(object)</code>, <code>Object.isSealed(object)</code></li>
+<li>prevents any changes to an object: <code>Object.freeze(object)</code>, <code>Object.isFrozen(object)</code></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/JavaScript/DRAFT-JavaScript-When-a-JavaScript-Developer-steps-into-the-object-oriented-world-Classical-vs-Prototypal-Inheritance/" data-id="ckcqnq28b005z1try5atrf5x7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2019/01/01/JavaScript/DRAFT-JavaScript-How-to-test-extended-classes-in-JavaScript/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [DRAFT] How to test extended classes in JavaScript
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2019/01/01/React/DRAFT-React-rendering-and-reconciliation-algorithm/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[DRAFT] React rendering and reconciliation algorithm</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/Other/">Other</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/">Mobile</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Cordova/">Cordova</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Scripts/">Scripts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/State-management/">State management</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Backend/" style="font-size: 12px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 14px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 10px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 16px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 14px;">Programming languages</a> <a href="/blog/tags/React/" style="font-size: 18px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 14px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 18px;">Software Engineering</a> <a href="/blog/tags/Tests/" style="font-size: 12px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12px;">TypeScript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/">Software Engineering notes</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/">MobX vs Redux</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/">JavaScript static classes, methods &amp; properties</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/17/React/DRAFT-React-Hooks/">React Hooks</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/">JavaScript `for..in` `for..of` and other loops</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Mateusz Roth<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
