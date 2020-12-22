@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Notes on Swift | Software Sensei Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="CombineCombine schedulers .receive and .subscribeCombine allows for publishers to specify the scheduler used when either receiving from an upstream publisher (in the case of operators), or when sendin">
+<meta name="keywords" content="Mobile,Swift,iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Notes on Swift">
+<meta property="og:url" content="https:&#x2F;&#x2F;mateuszroth.github.io&#x2F;blog&#x2F;2020&#x2F;12&#x2F;22&#x2F;Mobile&#x2F;Mobile-Swift&#x2F;index.html">
+<meta property="og:site_name" content="Software Sensei Blog">
+<meta property="og:description" content="CombineCombine schedulers .receive and .subscribeCombine allows for publishers to specify the scheduler used when either receiving from an upstream publisher (in the case of operators), or when sendin">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-12-22T18:21:32.288Z">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Software Sensei Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/blog/" id="subtitle">about Software Engineering - focused on patterns, JavaScript, mobile...</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://mateuszroth.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Mobile/Mobile-Swift" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/12/22/Mobile/Mobile-Swift/" class="article-date">
+  <time datetime="2020-12-22T20:00:00.000Z" itemprop="datePublished">2020-12-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Mobile/">Mobile</a>►<a class="article-category-link" href="/blog/categories/Mobile/Swift/">Swift</a>►<a class="article-category-link" href="/blog/categories/Mobile/Swift/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Notes on Swift
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Combine"><a href="#Combine" class="headerlink" title="Combine"></a>Combine</h2><h3 id="Combine-schedulers-receive-and-subscribe"><a href="#Combine-schedulers-receive-and-subscribe" class="headerlink" title="Combine schedulers .receive and .subscribe"></a>Combine schedulers <code>.receive</code> and <code>.subscribe</code></h3><p>Combine allows for publishers to specify the scheduler used when either receiving from an upstream publisher (in the case of operators), or when sending to a downstream subscriber. This is critical when working with a subscriber that updates UI elements, as that should always be called on the main thread.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">somePublisher</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    .subscribe(on: <span class="type">DispatchQueue</span>.global()) <span class="comment">// to subscribe on background thread</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    .receive(on: <span class="type">RunLoop</span>.main) <span class="comment">// but receive results on main thread as we need it for some UI updates</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr></table></figure>
+
+<h3 id="Future-with-Deferred"><a href="#Future-with-Deferred" class="headerlink" title="Future with Deferred"></a><code>Future</code> with <code>Deferred</code></h3><p>If you want your <code>Future</code> to act more like Rx’s <code>Single</code> by having it defer its execution until it receives a subscriber, and having the work execute every time you subscribe you can wrap your <code>Future</code> in a <code>Deferred</code> publisher. Let’s expand the previous example a bit to demonstrate this:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">createFuture</span><span class="params">()</span></span> -&gt; <span class="type">AnyPublisher</span>&lt;<span class="type">Int</span>, <span class="type">Never</span>&gt; &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> <span class="type">Deferred</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        <span class="type">Future</span> &#123; promise <span class="keyword">in</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">            <span class="built_in">print</span>(<span class="string">"Closure executed"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">            promise(.success(<span class="number">42</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    &#125;.eraseToAnyPublisher()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> future = createFuture()  <span class="comment">// nothing happens yet</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sub1 = future.sink(receiveValue: &#123; value <span class="keyword">in</span> </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">  <span class="built_in">print</span>(<span class="string">"sub1: \(value)"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">&#125;) <span class="comment">// the Future executes because it has a subscriber</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sub2 = future.sink(receiveValue: &#123; value <span class="keyword">in</span> </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">  <span class="built_in">print</span>(<span class="string">"sub2: \(value)"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">&#125;) <span class="comment">// the Future executes again because it received another subscriber</span></span></pre></td></tr></table></figure>
+<p>source: <a href="https://www.donnywals.com/using-promises-and-futures-in-combine/" target="_blank" rel="noopener">https://www.donnywals.com/using-promises-and-futures-in-combine/</a></p>
+<h2 id="Async-code-DispatchQueue"><a href="#Async-code-DispatchQueue" class="headerlink" title="Async code. DispatchQueue"></a>Async code. DispatchQueue</h2><h3 id="Use-DispatchQueue-to-print-something-after-1-second"><a href="#Use-DispatchQueue-to-print-something-after-1-second" class="headerlink" title="Use DispatchQueue to print something after 1 second"></a>Use DispatchQueue to print something after 1 second</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="type">DispatchQueue</span>.main.asyncAfter(deadline: .now() + <span class="number">1</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">print</span>(<span class="string">"Timer fired!"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h2 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h2><h3 id="Basic-usage-of-scheduled-timer"><a href="#Basic-usage-of-scheduled-timer" class="headerlink" title="Basic usage of scheduled timer"></a>Basic usage of scheduled timer</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> runCount = <span class="number">0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="type">Timer</span>.scheduledTimer(withTimeInterval: <span class="number">1.0</span>, repeats: <span class="literal">true</span>) &#123; timer <span class="keyword">in</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">print</span>(<span class="string">"Timer fired!"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    runCount += <span class="number">1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> runCount == <span class="number">3</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        timer.invalidate()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+
+<h3 id="Example-of-using-Timer-within-SwiftUI’s-ObservableObject"><a href="#Example-of-using-Timer-within-SwiftUI’s-ObservableObject" class="headerlink" title="Example of using Timer within SwiftUI’s ObservableObject"></a>Example of using Timer within SwiftUI’s <code>ObservableObject</code></h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TimeCounter</span>: <span class="title">ObservableObject</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    @<span class="type">Published</span> <span class="keyword">var</span> time = <span class="number">0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">lazy</span> <span class="keyword">var</span> timer = <span class="type">Timer</span>.scheduledTimer(withTimeInterval: <span class="number">1</span>, repeats: <span class="literal">true</span>) &#123; <span class="number">_</span> <span class="keyword">in</span> <span class="keyword">self</span>.time += <span class="number">1</span> &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">init</span>() &#123; timer.fire() &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ContentView</span>: <span class="title">View</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    @<span class="type">StateObject</span> <span class="keyword">var</span> timeCounter = <span class="type">TimeCounter</span>()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">var</span> body: some <span class="type">View</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        <span class="type">Text</span>(<span class="string">"\(timeCounter.time)"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h2 id="Swift-language-quirks"><a href="#Swift-language-quirks" class="headerlink" title="Swift language quirks"></a>Swift language quirks</h2><h3 id="Self-vs-self"><a href="#Self-vs-self" class="headerlink" title="Self vs self"></a><code>Self</code> vs <code>self</code></h3><p>When used with a capital S, <code>Self</code> refers to the type that conform to the protocol, e.g. <code>String</code> or <code>Int</code>. When used with a lowercase S, <code>self</code> refers to the value inside that type, e.g. <code>“hello”</code> or <code>556</code>.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">BinaryInteger</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">squared</span><span class="params">()</span></span> -&gt; <span class="type">Self</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span> * <span class="keyword">self</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+
+<h3 id="class-func-vs-static-func-functions"><a href="#class-func-vs-static-func-functions" class="headerlink" title="class func vs static func functions"></a><code>class func</code> vs <code>static func</code> functions</h3><p>Protocols use the <code>class</code> keyword, but it doesn’t exclude structs from implementing the protocol, they just use <code>static</code> instead. Class was chosen for protocols so there wouldn’t have to be a third keyword to represent <code>static</code> or <code>class</code>. That’s the main difference but some other differences are that class functions are dynamically dispatched and can be overridden by subclasses.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClassA</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">func1</span>() -&gt; <span class="title">String</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="string">"func1"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">func2</span><span class="params">()</span></span> -&gt; <span class="type">String</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="string">"func2"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">/* same as above</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="comment">    final class func func2() -&gt; String &#123;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="comment">        return "func2"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="comment">    &#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"><span class="comment">    */</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClassB</span> : <span class="title">ClassA</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">override</span> <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">func1</span>() -&gt; <span class="title">String</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="string">"func1 in ClassB"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// ERROR: Class method overrides a 'final` class method</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">override</span> <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">func2</span><span class="params">()</span></span> -&gt; <span class="type">String</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="string">"func2 in ClassB"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/12/22/Mobile/Mobile-Swift/" data-id="ckj0benjs000w0cr46s1ebdkp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Software Engineering notes</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/Other/">Other</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/">Mobile</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Cordova/">Cordova</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/">Swift</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/iOS/">iOS</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Scripts/">Scripts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/State-management/">State management</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Backend/" style="font-size: 12px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 14px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 12px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 16px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 14px;">Programming languages</a> <a href="/blog/tags/React/" style="font-size: 18px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 14px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 18px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 12px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2020/12/22/Mobile/Mobile-Swift/">Notes on Swift</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/">Software Engineering notes</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/">MobX vs Redux</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/">JavaScript static classes, methods &amp; properties</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/17/React/DRAFT-React-Hooks/">React Hooks</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Mateusz Roth<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

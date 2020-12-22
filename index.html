@@ -61,6 +61,67 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Mobile/Mobile-Swift" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/12/22/Mobile/Mobile-Swift/" class="article-date">
+  <time datetime="2020-12-22T20:00:00.000Z" itemprop="datePublished">2020-12-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Mobile/">Mobile</a>►<a class="article-category-link" href="/blog/categories/Mobile/Swift/">Swift</a>►<a class="article-category-link" href="/blog/categories/Mobile/Swift/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/12/22/Mobile/Mobile-Swift/">Notes on Swift</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Combine"><a href="#Combine" class="headerlink" title="Combine"></a>Combine</h2><h3 id="Combine-schedulers-receive-and-subscribe"><a href="#Combine-schedulers-receive-and-subscribe" class="headerlink" title="Combine schedulers .receive and .subscribe"></a>Combine schedulers <code>.receive</code> and <code>.subscribe</code></h3><p>Combine allows for publishers to specify the scheduler used when either receiving from an upstream publisher (in the case of operators), or when sending to a downstream subscriber. This is critical when working with a subscriber that updates UI elements, as that should always be called on the main thread.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">somePublisher</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    .subscribe(on: <span class="type">DispatchQueue</span>.global()) <span class="comment">// to subscribe on background thread</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    .receive(on: <span class="type">RunLoop</span>.main) <span class="comment">// but receive results on main thread as we need it for some UI updates</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr></table></figure>
+
+<h3 id="Future-with-Deferred"><a href="#Future-with-Deferred" class="headerlink" title="Future with Deferred"></a><code>Future</code> with <code>Deferred</code></h3><p>If you want your <code>Future</code> to act more like Rx’s <code>Single</code> by having it defer its execution until it receives a subscriber, and having the work execute every time you subscribe you can wrap your <code>Future</code> in a <code>Deferred</code> publisher. Let’s expand the previous example a bit to demonstrate this:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">createFuture</span><span class="params">()</span></span> -&gt; <span class="type">AnyPublisher</span>&lt;<span class="type">Int</span>, <span class="type">Never</span>&gt; &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> <span class="type">Deferred</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        <span class="type">Future</span> &#123; promise <span class="keyword">in</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">            <span class="built_in">print</span>(<span class="string">"Closure executed"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">            promise(.success(<span class="number">42</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    &#125;.eraseToAnyPublisher()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> future = createFuture()  <span class="comment">// nothing happens yet</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sub1 = future.sink(receiveValue: &#123; value <span class="keyword">in</span> </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">  <span class="built_in">print</span>(<span class="string">"sub1: \(value)"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">&#125;) <span class="comment">// the Future executes because it has a subscriber</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sub2 = future.sink(receiveValue: &#123; value <span class="keyword">in</span> </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">  <span class="built_in">print</span>(<span class="string">"sub2: \(value)"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">&#125;) <span class="comment">// the Future executes again because it received another subscriber</span></span></pre></td></tr></table></figure>
+<p>source: <a href="https://www.donnywals.com/using-promises-and-futures-in-combine/" target="_blank" rel="noopener">https://www.donnywals.com/using-promises-and-futures-in-combine/</a></p>
+<h2 id="Async-code-DispatchQueue"><a href="#Async-code-DispatchQueue" class="headerlink" title="Async code. DispatchQueue"></a>Async code. DispatchQueue</h2><h3 id="Use-DispatchQueue-to-print-something-after-1-second"><a href="#Use-DispatchQueue-to-print-something-after-1-second" class="headerlink" title="Use DispatchQueue to print something after 1 second"></a>Use DispatchQueue to print something after 1 second</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="type">DispatchQueue</span>.main.asyncAfter(deadline: .now() + <span class="number">1</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">print</span>(<span class="string">"Timer fired!"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h2 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h2><h3 id="Basic-usage-of-scheduled-timer"><a href="#Basic-usage-of-scheduled-timer" class="headerlink" title="Basic usage of scheduled timer"></a>Basic usage of scheduled timer</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> runCount = <span class="number">0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="type">Timer</span>.scheduledTimer(withTimeInterval: <span class="number">1.0</span>, repeats: <span class="literal">true</span>) &#123; timer <span class="keyword">in</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">print</span>(<span class="string">"Timer fired!"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    runCount += <span class="number">1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> runCount == <span class="number">3</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        timer.invalidate()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+
+<h3 id="Example-of-using-Timer-within-SwiftUI’s-ObservableObject"><a href="#Example-of-using-Timer-within-SwiftUI’s-ObservableObject" class="headerlink" title="Example of using Timer within SwiftUI’s ObservableObject"></a>Example of using Timer within SwiftUI’s <code>ObservableObject</code></h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TimeCounter</span>: <span class="title">ObservableObject</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    @<span class="type">Published</span> <span class="keyword">var</span> time = <span class="number">0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">lazy</span> <span class="keyword">var</span> timer = <span class="type">Timer</span>.scheduledTimer(withTimeInterval: <span class="number">1</span>, repeats: <span class="literal">true</span>) &#123; <span class="number">_</span> <span class="keyword">in</span> <span class="keyword">self</span>.time += <span class="number">1</span> &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">init</span>() &#123; timer.fire() &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ContentView</span>: <span class="title">View</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    @<span class="type">StateObject</span> <span class="keyword">var</span> timeCounter = <span class="type">TimeCounter</span>()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">var</span> body: some <span class="type">View</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        <span class="type">Text</span>(<span class="string">"\(timeCounter.time)"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h2 id="Swift-language-quirks"><a href="#Swift-language-quirks" class="headerlink" title="Swift language quirks"></a>Swift language quirks</h2><h3 id="Self-vs-self"><a href="#Self-vs-self" class="headerlink" title="Self vs self"></a><code>Self</code> vs <code>self</code></h3><p>When used with a capital S, <code>Self</code> refers to the type that conform to the protocol, e.g. <code>String</code> or <code>Int</code>. When used with a lowercase S, <code>self</code> refers to the value inside that type, e.g. <code>“hello”</code> or <code>556</code>.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">BinaryInteger</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">squared</span><span class="params">()</span></span> -&gt; <span class="type">Self</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span> * <span class="keyword">self</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+
+<h3 id="class-func-vs-static-func-functions"><a href="#class-func-vs-static-func-functions" class="headerlink" title="class func vs static func functions"></a><code>class func</code> vs <code>static func</code> functions</h3><p>Protocols use the <code>class</code> keyword, but it doesn’t exclude structs from implementing the protocol, they just use <code>static</code> instead. Class was chosen for protocols so there wouldn’t have to be a third keyword to represent <code>static</code> or <code>class</code>. That’s the main difference but some other differences are that class functions are dynamically dispatched and can be overridden by subclasses.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClassA</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">func1</span>() -&gt; <span class="title">String</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="string">"func1"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">func2</span><span class="params">()</span></span> -&gt; <span class="type">String</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="string">"func2"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">/* same as above</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="comment">    final class func func2() -&gt; String &#123;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="comment">        return "func2"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="comment">    &#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"><span class="comment">    */</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClassB</span> : <span class="title">ClassA</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">override</span> <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">func1</span>() -&gt; <span class="title">String</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="string">"func1 in ClassB"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// ERROR: Class method overrides a 'final` class method</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">override</span> <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">func2</span><span class="params">()</span></span> -&gt; <span class="type">String</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="string">"func2 in ClassB"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/12/22/Mobile/Mobile-Swift/" data-id="ckj0benjs000w0cr46s1ebdkp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Software Engineering/Software-Engineering-notes" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" class="article-date">
@@ -232,7 +293,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" data-id="ckcu67zvq006j16re37xd5sk4" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" data-id="ckj0benmo006w0cr43apuggzi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
@@ -310,7 +371,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/" data-id="ckcu67zsz001916refrtdcr4f" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/" data-id="ckj0benk2001c0cr4cxr577gb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li></ul>
@@ -408,7 +469,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/" data-id="ckcu67zs3000716rec4fz7m2m" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/" data-id="ckj0benj900070cr4crn96k4x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
@@ -506,7 +567,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-Hooks/" data-id="ckcu67zsx001716reb2yx88n9" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-Hooks/" data-id="ckj0benk000190cr47zxrfbyo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li></ul>
@@ -561,7 +622,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" data-id="ckcu67zs7000b16rednaqed7y" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" data-id="ckj0benjc000b0cr430m0gt0p" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
@@ -610,10 +671,119 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" data-id="ckcu67zsc000k16re4a3d87n7" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" data-id="ckj0benji000k0cr45xiq4wc5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Nodejs/Nodejs-GraphQL-Apollo-links" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/" class="article-date">
+  <time datetime="2020-07-17T20:00:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/">GraphQL Apollo links</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>self-documentation - you build your types</li>
+<li>types information available to the client coder through introspection with tools like GraphiQL</li>
+<li>specification which forms a standardization</li>
+<li>make everything go through an API gateway which would usually do the auth resolution for all microservices</li>
+</ul>
+<p>GraphCMS:<br><a href="https://docs.graphcms.com/" target="_blank" rel="noopener">https://docs.graphcms.com/</a><br><a href="https://github.com/GraphCMS/graphcms-examples/blob/master/current/next-apollo-blog/lib/initApollo.js" target="_blank" rel="noopener">https://github.com/GraphCMS/graphcms-examples/blob/master/current/next-apollo-blog/lib/initApollo.js</a></p>
+<p>GraphQL example:<br><a href="https://nec.is/writing/graphql-with-next-js-and-apollo/" target="_blank" rel="noopener">https://nec.is/writing/graphql-with-next-js-and-apollo/</a></p>
+<p>Next, Apollo, Postgraphile:<br><a href="https://github.com/graphile/postgraphile-apollo-server" target="_blank" rel="noopener">https://github.com/graphile/postgraphile-apollo-server</a></p>
+<p>Next, Apollo, Graphcool:<br><a href="https://github.com/adamsoffer/next-apollo-example" target="_blank" rel="noopener">https://github.com/adamsoffer/next-apollo-example</a><br><a href="https://github.com/zeit/next.js/tree/master/examples/with-apollo" target="_blank" rel="noopener">https://github.com/zeit/next.js/tree/master/examples/with-apollo</a></p>
+<p>Next &amp; Apollo:<br><a href="https://github.com/lfades/next-with-apollo" target="_blank" rel="noopener">https://github.com/lfades/next-with-apollo</a><br><a href="https://github.com/adamsoffer/next-apollo" target="_blank" rel="noopener">https://github.com/adamsoffer/next-apollo</a></p>
+<p>Next, Express, Apollo:<br><a href="https://github.com/ooade/next-apollo-auth" target="_blank" rel="noopener">https://github.com/ooade/next-apollo-auth</a></p>
+<p>Hasura and Apollo:<br><a href="https://medium.com/@f71uday/building-production-ready-application-with-hasura-and-apollo-476b18ccb44" target="_blank" rel="noopener">https://medium.com/@f71uday/building-production-ready-application-with-hasura-and-apollo-476b18ccb44</a></p>
+<p>Hasura vs Postgraphile:<br><a href="https://news.ycombinator.com/item?id=17540866" target="_blank" rel="noopener">https://news.ycombinator.com/item?id=17540866</a></p>
+<p>Postgraphile:<br><a href="https://www.graphile.org/postgraphile/" target="_blank" rel="noopener">https://www.graphile.org/postgraphile/</a></p>
+<p>Hasura - GraphQL on Postgres:<br><a href="https://hasura.io/" target="_blank" rel="noopener">https://hasura.io/</a></p>
+<p>Graphcool - GraphQL BaaS:<br><a href="https://www.graph.cool/" target="_blank" rel="noopener">https://www.graph.cool/</a></p>
+<p>Prisma - GrapQL on any database:<br><a href="https://www.prisma.io/with-graphql/" target="_blank" rel="noopener">https://www.prisma.io/with-graphql/</a></p>
+<p>Nextjs, Apollo, Prisma:<br><a href="https://github.com/mbaranovski/nextjs-apollo-oauth-prisma" target="_blank" rel="noopener">https://github.com/mbaranovski/nextjs-apollo-oauth-prisma</a></p>
+<p>RAN! React . GraphQL . Next.js Toolkit - bez backendu, przykład z Graphcool:<br><a href="https://github.com/Sly777/ran" target="_blank" rel="noopener">https://github.com/Sly777/ran</a><br><a href="https://github.com/mshameer/ran-with-prisma" target="_blank" rel="noopener">https://github.com/mshameer/ran-with-prisma</a></p>
+<p>Vulcan - React, GraphQL, Meteor:<br><a href="http://docs.vulcanjs.org/" target="_blank" rel="noopener">http://docs.vulcanjs.org/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/" data-id="ckj0benjv00120cr47c3980j6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Frontend/CSS-How-to-make-child-div-wider-than-parent-div" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/" class="article-date">
+  <time datetime="2020-07-17T20:00:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Frontend/">Frontend</a>►<a class="article-category-link" href="/blog/categories/Frontend/CSS/">CSS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/">CSS - How to make child div wider than parent div</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="By-using-calc"><a href="#By-using-calc" class="headerlink" title="By using calc"></a>By using <code>calc</code></h2><p><a href="https://stackoverflow.com/a/24895631" target="_blank" rel="noopener">Source</a></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">html</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">text-align</span>: center;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">width</span>: <span class="number">50%</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">max-width</span>: <span class="number">800px</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">background</span>: grey;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span> auto;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">position</span>: relative;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.child-element</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">position</span>: relative;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">width</span>: <span class="number">100vw</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">left</span>: <span class="built_in">calc</span>(-50vw + 50%);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">height</span>: <span class="number">50px</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">background</span>: blue;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h2 id="How-do-we-make-a-full-browser-width-container-when-we’re-inside-a-limited-width-parent"><a href="#How-do-we-make-a-full-browser-width-container-when-we’re-inside-a-limited-width-parent" class="headerlink" title="How do we make a full-browser-width container when we’re inside a limited-width parent?"></a>How do we make a full-browser-width container when we’re inside a limited-width parent?</h2><p><a href="https://css-tricks.com/full-width-containers-limited-width-parents/" target="_blank" rel="noopener">Source</a></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.full-width</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  <span class="attribute">width</span>: <span class="number">100vw</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  <span class="attribute">position</span>: relative;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  <span class="attribute">right</span>: <span class="number">50%</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  <span class="attribute">margin-left</span>: -<span class="number">50vw</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">  <span class="attribute">margin-right</span>: -<span class="number">50vw</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/" data-id="ckj0benj200010cr43j7hd5b3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li></ul>
 
     </footer>
   </div>
@@ -668,175 +838,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/Frontend-printing-documents/" data-id="ckcu67zs0000416re9xpna3oh" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/Frontend-printing-documents/" data-id="ckj0benj600040cr4bwovhmce" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Mobile/Mobile-Cordova" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/Mobile/Mobile-Cordova/" class="article-date">
-  <time datetime="2020-07-17T20:00:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Mobile/">Mobile</a>►<a class="article-category-link" href="/blog/categories/Mobile/Cordova/">Cordova</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/Mobile/Mobile-Cordova/">Cordova overview &amp; plugins</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Debugging"><a href="#Debugging" class="headerlink" title="Debugging"></a>Debugging</h2><p>At that time, when I needed to find a bug on Android, I had to build the web app, build the Android app with Cordova, launch it on a device or an emulator, launch chrome dev tool to connect to the running app, put my breakpoints, find a possible cause, fix it in my code and do this process all over again. This whole process was taking way too much time.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ cordova platform add &lt;platform&gt;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ cordova platform remove &lt;platform&gt;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ cordova requirements &lt;platform&gt;</span></pre></td></tr></table></figure>
-<h2 id="iOS-emulators-list"><a href="#iOS-emulators-list" class="headerlink" title="iOS emulators list"></a>iOS emulators list</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ cordova emulate ios --list</span></pre></td></tr></table></figure>
-<h2 id="To-emulate-iOS-12"><a href="#To-emulate-iOS-12" class="headerlink" title="To emulate iOS 12+"></a>To emulate iOS 12+</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ cordova run ios --emulator --target&#x3D;&quot;iPad-Air-2, 12.1&quot; --buildFlag&#x3D;&quot;-UseModernBuildSystem&#x3D;0&quot;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; -l --livereload doesn&#39;t work</span></pre></td></tr></table></figure>
-
-<h2 id="Run-on-a-device"><a href="#Run-on-a-device" class="headerlink" title="Run on a device"></a>Run on a device</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ cordova run android --device</span></pre></td></tr></table></figure>
-
-<h2 id="Use-emulator-with-VSCode-and-live-reload-Ionic"><a href="#Use-emulator-with-VSCode-and-live-reload-Ionic" class="headerlink" title="Use emulator with VSCode and live reload (Ionic)"></a>Use emulator with VSCode and live reload (Ionic)</h2><p><a href="https://geeklearning.io/live-debug-your-cordova-ionic-application-with-visual-studio-code/" target="_blank" rel="noopener">https://geeklearning.io/live-debug-your-cordova-ionic-application-with-visual-studio-code/</a></p>
-<h1 id="iOS"><a href="#iOS" class="headerlink" title="iOS"></a>iOS</h1><p><a href="https://developer.apple.com/download/more/" target="_blank" rel="noopener">https://developer.apple.com/download/more/</a><br><a href="https://download.developer.apple.com/Developer_Tools/Xcode_9.4.1/Xcode_9.4.1.xip" target="_blank" rel="noopener">https://download.developer.apple.com/Developer_Tools/Xcode_9.4.1/Xcode_9.4.1.xip</a></p>
-<h1 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h1><h2 id="Cordova-Android"><a href="#Cordova-Android" class="headerlink" title="Cordova Android"></a>Cordova Android</h2><p><a href="https://cordova.apache.org/docs/en/latest/guide/platforms/android/#setting-environment-variables" target="_blank" rel="noopener">https://cordova.apache.org/docs/en/latest/guide/platforms/android/#setting-environment-variables</a></p>
-<h2 id="How-to-create-AVD"><a href="#How-to-create-AVD" class="headerlink" title="How to create AVD"></a>How to create AVD</h2><p><a href="https://developer.android.com/studio/run/managing-avds#viewing" target="_blank" rel="noopener">https://developer.android.com/studio/run/managing-avds#viewing</a></p>
-<h2 id="Android-Emulator"><a href="#Android-Emulator" class="headerlink" title="Android Emulator"></a>Android Emulator</h2><p><a href="https://developer.android.com/studio/run/emulator#about" target="_blank" rel="noopener">https://developer.android.com/studio/run/emulator#about</a></p>
-<h2 id="Start-the-emulator-from-the-command-line"><a href="#Start-the-emulator-from-the-command-line" class="headerlink" title="Start the emulator from the command line"></a>Start the emulator from the command line</h2><p><a href="https://developer.android.com/studio/run/emulator-commandline" target="_blank" rel="noopener">https://developer.android.com/studio/run/emulator-commandline</a></p>
-<h1 id="Threading"><a href="#Threading" class="headerlink" title="Threading"></a>Threading</h1><h2 id="Threading-in-Android-Java"><a href="#Threading-in-Android-Java" class="headerlink" title="Threading in Android Java:"></a>Threading in Android Java:</h2><p><a href="http://burnignorance.com/phonegap-tips-and-tricks/implementing-multi-threading-in-android-plugin-for-phonegap-2-6-0/" target="_blank" rel="noopener">http://burnignorance.com/phonegap-tips-and-tricks/implementing-multi-threading-in-android-plugin-for-phonegap-2-6-0/</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>) create</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>), ^&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        [self saySomething];</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    &#125;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-
-<h2 id="Cordova-plugin-Android-threading"><a href="#Cordova-plugin-Android-threading" class="headerlink" title="Cordova plugin Android threading"></a>Cordova plugin Android threading</h2><p><a href="https://stackoverflow.com/a/28980819" target="_blank" rel="noopener">https://stackoverflow.com/a/28980819</a></p>
-<h2 id="Threading-Cordova-plugin-iOS"><a href="#Threading-Cordova-plugin-iOS" class="headerlink" title="Threading Cordova plugin iOS"></a>Threading Cordova plugin iOS</h2><p><a href="https://cordova.apache.org/docs/en/latest/guide/platforms/ios/plugin.html#threading" target="_blank" rel="noopener">https://cordova.apache.org/docs/en/latest/guide/platforms/ios/plugin.html#threading</a></p>
-<h2 id="iOS-and-Android-difference"><a href="#iOS-and-Android-difference" class="headerlink" title="iOS and Android difference"></a>iOS and Android difference</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">Plugin methods ordinarily execute in the same thread as the main interface. </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cordova.apache.org&#x2F;docs&#x2F;en&#x2F;latest&#x2F;guide&#x2F;platforms&#x2F;ios&#x2F;plugin.html#threading</span></pre></td></tr></table></figure>
-<p>but on Android:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">The plugin&#39;s JavaScript does not run in the main thread of the WebView interface; instead, it runs on the WebCore thread, as does the execute method.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cordova.apache.org&#x2F;docs&#x2F;en&#x2F;latest&#x2F;guide&#x2F;platforms&#x2F;android&#x2F;plugin.html#threading</span></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Mobile/Mobile-Cordova/" data-id="ckcu67zso000v16refqb14eyz" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Languages/Lang-Reason-language" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/Languages/Lang-Reason-language/" class="article-date">
-  <time datetime="2020-07-17T20:00:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/Languages/Lang-Reason-language/">Reason programming language attributes</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="How-to-start-React-project-in-Reason"><a href="#How-to-start-React-project-in-Reason" class="headerlink" title="How to start React project in Reason:"></a>How to start React project in Reason:</h2><ul>
-<li><a href="https://blog.pusher.com/reason-react-bucklescript/" target="_blank" rel="noopener">https://blog.pusher.com/reason-react-bucklescript/</a></li>
-<li><a href="https://blog.pusher.com/react-vs-reasonreact/" target="_blank" rel="noopener">https://blog.pusher.com/react-vs-reasonreact/</a></li>
-<li><a href="https://blog.pusher.com/reason-javascript/" target="_blank" rel="noopener">https://blog.pusher.com/reason-javascript/</a></li>
-</ul>
-<h2 id="Variants"><a href="#Variants" class="headerlink" title="Variants"></a>Variants</h2><p><em>Variants</em> in Reason are data types and structures. It can be used to define sets of symbols and data structures.<br><code>type animal = Cat(string) | Dog(string);</code></p>
-<h2 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h2><p><em>Functions</em> in Reason are declared with an arrow and a return expression.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">let speak &#x3D; (animal) &#x3D;&gt;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  switch (animal) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  | Cat(name) &#x3D;&gt; name ++ &quot; says: meow&quot;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  | Dog(name) &#x3D;&gt; name ++ &quot; says: woof&quot;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;;</span></pre></td></tr></table></figure>
-
-<h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><p>A React <code>component</code> can either be stateless or stateful. In <code>ReasonReact</code>, there are different ways of defining them:</p>
-<ul>
-<li>Stateless components: defined as <code>ReasonReact.statelessComponent(&quot;componentName&quot;)</code></li>
-<li>Stateful components: defined as <code>ReasonReact.reducerComponent(&quot;componentName&quot;)</code></li>
-</ul>
-<p><code>let make = (~message, _children) =&gt; {</code><br>The first parameter has a symbol ~ indicating that it was passed into the App component as a props and the second parameter has _, this is a more explicit way of showing that the parameter isn’t used and ignored.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Languages/Lang-Reason-language/" data-id="ckcu67zsk000s16re46mt0s9v" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Frontend/CSS-How-to-make-child-div-wider-than-parent-div" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/" class="article-date">
-  <time datetime="2020-07-17T20:00:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Frontend/">Frontend</a>►<a class="article-category-link" href="/blog/categories/Frontend/CSS/">CSS</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/">CSS - How to make child div wider than parent div</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="By-using-calc"><a href="#By-using-calc" class="headerlink" title="By using calc"></a>By using <code>calc</code></h2><p><a href="https://stackoverflow.com/a/24895631" target="_blank" rel="noopener">Source</a></p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">html</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">text-align</span>: center;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">width</span>: <span class="number">50%</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">max-width</span>: <span class="number">800px</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">background</span>: grey;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span> auto;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">position</span>: relative;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.child-element</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">position</span>: relative;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">width</span>: <span class="number">100vw</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">left</span>: <span class="built_in">calc</span>(-50vw + 50%);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">height</span>: <span class="number">50px</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">    <span class="attribute">background</span>: blue;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-
-<h2 id="How-do-we-make-a-full-browser-width-container-when-we’re-inside-a-limited-width-parent"><a href="#How-do-we-make-a-full-browser-width-container-when-we’re-inside-a-limited-width-parent" class="headerlink" title="How do we make a full-browser-width container when we’re inside a limited-width parent?"></a>How do we make a full-browser-width container when we’re inside a limited-width parent?</h2><p><a href="https://css-tricks.com/full-width-containers-limited-width-parents/" target="_blank" rel="noopener">Source</a></p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.full-width</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  <span class="attribute">width</span>: <span class="number">100vw</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  <span class="attribute">position</span>: relative;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  <span class="attribute">right</span>: <span class="number">50%</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  <span class="attribute">margin-left</span>: -<span class="number">50vw</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">  <span class="attribute">margin-right</span>: -<span class="number">50vw</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/" data-id="ckcu67zrv000116re7zeg2qac" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li></ul>
 
     </footer>
   </div>
@@ -849,7 +854,7 @@
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><a class="extend next" rel="next" href="/blog/page/2/">Next &amp;raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/2/">Next &amp;raquo;</a>
   </nav>
 
 </section>
@@ -860,7 +865,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/Other/">Other</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/">Mobile</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Cordova/">Cordova</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Scripts/">Scripts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/State-management/">State management</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/Other/">Other</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/">Mobile</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Cordova/">Cordova</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/">Swift</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/iOS/">iOS</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Scripts/">Scripts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/State-management/">State management</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -870,7 +875,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
     </div>
   </div>
 
@@ -880,7 +885,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Backend/" style="font-size: 12px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 14px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 10px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 16px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 14px;">Programming languages</a> <a href="/blog/tags/React/" style="font-size: 18px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 14px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 18px;">Software Engineering</a> <a href="/blog/tags/Tests/" style="font-size: 12px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12px;">TypeScript</a>
+      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Backend/" style="font-size: 12px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 14px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 12px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 16px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 14px;">Programming languages</a> <a href="/blog/tags/React/" style="font-size: 18px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 14px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 18px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 12px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
     </div>
   </div>
 
@@ -889,7 +894,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
     </div>
   </div>
 
@@ -900,6 +905,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/blog/2020/12/22/Mobile/Mobile-Swift/">Notes on Swift</a>
+          </li>
         
           <li>
             <a href="/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/">Software Engineering notes</a>
@@ -915,10 +924,6 @@
         
           <li>
             <a href="/blog/2020/07/17/React/DRAFT-React-Hooks/">React Hooks</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/">JavaScript `for..in` `for..of` and other loops</a>
           </li>
         
       </ul>

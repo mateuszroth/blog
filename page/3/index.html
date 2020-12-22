@@ -61,6 +61,63 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-JavaScript/JavaScript-CommonJS-vs-AMD" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/09/22/JavaScript/JavaScript-CommonJS-vs-AMD/" class="article-date">
+  <time datetime="2019-09-22T18:17:59.000Z" itemprop="datePublished">2019-09-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Basics/">Basics</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/09/22/JavaScript/JavaScript-CommonJS-vs-AMD/">JavaScript CommonJS vs AMD</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h1><ul>
+<li>uses <code>exports</code> and <code>require</code> keywords</li>
+<li>needs module identifier</li>
+<li>not designed for browser</li>
+<li>Browserify will let you use CommonJS in the browser</li>
+<li>CommonJS <code>require()</code> is a synchronous call, it is expected to return the <strong>module immediately</strong> which does not work well in the browser</li>
+<li>Node.js and RingoJS are server-side JavaScript runtimes, and yes, both of them implement modules based on the CommonJS Module spec</li>
+</ul>
+<h1 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h1><ul>
+<li><code>RequireJS</code> implements it</li>
+<li>suits web browser envs</li>
+<li><strong>supports asynchronous loading</strong> of module dependencies</li>
+<li><code>define</code> keyword</li>
+<li>example:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">define(<span class="string">'module/id/string'</span>, [<span class="string">'module'</span>, <span class="string">'dependency'</span>, <span class="string">'array'</span>], </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">function</span>(<span class="params">module, factory function</span>) </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> ModuleContents;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;);</span></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2019/09/22/JavaScript/JavaScript-CommonJS-vs-AMD/" data-id="ckj0benjb000a0cr4hkchel8q" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-JavaScript/JavaScript-performance-time-measurement-of-function-calls" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2019/09/22/JavaScript/JavaScript-performance-time-measurement-of-function-calls/" class="article-date">
@@ -95,7 +152,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/09/22/JavaScript/JavaScript-performance-time-measurement-of-function-calls/" data-id="ckcu67zsa000g16re114e2qpi" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/09/22/JavaScript/JavaScript-performance-time-measurement-of-function-calls/" data-id="ckj0benjf000g0cr485gg95eb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
@@ -155,7 +212,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/07/05/JavaScript/JavaScript-parseInt-vs-Number-comparision/" data-id="ckcu67zs9000e16re9n9dfg1l" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/07/05/JavaScript/JavaScript-parseInt-vs-Number-comparision/" data-id="ckj0benje000e0cr4cj7e0sy1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
@@ -261,7 +318,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/07/03/Software%20Engineering/Software-Engineering-Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps/" data-id="ckcu67zvp006i16re06mhd6cl" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/07/03/Software%20Engineering/Software-Engineering-Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps/" data-id="ckj0benmm006v0cr49gl2af7d" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li></ul>
@@ -273,14 +330,14 @@
 
 
   
-    <article id="post-Nodejs/DRAFT-Nodejs-notes" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-React/DRAFT-React-rendering-and-reconciliation-algorithm" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/blog/2019/01/01/Nodejs/DRAFT-Nodejs-notes/" class="article-date">
+    <a href="/blog/2019/01/01/React/DRAFT-React-rendering-and-reconciliation-algorithm/" class="article-date">
   <time datetime="2019-01-01T10:00:00.000Z" itemprop="datePublished">2019-01-01</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/blog/categories/Node-js/Basics/">Basics</a>
+    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/Basics/">Basics</a>
   </div>
 
   </div>
@@ -291,7 +348,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/01/01/Nodejs/DRAFT-Nodejs-notes/">[DRAFT] Node.js - ACLs, authentication, JWT, API Key validation, ElasticSearch</a>
+      <a class="article-title" href="/blog/2019/01/01/React/DRAFT-React-rendering-and-reconciliation-algorithm/">[DRAFT] React rendering and reconciliation algorithm</a>
     </h1>
   
 
@@ -299,33 +356,115 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><ul>
-<li>go through some articles <a href="https://medium.com/@pankaj.panigrahi/list-of-node-js-articles-ededa6dd304b" target="_blank" rel="noopener">https://medium.com/@pankaj.panigrahi/list-of-node-js-articles-ededa6dd304b</a></li>
-<li>go through ACL / Roles and permissions</li>
-</ul>
-<h3 id="Libraries-for-automatically-parsing-the-data-most-commonly-through-middlewares"><a href="#Libraries-for-automatically-parsing-the-data-most-commonly-through-middlewares" class="headerlink" title="Libraries for automatically parsing the data, most commonly through middlewares"></a>Libraries for automatically parsing the data, most commonly through middlewares</h3><p>querystring, body, and cookies parsing</p>
-<h1 id="ACL-Roles-and-permissions"><a href="#ACL-Roles-and-permissions" class="headerlink" title="ACL / Roles and permissions"></a>ACL / Roles and permissions</h1><p>TODO:</p>
+        <p><a href="https://reactjs.org/docs/reconciliation.html" target="_blank" rel="noopener">https://reactjs.org/docs/reconciliation.html</a></p>
 <ul>
-<li><a href="https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api" target="_blank" rel="noopener">https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api</a></li>
-<li><a href="https://gist.github.com/facultymatt/6370903" target="_blank" rel="noopener">https://gist.github.com/facultymatt/6370903</a></li>
-<li><a href="https://www.npmjs.com/package/accesscontrol" target="_blank" rel="noopener">https://www.npmjs.com/package/accesscontrol</a></li>
+<li>React implements a heuristic O(n) algorithm to compare rendered tree nodes</li>
+<li>Two elements of different types will produce different trees</li>
+<li>The developer can hint at which child elements may be stable across different renders with a <code>key</code> prop</li>
+<li>When a component updates, the instance stays the same, so that state is maintained across renders</li>
+<li>Keys should be stable, predictable, and unique. Unstable keys (like those produced by <code>Math.random()</code>) will cause many component instances and DOM nodes to be unnecessarily recreated, which can cause performance degradation and lost state in child components</li>
 </ul>
-<h1 id="Token-JWT-Authentication"><a href="#Token-JWT-Authentication" class="headerlink" title="Token/JWT Authentication"></a>Token/JWT Authentication</h1><h2 id="Authorization-header"><a href="#Authorization-header" class="headerlink" title="Authorization header"></a>Authorization header</h2><p>Example header is as below:</p>
-<p><code>Authorization: Bearer a1194981-b541-416e-935</code></p>
-<p>The header field should be “Authorization” and the first part of the value should be the keyword “Bearer” and then the second part separated by a space should contain the token.</p>
-<p>This is a standard given by W3C. The keyword “Bearer” was used to distinguish this from the existing Basic auth.</p>
-<h1 id="API-Key-validation"><a href="#API-Key-validation" class="headerlink" title="API Key validation"></a>API Key validation</h1><p>Simple example by using a dedicated api key header: <a href="https://medium.com/better-programming/getting-data-from-mongodb-creating-an-api-key-validation-middleware-in-express-944382205d3e" target="_blank" rel="noopener">https://medium.com/better-programming/getting-data-from-mongodb-creating-an-api-key-validation-middleware-in-express-944382205d3e</a></p>
-<h1 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h1><p>In theory: <a href="https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-1-164311327557" target="_blank" rel="noopener">https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-1-164311327557</a></p>
-<p>In practice in Node.js:<br><a href="https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-2-4c804427bc94" target="_blank" rel="noopener">https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-2-4c804427bc94</a></p>
-<p>Elasticsearch course on Udemy to buy and watch:<br><a href="https://www.udemy.com/course/elasticsearch-complete-guide/" target="_blank" rel="noopener">https://www.udemy.com/course/elasticsearch-complete-guide/</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/Nodejs/DRAFT-Nodejs-notes/" data-id="ckcu67zsq000w16recnyv0ius" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/React/DRAFT-React-rendering-and-reconciliation-algorithm/" data-id="ckj0benk4001e0cr42zuq286t" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Software Engineering/DRAFT-Software-Engineering-OOP-SOLID" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-OOP-SOLID/" class="article-date">
+  <time datetime="2019-01-01T10:00:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-OOP-SOLID/">[DRAFT] OOP - SOLID</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://blog.bitsrc.io/solid-principles-every-developer-should-know-b3bfa96bb688" target="_blank" rel="noopener">Examples with JS code</a></p>
+<h1 id="S-SRP-Single-Responsibility-Principle"><a href="#S-SRP-Single-Responsibility-Principle" class="headerlink" title="S - SRP - Single Responsibility Principle"></a>S - SRP - Single Responsibility Principle</h1><ul>
+<li>class should have just a one purpose - so for example <code>Animal</code> class shouldn’t perform logs to different outputs or shouldn’t perform a role of database of animals</li>
+<li>don’t:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">constructor</span>(<span class="params">name: <span class="built_in">string</span></span>) &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    getAnimalName() &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    saveAnimal(a: Animal) &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<ul>
+<li>do:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">constructor</span>(<span class="params">name: <span class="built_in">string</span></span>) &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    getAnimalName() &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> AnimalDB &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    getAnimal(a: Animal) &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    saveAnimal(a: Animal) &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<ul>
+<li>animal class shouldn’t be responsible for database management like saving</li>
+</ul>
+<h1 id="O-OCP-Open-Closed-Principle"><a href="#O-OCP-Open-Closed-Principle" class="headerlink" title="O - OCP - Open/Closed Principle"></a>O - OCP - <strong>Open/Closed Principle</strong></h1><ul>
+<li>classes should be open for extensions (new methods) but <strong>closed for modifications</strong> (don’t change method) - I’d say, you can change methods but not the contract what they receive and return</li>
+<li>I’d say this role is more about abstraction and use of inheritance, for example by having a base class <code>Animal</code> with method <code>makeSound</code>, which is going to be implemented by child classes <code>Lion</code> or <code>Snake</code></li>
+<li>don’t:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">AnimalSound</span>(<span class="params">a: <span class="built_in">Array</span>&lt;Animal&gt;</span>) </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt;= a.length; i++) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">'lion'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">            log(<span class="string">'roar'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">'mouse'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">            log(<span class="string">'squeak'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">'snake'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        log(<span class="string">'hiss'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">AnimalSound(animals);</span></pre></td></tr></table></figure>
+
+<ul>
+<li>You see, for every new animal, a new logic is added to the AnimalSound function. This is quite a simple example. When your application grows and becomes complex, you will see that the <code>if</code> statement would be repeated over and over again in the <code>AnimalSound</code> function each time a new animal is added, all over the application. Do instead:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    makeSound();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">//...</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Lion <span class="keyword">extends</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    makeSound() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="string">'roar'</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Squirrel <span class="keyword">extends</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    makeSound() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="string">'squeak'</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Snake <span class="keyword">extends</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    makeSound() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="string">'hiss'</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">AnimalSound</span>(<span class="params">a: <span class="built_in">Array</span>&lt;Animal&gt;</span>) </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt;= a.length; i++) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">        log(a[i].makeSound());</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">AnimalSound(animals);</span></pre></td></tr></table></figure>
+
+<ul>
+<li>another example:</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Discount</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    giveDiscount() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.customer == <span class="string">"fav"</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.price * <span class="number">0.2</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.customer == <span class="string">"vip"</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.price * <span class="number">0.4</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<ul>
+<li>do instead:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Discount &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    giveDiscount() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.price * <span class="number">0.2</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> VIPDiscount: Discount &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    getDiscount() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.getDiscount() * <span class="number">2</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">&#125;;</span></pre></td></tr></table></figure>
+
+<h1 id="L-LSP-Liskov-Substitution-Principle"><a href="#L-LSP-Liskov-Substitution-Principle" class="headerlink" title="L - LSP - Liskov Substitution Principle"></a>L - LSP - <strong>Liskov Substitution Principle</strong></h1><ul>
+<li>if something uses a class, it should be able to use the class and the base class / child class of it</li>
+<li>sub-class must be substitutable for its super-class</li>
+<li>PL: nie sprawdzamy typu klasy, wykorzystujemy metody wirtualne i implementujemy je różnie w róznych klasach, ale wywołujemy tak samo</li>
+</ul>
+<h1 id="I-ISP-Interface-Segregation-Principle"><a href="#I-ISP-Interface-Segregation-Principle" class="headerlink" title="I - ISP - Interface Segregation Principle"></a>I - ISP - <strong>Interface Segregation Principle</strong></h1><ul>
+<li>you should write few interfaces instead of a big one interface that contains all the interfaces</li>
+<li>make fine grained interfaces that are client specific</li>
+<li>clients should not be forced to depend upon interfaces that they do not use</li>
+<li>PL: nie tworzymy metod, których nie będziemy mogli zaimplementować w klasach korzystających z interfejsu, np. przykład z <code>draw</code> vs <code>drawCircle</code>, <code>drawTriangle</code></li>
+</ul>
+<h1 id="D-DIP-Dependency-Inversion-Principle"><a href="#D-DIP-Dependency-Inversion-Principle" class="headerlink" title="D - DIP - Dependency Inversion Principle"></a>D - DIP - Dependency Inversion Principle</h1><ul>
+<li>you should create new class by placing in the constructor of it the interface of a class that the new class depends on</li>
+<li>PL: polegamy na interfejsach, nie ich implementacjach - aby można było podmienić lub zamockować</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-OOP-SOLID/" data-id="ckj0benka001l0cr495cxccx8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
 
     </footer>
   </div>
@@ -373,7 +512,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/JavaScript/DRAFT-JavaScript-How-to-test-extended-classes-in-JavaScript/" data-id="ckcu67zs2000616ree98fgrlg" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/JavaScript/DRAFT-JavaScript-How-to-test-extended-classes-in-JavaScript/" data-id="ckj0benj800060cr4bw7d4b9q" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li></ul>
@@ -686,60 +825,10 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/JavaScript/DRAFT-JavaScript-When-a-JavaScript-Developer-steps-into-the-object-oriented-world-Classical-vs-Prototypal-Inheritance/" data-id="ckcu67zvh005z16re90etbmxa" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/JavaScript/DRAFT-JavaScript-When-a-JavaScript-Developer-steps-into-the-object-oriented-world-Classical-vs-Prototypal-Inheritance/" data-id="ckj0benmd006c0cr4hgg80o6s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-React/DRAFT-React-rendering-and-reconciliation-algorithm" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/01/01/React/DRAFT-React-rendering-and-reconciliation-algorithm/" class="article-date">
-  <time datetime="2019-01-01T10:00:00.000Z" itemprop="datePublished">2019-01-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/Basics/">Basics</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/01/01/React/DRAFT-React-rendering-and-reconciliation-algorithm/">[DRAFT] React rendering and reconciliation algorithm</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="https://reactjs.org/docs/reconciliation.html" target="_blank" rel="noopener">https://reactjs.org/docs/reconciliation.html</a></p>
-<ul>
-<li>React implements a heuristic O(n) algorithm to compare rendered tree nodes</li>
-<li>Two elements of different types will produce different trees</li>
-<li>The developer can hint at which child elements may be stable across different renders with a <code>key</code> prop</li>
-<li>When a component updates, the instance stays the same, so that state is maintained across renders</li>
-<li>Keys should be stable, predictable, and unique. Unstable keys (like those produced by <code>Math.random()</code>) will cause many component instances and DOM nodes to be unnecessarily recreated, which can cause performance degradation and lost state in child components</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/React/DRAFT-React-rendering-and-reconciliation-algorithm/" data-id="ckcu67zt0001c16re9rv60l0w" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li></ul>
 
     </footer>
   </div>
@@ -1026,7 +1115,7 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-PL-C-OOP/" data-id="ckcu67zvj006216re098n5cdc" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-PL-C-OOP/" data-id="ckj0benmg006f0cr4f3wl1iy2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li></ul>
@@ -1038,14 +1127,14 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
 
 
   
-    <article id="post-Software Engineering/DRAFT-Software-Engineering-OOP-SOLID" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Nodejs/DRAFT-Nodejs-notes" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-OOP-SOLID/" class="article-date">
+    <a href="/blog/2019/01/01/Nodejs/DRAFT-Nodejs-notes/" class="article-date">
   <time datetime="2019-01-01T10:00:00.000Z" itemprop="datePublished">2019-01-01</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a>
+    <a class="article-category-link" href="/blog/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/blog/categories/Node-js/Basics/">Basics</a>
   </div>
 
   </div>
@@ -1056,7 +1145,7 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-OOP-SOLID/">[DRAFT] OOP - SOLID</a>
+      <a class="article-title" href="/blog/2019/01/01/Nodejs/DRAFT-Nodejs-notes/">[DRAFT] Node.js - ACLs, authentication, JWT, API Key validation, ElasticSearch</a>
     </h1>
   
 
@@ -1064,117 +1153,33 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="https://blog.bitsrc.io/solid-principles-every-developer-should-know-b3bfa96bb688" target="_blank" rel="noopener">Examples with JS code</a></p>
-<h1 id="S-SRP-Single-Responsibility-Principle"><a href="#S-SRP-Single-Responsibility-Principle" class="headerlink" title="S - SRP - Single Responsibility Principle"></a>S - SRP - Single Responsibility Principle</h1><ul>
-<li>class should have just a one purpose - so for example <code>Animal</code> class shouldn’t perform logs to different outputs or shouldn’t perform a role of database of animals</li>
-<li>don’t:</li>
+        <h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><ul>
+<li>go through some articles <a href="https://medium.com/@pankaj.panigrahi/list-of-node-js-articles-ededa6dd304b" target="_blank" rel="noopener">https://medium.com/@pankaj.panigrahi/list-of-node-js-articles-ededa6dd304b</a></li>
+<li>go through ACL / Roles and permissions</li>
 </ul>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">constructor</span>(<span class="params">name: <span class="built_in">string</span></span>) &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    getAnimalName() &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    saveAnimal(a: Animal) &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-
+<h3 id="Libraries-for-automatically-parsing-the-data-most-commonly-through-middlewares"><a href="#Libraries-for-automatically-parsing-the-data-most-commonly-through-middlewares" class="headerlink" title="Libraries for automatically parsing the data, most commonly through middlewares"></a>Libraries for automatically parsing the data, most commonly through middlewares</h3><p>querystring, body, and cookies parsing</p>
+<h1 id="ACL-Roles-and-permissions"><a href="#ACL-Roles-and-permissions" class="headerlink" title="ACL / Roles and permissions"></a>ACL / Roles and permissions</h1><p>TODO:</p>
 <ul>
-<li>do:</li>
+<li><a href="https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api" target="_blank" rel="noopener">https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api</a></li>
+<li><a href="https://gist.github.com/facultymatt/6370903" target="_blank" rel="noopener">https://gist.github.com/facultymatt/6370903</a></li>
+<li><a href="https://www.npmjs.com/package/accesscontrol" target="_blank" rel="noopener">https://www.npmjs.com/package/accesscontrol</a></li>
 </ul>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">constructor</span>(<span class="params">name: <span class="built_in">string</span></span>) &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    getAnimalName() &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> AnimalDB &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    getAnimal(a: Animal) &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    saveAnimal(a: Animal) &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-<ul>
-<li>animal class shouldn’t be responsible for database management like saving</li>
-</ul>
-<h1 id="O-OCP-Open-Closed-Principle"><a href="#O-OCP-Open-Closed-Principle" class="headerlink" title="O - OCP - Open/Closed Principle"></a>O - OCP - <strong>Open/Closed Principle</strong></h1><ul>
-<li>classes should be open for extensions (new methods) but <strong>closed for modifications</strong> (don’t change method) - I’d say, you can change methods but not the contract what they receive and return</li>
-<li>I’d say this role is more about abstraction and use of inheritance, for example by having a base class <code>Animal</code> with method <code>makeSound</code>, which is going to be implemented by child classes <code>Lion</code> or <code>Snake</code></li>
-<li>don’t:</li>
-</ul>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">AnimalSound</span>(<span class="params">a: <span class="built_in">Array</span>&lt;Animal&gt;</span>) </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt;= a.length; i++) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">'lion'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">            log(<span class="string">'roar'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">'mouse'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">            log(<span class="string">'squeak'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">'snake'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        log(<span class="string">'hiss'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">AnimalSound(animals);</span></pre></td></tr></table></figure>
-
-<ul>
-<li>You see, for every new animal, a new logic is added to the AnimalSound function. This is quite a simple example. When your application grows and becomes complex, you will see that the <code>if</code> statement would be repeated over and over again in the <code>AnimalSound</code> function each time a new animal is added, all over the application. Do instead:</li>
-</ul>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    makeSound();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">//...</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Lion <span class="keyword">extends</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    makeSound() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="string">'roar'</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Squirrel <span class="keyword">extends</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    makeSound() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="string">'squeak'</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Snake <span class="keyword">extends</span> Animal &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    makeSound() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="string">'hiss'</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">AnimalSound</span>(<span class="params">a: <span class="built_in">Array</span>&lt;Animal&gt;</span>) </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt;= a.length; i++) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">        log(a[i].makeSound());</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">AnimalSound(animals);</span></pre></td></tr></table></figure>
-
-<ul>
-<li>another example:</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Discount</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    giveDiscount() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.customer == <span class="string">"fav"</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.price * <span class="number">0.2</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.customer == <span class="string">"vip"</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.price * <span class="number">0.4</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-
-<ul>
-<li>do instead:</li>
-</ul>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Discount &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    giveDiscount() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.price * <span class="number">0.2</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> VIPDiscount: Discount &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    getDiscount() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.getDiscount() * <span class="number">2</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">&#125;;</span></pre></td></tr></table></figure>
-
-<h1 id="L-LSP-Liskov-Substitution-Principle"><a href="#L-LSP-Liskov-Substitution-Principle" class="headerlink" title="L - LSP - Liskov Substitution Principle"></a>L - LSP - <strong>Liskov Substitution Principle</strong></h1><ul>
-<li>if something uses a class, it should be able to use the class and the base class / child class of it</li>
-<li>sub-class must be substitutable for its super-class</li>
-<li>PL: nie sprawdzamy typu klasy, wykorzystujemy metody wirtualne i implementujemy je różnie w róznych klasach, ale wywołujemy tak samo</li>
-</ul>
-<h1 id="I-ISP-Interface-Segregation-Principle"><a href="#I-ISP-Interface-Segregation-Principle" class="headerlink" title="I - ISP - Interface Segregation Principle"></a>I - ISP - <strong>Interface Segregation Principle</strong></h1><ul>
-<li>you should write few interfaces instead of a big one interface that contains all the interfaces</li>
-<li>make fine grained interfaces that are client specific</li>
-<li>clients should not be forced to depend upon interfaces that they do not use</li>
-<li>PL: nie tworzymy metod, których nie będziemy mogli zaimplementować w klasach korzystających z interfejsu, np. przykład z <code>draw</code> vs <code>drawCircle</code>, <code>drawTriangle</code></li>
-</ul>
-<h1 id="D-DIP-Dependency-Inversion-Principle"><a href="#D-DIP-Dependency-Inversion-Principle" class="headerlink" title="D - DIP - Dependency Inversion Principle"></a>D - DIP - Dependency Inversion Principle</h1><ul>
-<li>you should create new class by placing in the constructor of it the interface of a class that the new class depends on</li>
-<li>PL: polegamy na interfejsach, nie ich implementacjach - aby można było podmienić lub zamockować</li>
-</ul>
+<h1 id="Token-JWT-Authentication"><a href="#Token-JWT-Authentication" class="headerlink" title="Token/JWT Authentication"></a>Token/JWT Authentication</h1><h2 id="Authorization-header"><a href="#Authorization-header" class="headerlink" title="Authorization header"></a>Authorization header</h2><p>Example header is as below:</p>
+<p><code>Authorization: Bearer a1194981-b541-416e-935</code></p>
+<p>The header field should be “Authorization” and the first part of the value should be the keyword “Bearer” and then the second part separated by a space should contain the token.</p>
+<p>This is a standard given by W3C. The keyword “Bearer” was used to distinguish this from the existing Basic auth.</p>
+<h1 id="API-Key-validation"><a href="#API-Key-validation" class="headerlink" title="API Key validation"></a>API Key validation</h1><p>Simple example by using a dedicated api key header: <a href="https://medium.com/better-programming/getting-data-from-mongodb-creating-an-api-key-validation-middleware-in-express-944382205d3e" target="_blank" rel="noopener">https://medium.com/better-programming/getting-data-from-mongodb-creating-an-api-key-validation-middleware-in-express-944382205d3e</a></p>
+<h1 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h1><p>In theory: <a href="https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-1-164311327557" target="_blank" rel="noopener">https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-1-164311327557</a></p>
+<p>In practice in Node.js:<br><a href="https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-2-4c804427bc94" target="_blank" rel="noopener">https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-2-4c804427bc94</a></p>
+<p>Elasticsearch course on Udemy to buy and watch:<br><a href="https://www.udemy.com/course/elasticsearch-complete-guide/" target="_blank" rel="noopener">https://www.udemy.com/course/elasticsearch-complete-guide/</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-OOP-SOLID/" data-id="ckcu67zt4001j16re1lhygwjn" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/Nodejs/DRAFT-Nodejs-notes/" data-id="ckj0benjt000z0cr4fg3v90fu" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Nodejs/Nodejs-scripts" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/01/01/Nodejs/Nodejs-scripts/" class="article-date">
-  <time datetime="2019-01-01T00:00:00.000Z" itemprop="datePublished">2019-01-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/blog/categories/Node-js/Scripts/">Scripts</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/01/01/Nodejs/Nodejs-scripts/">[DRAFT] JavaScript Node.js Scripts</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Node-js-Scripts"><a href="#Node-js-Scripts" class="headerlink" title="Node.js Scripts"></a>Node.js Scripts</h1><p><a href="https://docs.npmjs.com/getting-started/packages" target="_blank" rel="noopener">Difference between a node module and a npm package</a>: npm package might be not a single node module but it can consists of many node modules.</p>
-<h2 id="How-to-create-a-npm-package-and-publish-it-to-NPM"><a href="#How-to-create-a-npm-package-and-publish-it-to-NPM" class="headerlink" title="How to create a npm package and publish it to NPM"></a>How to create a npm package and publish it to NPM</h2><ul>
-<li><a href="https://docs.npmjs.com/getting-started/creating-node-modules" target="_blank" rel="noopener">https://docs.npmjs.com/getting-started/creating-node-modules</a></li>
-<li><a href="https://docs.npmjs.com/getting-started/publishing-npm-packages" target="_blank" rel="noopener">https://docs.npmjs.com/getting-started/publishing-npm-packages</a></li>
-</ul>
-<h3 id="Short-instruction-to-create-a-new-npm-package"><a href="#Short-instruction-to-create-a-new-npm-package" class="headerlink" title="Short instruction to create a new npm package"></a>Short instruction to create a new npm package</h3><p>First login to NPM using <code>npm adduser</code> or <code>npm login</code> command <a href="https://docs.npmjs.com/getting-started/publishing-npm-packages#creating-a-user" target="_blank" rel="noopener">source</a>. Now go to a new project folder and run <code>npm init</code> and create an <code>index.js</code> file with <code>exports</code> object. Then run <code>npm publish</code>, now you can install your package in another project. You can also use <code>npm link</code> to link your package globally.</p>
-<h3 id="Release-a-new-version-of-a-npm-package"><a href="#Release-a-new-version-of-a-npm-package" class="headerlink" title="Release a new version of a npm package"></a>Release a new version of a npm package</h3><p>Simply use command <code>npm version &lt;update_type&gt;</code> where <code>&lt;update_type&gt;</code> is one of the semantic versioning release types, patch, minor, or major <a href="https://docs.npmjs.com/getting-started/publishing-npm-packages#updating-the-package" target="_blank" rel="noopener">source</a>.</p>
-<h2 id="Node-Scripts"><a href="#Node-Scripts" class="headerlink" title="Node Scripts"></a>Node Scripts</h2><h3 id="Shebang-line"><a href="#Shebang-line" class="headerlink" title="Shebang line:"></a>Shebang line:</h3><p>#! /usr/bin/env node </p>
-<h3 id="How-to-build-a-command-line-tool-with-shelljs"><a href="#How-to-build-a-command-line-tool-with-shelljs" class="headerlink" title="How to build a command line tool with shelljs"></a>How to build a command line tool with shelljs</h3><p><a href="http://blog.npmjs.org/post/118810260230/building-a-simple-command-line-tool-with-npm" target="_blank" rel="noopener">http://blog.npmjs.org/post/118810260230/building-a-simple-command-line-tool-with-npm</a></p>
-<h3 id="How-to-build-CLI-with-commander"><a href="#How-to-build-CLI-with-commander" class="headerlink" title="How to build CLI with commander"></a>How to build CLI with commander</h3><p><a href="https://medium.freecodecamp.org/writing-command-line-applications-in-nodejs-2cf8327eee2" target="_blank" rel="noopener">https://medium.freecodecamp.org/writing-command-line-applications-in-nodejs-2cf8327eee2</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/Nodejs/Nodejs-scripts/" data-id="ckcu67zsu001216re6kbj5j62" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
 
     </footer>
   </div>
@@ -1187,7 +1192,7 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/blog/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/blog/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/4/">Next &amp;raquo;</a>
   </nav>
 
 </section>
@@ -1198,7 +1203,7 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/Other/">Other</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/">Mobile</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Cordova/">Cordova</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Scripts/">Scripts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/State-management/">State management</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/Other/">Other</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/">Mobile</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Cordova/">Cordova</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/">Swift</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/iOS/">iOS</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Scripts/">Scripts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/State-management/">State management</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -1208,7 +1213,7 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
     </div>
   </div>
 
@@ -1218,7 +1223,7 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Backend/" style="font-size: 12px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 14px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 10px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 16px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 14px;">Programming languages</a> <a href="/blog/tags/React/" style="font-size: 18px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 14px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 18px;">Software Engineering</a> <a href="/blog/tags/Tests/" style="font-size: 12px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12px;">TypeScript</a>
+      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Backend/" style="font-size: 12px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 14px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 12px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 16px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 14px;">Programming languages</a> <a href="/blog/tags/React/" style="font-size: 18px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 14px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 18px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 12px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
     </div>
   </div>
 
@@ -1227,7 +1232,7 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
     </div>
   </div>
 
@@ -1238,6 +1243,10 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/blog/2020/12/22/Mobile/Mobile-Swift/">Notes on Swift</a>
+          </li>
         
           <li>
             <a href="/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/">Software Engineering notes</a>
@@ -1253,10 +1262,6 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
         
           <li>
             <a href="/blog/2020/07/17/React/DRAFT-React-Hooks/">React Hooks</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/">JavaScript `for..in` `for..of` and other loops</a>
           </li>
         
       </ul>
