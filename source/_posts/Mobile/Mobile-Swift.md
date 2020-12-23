@@ -42,6 +42,19 @@ let sub2 = future.sink(receiveValue: { value in
 ```
 source: https://www.donnywals.com/using-promises-and-futures-in-combine/
 
+## SwiftUI
+### Aligning with `.alignmentGuide`
+```swift
+    VStack(alignment: .leading) {
+        Text("Hello, world!")
+            .alignmentGuide(.leading) { d in d[.trailing] }
+        Text("This is a longer line of text")
+    }
+        .background(Color.red)
+        .frame(width: 400, height: 400)
+        .background(Color.blue)
+```
+source: https://www.hackingwithswift.com/books/ios-swiftui/alignment-and-alignment-guides
 
 ## Async code. DispatchQueue
 ### Use DispatchQueue to print something after 1 second
