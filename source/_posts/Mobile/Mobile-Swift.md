@@ -44,6 +44,7 @@ source: https://www.donnywals.com/using-promises-and-futures-in-combine/
 
 ## SwiftUI
 ### Aligning with `.alignmentGuide`
+To make for example one text align to the left and one to the right within a container, you can use `alignmentGuide` as below.
 ```swift
     VStack(alignment: .leading) {
         Text("Hello, world!")
@@ -54,6 +55,8 @@ source: https://www.donnywals.com/using-promises-and-futures-in-combine/
         .frame(width: 400, height: 400)
         .background(Color.blue)
 ```
+<img src="SwiftUI-alignmentGuide.png" alt="SwiftUI alignmentGuide example" width="150"/>
+
 source: https://www.hackingwithswift.com/books/ios-swiftui/alignment-and-alignment-guides
 
 ## Async code. DispatchQueue
