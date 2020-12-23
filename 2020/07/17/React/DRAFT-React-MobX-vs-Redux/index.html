@@ -8,14 +8,19 @@
   <title>MobX vs Redux | Software Sensei Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="MobX diagram: https:&#x2F;&#x2F;github.com&#x2F;mobxjs&#x2F;mobx&#x2F;blob&#x2F;mobx6&#x2F;docs&#x2F;assets&#x2F;flow.png MobX Github: https:&#x2F;&#x2F;github.com&#x2F;mobxjs&#x2F;mobx Flux vs Redux: https:&#x2F;&#x2F;cdn-images-1.medium.com&#x2F;max&#x2F;1600&#x2F;1*3lvNEQE4SF6Z1l-680cf">
-<meta name="keywords" content="React,MobX,Redux,React state management">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MobX vs Redux">
-<meta property="og:url" content="https:&#x2F;&#x2F;mateuszroth.github.io&#x2F;blog&#x2F;2020&#x2F;07&#x2F;17&#x2F;React&#x2F;DRAFT-React-MobX-vs-Redux&#x2F;index.html">
+<meta property="og:url" content="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/index.html">
 <meta property="og:site_name" content="Software Sensei Blog">
 <meta property="og:description" content="MobX diagram: https:&#x2F;&#x2F;github.com&#x2F;mobxjs&#x2F;mobx&#x2F;blob&#x2F;mobx6&#x2F;docs&#x2F;assets&#x2F;flow.png MobX Github: https:&#x2F;&#x2F;github.com&#x2F;mobxjs&#x2F;mobx Flux vs Redux: https:&#x2F;&#x2F;cdn-images-1.medium.com&#x2F;max&#x2F;1600&#x2F;1*3lvNEQE4SF6Z1l-680cf">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-12-23T12:48:51.313Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-17T21:25:00.000Z">
+<meta property="article:modified_time" content="2020-12-23T15:18:55.691Z">
+<meta property="article:author" content="Mateusz Roth">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="MobX">
+<meta property="article:tag" content="Redux">
+<meta property="article:tag" content="React state management">
 <meta name="twitter:card" content="summary">
   
   
@@ -24,8 +29,10 @@
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/blog/css/style.css">
-</head>
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body>
   <div id="container">
@@ -37,10 +44,6 @@
       <h1 id="logo-wrap">
         <a href="/blog/" id="logo">Software Sensei Blog</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/blog/" id="subtitle">about Software Engineering - focused on patterns, JavaScript, mobile...</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -90,11 +93,11 @@
     <div class="article-entry" itemprop="articleBody">
       
         <ul>
-<li>MobX diagram: <a href="https://github.com/mobxjs/mobx/blob/mobx6/docs/assets/flow.png" target="_blank" rel="noopener">https://github.com/mobxjs/mobx/blob/mobx6/docs/assets/flow.png</a></li>
-<li>MobX Github: <a href="https://github.com/mobxjs/mobx" target="_blank" rel="noopener">https://github.com/mobxjs/mobx</a></li>
-<li>Flux vs Redux: <a href="https://cdn-images-1.medium.com/max/1600/1*3lvNEQE4SF6Z1l-680cfSQ.jpeg" target="_blank" rel="noopener">https://cdn-images-1.medium.com/max/1600/1*3lvNEQE4SF6Z1l-680cfSQ.jpeg</a></li>
-<li>When To Add Redux: <a href="https://daveceddia.com/what-does-redux-do/" target="_blank" rel="noopener">https://daveceddia.com/what-does-redux-do/</a></li>
-<li>Why Redux adds some complexity to your application: <a href="https://www.quora.com/Do-I-need-Redux" target="_blank" rel="noopener">https://www.quora.com/Do-I-need-Redux</a></li>
+<li>MobX diagram: <a target="_blank" rel="noopener" href="https://github.com/mobxjs/mobx/blob/mobx6/docs/assets/flow.png">https://github.com/mobxjs/mobx/blob/mobx6/docs/assets/flow.png</a></li>
+<li>MobX Github: <a target="_blank" rel="noopener" href="https://github.com/mobxjs/mobx">https://github.com/mobxjs/mobx</a></li>
+<li>Flux vs Redux: <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/1600/1*3lvNEQE4SF6Z1l-680cfSQ.jpeg">https://cdn-images-1.medium.com/max/1600/1*3lvNEQE4SF6Z1l-680cfSQ.jpeg</a></li>
+<li>When To Add Redux: <a target="_blank" rel="noopener" href="https://daveceddia.com/what-does-redux-do/">https://daveceddia.com/what-does-redux-do/</a></li>
+<li>Why Redux adds some complexity to your application: <a target="_blank" rel="noopener" href="https://www.quora.com/Do-I-need-Redux">https://www.quora.com/Do-I-need-Redux</a></li>
 </ul>
 <h2 id="Attributes"><a href="#Attributes" class="headerlink" title="Attributes"></a>Attributes</h2><ul>
 <li>these are state management libraries</li>
@@ -129,7 +132,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/" data-id="ckj1eynkm001c0cr486p36xsi" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/" data-id="ckj1kbnnj001gzhtb0vb77knt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li></ul>
@@ -259,11 +262,17 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
-  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
 
 
 <script src="/blog/js/script.js"></script>
+
 
 
 

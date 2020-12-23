@@ -8,17 +8,19 @@
   <title>Software Engineering notes | Software Sensei Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Truths Product teams focusing on velocity may argue that in the future they will reach a place where they have time to circle back to fix technical debt. This is never true, there is always pressure.">
-<meta name="keywords" content="Software Engineering">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Software Engineering notes">
-<meta property="og:url" content="https:&#x2F;&#x2F;mateuszroth.github.io&#x2F;blog&#x2F;2020&#x2F;07&#x2F;18&#x2F;Software%20Engineering&#x2F;Software-Engineering-notes&#x2F;index.html">
+<meta property="og:url" content="https://mateuszroth.github.io/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/index.html">
 <meta property="og:site_name" content="Software Sensei Blog">
 <meta property="og:description" content="Truths Product teams focusing on velocity may argue that in the future they will reach a place where they have time to circle back to fix technical debt. This is never true, there is always pressure.">
-<meta property="og:locale" content="en">
-<meta property="og:image" content="https:&#x2F;&#x2F;koenig-media.raywenderlich.com&#x2F;uploads&#x2F;2015&#x2F;07&#x2F;EventBus-Publish-Subscribe.png">
-<meta property="og:updated_time" content="2020-12-23T12:48:51.313Z">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://koenig-media.raywenderlich.com/uploads/2015/07/EventBus-Publish-Subscribe.png">
+<meta property="article:published_time" content="2020-07-18T10:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-23T15:18:55.691Z">
+<meta property="article:author" content="Mateusz Roth">
+<meta property="article:tag" content="Software Engineering">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;koenig-media.raywenderlich.com&#x2F;uploads&#x2F;2015&#x2F;07&#x2F;EventBus-Publish-Subscribe.png">
+<meta name="twitter:image" content="https://koenig-media.raywenderlich.com/uploads/2015/07/EventBus-Publish-Subscribe.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -26,8 +28,10 @@
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/blog/css/style.css">
-</head>
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body>
   <div id="container">
@@ -39,10 +43,6 @@
       <h1 id="logo-wrap">
         <a href="/blog/" id="logo">Software Sensei Blog</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/blog/" id="subtitle">about Software Engineering - focused on patterns, JavaScript, mobile...</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -95,8 +95,8 @@
 <li>Product teams focusing on velocity may argue that in the future they will reach a place where they have time to circle back to fix technical debt. This is never true, there is always pressure. A team needs to consciously decide to make stability a part of value delivery, otherwise lack of stability will become part of the team’s culture.</li>
 </ul>
 <h1 id="Codebase-architecture-approaches"><a href="#Codebase-architecture-approaches" class="headerlink" title="Codebase architecture approaches"></a>Codebase architecture approaches</h1><ul>
-<li><a href="https://alistair.cockburn.us/hexagonal-architecture/" target="_blank" rel="noopener">Hexagonal Architecture</a></li>
-<li><a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html" target="_blank" rel="noopener">The Clean Architecture</a>:<ul>
+<li><a target="_blank" rel="noopener" href="https://alistair.cockburn.us/hexagonal-architecture/">Hexagonal Architecture</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">The Clean Architecture</a>:<ul>
 <li>(Recommended architecture approaches) They all have the same objective, which is the <strong>separation of concerns</strong>. They all achieve this <strong>separation by dividing the software into layers</strong>. Each has at least one layer for business rules, and another for interfaces.</li>
 <li>Independent of Frameworks</li>
 <li>Testable</li>
@@ -130,7 +130,7 @@
 </li>
 <li>A primary criticism of Design Patterns is that its patterns are simply workarounds for missing features in C++, replacing elegant abstract features with lengthy concrete patterns, essentially becoming a “human compiler” or “generating by hand the expansions of some macro”.</li>
 </ul>
-<h1 id="Design-Patterns"><a href="#Design-Patterns" class="headerlink" title="Design Patterns"></a>Design Patterns</h1><p><a href="https://en.wikipedia.org/wiki/Software_design_pattern#Classification_and_list" target="_blank" rel="noopener">List of design patterns</a><br><a href="https://www.raywenderlich.com/470-common-design-patterns-for-android-with-kotlin" target="_blank" rel="noopener">Source #1 - Common Design Patterns for Android with Kotlin</a></p>
+<h1 id="Design-Patterns"><a href="#Design-Patterns" class="headerlink" title="Design Patterns"></a>Design Patterns</h1><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Software_design_pattern#Classification_and_list">List of design patterns</a><br><a target="_blank" rel="noopener" href="https://www.raywenderlich.com/470-common-design-patterns-for-android-with-kotlin">Source #1 - Common Design Patterns for Android with Kotlin</a></p>
 <h2 id="Creational-patterns"><a href="#Creational-patterns" class="headerlink" title="Creational patterns"></a>Creational patterns</h2><p>They define how you create objects.</p>
 <ul>
 <li><strong>Builder</strong></li>
@@ -150,23 +150,22 @@
 <ul>
 <li><strong>Command</strong> - Similarly, the Command pattern lets you issue requests without knowing the receiver. You encapsulate a request as an object and send it off; deciding how to complete the request is an entirely separate mechanism.<ul>
 <li><img src="https://koenig-media.raywenderlich.com/uploads/2015/07/EventBus-Publish-Subscribe.png" width="500px"></li>
-<li><a href="https://www.raywenderlich.com/470-common-design-patterns-for-android-with-kotlin#toc-anchor-010" target="_blank" rel="noopener">How to create event bus</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.raywenderlich.com/470-common-design-patterns-for-android-with-kotlin#toc-anchor-010">How to create event bus</a></li>
 </ul>
 </li>
 <li><strong>Observer</strong> - The Observer pattern defines a one-to-many dependency between objects. When one object changes state, all of its dependents are notified and updated automatically.</li>
 <li><strong>Model View Controller</strong></li>
 <li><strong>Model View ViewModel</strong> - The ViewModel object is the “glue” between the model and view layers, but <strong>operates differently than the Controller component. Instead, it exposes commands for the view and binds the view to the model. When the model updates, the corresponding views update as well via the data binding</strong>. Similarly, as the user interacts with the view, the bindings work in the opposite direction to automatically update the model. This reactive pattern removes a lot of glue code.</li>
 </ul>
-<h3 id="Dependency-Injection-amp-Dependency-Inversion-principle-explained"><a href="#Dependency-Injection-amp-Dependency-Inversion-principle-explained" class="headerlink" title="Dependency Injection &amp; Dependency Inversion principle explained"></a>Dependency Injection &amp; Dependency Inversion principle explained</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> child = Child()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h3 id="Dependency-Injection-amp-Dependency-Inversion-principle-explained"><a href="#Dependency-Injection-amp-Dependency-Inversion-principle-explained" class="headerlink" title="Dependency Injection &amp; Dependency Inversion principle explained"></a>Dependency Injection &amp; Dependency Inversion principle explained</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> child = Child()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>A <code>Parent</code> instance creates its child field when it’s instantiated. The <code>Parent</code> instance is dependent on the concrete implementation of <code>Child</code> and on configuring the child field to use it.</p>
 <p><strong>This presents a coupling or dependency of the <code>Parent</code> class on the <code>Child</code> class</strong>. If the setup of a <code>Child</code> object is complex, all that complexity will be reflected within the <code>Parent</code> class as well. You will need to edit <code>Parent</code> to configure a <code>Child</code> object.</p>
 <p>If the <code>Child</code> class itself depends on a class <code>C</code>, which in turn depends on class <code>D</code>, then all that complexity will propagate throughout the code base and hence result in a tight coupling between the components of the application.</p>
 <p><strong>Dependency Injection is the term used to describe the technique of loosening the coupling</strong> just described. In the simple example above, only one tiny change is needed:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> child: Child)</span></pre></td></tr></table></figure>
-
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> child: Child)</span><br></pre></td></tr></table></figure>
 <p>Voilà — that’s dependency injection at its core!</p>
 <p>There is also <strong>Dependency Inversion principle</strong>. The gist of the Dependency Inversion principle is that <strong>it is important to depend on abstractions rather than concrete implementations</strong>. In the simple example above, this means changing <code>Child</code> to a Kotlin interface rather than a <code>Kotlin</code> class. With this change, many different types of concrete <code>Child</code> type objects that adhere to the <code>Child</code> interface can be passed into the <code>Parent</code> constructor.</p>
-<p><a href="https://www.raywenderlich.com/262-dependency-injection-in-android-with-dagger-2-and-kotlin#toc-anchor-003" target="_blank" rel="noopener">Source - Dependency Injection in Android with Dagger 2 and Kotlin</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.raywenderlich.com/262-dependency-injection-in-android-with-dagger-2-and-kotlin#toc-anchor-003">Source - Dependency Injection in Android with Dagger 2 and Kotlin</a></p>
 <h1 id="Empty-variables-interpretation"><a href="#Empty-variables-interpretation" class="headerlink" title="Empty variables interpretation"></a>Empty variables interpretation</h1><ul>
 <li><code>null</code> means nothing - we want no value</li>
 <li><code>undefined</code> declared but not defined - we want default value</li>
@@ -182,12 +181,12 @@
 <li>reusability - decoupled and reusable code is preferred</li>
 <li>coupling and code interdependence</li>
 <li>performance</li>
-<li><a href="https://en.wikipedia.org/wiki/No_Silver_Bullet" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/No_Silver_Bullet</a> essential vs accident complexity</li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/No_Silver_Bullet">https://en.wikipedia.org/wiki/No_Silver_Bullet</a> essential vs accident complexity</li>
 <li>robustness - the ability of a computer system to cope with errors during execution and cope with erroneous input</li>
 <li>concise vs explicit</li>
 <li><strong>abstractions are bad</strong></li>
 </ul>
-<p>PEP20 — The Zen of Python<br><a href="https://www.python.org/dev/peps/pep-0020/" target="_blank" rel="noopener">https://www.python.org/dev/peps/pep-0020</a>/</p>
+<p>PEP20 — The Zen of Python<br><a target="_blank" rel="noopener" href="https://www.python.org/dev/peps/pep-0020/">https://www.python.org/dev/peps/pep-0020</a>/</p>
 <h1 id="System-infrastructure"><a href="#System-infrastructure" class="headerlink" title="System infrastructure"></a>System infrastructure</h1><ul>
 <li>scalability - skalowalność</li>
 <li>performance - wydajność</li>
@@ -209,7 +208,7 @@
 <p><strong>Software rot,</strong> also known as code rot, software erosion, software decay or software entropy is either a slow deterioration of software performance over time or its diminishing responsiveness that will eventually lead to software becoming faulty, unusable, or in need of upgrade.</p>
 <h2 id="feature-creep"><a href="#feature-creep" class="headerlink" title="feature creep"></a>feature creep</h2><p><strong>Feature creep is the excessive ongoing expansion or addition of new features in a product,</strong>[1] especially in computer software, videogames and consumer and business electronics. These extra features go beyond the basic function of the product and can result in software bloat and over-complication, rather than simple design.</p>
 <h2 id="software-brittleness"><a href="#software-brittleness" class="headerlink" title="software brittleness"></a>software brittleness</h2><p>In computer programming and software engineering, software brittleness is the increased difficulty in fixing older software that may appear reliable, <strong>but fails badly when presented with unusual data or altered in a seemingly minor way</strong>. </p>
-<h2 id="first-class-functions"><a href="#first-class-functions" class="headerlink" title="first-class functions"></a>first-class functions</h2><p>In computer science, a programming language is said to have first-class functions if it <strong>treats functions as first-class citizens</strong>. This means the language supports <strong>passing functions as arguments to other functions, returning them as the values from other functions, and assigning them to variables or storing them in data structures</strong>.[1] Some programming language theorists require support for anonymous functions (function literals) as well.[2] In languages with first-class functions, the names of functions do not have any special status; they are treated like ordinary variables with a function type.[3]<br>First-class functions are a necessity for the <a href="https://en.m.wikipedia.org/wiki/Functional_programming" target="_blank" rel="noopener">functional programming</a> style, in which the use of <a href="https://en.m.wikipedia.org/wiki/Higher-order_function" target="_blank" rel="noopener">higher-order functions</a> is a standard practice. A simple example of a higher-ordered function is the <a href="https://en.m.wikipedia.org/wiki/Map_(higher-order_function)" target="_blank" rel="noopener">map</a> function, which takes, as its arguments, a function and a list, and returns the list formed by applying the function to each member of the list. For a language to support <em>map</em>, it must support passing a function as an argument.<br>Source <a href="https://en.m.wikipedia.org/wiki/First-class_function" target="_blank" rel="noopener">https://en.m.wikipedia.org/wiki/First-class_function</a></p>
+<h2 id="first-class-functions"><a href="#first-class-functions" class="headerlink" title="first-class functions"></a>first-class functions</h2><p>In computer science, a programming language is said to have first-class functions if it <strong>treats functions as first-class citizens</strong>. This means the language supports <strong>passing functions as arguments to other functions, returning them as the values from other functions, and assigning them to variables or storing them in data structures</strong>.[1] Some programming language theorists require support for anonymous functions (function literals) as well.[2] In languages with first-class functions, the names of functions do not have any special status; they are treated like ordinary variables with a function type.[3]<br>First-class functions are a necessity for the <a target="_blank" rel="noopener" href="https://en.m.wikipedia.org/wiki/Functional_programming">functional programming</a> style, in which the use of <a target="_blank" rel="noopener" href="https://en.m.wikipedia.org/wiki/Higher-order_function">higher-order functions</a> is a standard practice. A simple example of a higher-ordered function is the <a target="_blank" rel="noopener" href="https://en.m.wikipedia.org/wiki/Map_(higher-order_function)">map</a> function, which takes, as its arguments, a function and a list, and returns the list formed by applying the function to each member of the list. For a language to support <em>map</em>, it must support passing a function as an argument.<br>Source <a target="_blank" rel="noopener" href="https://en.m.wikipedia.org/wiki/First-class_function">https://en.m.wikipedia.org/wiki/First-class_function</a></p>
 <h2 id="higher-order-function"><a href="#higher-order-function" class="headerlink" title="higher order function"></a>higher order function</h2><p>a function taking another function as argument is called a higher-order function</p>
 <h1 id="Authorization-vs-Authentication"><a href="#Authorization-vs-Authentication" class="headerlink" title="Authorization vs Authentication"></a>Authorization vs Authentication</h1><p>• <strong>Authentication</strong> describes the process of claiming an identity. That’s what you do when you log in to a service with a username and password, you authenticate yourself.<br>• <strong>Authorization</strong> on the other hand describes permission rules that specify the access rights of individual users and user groups to certain parts of the system.</p>
 <h1 id="Software-problems"><a href="#Software-problems" class="headerlink" title="Software problems"></a>Software problems</h1><ul>
@@ -228,7 +227,7 @@
 <li>pros if language offers <strong>strict type system</strong> and <strong>compile-time error checks</strong>, C# is more potent than JavaScript</li>
 </ul>
 <h1 id="Uncommon-terms"><a href="#Uncommon-terms" class="headerlink" title="Uncommon terms"></a>Uncommon terms</h1><ul>
-<li><strong>Monkey patching</strong><br><a href="https://en.wikipedia.org/wiki/Monkey_patch" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Monkey_patch</a><br><a href="https://www.audero.it/blog/2016/12/05/monkey-patching-javascript/" target="_blank" rel="noopener">https://www.audero.it/blog/2016/12/05/monkey-patching-javascript/</a></li>
+<li><strong>Monkey patching</strong><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Monkey_patch">https://en.wikipedia.org/wiki/Monkey_patch</a><br><a target="_blank" rel="noopener" href="https://www.audero.it/blog/2016/12/05/monkey-patching-javascript/">https://www.audero.it/blog/2016/12/05/monkey-patching-javascript/</a></li>
 <li><strong>Domain-driven design (skrót DDD)</strong> – podejście do tworzenia oprogramowania kładące nacisk na takie definiowanie obiektów i komponentów systemu oraz ich zachowań, aby wiernie odzwierciedlały rzeczywistość. Dopiero po utworzeniu takiego modelu należy rozważyć zagadnienia związane z techniczną realizacją. Podejście to umożliwia modelowanie systemów informatycznych przez ekspertów, którzy znają specyfikę problemu, lecz nie muszą znać się na projektowaniu architektury systemów informatycznych.</li>
 <li><strong>Command–query separation (CQS)</strong> is a principle of imperative computer programming. It was devised by Bertrand Meyer as part of his pioneering work on the Eiffel programming language. It states that every method should either be a command that performs an action, or a query that returns data to the caller, but not both. In other words, Asking a question should not change the answer.[1] More formally, methods should return a value only if they are referentially transparent and hence possess no side effects.</li>
 </ul>
@@ -236,7 +235,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" data-id="ckj1eynmx006w0cr46it1by1j" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" data-id="ckj1kbnp80072zhtbfiik2zge" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
@@ -366,11 +365,17 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
-  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
 
 
 <script src="/blog/js/script.js"></script>
+
 
 
 

@@ -7,15 +7,17 @@
   
   <title>JavaScript - `parseInt` vs `Number` comparision | Software Sensei Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1parseInt(string, radix);23var a &#x3D; new Number(&amp;apos;123&amp;apos;); &#x2F;&#x2F; a &#x3D;&#x3D;&#x3D; 123 is false4var b &#x3D; Number(&amp;apos;123&amp;apos;); &#x2F;&#x2F; b &#x3D;&#x3D;&#x3D; 123 is true   parseInt takes 2 arguments  Number:  returns NaN for string 123sdfdsf returns">
-<meta name="keywords" content="JavaScript">
+  <meta name="description" content="1234parseInt(string, radix);var a &#x3D; new Number(&amp;#x27;123&amp;#x27;); &#x2F;&#x2F; a &#x3D;&#x3D;&#x3D; 123 is falsevar b &#x3D; Number(&amp;#x27;123&amp;#x27;); &#x2F;&#x2F; b &#x3D;&#x3D;&#x3D; 123 is true  parseInt takes 2 arguments  Number:  returns NaN for string">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript - &#96;parseInt&#96; vs &#96;Number&#96; comparision">
-<meta property="og:url" content="https:&#x2F;&#x2F;mateuszroth.github.io&#x2F;blog&#x2F;2019&#x2F;07&#x2F;05&#x2F;JavaScript&#x2F;JavaScript-parseInt-vs-Number-comparision&#x2F;index.html">
+<meta property="og:url" content="https://mateuszroth.github.io/blog/2019/07/05/JavaScript/JavaScript-parseInt-vs-Number-comparision/index.html">
 <meta property="og:site_name" content="Software Sensei Blog">
-<meta property="og:description" content="1parseInt(string, radix);23var a &#x3D; new Number(&amp;apos;123&amp;apos;); &#x2F;&#x2F; a &#x3D;&#x3D;&#x3D; 123 is false4var b &#x3D; Number(&amp;apos;123&amp;apos;); &#x2F;&#x2F; b &#x3D;&#x3D;&#x3D; 123 is true   parseInt takes 2 arguments  Number:  returns NaN for string 123sdfdsf returns">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-12-23T12:48:51.309Z">
+<meta property="og:description" content="1234parseInt(string, radix);var a &#x3D; new Number(&amp;#x27;123&amp;#x27;); &#x2F;&#x2F; a &#x3D;&#x3D;&#x3D; 123 is falsevar b &#x3D; Number(&amp;#x27;123&amp;#x27;); &#x2F;&#x2F; b &#x3D;&#x3D;&#x3D; 123 is true  parseInt takes 2 arguments  Number:  returns NaN for string">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-07-05T23:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-23T15:18:55.691Z">
+<meta property="article:author" content="Mateusz Roth">
+<meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
   
   
@@ -24,8 +26,10 @@
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/blog/css/style.css">
-</head>
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body>
   <div id="container">
@@ -37,10 +41,6 @@
       <h1 id="logo-wrap">
         <a href="/blog/" id="logo">Software Sensei Blog</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/blog/" id="subtitle">about Software Engineering - focused on patterns, JavaScript, mobile...</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -89,29 +89,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(string, radix);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="string">'123'</span>); <span class="comment">// a === 123 is false</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b = <span class="built_in">Number</span>(<span class="string">'123'</span>); <span class="comment">// b === 123 is true</span></span></pre></td></tr></table></figure>
-
+        <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(string, radix);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="string">&#x27;123&#x27;</span>); <span class="comment">// a === 123 is false</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="built_in">Number</span>(<span class="string">&#x27;123&#x27;</span>); <span class="comment">// b === 123 is true</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>parseInt</code> takes 2 arguments</li>
 </ul>
 <p><code>Number</code>:</p>
 <ul>
 <li>returns <code>NaN</code> for string <code>123sdfdsf</code></li>
-<li>returns <code>NaN</code> for <code>undefined</code>, <code>NaN</code> and <code>{}</code></li>
+<li>returns <code>NaN</code> for <code>undefined</code>, <code>NaN</code> and <code>&#123;&#125;</code></li>
 <li>returns <code>0</code> for <code>false</code>, <code>null</code>, <code>&quot;&quot;</code>, <code>&quot; &quot;</code></li>
 <li>returns <code>1</code> for <code>true</code></li>
 </ul>
 <p><code>parseInt</code>:</p>
 <ul>
 <li>returns <code>123</code> for string <code>123sdfdsf</code></li>
-<li>returns <code>NaN</code> for all <code>false</code>, <code>null</code>, <code>&quot;&quot;</code>, <code>&quot; &quot;</code>, <code>true</code>, <code>{}</code>, <code>undefined</code> and <code>NaN</code></li>
+<li>returns <code>NaN</code> for all <code>false</code>, <code>null</code>, <code>&quot;&quot;</code>, <code>&quot; &quot;</code>, <code>true</code>, <code>&#123;&#125;</code>, <code>undefined</code> and <code>NaN</code></li>
 <li><code>parseInt</code> preferable for inputs where user can leave some additional characters</li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/07/05/JavaScript/JavaScript-parseInt-vs-Number-comparision/" data-id="ckj1eynjz000e0cr43fhsc2mh" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/07/05/JavaScript/JavaScript-parseInt-vs-Number-comparision/" data-id="ckj1kbnn1000gzhtbbo4o5xss" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
@@ -241,11 +240,17 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
-  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
 
 
 <script src="/blog/js/script.js"></script>
+
 
 
 

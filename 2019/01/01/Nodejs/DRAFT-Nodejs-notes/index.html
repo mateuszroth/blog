@@ -8,14 +8,17 @@
   <title>[DRAFT] Node.js - ACLs, authentication, JWT, API Key validation, ElasticSearch | Software Sensei Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="TODO go through some articles https:&#x2F;&#x2F;medium.com&#x2F;@pankaj.panigrahi&#x2F;list-of-node-js-articles-ededa6dd304b go through ACL &#x2F; Roles and permissions  Libraries for automatically parsing the data, most comm">
-<meta name="keywords" content="Backend,Node.js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[DRAFT] Node.js - ACLs, authentication, JWT, API Key validation, ElasticSearch">
-<meta property="og:url" content="https:&#x2F;&#x2F;mateuszroth.github.io&#x2F;blog&#x2F;2019&#x2F;01&#x2F;01&#x2F;Nodejs&#x2F;DRAFT-Nodejs-notes&#x2F;index.html">
+<meta property="og:url" content="https://mateuszroth.github.io/blog/2019/01/01/Nodejs/DRAFT-Nodejs-notes/index.html">
 <meta property="og:site_name" content="Software Sensei Blog">
 <meta property="og:description" content="TODO go through some articles https:&#x2F;&#x2F;medium.com&#x2F;@pankaj.panigrahi&#x2F;list-of-node-js-articles-ededa6dd304b go through ACL &#x2F; Roles and permissions  Libraries for automatically parsing the data, most comm">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-12-23T12:48:51.309Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-01-01T10:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-23T15:18:55.691Z">
+<meta property="article:author" content="Mateusz Roth">
+<meta property="article:tag" content="Backend">
+<meta property="article:tag" content="Node.js">
 <meta name="twitter:card" content="summary">
   
   
@@ -24,8 +27,10 @@
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/blog/css/style.css">
-</head>
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body>
   <div id="container">
@@ -37,10 +42,6 @@
       <h1 id="logo-wrap">
         <a href="/blog/" id="logo">Software Sensei Blog</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/blog/" id="subtitle">about Software Engineering - focused on patterns, JavaScript, mobile...</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -90,29 +91,29 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><ul>
-<li>go through some articles <a href="https://medium.com/@pankaj.panigrahi/list-of-node-js-articles-ededa6dd304b" target="_blank" rel="noopener">https://medium.com/@pankaj.panigrahi/list-of-node-js-articles-ededa6dd304b</a></li>
+<li>go through some articles <a target="_blank" rel="noopener" href="https://medium.com/@pankaj.panigrahi/list-of-node-js-articles-ededa6dd304b">https://medium.com/@pankaj.panigrahi/list-of-node-js-articles-ededa6dd304b</a></li>
 <li>go through ACL / Roles and permissions</li>
 </ul>
 <h3 id="Libraries-for-automatically-parsing-the-data-most-commonly-through-middlewares"><a href="#Libraries-for-automatically-parsing-the-data-most-commonly-through-middlewares" class="headerlink" title="Libraries for automatically parsing the data, most commonly through middlewares"></a>Libraries for automatically parsing the data, most commonly through middlewares</h3><p>querystring, body, and cookies parsing</p>
 <h1 id="ACL-Roles-and-permissions"><a href="#ACL-Roles-and-permissions" class="headerlink" title="ACL / Roles and permissions"></a>ACL / Roles and permissions</h1><p>TODO:</p>
 <ul>
-<li><a href="https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api" target="_blank" rel="noopener">https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api</a></li>
-<li><a href="https://gist.github.com/facultymatt/6370903" target="_blank" rel="noopener">https://gist.github.com/facultymatt/6370903</a></li>
-<li><a href="https://www.npmjs.com/package/accesscontrol" target="_blank" rel="noopener">https://www.npmjs.com/package/accesscontrol</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api">https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api</a></li>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/facultymatt/6370903">https://gist.github.com/facultymatt/6370903</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/accesscontrol">https://www.npmjs.com/package/accesscontrol</a></li>
 </ul>
 <h1 id="Token-JWT-Authentication"><a href="#Token-JWT-Authentication" class="headerlink" title="Token/JWT Authentication"></a>Token/JWT Authentication</h1><h2 id="Authorization-header"><a href="#Authorization-header" class="headerlink" title="Authorization header"></a>Authorization header</h2><p>Example header is as below:</p>
 <p><code>Authorization: Bearer a1194981-b541-416e-935</code></p>
 <p>The header field should be “Authorization” and the first part of the value should be the keyword “Bearer” and then the second part separated by a space should contain the token.</p>
 <p>This is a standard given by W3C. The keyword “Bearer” was used to distinguish this from the existing Basic auth.</p>
-<h1 id="API-Key-validation"><a href="#API-Key-validation" class="headerlink" title="API Key validation"></a>API Key validation</h1><p>Simple example by using a dedicated api key header: <a href="https://medium.com/better-programming/getting-data-from-mongodb-creating-an-api-key-validation-middleware-in-express-944382205d3e" target="_blank" rel="noopener">https://medium.com/better-programming/getting-data-from-mongodb-creating-an-api-key-validation-middleware-in-express-944382205d3e</a></p>
-<h1 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h1><p>In theory: <a href="https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-1-164311327557" target="_blank" rel="noopener">https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-1-164311327557</a></p>
-<p>In practice in Node.js:<br><a href="https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-2-4c804427bc94" target="_blank" rel="noopener">https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-2-4c804427bc94</a></p>
-<p>Elasticsearch course on Udemy to buy and watch:<br><a href="https://www.udemy.com/course/elasticsearch-complete-guide/" target="_blank" rel="noopener">https://www.udemy.com/course/elasticsearch-complete-guide/</a></p>
+<h1 id="API-Key-validation"><a href="#API-Key-validation" class="headerlink" title="API Key validation"></a>API Key validation</h1><p>Simple example by using a dedicated api key header: <a target="_blank" rel="noopener" href="https://medium.com/better-programming/getting-data-from-mongodb-creating-an-api-key-validation-middleware-in-express-944382205d3e">https://medium.com/better-programming/getting-data-from-mongodb-creating-an-api-key-validation-middleware-in-express-944382205d3e</a></p>
+<h1 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h1><p>In theory: <a target="_blank" rel="noopener" href="https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-1-164311327557">https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-1-164311327557</a></p>
+<p>In practice in Node.js:<br><a target="_blank" rel="noopener" href="https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-2-4c804427bc94">https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-2-4c804427bc94</a></p>
+<p>Elasticsearch course on Udemy to buy and watch:<br><a target="_blank" rel="noopener" href="https://www.udemy.com/course/elasticsearch-complete-guide/">https://www.udemy.com/course/elasticsearch-complete-guide/</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/Nodejs/DRAFT-Nodejs-notes/" data-id="ckj1eynkd000z0cr4gbzec2ni" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/Nodejs/DRAFT-Nodejs-notes/" data-id="ckj1kbnnd0012zhtb480rfpcv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
@@ -133,9 +134,9 @@
     </a>
   
   
-    <a href="/blog/2019/01/01/Nodejs/Nodejs-scripts/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/blog/2019/01/01/JavaScript/DRAFT-JavaScript-How-to-test-extended-classes-in-JavaScript/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">[DRAFT] JavaScript Node.js Scripts</div>
+      <div class="article-nav-title">[DRAFT] How to test extended classes in JavaScript</div>
     </a>
   
 </nav>
@@ -242,11 +243,17 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
-  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
 
 
 <script src="/blog/js/script.js"></script>
+
 
 
 

@@ -8,14 +8,18 @@
   <title>Cordova overview &amp; plugins | Software Sensei Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="DebuggingAt that time, when I needed to find a bug on Android, I had to build the web app, build the Android app with Cordova, launch it on a device or an emulator, launch chrome dev tool to connect t">
-<meta name="keywords" content="Mobile,Cordova,Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cordova overview &amp; plugins">
-<meta property="og:url" content="https:&#x2F;&#x2F;mateuszroth.github.io&#x2F;blog&#x2F;2020&#x2F;07&#x2F;17&#x2F;Mobile&#x2F;Mobile-Cordova&#x2F;index.html">
+<meta property="og:url" content="https://mateuszroth.github.io/blog/2020/07/17/Mobile/Mobile-Cordova/index.html">
 <meta property="og:site_name" content="Software Sensei Blog">
 <meta property="og:description" content="DebuggingAt that time, when I needed to find a bug on Android, I had to build the web app, build the Android app with Cordova, launch it on a device or an emulator, launch chrome dev tool to connect t">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-12-23T12:48:51.309Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-17T20:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-23T15:18:55.691Z">
+<meta property="article:author" content="Mateusz Roth">
+<meta property="article:tag" content="Mobile">
+<meta property="article:tag" content="Cordova">
+<meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
   
   
@@ -24,8 +28,10 @@
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/blog/css/style.css">
-</head>
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body>
   <div id="container">
@@ -37,10 +43,6 @@
       <h1 id="logo-wrap">
         <a href="/blog/" id="logo">Software Sensei Blog</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/blog/" id="subtitle">about Software Engineering - focused on patterns, JavaScript, mobile...</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -90,30 +92,27 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="Debugging"><a href="#Debugging" class="headerlink" title="Debugging"></a>Debugging</h2><p>At that time, when I needed to find a bug on Android, I had to build the web app, build the Android app with Cordova, launch it on a device or an emulator, launch chrome dev tool to connect to the running app, put my breakpoints, find a possible cause, fix it in my code and do this process all over again. This whole process was taking way too much time.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ cordova platform add &lt;platform&gt;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ cordova platform remove &lt;platform&gt;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ cordova requirements &lt;platform&gt;</span></pre></td></tr></table></figure>
-<h2 id="iOS-emulators-list"><a href="#iOS-emulators-list" class="headerlink" title="iOS emulators list"></a>iOS emulators list</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ cordova emulate ios --list</span></pre></td></tr></table></figure>
-<h2 id="To-emulate-iOS-12"><a href="#To-emulate-iOS-12" class="headerlink" title="To emulate iOS 12+"></a>To emulate iOS 12+</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ cordova run ios --emulator --target&#x3D;&quot;iPad-Air-2, 12.1&quot; --buildFlag&#x3D;&quot;-UseModernBuildSystem&#x3D;0&quot;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; -l --livereload doesn&#39;t work</span></pre></td></tr></table></figure>
-
-<h2 id="Run-on-a-device"><a href="#Run-on-a-device" class="headerlink" title="Run on a device"></a>Run on a device</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ cordova run android --device</span></pre></td></tr></table></figure>
-
-<h2 id="Use-emulator-with-VSCode-and-live-reload-Ionic"><a href="#Use-emulator-with-VSCode-and-live-reload-Ionic" class="headerlink" title="Use emulator with VSCode and live reload (Ionic)"></a>Use emulator with VSCode and live reload (Ionic)</h2><p><a href="https://geeklearning.io/live-debug-your-cordova-ionic-application-with-visual-studio-code/" target="_blank" rel="noopener">https://geeklearning.io/live-debug-your-cordova-ionic-application-with-visual-studio-code/</a></p>
-<h1 id="iOS"><a href="#iOS" class="headerlink" title="iOS"></a>iOS</h1><p><a href="https://developer.apple.com/download/more/" target="_blank" rel="noopener">https://developer.apple.com/download/more/</a><br><a href="https://download.developer.apple.com/Developer_Tools/Xcode_9.4.1/Xcode_9.4.1.xip" target="_blank" rel="noopener">https://download.developer.apple.com/Developer_Tools/Xcode_9.4.1/Xcode_9.4.1.xip</a></p>
-<h1 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h1><h2 id="Cordova-Android"><a href="#Cordova-Android" class="headerlink" title="Cordova Android"></a>Cordova Android</h2><p><a href="https://cordova.apache.org/docs/en/latest/guide/platforms/android/#setting-environment-variables" target="_blank" rel="noopener">https://cordova.apache.org/docs/en/latest/guide/platforms/android/#setting-environment-variables</a></p>
-<h2 id="How-to-create-AVD"><a href="#How-to-create-AVD" class="headerlink" title="How to create AVD"></a>How to create AVD</h2><p><a href="https://developer.android.com/studio/run/managing-avds#viewing" target="_blank" rel="noopener">https://developer.android.com/studio/run/managing-avds#viewing</a></p>
-<h2 id="Android-Emulator"><a href="#Android-Emulator" class="headerlink" title="Android Emulator"></a>Android Emulator</h2><p><a href="https://developer.android.com/studio/run/emulator#about" target="_blank" rel="noopener">https://developer.android.com/studio/run/emulator#about</a></p>
-<h2 id="Start-the-emulator-from-the-command-line"><a href="#Start-the-emulator-from-the-command-line" class="headerlink" title="Start the emulator from the command line"></a>Start the emulator from the command line</h2><p><a href="https://developer.android.com/studio/run/emulator-commandline" target="_blank" rel="noopener">https://developer.android.com/studio/run/emulator-commandline</a></p>
-<h1 id="Threading"><a href="#Threading" class="headerlink" title="Threading"></a>Threading</h1><h2 id="Threading-in-Android-Java"><a href="#Threading-in-Android-Java" class="headerlink" title="Threading in Android Java:"></a>Threading in Android Java:</h2><p><a href="http://burnignorance.com/phonegap-tips-and-tricks/implementing-multi-threading-in-android-plugin-for-phonegap-2-6-0/" target="_blank" rel="noopener">http://burnignorance.com/phonegap-tips-and-tricks/implementing-multi-threading-in-android-plugin-for-phonegap-2-6-0/</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>) create</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>), ^&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        [self saySomething];</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    &#125;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-
-<h2 id="Cordova-plugin-Android-threading"><a href="#Cordova-plugin-Android-threading" class="headerlink" title="Cordova plugin Android threading"></a>Cordova plugin Android threading</h2><p><a href="https://stackoverflow.com/a/28980819" target="_blank" rel="noopener">https://stackoverflow.com/a/28980819</a></p>
-<h2 id="Threading-Cordova-plugin-iOS"><a href="#Threading-Cordova-plugin-iOS" class="headerlink" title="Threading Cordova plugin iOS"></a>Threading Cordova plugin iOS</h2><p><a href="https://cordova.apache.org/docs/en/latest/guide/platforms/ios/plugin.html#threading" target="_blank" rel="noopener">https://cordova.apache.org/docs/en/latest/guide/platforms/ios/plugin.html#threading</a></p>
-<h2 id="iOS-and-Android-difference"><a href="#iOS-and-Android-difference" class="headerlink" title="iOS and Android difference"></a>iOS and Android difference</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">Plugin methods ordinarily execute in the same thread as the main interface. </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cordova.apache.org&#x2F;docs&#x2F;en&#x2F;latest&#x2F;guide&#x2F;platforms&#x2F;ios&#x2F;plugin.html#threading</span></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cordova platform add &lt;platform&gt;</span><br><span class="line">$ cordova platform remove &lt;platform&gt;</span><br><span class="line">$ cordova requirements &lt;platform&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="iOS-emulators-list"><a href="#iOS-emulators-list" class="headerlink" title="iOS emulators list"></a>iOS emulators list</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cordova emulate ios --list</span><br></pre></td></tr></table></figure>
+<h2 id="To-emulate-iOS-12"><a href="#To-emulate-iOS-12" class="headerlink" title="To emulate iOS 12+"></a>To emulate iOS 12+</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cordova run ios --emulator --target&#x3D;&quot;iPad-Air-2, 12.1&quot; --buildFlag&#x3D;&quot;-UseModernBuildSystem&#x3D;0&quot;</span><br><span class="line">&#x2F;&#x2F; -l --livereload doesn&#39;t work</span><br></pre></td></tr></table></figure>
+<h2 id="Run-on-a-device"><a href="#Run-on-a-device" class="headerlink" title="Run on a device"></a>Run on a device</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cordova run android --device</span><br></pre></td></tr></table></figure>
+<h2 id="Use-emulator-with-VSCode-and-live-reload-Ionic"><a href="#Use-emulator-with-VSCode-and-live-reload-Ionic" class="headerlink" title="Use emulator with VSCode and live reload (Ionic)"></a>Use emulator with VSCode and live reload (Ionic)</h2><p><a target="_blank" rel="noopener" href="https://geeklearning.io/live-debug-your-cordova-ionic-application-with-visual-studio-code/">https://geeklearning.io/live-debug-your-cordova-ionic-application-with-visual-studio-code/</a></p>
+<h1 id="iOS"><a href="#iOS" class="headerlink" title="iOS"></a>iOS</h1><p><a target="_blank" rel="noopener" href="https://developer.apple.com/download/more/">https://developer.apple.com/download/more/</a><br><a target="_blank" rel="noopener" href="https://download.developer.apple.com/Developer_Tools/Xcode_9.4.1/Xcode_9.4.1.xip">https://download.developer.apple.com/Developer_Tools/Xcode_9.4.1/Xcode_9.4.1.xip</a></p>
+<h1 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h1><h2 id="Cordova-Android"><a href="#Cordova-Android" class="headerlink" title="Cordova Android"></a>Cordova Android</h2><p><a target="_blank" rel="noopener" href="https://cordova.apache.org/docs/en/latest/guide/platforms/android/#setting-environment-variables">https://cordova.apache.org/docs/en/latest/guide/platforms/android/#setting-environment-variables</a></p>
+<h2 id="How-to-create-AVD"><a href="#How-to-create-AVD" class="headerlink" title="How to create AVD"></a>How to create AVD</h2><p><a target="_blank" rel="noopener" href="https://developer.android.com/studio/run/managing-avds#viewing">https://developer.android.com/studio/run/managing-avds#viewing</a></p>
+<h2 id="Android-Emulator"><a href="#Android-Emulator" class="headerlink" title="Android Emulator"></a>Android Emulator</h2><p><a target="_blank" rel="noopener" href="https://developer.android.com/studio/run/emulator#about">https://developer.android.com/studio/run/emulator#about</a></p>
+<h2 id="Start-the-emulator-from-the-command-line"><a href="#Start-the-emulator-from-the-command-line" class="headerlink" title="Start the emulator from the command line"></a>Start the emulator from the command line</h2><p><a target="_blank" rel="noopener" href="https://developer.android.com/studio/run/emulator-commandline">https://developer.android.com/studio/run/emulator-commandline</a></p>
+<h1 id="Threading"><a href="#Threading" class="headerlink" title="Threading"></a>Threading</h1><h2 id="Threading-in-Android-Java"><a href="#Threading-in-Android-Java" class="headerlink" title="Threading in Android Java:"></a>Threading in Android Java:</h2><p><a target="_blank" rel="noopener" href="http://burnignorance.com/phonegap-tips-and-tricks/implementing-multi-threading-in-android-plugin-for-phonegap-2-6-0/">http://burnignorance.com/phonegap-tips-and-tricks/implementing-multi-threading-in-android-plugin-for-phonegap-2-6-0/</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>) create</span><br><span class="line">&#123;</span><br><span class="line">    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>), ^&#123;</span><br><span class="line">        [self saySomething];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Cordova-plugin-Android-threading"><a href="#Cordova-plugin-Android-threading" class="headerlink" title="Cordova plugin Android threading"></a>Cordova plugin Android threading</h2><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/28980819">https://stackoverflow.com/a/28980819</a></p>
+<h2 id="Threading-Cordova-plugin-iOS"><a href="#Threading-Cordova-plugin-iOS" class="headerlink" title="Threading Cordova plugin iOS"></a>Threading Cordova plugin iOS</h2><p><a target="_blank" rel="noopener" href="https://cordova.apache.org/docs/en/latest/guide/platforms/ios/plugin.html#threading">https://cordova.apache.org/docs/en/latest/guide/platforms/ios/plugin.html#threading</a></p>
+<h2 id="iOS-and-Android-difference"><a href="#iOS-and-Android-difference" class="headerlink" title="iOS and Android difference"></a>iOS and Android difference</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Plugin methods ordinarily execute in the same thread as the main interface. </span><br><span class="line">https:&#x2F;&#x2F;cordova.apache.org&#x2F;docs&#x2F;en&#x2F;latest&#x2F;guide&#x2F;platforms&#x2F;ios&#x2F;plugin.html#threading</span><br></pre></td></tr></table></figure>
 <p>but on Android:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">The plugin&#39;s JavaScript does not run in the main thread of the WebView interface; instead, it runs on the WebCore thread, as does the execute method.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cordova.apache.org&#x2F;docs&#x2F;en&#x2F;latest&#x2F;guide&#x2F;platforms&#x2F;android&#x2F;plugin.html#threading</span></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">The plugin&#39;s JavaScript does not run in the main thread of the WebView interface; instead, it runs on the WebCore thread, as does the execute method.</span><br><span class="line">https:&#x2F;&#x2F;cordova.apache.org&#x2F;docs&#x2F;en&#x2F;latest&#x2F;guide&#x2F;platforms&#x2F;android&#x2F;plugin.html#threading</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Mobile/Mobile-Cordova/" data-id="ckj1eynkb000v0cr4b12v83ys" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Mobile/Mobile-Cordova/" data-id="ckj1kbnnb000wzhtbhan3chtc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li></ul>
@@ -124,19 +123,19 @@
     
 <nav id="article-nav">
   
-    <a href="/blog/2020/07/17/Languages/Lang-Reason-language/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Reason programming language attributes
+          GraphQL Apollo links
         
       </div>
     </a>
   
   
-    <a href="/blog/2019/12/01/React/React-various-notes/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">React - miscellaneous notes</div>
+      <div class="article-nav-title">CSS - How to make child div wider than parent div</div>
     </a>
   
 </nav>
@@ -243,11 +242,17 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
-  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
 
 
 <script src="/blog/js/script.js"></script>
+
 
 
 

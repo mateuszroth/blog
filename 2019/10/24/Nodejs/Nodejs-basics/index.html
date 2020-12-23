@@ -8,14 +8,17 @@
   <title>Node.js introduction - pros and cons, qualities | Software Sensei Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="What is Node.js and its pros and consMost of the information below is taken from Netguru blog. What isNode.js’ famous asynchronous I&#x2F;O and its single-threaded event loop models that can efficiently ha">
-<meta name="keywords" content="Backend,Node.js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Node.js introduction - pros and cons, qualities">
-<meta property="og:url" content="https:&#x2F;&#x2F;mateuszroth.github.io&#x2F;blog&#x2F;2019&#x2F;10&#x2F;24&#x2F;Nodejs&#x2F;Nodejs-basics&#x2F;index.html">
+<meta property="og:url" content="https://mateuszroth.github.io/blog/2019/10/24/Nodejs/Nodejs-basics/index.html">
 <meta property="og:site_name" content="Software Sensei Blog">
 <meta property="og:description" content="What is Node.js and its pros and consMost of the information below is taken from Netguru blog. What isNode.js’ famous asynchronous I&#x2F;O and its single-threaded event loop models that can efficiently ha">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-12-23T12:48:51.313Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-10-24T22:33:05.000Z">
+<meta property="article:modified_time" content="2020-12-23T15:18:55.691Z">
+<meta property="article:author" content="Mateusz Roth">
+<meta property="article:tag" content="Backend">
+<meta property="article:tag" content="Node.js">
 <meta name="twitter:card" content="summary">
   
   
@@ -24,8 +27,10 @@
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/blog/css/style.css">
-</head>
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body>
   <div id="container">
@@ -37,10 +42,6 @@
       <h1 id="logo-wrap">
         <a href="/blog/" id="logo">Software Sensei Blog</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/blog/" id="subtitle">about Software Engineering - focused on patterns, JavaScript, mobile...</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -89,19 +90,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="What-is-Node-js-and-its-pros-and-cons"><a href="#What-is-Node-js-and-its-pros-and-cons" class="headerlink" title="What is Node.js and its pros and cons"></a>What is Node.js and its pros and cons</h1><p>Most of the information below is taken from <a href="https://www.netguru.com/blog" target="_blank" rel="noopener">Netguru blog</a>.</p>
+        <h1 id="What-is-Node-js-and-its-pros-and-cons"><a href="#What-is-Node-js-and-its-pros-and-cons" class="headerlink" title="What is Node.js and its pros and cons"></a>What is Node.js and its pros and cons</h1><p>Most of the information below is taken from <a target="_blank" rel="noopener" href="https://www.netguru.com/blog">Netguru blog</a>.</p>
 <h2 id="What-is"><a href="#What-is" class="headerlink" title="What is"></a>What is</h2><p>Node.js’ famous <strong>asynchronous I/O</strong> and its <strong>single-threaded event loop</strong> models that can efficiently <strong>handle concurrent requests</strong>. Node.js is based on an <strong>event-driven</strong>, <strong>non-blocking I/O model</strong>, and <strong>uses only a single CPU core</strong>. The non-blocking IO system lets you process numerous requests concurrently.</p>
 <ul>
 <li>That’s how we can conclude Node.js is single-threaded but <strong>in the background it uses <em>multiple threads</em> to execute asynchronous code with the help of the libuv library.</strong> Only the event loop is single-threaded.</li>
-<li><a href="https://medium.com/better-programming/is-node-js-really-single-threaded-7ea59bcc8d64" target="_blank" rel="noopener">https://medium.com/better-programming/is-node-js-really-single-threaded-7ea59bcc8d64</a> While Node.js itself is multithreaded – I/O and other such operations run from a thread pool – JavaScript code executed by Node.js runs, for all practical purposes, in a single thread. This isn’t a limitation of Node.js itself, but of the V8 JavaScript engine and of JavaScript implementations generally.</li>
-<li><a href="https://stackoverflow.com/a/40029919" target="_blank" rel="noopener">https://stackoverflow.com/a/40029919</a> The single threaded, async nature does make things complicated. But do you honestly think it’s more complicated than threading? One race condition can ruin your entire month! Or empty out your thread pool due to some setting somewhere and watch your response time slow to a crawl! Not to mention deadlocks, priority inversions, and all the other gyrations that go with multithreading.</li>
-<li><a href="https://stackoverflow.com/a/17959746" target="_blank" rel="noopener">https://stackoverflow.com/a/17959746</a> The main functionality differentiation between NodeJs based servers and other IIS/ Apache based servers, <strong>NodeJs for every connection request do not create a new thread</strong> instead it receives all request on single thread and delegates it to be handled by many background workers to do the task as required.</li>
-<li><a href="https://codeburst.io/how-node-js-single-thread-mechanism-work-understanding-event-loop-in-nodejs-230f7440b0ea" target="_blank" rel="noopener">https://codeburst.io/how-node-js-single-thread-mechanism-work-understanding-event-loop-in-nodejs-230f7440b0ea</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/better-programming/is-node-js-really-single-threaded-7ea59bcc8d64">https://medium.com/better-programming/is-node-js-really-single-threaded-7ea59bcc8d64</a> While Node.js itself is multithreaded – I/O and other such operations run from a thread pool – JavaScript code executed by Node.js runs, for all practical purposes, in a single thread. This isn’t a limitation of Node.js itself, but of the V8 JavaScript engine and of JavaScript implementations generally.</li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/40029919">https://stackoverflow.com/a/40029919</a> The single threaded, async nature does make things complicated. But do you honestly think it’s more complicated than threading? One race condition can ruin your entire month! Or empty out your thread pool due to some setting somewhere and watch your response time slow to a crawl! Not to mention deadlocks, priority inversions, and all the other gyrations that go with multithreading.</li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/17959746">https://stackoverflow.com/a/17959746</a> The main functionality differentiation between NodeJs based servers and other IIS/ Apache based servers, <strong>NodeJs for every connection request do not create a new thread</strong> instead it receives all request on single thread and delegates it to be handled by many background workers to do the task as required.</li>
+<li><a target="_blank" rel="noopener" href="https://codeburst.io/how-node-js-single-thread-mechanism-work-understanding-event-loop-in-nodejs-230f7440b0ea">https://codeburst.io/how-node-js-single-thread-mechanism-work-understanding-event-loop-in-nodejs-230f7440b0ea</a></li>
 </ul>
 <p>Node.js comes with many <strong>APIs suitable for backend development</strong>, e.g. the support for <strong>file systems, http requests, streams, child processes</strong>, etc. Browsers do offer some basic support for file systems or http requests, but those are usually limited due to security concerns.</p>
 <p>More:</p>
 <ul>
-<li>Node.js event loop phases explained <a href="https://codeburst.io/how-node-js-single-thread-mechanism-work-understanding-event-loop-in-nodejs-230f7440b0ea" target="_blank" rel="noopener">https://codeburst.io/how-node-js-single-thread-mechanism-work-understanding-event-loop-in-nodejs-230f7440b0ea</a></li>
+<li>Node.js event loop phases explained <a target="_blank" rel="noopener" href="https://codeburst.io/how-node-js-single-thread-mechanism-work-understanding-event-loop-in-nodejs-230f7440b0ea">https://codeburst.io/how-node-js-single-thread-mechanism-work-understanding-event-loop-in-nodejs-230f7440b0ea</a></li>
 </ul>
 <h2 id="Pros"><a href="#Pros" class="headerlink" title="Pros"></a>Pros</h2><p>Nowadays it is possible to write both front-end and back-end of web applications in Javascript, making app deployment much easier and more efficient. </p>
 <p>Node.js as your server technology gives your team a great boost that comes from <strong>using the same language on both the front end and the back end</strong>. This, means that <strong>your team is more efficient and cross-functional</strong>, which, in turn, leads to <strong>lower development costs</strong>.</p>
@@ -117,8 +118,8 @@
 <h2 id="Cons"><a href="#Cons" class="headerlink" title="Cons"></a>Cons</h2><p>Node.js is <strong>not so good for developing CPU-intensive</strong> applications that involve the generation and processing of images, audio, or video. <strong>Being a single-threaded solution, Node.js may be become unresponsive and slow in processing large files.</strong> In this case, conventional multi-threaded solutions will be your best bet.</p>
 <ul>
 <li>So just spawn workers, well! That’s the whole deal with Node.js. Heavy stuff can run in another process, and you process it’s results in a lightweight callback.</li>
-<li><a href="https://stackoverflow.com/questions/17959663/why-is-node-js-single-threaded#comment26250255_17959746" target="_blank" rel="noopener">https://stackoverflow.com/questions/17959663/why-is-node-js-single-threaded#comment26250255_17959746</a> Converting product data into a UI is not CPU intensive, nor is calculating orders or the like. Most of the web is pretty transactional. CPU intensive stuff is things like converting videos, converting image formats, etc. Much of that is due to file i/o which, actually, node does pretty well. And makes it <strong>easy to offload to another process that’s dedicated to the converting</strong>.</li>
-<li><a href="https://stackoverflow.com/questions/17959663/why-is-node-js-single-threaded#comment26252014_17959746" target="_blank" rel="noopener">https://stackoverflow.com/questions/17959663/why-is-node-js-single-threaded#comment26252014_17959746</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/17959663/why-is-node-js-single-threaded#comment26250255_17959746">https://stackoverflow.com/questions/17959663/why-is-node-js-single-threaded#comment26250255_17959746</a> Converting product data into a UI is not CPU intensive, nor is calculating orders or the like. Most of the web is pretty transactional. CPU intensive stuff is things like converting videos, converting image formats, etc. Much of that is due to file i/o which, actually, node does pretty well. And makes it <strong>easy to offload to another process that’s dedicated to the converting</strong>.</li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/17959663/why-is-node-js-single-threaded#comment26252014_17959746">https://stackoverflow.com/questions/17959663/why-is-node-js-single-threaded#comment26252014_17959746</a></li>
 </ul>
 <p>Node.js is <strong>not best choice for applications with a vast code</strong> <strong>base</strong> – since Java provides strongly typed sources, refactoring it and bug fixing will be more straightforward during its maintenance.</p>
 <h2 id="Infra"><a href="#Infra" class="headerlink" title="Infra"></a>Infra</h2><p>Node.js <strong>works perfectly with the leading cloud computing tools</strong>, keeps the infrastructure costs under control, and <strong>gives you access to the best services that predict usage spikes, expand resources and control the development process</strong>.</p>
@@ -128,27 +129,27 @@
 <p>Node.js with microservices significantly reduces application deployment time and <strong>enhances efficiency, maintainability, and scalability of your applications</strong>.</p>
 <p>Using microservices, you <strong>build your app from separate small blocks that perform one function</strong> (e.g., checkout in an e-commerce app, product page, shopping cart, etc). Each block receives information, computes it, and delivers the result. <strong>You can add, multiply, and remove these elements according to your needs.</strong> <strong>This brings stability.</strong> First of all, if one element crashes, for instance, the checkout, the users who are browsing the other parts of the store will not notice it.</p>
 <p>Building software with a microservices architecture is fast and easy, however, if you include too many blocks and too many relations among them, <strong>supporting and expanding such an architecture may become tricky when you put dozens of element together</strong>.</p>
-<h3 id="EXAMPLES"><a href="#EXAMPLES" class="headerlink" title="EXAMPLES"></a>EXAMPLES</h3><p>PayPal, a worldwide online payments system, has also moved their backend development from Java to JavaScript and Node.js. Beforehand, the engineering teams at the company were divided into those who code for the browser and those who code for the application layer, and it didn’t work perfectly. Then, full-stack engineers came to the rescue, but that model wasn’t ideal too. Adopting Node.js solved their problems, as it allowed for writing the browser and the server applications in the same programming language – JavaScript. As a result, the unified team is able to understand problems at both ends and react more effectively to the customer needs. Read more here about how smaller Node.js team started work 2 months after bigger Java team and catched them up: <a href="https://www.paypal-engineering.com/2013/11/22/node-js-at-paypal/" target="_blank" rel="noopener">https://www.paypal-engineering.com/2013/11/22/node-js-at-paypal/</a></p>
+<h3 id="EXAMPLES"><a href="#EXAMPLES" class="headerlink" title="EXAMPLES"></a>EXAMPLES</h3><p>PayPal, a worldwide online payments system, has also moved their backend development from Java to JavaScript and Node.js. Beforehand, the engineering teams at the company were divided into those who code for the browser and those who code for the application layer, and it didn’t work perfectly. Then, full-stack engineers came to the rescue, but that model wasn’t ideal too. Adopting Node.js solved their problems, as it allowed for writing the browser and the server applications in the same programming language – JavaScript. As a result, the unified team is able to understand problems at both ends and react more effectively to the customer needs. Read more here about how smaller Node.js team started work 2 months after bigger Java team and catched them up: <a target="_blank" rel="noopener" href="https://www.paypal-engineering.com/2013/11/22/node-js-at-paypal/">https://www.paypal-engineering.com/2013/11/22/node-js-at-paypal/</a></p>
 <h3 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a>Sources</h3><ul>
-<li><a href="https://medium.com/paypal-engineering/node-js-at-paypal-4e2d1d08ce4f" target="_blank" rel="noopener">https://medium.com/paypal-engineering/node-js-at-paypal-4e2d1d08ce4f</a></li>
-<li><a href="https://www.netguru.com/hs-fs/hubfs/Blog_posts_-_images/image1-15.png?width=980&amp;height=755&amp;name=image1-15.png" target="_blank" rel="noopener">https://www.netguru.com/hs-fs/hubfs/Blog_posts_-_images/image1-15.png?width=980&amp;height=755&amp;name=image1-15.png</a></li>
-<li><a href="https://www.netguru.com/blog/top-companies-used-nodejs-production" target="_blank" rel="noopener">https://www.netguru.com/blog/top-companies-used-nodejs-production</a></li>
-<li><a href="https://www.netguru.com/blog/node.js-scalability-how-your-web-application-can-benefit-from-node.js" target="_blank" rel="noopener">https://www.netguru.com/blog/node.js-scalability-how-your-web-application-can-benefit-from-node.js</a></li>
-<li><a href="https://www.netguru.com/blog/node.js-vs.-asp.net-for-enterprise-solutions-which-stack-to-choose-for-advanced-web-applications" target="_blank" rel="noopener">https://www.netguru.com/blog/node.js-vs.-asp.net-for-enterprise-solutions-which-stack-to-choose-for-advanced-web-applications</a></li>
-<li><a href="https://www.netguru.com/blog/pros-cons-use-node.js-backend" target="_blank" rel="noopener">https://www.netguru.com/blog/pros-cons-use-node.js-backend</a></li>
-<li><a href="https://www.netguru.com/blog/use-node-js-backend" target="_blank" rel="noopener">https://www.netguru.com/blog/use-node-js-backend</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/paypal-engineering/node-js-at-paypal-4e2d1d08ce4f">https://medium.com/paypal-engineering/node-js-at-paypal-4e2d1d08ce4f</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.netguru.com/hs-fs/hubfs/Blog_posts_-_images/image1-15.png?width=980&amp;height=755&amp;name=image1-15.png">https://www.netguru.com/hs-fs/hubfs/Blog_posts_-_images/image1-15.png?width=980&amp;height=755&amp;name=image1-15.png</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.netguru.com/blog/top-companies-used-nodejs-production">https://www.netguru.com/blog/top-companies-used-nodejs-production</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.netguru.com/blog/node.js-scalability-how-your-web-application-can-benefit-from-node.js">https://www.netguru.com/blog/node.js-scalability-how-your-web-application-can-benefit-from-node.js</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.netguru.com/blog/node.js-vs.-asp.net-for-enterprise-solutions-which-stack-to-choose-for-advanced-web-applications">https://www.netguru.com/blog/node.js-vs.-asp.net-for-enterprise-solutions-which-stack-to-choose-for-advanced-web-applications</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.netguru.com/blog/pros-cons-use-node.js-backend">https://www.netguru.com/blog/pros-cons-use-node.js-backend</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.netguru.com/blog/use-node-js-backend">https://www.netguru.com/blog/use-node-js-backend</a></li>
 </ul>
 <h1 id="Advantages-of-development-in-Node-js"><a href="#Advantages-of-development-in-Node-js" class="headerlink" title="Advantages of development in Node.js"></a>Advantages of development in Node.js</h1><ul>
 <li><strong>Serialization</strong> - in Node.js mostly builtin, we use <code>response.json()</code> or <code>json.stringify()</code></li>
-<li><code>schema</code> - joi, parsing and validation of form values, parsing and validation of query string, schm, ajv, <a href="https://scotch.io/tutorials/node-api-schema-validation-with-joi" target="_blank" rel="noopener">https://scotch.io/tutorials/node-api-schema-validation-with-joi</a></li>
-<li>Very solid article about Node.js backend that uses TypeScript, TypeORM, SQL database, Winston logger, PM2 process manager, Redis: <a href="https://itnext.io/production-ready-node-js-rest-apis-setup-using-typescript-postgresql-and-redis-a9525871407" target="_blank" rel="noopener">https://itnext.io/production-ready-node-js-rest-apis-setup-using-typescript-postgresql-and-redis-a9525871407</a></li>
+<li><code>schema</code> - joi, parsing and validation of form values, parsing and validation of query string, schm, ajv, <a target="_blank" rel="noopener" href="https://scotch.io/tutorials/node-api-schema-validation-with-joi">https://scotch.io/tutorials/node-api-schema-validation-with-joi</a></li>
+<li>Very solid article about Node.js backend that uses TypeScript, TypeORM, SQL database, Winston logger, PM2 process manager, Redis: <a target="_blank" rel="noopener" href="https://itnext.io/production-ready-node-js-rest-apis-setup-using-typescript-postgresql-and-redis-a9525871407">https://itnext.io/production-ready-node-js-rest-apis-setup-using-typescript-postgresql-and-redis-a9525871407</a></li>
 <li>PM2 process manager or Rollbar help detect and track errors easily, boosting developers’ productivity</li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/10/24/Nodejs/Nodejs-basics/" data-id="ckj1eynml006d0cr4d3j4gpjz" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/10/24/Nodejs/Nodejs-basics/" data-id="ckj1kbnnf0018zhtbbtuocax3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
@@ -278,11 +279,17 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
-  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
 
 
 <script src="/blog/js/script.js"></script>
+
 
 
 
