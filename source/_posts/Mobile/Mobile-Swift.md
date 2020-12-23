@@ -55,7 +55,7 @@ To make for example one text align to the left and one to the right within a con
         .frame(width: 400, height: 400)
         .background(Color.blue)
 ```
-<img src="SwiftUI-alignmentGuide.png" alt="SwiftUI alignmentGuide example" width="150"/>
+![SwiftUI alignmentGuide example](Mobile/Images/SwiftUI-alignmentGuide.png)
 
 source: https://www.hackingwithswift.com/books/ios-swiftui/alignment-and-alignment-guides
 
