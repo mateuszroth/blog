@@ -59,6 +59,20 @@ To make for example one text align to the left and one to the right within a con
 
 source: https://www.hackingwithswift.com/books/ios-swiftui/alignment-and-alignment-guides
 
+### Initialize `@State` from initializer
+SwiftUI doesn't allow you to change `@State` in the initializer but you can initialize it.
+
+Remove the default value and use `_valueName` to set `@State` directly instead of going through the property wrapper accessor.
+
+```swift
+@State var fullText: String // No default value of ""
+
+init(letter: String) {
+    _fullText = State(initialValue: list[letter]!)
+}
+```
+source: https://stackoverflow.com/a/58137096
+
 ## Async code. DispatchQueue
 ### Use DispatchQueue to print something after 1 second
 ```swift
