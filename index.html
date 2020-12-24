@@ -95,6 +95,10 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">VStack</span>(alignment: .leading) &#123;</span><br><span class="line">    <span class="type">Text</span>(<span class="string">&quot;Hello, world!&quot;</span>)</span><br><span class="line">        .alignmentGuide(.leading) &#123; d <span class="keyword">in</span> d[.trailing] &#125;</span><br><span class="line">    <span class="type">Text</span>(<span class="string">&quot;This is a longer line of text&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line">    .background(<span class="type">Color</span>.red)</span><br><span class="line">    .frame(width: <span class="number">400</span>, height: <span class="number">400</span>)</span><br><span class="line">    .background(<span class="type">Color</span>.blue)</span><br></pre></td></tr></table></figure>
 <p><img src="/blog/2020/12/22/Mobile/Mobile-Swift/SwiftUI-alignmentGuide.png" alt="SwiftUI alignmentGuide example"></p>
 <p>source: <a target="_blank" rel="noopener" href="https://www.hackingwithswift.com/books/ios-swiftui/alignment-and-alignment-guides">https://www.hackingwithswift.com/books/ios-swiftui/alignment-and-alignment-guides</a></p>
+<h3 id="Initialize-State-from-initializer"><a href="#Initialize-State-from-initializer" class="headerlink" title="Initialize @State from initializer"></a>Initialize <code>@State</code> from initializer</h3><p>SwiftUI doesn’t allow you to change <code>@State</code> in the initializer but you can initialize it.</p>
+<p>Remove the default value and use <code>_valueName</code> to set <code>@State</code> directly instead of going through the property wrapper accessor.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">State</span> <span class="keyword">var</span> fullText: <span class="type">String</span> <span class="comment">// No default value of &quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">init</span>(letter: <span class="type">String</span>) &#123;</span><br><span class="line">    _fullText = <span class="type">State</span>(initialValue: list[letter]!)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>source: <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/58137096">https://stackoverflow.com/a/58137096</a></p>
 <h2 id="Async-code-DispatchQueue"><a href="#Async-code-DispatchQueue" class="headerlink" title="Async code. DispatchQueue"></a>Async code. DispatchQueue</h2><h3 id="Use-DispatchQueue-to-print-something-after-1-second"><a href="#Use-DispatchQueue-to-print-something-after-1-second" class="headerlink" title="Use DispatchQueue to print something after 1 second"></a>Use DispatchQueue to print something after 1 second</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">DispatchQueue</span>.main.asyncAfter(deadline: .now() + <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Timer fired!&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h2><h3 id="Basic-usage-of-scheduled-timer"><a href="#Basic-usage-of-scheduled-timer" class="headerlink" title="Basic usage of scheduled timer"></a>Basic usage of scheduled timer</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> runCount = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="type">Timer</span>.scheduledTimer(withTimeInterval: <span class="number">1.0</span>, repeats: <span class="literal">true</span>) &#123; timer <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Timer fired!&quot;</span>)</span><br><span class="line">    runCount += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> runCount == <span class="number">3</span> &#123;</span><br><span class="line">        timer.invalidate()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -107,7 +111,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/12/22/Mobile/Mobile-Swift/" data-id="ckj1kbnnc000zzhtbcx5x3awm" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/12/22/Mobile/Mobile-Swift/" data-id="ckj2vrip7000zzmsr1cje5icl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
@@ -289,7 +293,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" data-id="ckj1kbnp80072zhtbfiik2zge" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" data-id="ckj2vrir90072zmsrg9ig2e78" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
@@ -367,7 +371,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/" data-id="ckj1kbnnj001gzhtb0vb77knt" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/" data-id="ckj2vripe001gzmsr5sjk45ta" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li></ul>
@@ -465,7 +469,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/" data-id="ckj1kbnmw000azhtb8ewz1x9y" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/" data-id="ckj2vrior000azmsr03buhydl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
@@ -556,7 +560,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-Hooks/" data-id="ckj1kbnni001dzhtb98vbbd12" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-Hooks/" data-id="ckj2vripd001dzmsrezhs6q5o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li></ul>
@@ -608,7 +612,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" data-id="ckj1kbnn0000ezhtb4d3fgxx1" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" data-id="ckj2vriou000ezmsr5mkncvpt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
@@ -657,7 +661,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" data-id="ckj1kbnn6000nzhtba4ond6hh" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" data-id="ckj2vrip1000nzmsr6obt3pfk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
@@ -709,7 +713,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/Frontend-printing-documents/" data-id="ckj1kbnms0004zhtb1zvk0ycf" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/Frontend-printing-documents/" data-id="ckj2vrion0004zmsr40xl4k0u" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li></ul>
@@ -772,7 +776,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/" data-id="ckj1kbnne0017zhtb5o3z9ahz" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/" data-id="ckj2vripa0017zmsr4nbhbcpm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
@@ -831,7 +835,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Mobile/Mobile-Cordova/" data-id="ckj1kbnnb000wzhtbhan3chtc" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Mobile/Mobile-Cordova/" data-id="ckj2vrip6000wzmsrdhzg1qwq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li></ul>
