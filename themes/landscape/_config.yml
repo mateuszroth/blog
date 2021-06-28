@@ -1,12 +1,18 @@
 # Header
 menu:
   Home: /
-  Archives: /archives
+  About me: /about-me
+  JavaScript: /categories/JavaScript/
+  Node.js: /categories/Node-js/
+  React: /categories/React/
+  Software Engineering: /categories/Software-Engineering/
+  Other archives: /archives
 rss:
 
 # Content
 excerpt_link: Read More
 fancybox: true
+recent_posts_limits: 5
 
 # Sidebar
 sidebar: right

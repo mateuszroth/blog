@@ -3,13 +3,13 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Software Sensei Blog
-subtitle: about Software Engineering - focused on patterns, JavaScript, mobile...
+title: Software Sensei's Notes
+subtitle: Mateusz Roth's notes about Software Engineering - focused on patterns, JavaScript, mobile...
 description:
-keywords:
+keywords: konsultant, specjalista, programista, developer, consultant, specialist, Software Engineer, iOS, App, Mac, Android, Chrome, Safari, Firefox, Front End, Web, Development, JavaScript, ECMAScript, ES6, ES5, React, Node.js, Express, React Native, Vue, Angular, AngularJS, Ionic, Cordova, Bootstrap, SASS, LESS, Haml, Jade, Design, UI, UX, web apps, web applications, aplikacje internetowe, tworzenie aplikacji internetowych, tworzenie stron internetowych, tworzenie aplikacji mobilnych, tworzenie wizytówek internetowych
 author: Mateusz Roth
 language: en
-timezone: ''
+timezone: 'Europe/Warsaw'
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
