@@ -83,6 +83,60 @@
 </div>
 
   
+    <article id="post-Nodejs/Nodejs-threads" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/06/29/Nodejs/Nodejs-threads/" class="article-date">
+  <time datetime="2021-06-29T22:00:00.000Z" itemprop="datePublished">2021-06-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/blog/categories/Node-js/Basics/">Basics</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2021/06/29/Nodejs/Nodejs-threads/">Node.js threads</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Backgrounds"><a href="#Backgrounds" class="headerlink" title="Backgrounds"></a>Backgrounds</h1><ul>
+<li>The virtual machine and the operating system run the I/O in parallel for us, and when it’s time to send data back to our JavaScript code, the JavaScript part is the one that runs in a single thread. So everything runs in parallel except for our JavaScript code:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> flag = <span class="literal">false</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doSomething</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  flag = <span class="literal">true</span></span><br><span class="line">  <span class="comment">// More code (that doesn&#x27;t change `flag`)...</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// We can be sure that `flag` here is true.</span></span><br><span class="line">  <span class="comment">// There&#x27;s no way another code block could have changed</span></span><br><span class="line">  <span class="comment">// `flag` since this block is synchronous.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>For example, in Java, even some numeric types are not atomic; if you don’t synchronize their access, you could end up having two threads change the value of a variable. The result would be that after both threads have accessed the variable, it has a few bytes changed by one thread and a few bytes changed by the other thread — and, thus, not resulting in any valid value.</li>
+<li>Worker pool is an execution model that spawns and handles separate threads, which then synchronously perform the task and return the result to the event loop. The event loop then executes the provided callback with said result. A worker pool is a given number of previously created workers sitting and listening for the message event. Eight workers created below:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pool = <span class="keyword">new</span> WorkerPool(path.join(__dirname, <span class="string">&#x27;./test-worker.js&#x27;</span>), <span class="number">8</span>);</span><br></pre></td></tr></table></figure></li>
+<li>In short, main event pool takes care of asynchronous I/O operations — primarily, interactions with the system’s disk and network. It is mainly used by modules such as <code>fs</code> (I/O-heavy) or <code>crypto</code> (CPU-heavy). Worker pool is implemented in libuv.<br><a target="_blank" rel="noopener" href="https://blog.logrocket.com/node-js-multithreading-what-are-worker-threads-and-why-do-they-matter-48ab102f8b10/">source 1</a><br><a target="_blank" rel="noopener" href="https://blog.logrocket.com/a-complete-guide-to-threads-in-node-js-4fa3898fe74f/">source 2</a></li>
+</ul>
+<h1 id="worker-threads-module"><a href="#worker-threads-module" class="headerlink" title="worker_threads module"></a><code>worker_threads</code> module</h1><ul>
+<li>A thread worker is a piece of code (usually taken out of a file) spawned in a separate thread.</li>
+<li>Here’s an example of a file that contains a worker that is spawned, executed, and then closed:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; parentPort &#125; <span class="keyword">from</span> <span class="string">&#x27;worker_threads&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> collection = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i += <span class="number">1</span>) &#123;</span><br><span class="line"> collection[i] = i;</span><br><span class="line">&#125;</span><br><span class="line">parentPort.postMessage(collection);</span><br></pre></td></tr></table></figure></li>
+<li>Here’s an example of a worker that can wait for a long period of time before it is given a task:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; parentPort &#125; <span class="keyword">from</span> <span class="string">&#x27;worker_threads&#x27;</span>;</span><br><span class="line">parentPort.on(<span class="string">&#x27;message&#x27;</span>, <span class="function">(<span class="params">data: any</span>) =&gt;</span> &#123;</span><br><span class="line"> <span class="keyword">const</span> result = doSomething(data);</span><br><span class="line"> parentPort.postMessage(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<a target="_blank" rel="noopener" href="https://blog.logrocket.com/a-complete-guide-to-threads-in-node-js-4fa3898fe74f/">source</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2021/06/29/Nodejs/Nodejs-threads/" data-id="ckqjsv8kc001e0jrtbhfvgqow" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Mobile/Mobile-Swift" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2020/12/22/Mobile/Mobile-Swift/" class="article-date">
@@ -134,7 +188,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/12/22/Mobile/Mobile-Swift/" data-id="ckqh02srs001bzfvha5yu2370" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/12/22/Mobile/Mobile-Swift/" data-id="ckqjsv8k500100jrt3n1i06vq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
@@ -316,7 +370,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" data-id="ckqh02su0006tzfvh3qt4h188" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" data-id="ckqjsv8mj007c0jrte7wi4l0d" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
@@ -394,10 +448,101 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/" data-id="ckqh02srz001szfvhd5w24vru" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/" data-id="ckqjsv8kf001k0jrtfvs1g8l8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-React/DRAFT-React-Hooks" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/React/DRAFT-React-Hooks/" class="article-date">
+  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/Hooks/">Hooks</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/React/DRAFT-React-Hooks/">React Hooks</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="React-Hooks"><a href="#React-Hooks" class="headerlink" title="React Hooks"></a>React Hooks</h1><h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h2><ul>
+<li>basic hooks: <code>useState</code>, <code>useEffect</code>, <code>useContext</code></li>
+<li>additional: <code>useReducer</code>, <code>useCallback</code>, <code>useMemo</code>, <code>useRef</code>, <code>useImperativeHandle</code>, <code>useLayoutEffect</code>, <code>useDebugValue</code></li>
+</ul>
+<h3 id="setState"><a href="#setState" class="headerlink" title="setState"></a><code>setState</code></h3><ul>
+<li>Unlike the <code>setState</code> method found in class components, <code>useState</code> does not automatically merge update objects.</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">setState(prevState &#x3D;&gt; &#123;</span><br><span class="line">  &#x2F;&#x2F; Object.assign would also work</span><br><span class="line">  return &#123;...prevState, ...updatedValues&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Another option is <code>useReducer</code>, which is more suited for managing state objects that contain multiple sub-values.</li>
+<li><code>setState</code> - If the initial state is the result of an expensive computation, you may provide a function instead, which will be executed only on the initial render</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const [state, setState] &#x3D; useState(() &#x3D;&gt; &#123;</span><br><span class="line">  const initialState &#x3D; someExpensiveComputation(props);</span><br><span class="line">  return initialState;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a><code>useEffect</code></h3><ul>
+<li>you should call hooks at the top level of the render function, this means no conditional hooks</li>
+<li>a second argument to <code>useEffect</code> that is the array of values that the effect depends on:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">useEffect(</span><br><span class="line">  () &#x3D;&gt; &#123;</span><br><span class="line">    const subscription &#x3D; props.source.subscribe();</span><br><span class="line">    return () &#x3D;&gt; &#123;</span><br><span class="line">      subscription.unsubscribe();</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  [props.source],</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h3 id="useMemo"><a href="#useMemo" class="headerlink" title="useMemo"></a><code>useMemo</code></h3><ul>
+<li>If you’re doing expensive calculations while rendering, you can optimize them with <code>useMemo</code>.</li>
+</ul>
+<h2 id="React-Hooks-advantages"><a href="#React-Hooks-advantages" class="headerlink" title="React Hooks advantages"></a>React Hooks advantages</h2><ul>
+<li>hooks are easier to test (as separated functions) and make the code look cleaner/easier to read (i.e. less LOCs)</li>
+<li>code that uses hooks is more readable and have less LOC (<a target="_blank" rel="noopener" href="https://m.habr.com/en/post/443500/">https://m.habr.com/en/post/443500/</a>)</li>
+<li>hooks make code more reusable / composable (also they don’t create another element in DOM like HOCs do)</li>
+<li>you can define several seperate lifecycle methods instead of having all in one method</li>
+<li>hooks are going to work better with future React optimizations (like ahead of time compilation and components folding) - components folding in future (<a target="_blank" rel="noopener" href="https://github.com/facebook/react/issues/7323">https://github.com/facebook/react/issues/7323</a>) - what means dead code elimination at compile time (less JS code to download, less to execute)</li>
+<li>hooks show real nature of React which is functional, using classes make developer easier to do mistakes and use React antipatterns</li>
+<li>hooks are very convenient to re-use stateful logic, this is one of their selling point. But this not applicable when app is built using some state management library and stateful logic doesn’t live in React components. So for desktop in its current state hooks are mostly for readability and to make it future-proof.</li>
+<li>With HOCs we are separating unrelated state logic into different functions and injecting them into the main component as props, although with Hooks, we can solve this just like HOCs but without a wrapper hell (<a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/2000/1*t4NuFEZWHcfPHV_f487GRA.png">https://cdn-images-1.medium.com/max/2000/1*t4NuFEZWHcfPHV_f487GRA.png</a>)</li>
+</ul>
+<h2 id="React-Hooks-vs-HOCs-and-render-props"><a href="#React-Hooks-vs-HOCs-and-render-props" class="headerlink" title="React Hooks vs HOCs and render props"></a>React Hooks vs HOCs and render props</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.freecodecamp.org/news/why-react-hooks-and-how-did-we-even-get-here-aa5ed5dc96af/">https://www.freecodecamp.org/news/why-react-hooks-and-how-did-we-even-get-here-aa5ed5dc96af/</a></li>
+<li><a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*skhvS29DZ6sBkCPBmaMz7g.png">https://cdn-images-1.medium.com/max/800/1*skhvS29DZ6sBkCPBmaMz7g.png</a></li>
+<li>mixins <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*nkp3K5sbw6FuGvoLofVk8g.png">https://cdn-images-1.medium.com/max/800/1*nkp3K5sbw6FuGvoLofVk8g.png</a></li>
+<li>hocs <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*qJZXnzuAgXQsSoibXZH6Zg.png">https://cdn-images-1.medium.com/max/800/1*qJZXnzuAgXQsSoibXZH6Zg.png</a></li>
+<li>render props <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*ii7bRuk2u7jBqunmIzwGrQ.png">https://cdn-images-1.medium.com/max/800/1*ii7bRuk2u7jBqunmIzwGrQ.png</a></li>
+<li>hooks <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*11zyjavrNZlqDypso2EaeQ.png">https://cdn-images-1.medium.com/max/800/1*11zyjavrNZlqDypso2EaeQ.png</a></li>
+</ul>
+<h2 id="Function-Components-and-Hooks-in-TypeScript-example"><a href="#Function-Components-and-Hooks-in-TypeScript-example" class="headerlink" title="Function Components and Hooks in TypeScript example"></a>Function Components and Hooks in TypeScript example</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; import useState next to FunctionComponent</span><br><span class="line">import React, &#123; FunctionComponent, useState &#125; from &#39;react&#39;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; our components props accept a number for the initial value</span><br><span class="line">const Counter:FunctionComponent&lt;&#123; initial?: number &#125;&gt; &#x3D; (&#123; initial &#x3D; 0 &#125;) &#x3D;&gt; &#123;</span><br><span class="line">  &#x2F;&#x2F; since we pass a number here, clicks is going to be a number.</span><br><span class="line">  &#x2F;&#x2F; setClicks is a function that accepts either a number or a function returning</span><br><span class="line">  &#x2F;&#x2F; a number</span><br><span class="line">  const [clicks, setClicks] &#x3D; useState(initial);</span><br><span class="line">  return &lt;&gt;</span><br><span class="line">    &lt;p&gt;Clicks: &#123;clicks&#125;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;button onClick&#x3D;&#123;() &#x3D;&gt; setClicks(clicks+1)&#125;&gt;+&lt;&#x2F;button&gt;</span><br><span class="line">    &lt;button onClick&#x3D;&#123;() &#x3D;&gt; setClicks(clicks-1)&#125;&gt;-&lt;&#x2F;button&gt;</span><br><span class="line">  &lt;&#x2F;&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Hooks-with-TypeScript"><a href="#Hooks-with-TypeScript" class="headerlink" title="Hooks with TypeScript"></a>Hooks with TypeScript</h2><ul>
+<li>Examples how to use with TS: <a target="_blank" rel="noopener" href="https://fettblog.eu/typescript-react/hooks/">https://fettblog.eu/typescript-react/hooks/</a></li>
+<li>TS advanced: <a target="_blank" rel="noopener" href="https://medium.com/@jrwebdev/react-hooks-in-typescript-88fce7001d0d">https://medium.com/@jrwebdev/react-hooks-in-typescript-88fce7001d0d</a></li>
+<li>super advanced: <a target="_blank" rel="noopener" href="https://levelup.gitconnected.com/usetypescript-a-complete-guide-to-react-hooks-and-typescript-db1858d1fb9c">https://levelup.gitconnected.com/usetypescript-a-complete-guide-to-react-hooks-and-typescript-db1858d1fb9c</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const Counter:FunctionComponent&lt;&#123; initial?: number &#125;&gt; &#x3D; (&#123; initial &#x3D; 0 &#125;) &#x3D;&gt; &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="with-useState"><a href="#with-useState" class="headerlink" title="with useState"></a>with <code>useState</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; explicitly setting the types</span><br><span class="line">const [value, setValue] &#x3D; useState&lt;number | undefined&gt;(undefined);</span><br><span class="line">const [value, setValue] &#x3D; useState&lt;Array&lt;number&gt;&gt;([]);</span><br><span class="line"></span><br><span class="line">interface MyObject &#123;</span><br><span class="line">  foo: string;</span><br><span class="line">  bar?: number;</span><br><span class="line">&#125;</span><br><span class="line">const [value, setValue] &#x3D; useState&lt;MyObject&gt;(&#123; foo: &#39;hello&#39; &#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="with-useRef"><a href="#with-useRef" class="headerlink" title="with useRef"></a>with <code>useRef</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const inputEl &#x3D; useRef&lt;HTMLInputElement&gt;(null);</span><br></pre></td></tr></table></figure>
+<h3 id="with-useContext"><a href="#with-useContext" class="headerlink" title="with useContext"></a>with <code>useContext</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type Theme &#x3D; &#39;light&#39; | &#39;dark&#39;;</span><br><span class="line">const ThemeContext &#x3D; createContext&lt;Theme&gt;(&#39;dark&#39;);</span><br></pre></td></tr></table></figure>
+<h3 id="with-useReducer"><a href="#with-useReducer" class="headerlink" title="with useReducer"></a>with <code>useReducer</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">interface State &#123;</span><br><span class="line">  value: number;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type Action &#x3D;</span><br><span class="line">  | &#123; type: &#39;increment&#39; &#125;</span><br><span class="line">  | &#123; type: &#39;decrement&#39; &#125;</span><br><span class="line">  | &#123; type: &#39;incrementAmount&#39;; amount: number &#125;;</span><br><span class="line"></span><br><span class="line">const counterReducer &#x3D; (state: State, action: Action) &#x3D;&gt; &#123;</span><br><span class="line">  switch (action.type) &#123;</span><br><span class="line">    case &#39;increment&#39;:</span><br><span class="line">      return &#123; value: state.value + 1 &#125;;</span><br><span class="line">    case &#39;decrement&#39;:</span><br><span class="line">      return &#123; value: state.value - 1 &#125;;</span><br><span class="line">    case &#39;incrementAmount&#39;:</span><br><span class="line">      return &#123; value: state.value + action.amount &#125;;</span><br><span class="line">    default:</span><br><span class="line">      throw new Error();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const [state, dispatch] &#x3D; useReducer(counterReducer, &#123; value: 0 &#125;);</span><br><span class="line"></span><br><span class="line">dispatch(&#123; type: &#39;increment&#39; &#125;);</span><br><span class="line">dispatch(&#123; type: &#39;decrement&#39; &#125;);</span><br><span class="line">dispatch(&#123; type: &#39;incrementAmount&#39;, amount: 10 &#125;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; TypeScript compilation error</span><br><span class="line">dispatch(&#123; type: &#39;invalidActionType&#39; &#125;);</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-Hooks/" data-id="ckqjsv8kd001h0jrt7azcf7d2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li></ul>
 
     </footer>
   </div>
@@ -492,101 +637,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/" data-id="ckqh02sr5000jzfvhakxw810o" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/" data-id="ckqjsv8jn000b0jrt4mmqf43k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-React/DRAFT-React-Hooks" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/React/DRAFT-React-Hooks/" class="article-date">
-  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/Hooks/">Hooks</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/React/DRAFT-React-Hooks/">React Hooks</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="React-Hooks"><a href="#React-Hooks" class="headerlink" title="React Hooks"></a>React Hooks</h1><h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h2><ul>
-<li>basic hooks: <code>useState</code>, <code>useEffect</code>, <code>useContext</code></li>
-<li>additional: <code>useReducer</code>, <code>useCallback</code>, <code>useMemo</code>, <code>useRef</code>, <code>useImperativeHandle</code>, <code>useLayoutEffect</code>, <code>useDebugValue</code></li>
-</ul>
-<h3 id="setState"><a href="#setState" class="headerlink" title="setState"></a><code>setState</code></h3><ul>
-<li>Unlike the <code>setState</code> method found in class components, <code>useState</code> does not automatically merge update objects.</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">setState(prevState &#x3D;&gt; &#123;</span><br><span class="line">  &#x2F;&#x2F; Object.assign would also work</span><br><span class="line">  return &#123;...prevState, ...updatedValues&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Another option is <code>useReducer</code>, which is more suited for managing state objects that contain multiple sub-values.</li>
-<li><code>setState</code> - If the initial state is the result of an expensive computation, you may provide a function instead, which will be executed only on the initial render</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const [state, setState] &#x3D; useState(() &#x3D;&gt; &#123;</span><br><span class="line">  const initialState &#x3D; someExpensiveComputation(props);</span><br><span class="line">  return initialState;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a><code>useEffect</code></h3><ul>
-<li>you should call hooks at the top level of the render function, this means no conditional hooks</li>
-<li>a second argument to <code>useEffect</code> that is the array of values that the effect depends on:</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">useEffect(</span><br><span class="line">  () &#x3D;&gt; &#123;</span><br><span class="line">    const subscription &#x3D; props.source.subscribe();</span><br><span class="line">    return () &#x3D;&gt; &#123;</span><br><span class="line">      subscription.unsubscribe();</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  [props.source],</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-<h3 id="useMemo"><a href="#useMemo" class="headerlink" title="useMemo"></a><code>useMemo</code></h3><ul>
-<li>If you’re doing expensive calculations while rendering, you can optimize them with <code>useMemo</code>.</li>
-</ul>
-<h2 id="React-Hooks-advantages"><a href="#React-Hooks-advantages" class="headerlink" title="React Hooks advantages"></a>React Hooks advantages</h2><ul>
-<li>hooks are easier to test (as separated functions) and make the code look cleaner/easier to read (i.e. less LOCs)</li>
-<li>code that uses hooks is more readable and have less LOC (<a target="_blank" rel="noopener" href="https://m.habr.com/en/post/443500/">https://m.habr.com/en/post/443500/</a>)</li>
-<li>hooks make code more reusable / composable (also they don’t create another element in DOM like HOCs do)</li>
-<li>you can define several seperate lifecycle methods instead of having all in one method</li>
-<li>hooks are going to work better with future React optimizations (like ahead of time compilation and components folding) - components folding in future (<a target="_blank" rel="noopener" href="https://github.com/facebook/react/issues/7323">https://github.com/facebook/react/issues/7323</a>) - what means dead code elimination at compile time (less JS code to download, less to execute)</li>
-<li>hooks show real nature of React which is functional, using classes make developer easier to do mistakes and use React antipatterns</li>
-<li>hooks are very convenient to re-use stateful logic, this is one of their selling point. But this not applicable when app is built using some state management library and stateful logic doesn’t live in React components. So for desktop in its current state hooks are mostly for readability and to make it future-proof.</li>
-<li>With HOCs we are separating unrelated state logic into different functions and injecting them into the main component as props, although with Hooks, we can solve this just like HOCs but without a wrapper hell (<a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/2000/1*t4NuFEZWHcfPHV_f487GRA.png">https://cdn-images-1.medium.com/max/2000/1*t4NuFEZWHcfPHV_f487GRA.png</a>)</li>
-</ul>
-<h2 id="React-Hooks-vs-HOCs-and-render-props"><a href="#React-Hooks-vs-HOCs-and-render-props" class="headerlink" title="React Hooks vs HOCs and render props"></a>React Hooks vs HOCs and render props</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.freecodecamp.org/news/why-react-hooks-and-how-did-we-even-get-here-aa5ed5dc96af/">https://www.freecodecamp.org/news/why-react-hooks-and-how-did-we-even-get-here-aa5ed5dc96af/</a></li>
-<li><a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*skhvS29DZ6sBkCPBmaMz7g.png">https://cdn-images-1.medium.com/max/800/1*skhvS29DZ6sBkCPBmaMz7g.png</a></li>
-<li>mixins <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*nkp3K5sbw6FuGvoLofVk8g.png">https://cdn-images-1.medium.com/max/800/1*nkp3K5sbw6FuGvoLofVk8g.png</a></li>
-<li>hocs <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*qJZXnzuAgXQsSoibXZH6Zg.png">https://cdn-images-1.medium.com/max/800/1*qJZXnzuAgXQsSoibXZH6Zg.png</a></li>
-<li>render props <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*ii7bRuk2u7jBqunmIzwGrQ.png">https://cdn-images-1.medium.com/max/800/1*ii7bRuk2u7jBqunmIzwGrQ.png</a></li>
-<li>hooks <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*11zyjavrNZlqDypso2EaeQ.png">https://cdn-images-1.medium.com/max/800/1*11zyjavrNZlqDypso2EaeQ.png</a></li>
-</ul>
-<h2 id="Function-Components-and-Hooks-in-TypeScript-example"><a href="#Function-Components-and-Hooks-in-TypeScript-example" class="headerlink" title="Function Components and Hooks in TypeScript example"></a>Function Components and Hooks in TypeScript example</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; import useState next to FunctionComponent</span><br><span class="line">import React, &#123; FunctionComponent, useState &#125; from &#39;react&#39;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; our components props accept a number for the initial value</span><br><span class="line">const Counter:FunctionComponent&lt;&#123; initial?: number &#125;&gt; &#x3D; (&#123; initial &#x3D; 0 &#125;) &#x3D;&gt; &#123;</span><br><span class="line">  &#x2F;&#x2F; since we pass a number here, clicks is going to be a number.</span><br><span class="line">  &#x2F;&#x2F; setClicks is a function that accepts either a number or a function returning</span><br><span class="line">  &#x2F;&#x2F; a number</span><br><span class="line">  const [clicks, setClicks] &#x3D; useState(initial);</span><br><span class="line">  return &lt;&gt;</span><br><span class="line">    &lt;p&gt;Clicks: &#123;clicks&#125;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;button onClick&#x3D;&#123;() &#x3D;&gt; setClicks(clicks+1)&#125;&gt;+&lt;&#x2F;button&gt;</span><br><span class="line">    &lt;button onClick&#x3D;&#123;() &#x3D;&gt; setClicks(clicks-1)&#125;&gt;-&lt;&#x2F;button&gt;</span><br><span class="line">  &lt;&#x2F;&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Hooks-with-TypeScript"><a href="#Hooks-with-TypeScript" class="headerlink" title="Hooks with TypeScript"></a>Hooks with TypeScript</h2><ul>
-<li>Examples how to use with TS: <a target="_blank" rel="noopener" href="https://fettblog.eu/typescript-react/hooks/">https://fettblog.eu/typescript-react/hooks/</a></li>
-<li>TS advanced: <a target="_blank" rel="noopener" href="https://medium.com/@jrwebdev/react-hooks-in-typescript-88fce7001d0d">https://medium.com/@jrwebdev/react-hooks-in-typescript-88fce7001d0d</a></li>
-<li>super advanced: <a target="_blank" rel="noopener" href="https://levelup.gitconnected.com/usetypescript-a-complete-guide-to-react-hooks-and-typescript-db1858d1fb9c">https://levelup.gitconnected.com/usetypescript-a-complete-guide-to-react-hooks-and-typescript-db1858d1fb9c</a></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const Counter:FunctionComponent&lt;&#123; initial?: number &#125;&gt; &#x3D; (&#123; initial &#x3D; 0 &#125;) &#x3D;&gt; &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="with-useState"><a href="#with-useState" class="headerlink" title="with useState"></a>with <code>useState</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; explicitly setting the types</span><br><span class="line">const [value, setValue] &#x3D; useState&lt;number | undefined&gt;(undefined);</span><br><span class="line">const [value, setValue] &#x3D; useState&lt;Array&lt;number&gt;&gt;([]);</span><br><span class="line"></span><br><span class="line">interface MyObject &#123;</span><br><span class="line">  foo: string;</span><br><span class="line">  bar?: number;</span><br><span class="line">&#125;</span><br><span class="line">const [value, setValue] &#x3D; useState&lt;MyObject&gt;(&#123; foo: &#39;hello&#39; &#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="with-useRef"><a href="#with-useRef" class="headerlink" title="with useRef"></a>with <code>useRef</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const inputEl &#x3D; useRef&lt;HTMLInputElement&gt;(null);</span><br></pre></td></tr></table></figure>
-<h3 id="with-useContext"><a href="#with-useContext" class="headerlink" title="with useContext"></a>with <code>useContext</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type Theme &#x3D; &#39;light&#39; | &#39;dark&#39;;</span><br><span class="line">const ThemeContext &#x3D; createContext&lt;Theme&gt;(&#39;dark&#39;);</span><br></pre></td></tr></table></figure>
-<h3 id="with-useReducer"><a href="#with-useReducer" class="headerlink" title="with useReducer"></a>with <code>useReducer</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">interface State &#123;</span><br><span class="line">  value: number;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type Action &#x3D;</span><br><span class="line">  | &#123; type: &#39;increment&#39; &#125;</span><br><span class="line">  | &#123; type: &#39;decrement&#39; &#125;</span><br><span class="line">  | &#123; type: &#39;incrementAmount&#39;; amount: number &#125;;</span><br><span class="line"></span><br><span class="line">const counterReducer &#x3D; (state: State, action: Action) &#x3D;&gt; &#123;</span><br><span class="line">  switch (action.type) &#123;</span><br><span class="line">    case &#39;increment&#39;:</span><br><span class="line">      return &#123; value: state.value + 1 &#125;;</span><br><span class="line">    case &#39;decrement&#39;:</span><br><span class="line">      return &#123; value: state.value - 1 &#125;;</span><br><span class="line">    case &#39;incrementAmount&#39;:</span><br><span class="line">      return &#123; value: state.value + action.amount &#125;;</span><br><span class="line">    default:</span><br><span class="line">      throw new Error();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const [state, dispatch] &#x3D; useReducer(counterReducer, &#123; value: 0 &#125;);</span><br><span class="line"></span><br><span class="line">dispatch(&#123; type: &#39;increment&#39; &#125;);</span><br><span class="line">dispatch(&#123; type: &#39;decrement&#39; &#125;);</span><br><span class="line">dispatch(&#123; type: &#39;incrementAmount&#39;, amount: 10 &#125;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; TypeScript compilation error</span><br><span class="line">dispatch(&#123; type: &#39;invalidActionType&#39; &#125;);</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-Hooks/" data-id="ckqh02sry001pzfvh5l7g3ty2" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li></ul>
 
     </footer>
   </div>
@@ -635,7 +689,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" data-id="ckqh02sr9000nzfvh0niofxta" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" data-id="ckqjsv8jr000f0jrtg12wad05" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
@@ -684,62 +738,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" data-id="ckqh02sri000vzfvh25x62kdd" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" data-id="ckqjsv8jv000o0jrt98hggkq4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Frontend/Frontend-printing-documents" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/Frontend/Frontend-printing-documents/" class="article-date">
-  <time datetime="2020-07-17T18:00:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Frontend/">Frontend</a>►<a class="article-category-link" href="/blog/categories/Frontend/Other/">Other</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/Frontend/Frontend-printing-documents/">Frontend - printing documents</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Print-iframe"><a href="#Print-iframe" class="headerlink" title="Print iframe"></a>Print <code>iframe</code></h1><p>JS:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">window.frames[&quot;printf&quot;].focus();</span><br><span class="line">window.frames[&quot;printf&quot;].print();</span><br></pre></td></tr></table></figure>
-<p>HTML:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe id&#x3D;&quot;printf&quot; name&#x3D;&quot;printf&quot;&gt;&lt;&#x2F;iframe&gt;</span><br></pre></td></tr></table></figure>
-<p>JS:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.getElementById(&quot;printf&quot;).contentWindow.print()​​​​​​;</span><br></pre></td></tr></table></figure>
-<p>More: <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/9616426/javascript-print-iframe-contents-only">https://stackoverflow.com/questions/9616426/javascript-print-iframe-contents-only</a></p>
-<h1 id="Print-div"><a href="#Print-div" class="headerlink" title="Print div"></a>Print <code>div</code></h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printDiv</span>(<span class="params">divName</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> printContents = <span class="built_in">document</span>.getElementById(divName).innerHTML;</span><br><span class="line">  <span class="keyword">var</span> originalContents = <span class="built_in">document</span>.body.innerHTML;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">document</span>.body.innerHTML = printContents;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">window</span>.print();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">document</span>.body.innerHTML = originalContents;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="jspdf-nie-nadaje-sie-do-robienia-plikow-HTML"><a href="#jspdf-nie-nadaje-sie-do-robienia-plikow-HTML" class="headerlink" title="jspdf nie nadaje się do robienia plików HTML"></a><code>jspdf</code> nie nadaje się do robienia plików HTML</h1><p>More: <a target="_blank" rel="noopener" href="https://cdn.rawgit.com/MrRio/jsPDF/master/examples/html2pdf/showcase_supported_html.html">https://cdn.rawgit.com/MrRio/jsPDF/master/examples/html2pdf/showcase_supported_html.html</a></p>
-<h1 id="My-implementation"><a href="#My-implementation" class="headerlink" title="My implementation"></a>My implementation</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> replace <span class="keyword">from</span> <span class="string">&quot;lodash/replace&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; getDataBase64String, MIME_HTML &#125; <span class="keyword">from</span> <span class="string">&quot;../constants/mimeTypes&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> REPLACE_SCRIPT = <span class="string">`</span></span><br><span class="line"><span class="string">&lt;script&gt;</span></span><br><span class="line"><span class="string">  window.loadPrint = function loadPrint() &#123;</span></span><br><span class="line"><span class="string">    window.print();</span></span><br><span class="line"><span class="string">    setTimeout(function () &#123; window.close(); document.clear(); document.close(); &#125;, 100);</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  window.onload = function() &#123; window.loadPrint(); &#125;</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br><span class="line"><span class="string">`</span>;</span><br><span class="line"><span class="keyword">const</span> HTML_TAG = <span class="string">&quot;&lt;/html&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> HTML_TAG_CAPITALIZED = <span class="string">&quot;&lt;/HTML&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printHtmlDocument</span>(<span class="params">dataBase64Source, iframeElement</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> dataBase64Prefix = getDataBase64String(MIME_HTML);</span><br><span class="line">  <span class="keyword">const</span> base64Source = dataBase64Source.slice(dataBase64Prefix.length);</span><br><span class="line">  <span class="keyword">const</span> source = atob(base64Source);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> hasHtmlTag = source.indexOf(HTML_TAG) &gt; -<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">const</span> hasCapitalizedHtmlTag = source.indexOf(HTML_TAG_CAPITALIZED) &gt; -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> processedHtml;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (hasHtmlTag &amp;&amp; !hasCapitalizedHtmlTag) &#123;</span><br><span class="line">    processedHtml = replace(source, HTML_TAG, REPLACE_SCRIPT + HTML_TAG);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!hasHtmlTag &amp;&amp; hasCapitalizedHtmlTag) &#123;</span><br><span class="line">    processedHtml = replace(</span><br><span class="line">      source,</span><br><span class="line">      HTML_TAG_CAPITALIZED,</span><br><span class="line">      REPLACE_SCRIPT + HTML_TAG_CAPITALIZED</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!processedHtml) &#123;</span><br><span class="line">    processedHtml = source + REPLACE_SCRIPT;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> processedBase64Source = btoa(processedHtml);</span><br><span class="line">  <span class="keyword">const</span> processedDataBase64Source = dataBase64Prefix + processedBase64Source;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> iframe = iframeElement || <span class="built_in">document</span>.createElement(<span class="string">&quot;iframe&quot;</span>);</span><br><span class="line">  iframe.src = processedDataBase64Source;</span><br><span class="line">  iframe.height = <span class="string">&quot;0&quot;</span>;</span><br><span class="line">  iframe.width = <span class="string">&quot;0&quot;</span>;</span><br><span class="line">  iframe.title = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(iframe);</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> iframe.remove(), <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    html: processedHtml,</span><br><span class="line">    dataBase64: processedDataBase64Source,</span><br><span class="line">    iframe: iframe,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> printHtmlDocument;</span><br></pre></td></tr></table></figure>
-<h2 id="Tests"><a href="#Tests" class="headerlink" title="Tests"></a>Tests</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> printHtmlDocument, &#123; REPLACE_SCRIPT &#125; <span class="keyword">from</span> <span class="string">&quot;./printHtmlDocument&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; DATA_MIME_HTML_BASE64 &#125; <span class="keyword">from</span> <span class="string">&quot;../constants/mimeTypes&quot;</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">&quot;printHtmlDocument&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> HTML = <span class="string">&quot;&lt;html&gt;&lt;body&gt;Hello&lt;/body&gt;&lt;/html&gt;&quot;</span>;</span><br><span class="line">  <span class="keyword">const</span> HTML_EXPECTED = <span class="string">`&lt;html&gt;&lt;body&gt;Hello&lt;/body&gt;<span class="subst">$&#123;REPLACE_SCRIPT&#125;</span>&lt;/html&gt;`</span>;</span><br><span class="line">  <span class="keyword">const</span> SOURCE = DATA_MIME_HTML_BASE64 + btoa(HTML);</span><br><span class="line">  <span class="keyword">const</span> SOURCE_EXPECTED = DATA_MIME_HTML_BASE64 + btoa(HTML_EXPECTED);</span><br><span class="line"></span><br><span class="line">  test(<span class="string">&quot;it should return properly modified HTML with included REPLACE_SCRIPT script&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    expect(printHtmlDocument(SOURCE).html).toEqual(HTML_EXPECTED);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  test(<span class="string">&quot;it should return properly modified BASE64 source&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    expect(printHtmlDocument(SOURCE).dataBase64).toEqual(SOURCE_EXPECTED);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  test(<span class="string">&quot;it should create iframe element with proper attributes&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> result = printHtmlDocument(SOURCE);</span><br><span class="line">    expect(result.iframe.src).toEqual(SOURCE_EXPECTED);</span><br><span class="line">    expect(result.iframe.height).toEqual(<span class="string">&quot;0&quot;</span>);</span><br><span class="line">    expect(result.iframe.width).toEqual(<span class="string">&quot;0&quot;</span>);</span><br><span class="line">    expect(result.iframe.title).toEqual(<span class="string">&quot;&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/Frontend-printing-documents/" data-id="ckqh02sr2000czfvh9fhm2zu9" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li></ul>
 
     </footer>
   </div>
@@ -799,7 +801,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/" data-id="ckqh02sru001gzfvhd8cgdkft" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/" data-id="ckqjsv8k900180jrt6bmmfsas" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
@@ -811,14 +813,14 @@
 
 
   
-    <article id="post-Mobile/Mobile-Cordova" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Frontend/Frontend-printing-documents" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/blog/2020/07/17/Mobile/Mobile-Cordova/" class="article-date">
+    <a href="/blog/2020/07/17/Frontend/Frontend-printing-documents/" class="article-date">
   <time datetime="2020-07-17T18:00:00.000Z" itemprop="datePublished">2020-07-17</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Mobile/">Mobile</a>►<a class="article-category-link" href="/blog/categories/Mobile/Cordova/">Cordova</a>
+    <a class="article-category-link" href="/blog/categories/Frontend/">Frontend</a>►<a class="article-category-link" href="/blog/categories/Frontend/Other/">Other</a>
   </div>
 
   </div>
@@ -829,7 +831,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/Mobile/Mobile-Cordova/">Cordova overview &amp; plugins</a>
+      <a class="article-title" href="/blog/2020/07/17/Frontend/Frontend-printing-documents/">Frontend - printing documents</a>
     </h1>
   
 
@@ -837,31 +839,24 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Debugging"><a href="#Debugging" class="headerlink" title="Debugging"></a>Debugging</h2><p>At that time, when I needed to find a bug on Android, I had to build the web app, build the Android app with Cordova, launch it on a device or an emulator, launch chrome dev tool to connect to the running app, put my breakpoints, find a possible cause, fix it in my code and do this process all over again. This whole process was taking way too much time.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cordova platform add &lt;platform&gt;</span><br><span class="line">$ cordova platform remove &lt;platform&gt;</span><br><span class="line">$ cordova requirements &lt;platform&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="iOS-emulators-list"><a href="#iOS-emulators-list" class="headerlink" title="iOS emulators list"></a>iOS emulators list</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cordova emulate ios --list</span><br></pre></td></tr></table></figure>
-<h2 id="To-emulate-iOS-12"><a href="#To-emulate-iOS-12" class="headerlink" title="To emulate iOS 12+"></a>To emulate iOS 12+</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cordova run ios --emulator --target&#x3D;&quot;iPad-Air-2, 12.1&quot; --buildFlag&#x3D;&quot;-UseModernBuildSystem&#x3D;0&quot;</span><br><span class="line">&#x2F;&#x2F; -l --livereload doesn&#39;t work</span><br></pre></td></tr></table></figure>
-<h2 id="Run-on-a-device"><a href="#Run-on-a-device" class="headerlink" title="Run on a device"></a>Run on a device</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cordova run android --device</span><br></pre></td></tr></table></figure>
-<h2 id="Use-emulator-with-VSCode-and-live-reload-Ionic"><a href="#Use-emulator-with-VSCode-and-live-reload-Ionic" class="headerlink" title="Use emulator with VSCode and live reload (Ionic)"></a>Use emulator with VSCode and live reload (Ionic)</h2><p><a target="_blank" rel="noopener" href="https://geeklearning.io/live-debug-your-cordova-ionic-application-with-visual-studio-code/">https://geeklearning.io/live-debug-your-cordova-ionic-application-with-visual-studio-code/</a></p>
-<h1 id="iOS"><a href="#iOS" class="headerlink" title="iOS"></a>iOS</h1><p><a target="_blank" rel="noopener" href="https://developer.apple.com/download/more/">https://developer.apple.com/download/more/</a><br><a target="_blank" rel="noopener" href="https://download.developer.apple.com/Developer_Tools/Xcode_9.4.1/Xcode_9.4.1.xip">https://download.developer.apple.com/Developer_Tools/Xcode_9.4.1/Xcode_9.4.1.xip</a></p>
-<h1 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h1><h2 id="Cordova-Android"><a href="#Cordova-Android" class="headerlink" title="Cordova Android"></a>Cordova Android</h2><p><a target="_blank" rel="noopener" href="https://cordova.apache.org/docs/en/latest/guide/platforms/android/#setting-environment-variables">https://cordova.apache.org/docs/en/latest/guide/platforms/android/#setting-environment-variables</a></p>
-<h2 id="How-to-create-AVD"><a href="#How-to-create-AVD" class="headerlink" title="How to create AVD"></a>How to create AVD</h2><p><a target="_blank" rel="noopener" href="https://developer.android.com/studio/run/managing-avds#viewing">https://developer.android.com/studio/run/managing-avds#viewing</a></p>
-<h2 id="Android-Emulator"><a href="#Android-Emulator" class="headerlink" title="Android Emulator"></a>Android Emulator</h2><p><a target="_blank" rel="noopener" href="https://developer.android.com/studio/run/emulator#about">https://developer.android.com/studio/run/emulator#about</a></p>
-<h2 id="Start-the-emulator-from-the-command-line"><a href="#Start-the-emulator-from-the-command-line" class="headerlink" title="Start the emulator from the command line"></a>Start the emulator from the command line</h2><p><a target="_blank" rel="noopener" href="https://developer.android.com/studio/run/emulator-commandline">https://developer.android.com/studio/run/emulator-commandline</a></p>
-<h1 id="Threading"><a href="#Threading" class="headerlink" title="Threading"></a>Threading</h1><h2 id="Threading-in-Android-Java"><a href="#Threading-in-Android-Java" class="headerlink" title="Threading in Android Java:"></a>Threading in Android Java:</h2><p><a target="_blank" rel="noopener" href="http://burnignorance.com/phonegap-tips-and-tricks/implementing-multi-threading-in-android-plugin-for-phonegap-2-6-0/">http://burnignorance.com/phonegap-tips-and-tricks/implementing-multi-threading-in-android-plugin-for-phonegap-2-6-0/</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>) create</span><br><span class="line">&#123;</span><br><span class="line">    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>), ^&#123;</span><br><span class="line">        [self saySomething];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Cordova-plugin-Android-threading"><a href="#Cordova-plugin-Android-threading" class="headerlink" title="Cordova plugin Android threading"></a>Cordova plugin Android threading</h2><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/28980819">https://stackoverflow.com/a/28980819</a></p>
-<h2 id="Threading-Cordova-plugin-iOS"><a href="#Threading-Cordova-plugin-iOS" class="headerlink" title="Threading Cordova plugin iOS"></a>Threading Cordova plugin iOS</h2><p><a target="_blank" rel="noopener" href="https://cordova.apache.org/docs/en/latest/guide/platforms/ios/plugin.html#threading">https://cordova.apache.org/docs/en/latest/guide/platforms/ios/plugin.html#threading</a></p>
-<h2 id="iOS-and-Android-difference"><a href="#iOS-and-Android-difference" class="headerlink" title="iOS and Android difference"></a>iOS and Android difference</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Plugin methods ordinarily execute in the same thread as the main interface. </span><br><span class="line">https:&#x2F;&#x2F;cordova.apache.org&#x2F;docs&#x2F;en&#x2F;latest&#x2F;guide&#x2F;platforms&#x2F;ios&#x2F;plugin.html#threading</span><br></pre></td></tr></table></figure>
-<p>but on Android:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">The plugin&#39;s JavaScript does not run in the main thread of the WebView interface; instead, it runs on the WebCore thread, as does the execute method.</span><br><span class="line">https:&#x2F;&#x2F;cordova.apache.org&#x2F;docs&#x2F;en&#x2F;latest&#x2F;guide&#x2F;platforms&#x2F;android&#x2F;plugin.html#threading</span><br></pre></td></tr></table></figure>
+        <h1 id="Print-iframe"><a href="#Print-iframe" class="headerlink" title="Print iframe"></a>Print <code>iframe</code></h1><p>JS:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">window.frames[&quot;printf&quot;].focus();</span><br><span class="line">window.frames[&quot;printf&quot;].print();</span><br></pre></td></tr></table></figure>
+<p>HTML:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe id&#x3D;&quot;printf&quot; name&#x3D;&quot;printf&quot;&gt;&lt;&#x2F;iframe&gt;</span><br></pre></td></tr></table></figure>
+<p>JS:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.getElementById(&quot;printf&quot;).contentWindow.print()​​​​​​;</span><br></pre></td></tr></table></figure>
+<p>More: <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/9616426/javascript-print-iframe-contents-only">https://stackoverflow.com/questions/9616426/javascript-print-iframe-contents-only</a></p>
+<h1 id="Print-div"><a href="#Print-div" class="headerlink" title="Print div"></a>Print <code>div</code></h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printDiv</span>(<span class="params">divName</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> printContents = <span class="built_in">document</span>.getElementById(divName).innerHTML;</span><br><span class="line">  <span class="keyword">var</span> originalContents = <span class="built_in">document</span>.body.innerHTML;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">document</span>.body.innerHTML = printContents;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">window</span>.print();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">document</span>.body.innerHTML = originalContents;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="jspdf-nie-nadaje-sie-do-robienia-plikow-HTML"><a href="#jspdf-nie-nadaje-sie-do-robienia-plikow-HTML" class="headerlink" title="jspdf nie nadaje się do robienia plików HTML"></a><code>jspdf</code> nie nadaje się do robienia plików HTML</h1><p>More: <a target="_blank" rel="noopener" href="https://cdn.rawgit.com/MrRio/jsPDF/master/examples/html2pdf/showcase_supported_html.html">https://cdn.rawgit.com/MrRio/jsPDF/master/examples/html2pdf/showcase_supported_html.html</a></p>
+<h1 id="My-implementation"><a href="#My-implementation" class="headerlink" title="My implementation"></a>My implementation</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> replace <span class="keyword">from</span> <span class="string">&quot;lodash/replace&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; getDataBase64String, MIME_HTML &#125; <span class="keyword">from</span> <span class="string">&quot;../constants/mimeTypes&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> REPLACE_SCRIPT = <span class="string">`</span></span><br><span class="line"><span class="string">&lt;script&gt;</span></span><br><span class="line"><span class="string">  window.loadPrint = function loadPrint() &#123;</span></span><br><span class="line"><span class="string">    window.print();</span></span><br><span class="line"><span class="string">    setTimeout(function () &#123; window.close(); document.clear(); document.close(); &#125;, 100);</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  window.onload = function() &#123; window.loadPrint(); &#125;</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br><span class="line"><span class="string">`</span>;</span><br><span class="line"><span class="keyword">const</span> HTML_TAG = <span class="string">&quot;&lt;/html&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> HTML_TAG_CAPITALIZED = <span class="string">&quot;&lt;/HTML&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printHtmlDocument</span>(<span class="params">dataBase64Source, iframeElement</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> dataBase64Prefix = getDataBase64String(MIME_HTML);</span><br><span class="line">  <span class="keyword">const</span> base64Source = dataBase64Source.slice(dataBase64Prefix.length);</span><br><span class="line">  <span class="keyword">const</span> source = atob(base64Source);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> hasHtmlTag = source.indexOf(HTML_TAG) &gt; -<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">const</span> hasCapitalizedHtmlTag = source.indexOf(HTML_TAG_CAPITALIZED) &gt; -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> processedHtml;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (hasHtmlTag &amp;&amp; !hasCapitalizedHtmlTag) &#123;</span><br><span class="line">    processedHtml = replace(source, HTML_TAG, REPLACE_SCRIPT + HTML_TAG);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!hasHtmlTag &amp;&amp; hasCapitalizedHtmlTag) &#123;</span><br><span class="line">    processedHtml = replace(</span><br><span class="line">      source,</span><br><span class="line">      HTML_TAG_CAPITALIZED,</span><br><span class="line">      REPLACE_SCRIPT + HTML_TAG_CAPITALIZED</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!processedHtml) &#123;</span><br><span class="line">    processedHtml = source + REPLACE_SCRIPT;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> processedBase64Source = btoa(processedHtml);</span><br><span class="line">  <span class="keyword">const</span> processedDataBase64Source = dataBase64Prefix + processedBase64Source;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> iframe = iframeElement || <span class="built_in">document</span>.createElement(<span class="string">&quot;iframe&quot;</span>);</span><br><span class="line">  iframe.src = processedDataBase64Source;</span><br><span class="line">  iframe.height = <span class="string">&quot;0&quot;</span>;</span><br><span class="line">  iframe.width = <span class="string">&quot;0&quot;</span>;</span><br><span class="line">  iframe.title = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(iframe);</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> iframe.remove(), <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    html: processedHtml,</span><br><span class="line">    dataBase64: processedDataBase64Source,</span><br><span class="line">    iframe: iframe,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> printHtmlDocument;</span><br></pre></td></tr></table></figure>
+<h2 id="Tests"><a href="#Tests" class="headerlink" title="Tests"></a>Tests</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> printHtmlDocument, &#123; REPLACE_SCRIPT &#125; <span class="keyword">from</span> <span class="string">&quot;./printHtmlDocument&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; DATA_MIME_HTML_BASE64 &#125; <span class="keyword">from</span> <span class="string">&quot;../constants/mimeTypes&quot;</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">&quot;printHtmlDocument&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> HTML = <span class="string">&quot;&lt;html&gt;&lt;body&gt;Hello&lt;/body&gt;&lt;/html&gt;&quot;</span>;</span><br><span class="line">  <span class="keyword">const</span> HTML_EXPECTED = <span class="string">`&lt;html&gt;&lt;body&gt;Hello&lt;/body&gt;<span class="subst">$&#123;REPLACE_SCRIPT&#125;</span>&lt;/html&gt;`</span>;</span><br><span class="line">  <span class="keyword">const</span> SOURCE = DATA_MIME_HTML_BASE64 + btoa(HTML);</span><br><span class="line">  <span class="keyword">const</span> SOURCE_EXPECTED = DATA_MIME_HTML_BASE64 + btoa(HTML_EXPECTED);</span><br><span class="line"></span><br><span class="line">  test(<span class="string">&quot;it should return properly modified HTML with included REPLACE_SCRIPT script&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    expect(printHtmlDocument(SOURCE).html).toEqual(HTML_EXPECTED);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  test(<span class="string">&quot;it should return properly modified BASE64 source&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    expect(printHtmlDocument(SOURCE).dataBase64).toEqual(SOURCE_EXPECTED);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  test(<span class="string">&quot;it should create iframe element with proper attributes&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> result = printHtmlDocument(SOURCE);</span><br><span class="line">    expect(result.iframe.src).toEqual(SOURCE_EXPECTED);</span><br><span class="line">    expect(result.iframe.height).toEqual(<span class="string">&quot;0&quot;</span>);</span><br><span class="line">    expect(result.iframe.width).toEqual(<span class="string">&quot;0&quot;</span>);</span><br><span class="line">    expect(result.iframe.title).toEqual(<span class="string">&quot;&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Mobile/Mobile-Cordova/" data-id="ckqh02srq0018zfvh5g7ierqp" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/Frontend-printing-documents/" data-id="ckqjsv8ji00050jrtfn4f6hej" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li></ul>
 
     </footer>
   </div>
@@ -916,7 +911,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Backend/" style="font-size: 12px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 14px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 12px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 16px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 14px;">Programming languages</a> <a href="/blog/tags/React/" style="font-size: 18px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 14px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 18px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 12px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
+      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Backend/" style="font-size: 14px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 14px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 12px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 16px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 14px;">Programming languages</a> <a href="/blog/tags/React/" style="font-size: 18px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 14px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 18px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 12px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
     </div>
   </div>
 
@@ -925,7 +920,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
     </div>
   </div>
 
@@ -938,6 +933,10 @@
       <ul>
         
           <li>
+            <a href="/blog/2021/06/29/Nodejs/Nodejs-threads/">Node.js threads</a>
+          </li>
+        
+          <li>
             <a href="/blog/2020/12/22/Mobile/Mobile-Swift/">Notes on Swift</a>
           </li>
         
@@ -947,10 +946,6 @@
         
           <li>
             <a href="/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/">MobX vs Redux</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/">JavaScript static classes, methods &amp; properties</a>
           </li>
         
           <li>

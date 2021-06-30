@@ -83,6 +83,103 @@
 </div>
 
   
+    <article id="post-Nodejs/Nodejs-basics" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/10/24/Nodejs/Nodejs-basics/" class="article-date">
+  <time datetime="2019-10-24T20:33:05.000Z" itemprop="datePublished">2019-10-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/blog/categories/Node-js/Basics/">Basics</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/10/24/Nodejs/Nodejs-basics/">Node.js introduction - pros and cons, qualities</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="What-is-Node-js-and-its-pros-and-cons"><a href="#What-is-Node-js-and-its-pros-and-cons" class="headerlink" title="What is Node.js and its pros and cons"></a>What is Node.js and its pros and cons</h1><p>Most of the information below is taken from <a target="_blank" rel="noopener" href="https://www.netguru.com/blog">Netguru blog</a>.</p>
+<h2 id="What-is"><a href="#What-is" class="headerlink" title="What is"></a>What is</h2><p>Node.js’ famous <strong>asynchronous I/O</strong> and its <strong>single-threaded event loop</strong> models that can efficiently <strong>handle concurrent requests</strong>. Node.js is based on an <strong>event-driven</strong>, <strong>non-blocking I/O model</strong>, and <strong>uses only a single CPU core</strong>. The non-blocking IO system lets you process numerous requests concurrently.</p>
+<ul>
+<li>That’s how we can conclude Node.js is single-threaded but <strong>in the background it uses <em>multiple threads</em> to execute asynchronous code with the help of the libuv library.</strong> Only the event loop is single-threaded.</li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/better-programming/is-node-js-really-single-threaded-7ea59bcc8d64">https://medium.com/better-programming/is-node-js-really-single-threaded-7ea59bcc8d64</a> While Node.js itself is multithreaded – I/O and other such operations run from a thread pool – JavaScript code executed by Node.js runs, for all practical purposes, in a single thread. This isn’t a limitation of Node.js itself, but of the V8 JavaScript engine and of JavaScript implementations generally.</li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/40029919">https://stackoverflow.com/a/40029919</a> The single threaded, async nature does make things complicated. But do you honestly think it’s more complicated than threading? One race condition can ruin your entire month! Or empty out your thread pool due to some setting somewhere and watch your response time slow to a crawl! Not to mention deadlocks, priority inversions, and all the other gyrations that go with multithreading.</li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/17959746">https://stackoverflow.com/a/17959746</a> The main functionality differentiation between NodeJs based servers and other IIS/ Apache based servers, <strong>NodeJs for every connection request do not create a new thread</strong> instead it receives all request on single thread and delegates it to be handled by many background workers to do the task as required.</li>
+<li><a target="_blank" rel="noopener" href="https://codeburst.io/how-node-js-single-thread-mechanism-work-understanding-event-loop-in-nodejs-230f7440b0ea">https://codeburst.io/how-node-js-single-thread-mechanism-work-understanding-event-loop-in-nodejs-230f7440b0ea</a></li>
+</ul>
+<p>Node.js comes with many <strong>APIs suitable for backend development</strong>, e.g. the support for <strong>file systems, http requests, streams, child processes</strong>, etc. Browsers do offer some basic support for file systems or http requests, but those are usually limited due to security concerns.</p>
+<p>More:</p>
+<ul>
+<li>Node.js event loop phases explained <a target="_blank" rel="noopener" href="https://codeburst.io/how-node-js-single-thread-mechanism-work-understanding-event-loop-in-nodejs-230f7440b0ea">https://codeburst.io/how-node-js-single-thread-mechanism-work-understanding-event-loop-in-nodejs-230f7440b0ea</a></li>
+</ul>
+<h2 id="Pros"><a href="#Pros" class="headerlink" title="Pros"></a>Pros</h2><p>Nowadays it is possible to write both front-end and back-end of web applications in Javascript, making app deployment much easier and more efficient. </p>
+<p>Node.js as your server technology gives your team a great boost that comes from <strong>using the same language on both the front end and the back end</strong>. This, means that <strong>your team is more efficient and cross-functional</strong>, which, in turn, leads to <strong>lower development costs</strong>.</p>
+<p>Node’s ability to <strong>process many requests with low response times,</strong> as well as <strong>sharing things such as validation code between the client and server</strong>, make it a great fit for modern web applications that carry out lots of processing on the client’s side.</p>
+<p>For SPAs apps Node.js would only return the index page (index.html) while data would be sent via REST interfaces and controllers implemented server-side. From the design point of view, such approach will ensure the <strong>clear separation of concerns (SoC) between models, controllers, and views</strong> with all data-related services implemented server-side.</p>
+<p>Node.js is especially <strong>popular in real-time applications</strong> or when we seek a <strong>fast and scalable solution</strong>. Node.js. An event-driven, non-blocking server was a good solution for an <strong>instant propagation of updates</strong>, which required <strong>holding a lot of open connections</strong>.</p>
+<p>In particular, Node <strong>has a powerful Event API</strong> that facilitates creating certain kinds of objects (“emitters”) that periodically emit named events “listened” by event handlers. Thanks to this functionality, Node.js makes it <strong>easy to implement server-side events and push notifications</strong> widely used in instant messaging and other real-time applications.</p>
+<p>Node’s event-based architecture also <strong>works well with the WebSockets protocol</strong> that facilitates a fast two-way exchange of messages between the client and the server via one open connection. By installing WebSockets libraries on the server and the client side, you can implement real-time messaging that has lower overheads and latency, and faster data transfer than most other, more conventional, solutions.</p>
+<p>IoT developers working in data-intensive scenarios can leverage the <strong>low resource requirements of Node.js</strong>. <strong>Low memory requirements</strong> allow for the easy integration of Node.js as software into single-board controllers such as Arduino, widely used for building digital devices that make up IoT systems. Finally, the Node community has been an early adopter of the IoT technology, creating over 80 packages for Arduino controllers and multiple packages for the Pebble and Fitbit wearable devices widely used in IoT systems.</p>
+<p>Node.js <strong>offers fewer abstractions</strong> than for example ASP.NET, allowing developers to <strong>write code using a multitude of small components</strong> rather than configuring a vast number of parameters.</p>
+<p>Node.js will prove <strong>useful in situations when something faster and more scalable than Rails is needed</strong>.</p>
+<p>The Node.js developers <strong>community is a very active and vibrant group</strong> of developers who contribute to constant improvement of Node.js.</p>
+<h2 id="Cons"><a href="#Cons" class="headerlink" title="Cons"></a>Cons</h2><p>Node.js is <strong>not so good for developing CPU-intensive</strong> applications that involve the generation and processing of images, audio, or video. <strong>Being a single-threaded solution, Node.js may be become unresponsive and slow in processing large files.</strong> In this case, conventional multi-threaded solutions will be your best bet.</p>
+<ul>
+<li>So just spawn workers, well! That’s the whole deal with Node.js. Heavy stuff can run in another process, and you process it’s results in a lightweight callback.</li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/17959663/why-is-node-js-single-threaded#comment26250255_17959746">https://stackoverflow.com/questions/17959663/why-is-node-js-single-threaded#comment26250255_17959746</a> Converting product data into a UI is not CPU intensive, nor is calculating orders or the like. Most of the web is pretty transactional. CPU intensive stuff is things like converting videos, converting image formats, etc. Much of that is due to file i/o which, actually, node does pretty well. And makes it <strong>easy to offload to another process that’s dedicated to the converting</strong>.</li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/17959663/why-is-node-js-single-threaded#comment26252014_17959746">https://stackoverflow.com/questions/17959663/why-is-node-js-single-threaded#comment26252014_17959746</a></li>
+</ul>
+<p>Node.js is <strong>not best choice for applications with a vast code</strong> <strong>base</strong> – since Java provides strongly typed sources, refactoring it and bug fixing will be more straightforward during its maintenance.</p>
+<h2 id="Infra"><a href="#Infra" class="headerlink" title="Infra"></a>Infra</h2><p>Node.js <strong>works perfectly with the leading cloud computing tools</strong>, keeps the infrastructure costs under control, and <strong>gives you access to the best services that predict usage spikes, expand resources and control the development process</strong>.</p>
+<p>With AWS and Node.js you get a set of development tools that can predict and detect an increase in web application traffic and usage to automatically add virtual machines to meet the new requirements.</p>
+<h3 id="SERVERLESS"><a href="#SERVERLESS" class="headerlink" title="SERVERLESS"></a>SERVERLESS</h3><p>Node.js <strong>allows for serverless app development</strong>. The easiest way to do it is to use the <strong>Serverless framework</strong> powered by AWS. You can build apps directly in the AWS environment. All the processes take place there, so you don’t need DevOps, because everything is configured automatically. Your app’s developer writes code, uploads it to Serverless, and it’s all set up.</p>
+<h3 id="MICROSERVICES"><a href="#MICROSERVICES" class="headerlink" title="MICROSERVICES"></a>MICROSERVICES</h3><p>Node.js <strong>is an excellent pick for the microservices architecture approach</strong>, which offers excellent scalability and stability.</p>
+<p>Node.js with microservices significantly reduces application deployment time and <strong>enhances efficiency, maintainability, and scalability of your applications</strong>.</p>
+<p>Using microservices, you <strong>build your app from separate small blocks that perform one function</strong> (e.g., checkout in an e-commerce app, product page, shopping cart, etc). Each block receives information, computes it, and delivers the result. <strong>You can add, multiply, and remove these elements according to your needs.</strong> <strong>This brings stability.</strong> First of all, if one element crashes, for instance, the checkout, the users who are browsing the other parts of the store will not notice it.</p>
+<p>Building software with a microservices architecture is fast and easy, however, if you include too many blocks and too many relations among them, <strong>supporting and expanding such an architecture may become tricky when you put dozens of element together</strong>.</p>
+<h3 id="EXAMPLES"><a href="#EXAMPLES" class="headerlink" title="EXAMPLES"></a>EXAMPLES</h3><p>PayPal, a worldwide online payments system, has also moved their backend development from Java to JavaScript and Node.js. Beforehand, the engineering teams at the company were divided into those who code for the browser and those who code for the application layer, and it didn’t work perfectly. Then, full-stack engineers came to the rescue, but that model wasn’t ideal too. Adopting Node.js solved their problems, as it allowed for writing the browser and the server applications in the same programming language – JavaScript. As a result, the unified team is able to understand problems at both ends and react more effectively to the customer needs. Read more here about how smaller Node.js team started work 2 months after bigger Java team and catched them up: <a target="_blank" rel="noopener" href="https://www.paypal-engineering.com/2013/11/22/node-js-at-paypal/">https://www.paypal-engineering.com/2013/11/22/node-js-at-paypal/</a></p>
+<h3 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a>Sources</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://medium.com/paypal-engineering/node-js-at-paypal-4e2d1d08ce4f">https://medium.com/paypal-engineering/node-js-at-paypal-4e2d1d08ce4f</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.netguru.com/hs-fs/hubfs/Blog_posts_-_images/image1-15.png?width=980&amp;height=755&amp;name=image1-15.png">https://www.netguru.com/hs-fs/hubfs/Blog_posts_-_images/image1-15.png?width=980&amp;height=755&amp;name=image1-15.png</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.netguru.com/blog/top-companies-used-nodejs-production">https://www.netguru.com/blog/top-companies-used-nodejs-production</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.netguru.com/blog/node.js-scalability-how-your-web-application-can-benefit-from-node.js">https://www.netguru.com/blog/node.js-scalability-how-your-web-application-can-benefit-from-node.js</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.netguru.com/blog/node.js-vs.-asp.net-for-enterprise-solutions-which-stack-to-choose-for-advanced-web-applications">https://www.netguru.com/blog/node.js-vs.-asp.net-for-enterprise-solutions-which-stack-to-choose-for-advanced-web-applications</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.netguru.com/blog/pros-cons-use-node.js-backend">https://www.netguru.com/blog/pros-cons-use-node.js-backend</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.netguru.com/blog/use-node-js-backend">https://www.netguru.com/blog/use-node-js-backend</a></li>
+</ul>
+<h1 id="Advantages-of-development-in-Node-js"><a href="#Advantages-of-development-in-Node-js" class="headerlink" title="Advantages of development in Node.js"></a>Advantages of development in Node.js</h1><ul>
+<li><strong>Serialization</strong> - in Node.js mostly builtin, we use <code>response.json()</code> or <code>json.stringify()</code></li>
+<li><code>schema</code> - joi, parsing and validation of form values, parsing and validation of query string, schm, ajv, <a target="_blank" rel="noopener" href="https://scotch.io/tutorials/node-api-schema-validation-with-joi">https://scotch.io/tutorials/node-api-schema-validation-with-joi</a></li>
+<li>Very solid article about Node.js backend that uses TypeScript, TypeORM, SQL database, Winston logger, PM2 process manager, Redis: <a target="_blank" rel="noopener" href="https://itnext.io/production-ready-node-js-rest-apis-setup-using-typescript-postgresql-and-redis-a9525871407">https://itnext.io/production-ready-node-js-rest-apis-setup-using-typescript-postgresql-and-redis-a9525871407</a></li>
+<li>PM2 process manager or Rollbar help detect and track errors easily, boosting developers’ productivity</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2019/10/24/Nodejs/Nodejs-basics/" data-id="ckqjsv8ka00190jrtfsi8g3d2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-JavaScript/JavaScript-CommonJS-vs-AMD" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2019/09/22/JavaScript/JavaScript-CommonJS-vs-AMD/" class="article-date">
@@ -128,7 +225,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/09/22/JavaScript/JavaScript-CommonJS-vs-AMD/" data-id="ckqh02sr7000lzfvh6ds5dm9k" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/09/22/JavaScript/JavaScript-CommonJS-vs-AMD/" data-id="ckqjsv8jo000c0jrth0r6hyye" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
@@ -173,7 +270,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/09/22/JavaScript/JavaScript-performance-time-measurement-of-function-calls/" data-id="ckqh02srd000rzfvh8ww0f70o" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/09/22/JavaScript/JavaScript-performance-time-measurement-of-function-calls/" data-id="ckqjsv8ju000l0jrt45ak9129" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
@@ -232,7 +329,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/07/05/JavaScript/JavaScript-parseInt-vs-Number-comparision/" data-id="ckqh02srb000pzfvh0h2h8gg1" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/07/05/JavaScript/JavaScript-parseInt-vs-Number-comparision/" data-id="ckqjsv8js000h0jrtckuh031p" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
@@ -338,10 +435,496 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/07/03/Software%20Engineering/Software-Engineering-Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps/" data-id="ckqh02su0006szfvh8doz81g4" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/07/03/Software%20Engineering/Software-Engineering-Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps/" data-id="ckqjsv8mi007b0jrt44eh4qpj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-JavaScript/DRAFT-JavaScript-How-to-test-extended-classes-in-JavaScript" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/01/01/JavaScript/DRAFT-JavaScript-How-to-test-extended-classes-in-JavaScript/" class="article-date">
+  <time datetime="2019-01-01T09:00:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Tests/">Tests</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/01/01/JavaScript/DRAFT-JavaScript-How-to-test-extended-classes-in-JavaScript/">[DRAFT] How to test extended classes in JavaScript</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><a target="_blank" rel="noopener" href="https://blog.arkency.com/2014/09/unit-tests-vs-class-tests/">https://blog.arkency.com/2014/09/unit-tests-vs-class-tests/</a></li>
+<li><a target="_blank" rel="noopener" href="https://martinfowler.com/bliki/UnitTest.html">https://martinfowler.com/bliki/UnitTest.html</a></li>
+<li>testowanie tylko “publicznych” metod klas/obiektów pozwala zaoszczędzić czas na refaktor poprzez brak konieczności zmiany istniejących testów, zapewniając że główna logika API działa dobrze — Existing tests not only helped him to assert correctness of the new solution but more importantly they did not stand in his way during the refactoring. As he admitted, he wouldn’t get it done as quickly as he did had he had to address failing unit tests throughout the process.</li>
+<li>test “class” units because pragmatically it makes our tests much more stable — like, you don’t need to change test if you extracted something to a method or splitted one coupled class to two. Do you really want to test against structure of your code, or against what the code does? I choose latter solution.</li>
+<li>About the “Integration Test” and “Unit Test” from Martin Fowler:<br>“Object-oriented design tends to treat a class as the unit, procedural or functional approaches might consider a single function as a unit. But really it’s a situational thing — the team decides what makes sense to be a unit for the purposes of their understanding of the system and its testing. Although I start with the notion of the unit being a class, I often take a bunch of closely related classes and treat them as a single unit. Rarely I might take a subset of methods in a class as a unit. However you define it doesn’t really matter.” <a target="_blank" rel="noopener" href="https://martinfowler.com/bliki/UnitTest.html">https://martinfowler.com/bliki/UnitTest.html</a></li>
+<li>Tests are meant to protect you from regressions and you don’t get that value when you need to update the tests whenever the implementation changes. For the same reason it destroys the point of Red-Green-Refactor approach.</li>
+<li>Now, would I see value in having a test for the Pricing class directly? Having more tests is good, right? Well, no — tests are code. The more code you have the more you need to maintain. It makes a bigger cost. It also builds a more complex mental model. Low-level tests are often causing more troubles than profit.</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/JavaScript/DRAFT-JavaScript-How-to-test-extended-classes-in-JavaScript/" data-id="ckqjsv8jk00070jrt0cpkd2vd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Software Engineering/DRAFT-Software-Engineering-OOP-SOLID" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-OOP-SOLID/" class="article-date">
+  <time datetime="2019-01-01T09:00:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-OOP-SOLID/">[DRAFT] OOP - SOLID</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a target="_blank" rel="noopener" href="https://blog.bitsrc.io/solid-principles-every-developer-should-know-b3bfa96bb688">Examples with JS code</a></p>
+<h1 id="S-SRP-Single-Responsibility-Principle"><a href="#S-SRP-Single-Responsibility-Principle" class="headerlink" title="S - SRP - Single Responsibility Principle"></a>S - SRP - Single Responsibility Principle</h1><ul>
+<li>class should have just a one purpose - so for example <code>Animal</code> class shouldn’t perform logs to different outputs or shouldn’t perform a role of database of animals</li>
+<li>don’t:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name: <span class="built_in">string</span></span>)</span> &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">getAnimalName</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">saveAnimal</span>(<span class="params">a: Animal</span>)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>do:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name: <span class="built_in">string</span></span>)</span> &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">getAnimalName</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnimalDB</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">getAnimal</span>(<span class="params">a: Animal</span>)</span> &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">saveAnimal</span>(<span class="params">a: Animal</span>)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>animal class shouldn’t be responsible for database management like saving</li>
+</ul>
+<h1 id="O-OCP-Open-Closed-Principle"><a href="#O-OCP-Open-Closed-Principle" class="headerlink" title="O - OCP - Open/Closed Principle"></a>O - OCP - <strong>Open/Closed Principle</strong></h1><ul>
+<li>classes should be open for extensions (new methods) but <strong>closed for modifications</strong> (don’t change method) - I’d say, you can change methods but not the contract what they receive and return</li>
+<li>I’d say this role is more about abstraction and use of inheritance, for example by having a base class <code>Animal</code> with method <code>makeSound</code>, which is going to be implemented by child classes <code>Lion</code> or <code>Snake</code></li>
+<li>don’t:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">AnimalSound</span>(<span class="params">a: <span class="built_in">Array</span>&lt;Animal&gt;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt;= a.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">&#x27;lion&#x27;</span>)</span><br><span class="line">            log(<span class="string">&#x27;roar&#x27;</span>);</span><br><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">&#x27;mouse&#x27;</span>)</span><br><span class="line">            log(<span class="string">&#x27;squeak&#x27;</span>);</span><br><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">&#x27;snake&#x27;</span>)</span><br><span class="line">        log(<span class="string">&#x27;hiss&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">AnimalSound(animals);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>You see, for every new animal, a new logic is added to the AnimalSound function. This is quite a simple example. When your application grows and becomes complex, you will see that the <code>if</code> statement would be repeated over and over again in the <code>AnimalSound</code> function each time a new animal is added, all over the application. Do instead:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    makeSound();</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Lion</span> <span class="keyword">extends</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">makeSound</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;roar&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Squirrel</span> <span class="keyword">extends</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">makeSound</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;squeak&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Snake</span> <span class="keyword">extends</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">makeSound</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;hiss&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">AnimalSound</span>(<span class="params">a: <span class="built_in">Array</span>&lt;Animal&gt;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt;= a.length; i++) &#123;</span><br><span class="line">        log(a[i].makeSound());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">AnimalSound(animals);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>another example:</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Discount</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">giveDiscount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.customer == <span class="string">&quot;fav&quot;</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.price * <span class="number">0.2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.customer == <span class="string">&quot;vip&quot;</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.price * <span class="number">0.4</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>do instead:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Discount</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">giveDiscount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.price * <span class="number">0.2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class VIPDiscount: Discount &#123;</span><br><span class="line">    <span class="function"><span class="title">getDiscount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>.getDiscount() * <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="L-LSP-Liskov-Substitution-Principle"><a href="#L-LSP-Liskov-Substitution-Principle" class="headerlink" title="L - LSP - Liskov Substitution Principle"></a>L - LSP - <strong>Liskov Substitution Principle</strong></h1><ul>
+<li>if something uses a class, it should be able to use the class and the base class / child class of it</li>
+<li>sub-class must be substitutable for its super-class</li>
+<li>PL: nie sprawdzamy typu klasy, wykorzystujemy metody wirtualne i implementujemy je różnie w róznych klasach, ale wywołujemy tak samo</li>
+</ul>
+<h1 id="I-ISP-Interface-Segregation-Principle"><a href="#I-ISP-Interface-Segregation-Principle" class="headerlink" title="I - ISP - Interface Segregation Principle"></a>I - ISP - <strong>Interface Segregation Principle</strong></h1><ul>
+<li>you should write few interfaces instead of a big one interface that contains all the interfaces</li>
+<li>make fine grained interfaces that are client specific</li>
+<li>clients should not be forced to depend upon interfaces that they do not use</li>
+<li>PL: nie tworzymy metod, których nie będziemy mogli zaimplementować w klasach korzystających z interfejsu, np. przykład z <code>draw</code> vs <code>drawCircle</code>, <code>drawTriangle</code></li>
+</ul>
+<h1 id="D-DIP-Dependency-Inversion-Principle"><a href="#D-DIP-Dependency-Inversion-Principle" class="headerlink" title="D - DIP - Dependency Inversion Principle"></a>D - DIP - Dependency Inversion Principle</h1><ul>
+<li>you should create new class by placing in the constructor of it the interface of a class that the new class depends on</li>
+<li>PL: polegamy na interfejsach, nie ich implementacjach - aby można było podmienić lub zamockować</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-OOP-SOLID/" data-id="ckqjsv8kj001v0jrtfz0ucnbm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Software Engineering/DRAFT-Software-Engineering-PL-C-OOP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-PL-C-OOP/" class="article-date">
+  <time datetime="2019-01-01T09:00:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-PL-C-OOP/">[DRAFT] [PL] C# &amp; OOP</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Poniższe notatki to głównie skrót i spis pojęć z kursu dostępnego na stronie <a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku">https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku</a> i <a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty</a> , uzupełniony o inne źródła.</p>
+<h2 id="Cechy-C"><a href="#Cechy-C" class="headerlink" title="Cechy C#:"></a>Cechy C#:</h2><ul>
+<li>warunki logiczne (boolean conditions)</li>
+<li>garbage collector<ul>
+<li>TODO: jak działa?</li>
+</ul>
+</li>
+<li>standardowe biblioteki<ul>
+<li>TODO: na przykład jakie?</li>
+</ul>
+</li>
+<li>właściwości i zdarzenia (properties, events)</li>
+<li>delegaty oraz zarządzanie zdarzeniami (Delegates, Events Management)</li>
+<li>łatwość używania typów generycznych (Generics)</li>
+<li>kompilacja warunkowa</li>
+<li>wielowątkowość</li>
+<li>LINQ i wyrażenia lambda (lambda expressions)</li>
+<li>deklaracje przestrzeni nazw</li>
+</ul>
+<hr>
+<h1 id="Czesc-1"><a href="#Czesc-1" class="headerlink" title="Część 1"></a>Część 1</h1><p><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku">https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku</a></p>
+<h2 id="Notatki-z-C"><a href="#Notatki-z-C" class="headerlink" title="Notatki z C#:"></a>Notatki z C#:</h2><ul>
+<li>główna metoda całego programu to <code>Main</code></li>
+</ul>
+<p><strong>Podstawowe części języka:</strong></p>
+<ul>
+<li>instrukcje i wyrażenia</li>
+<li>komentarze</li>
+<li>kompilowanie i wykonywanie</li>
+<li>słowa kluczowe</li>
+</ul>
+<p><strong>Typy:</strong></p>
+<ul>
+<li>typy wartościowe (value types) - w tym również struct</li>
+<li>typy referencyjne (reference types)</li>
+<li>typy wskaźnikowe (pointer types)</li>
+<li>konwersja niejawna (implicit type conversion)</li>
+<li>konwersja jawna (explicit type conversion)</li>
+<li>zmienne, typy integralne (integral types)</li>
+<li>typy zmiennoprzecinkowe (floating point types)</li>
+<li>typy dziesiętne (decimal types)</li>
+<li>typy logiczne (boolean types)</li>
+<li>typy puste (nullable types)</li>
+</ul>
+<p><strong>Stałe i literały:</strong></p>
+<ul>
+<li>Stałe odnoszą się do wartości, których program nie może zmieniać w trakcie wykonywania. Te stałe wartości nazywane są również literałami. Stałe traktowane są jak zwykłe zmienne z zaznaczeniem, że ich wartości nie mogą być modyfikowane.</li>
+<li>literały całkowite (integer literals)</li>
+<li>literały zmiennoprzecinkowe (floating-point literals)</li>
+<li>literały znakowe (character literals)</li>
+<li>literały łańcuchowe (string literals)</li>
+</ul>
+<p><strong>Operatory:</strong></p>
+<ul>
+<li>operatory arytmetyczne</li>
+<li>operatory relacyjne</li>
+<li>operatory logiczne</li>
+<li>operatory bitowe</li>
+<li>operatory przypisania</li>
+<li>różne inne operatory</li>
+</ul>
+<p><strong>Sterowanie:</strong></p>
+<ul>
+<li>instrukcja warunkowa if</li>
+<li>instrukcja warunkowa if..else</li>
+<li>zagnieżdżona instrukcja warunkowa if</li>
+<li>instrukcja wyboru switch</li>
+<li>zagnieżdżona instrukcja wyboru switch</li>
+<li>pętla while</li>
+<li>pętla for</li>
+<li>pętla do..while</li>
+<li>polecenie break</li>
+<li>polecenie continue</li>
+</ul>
+<p><strong>Parametry, inne typy i tablice:</strong></p>
+<ul>
+<li>parametry typu wartościowego, referencyjnego, wyjściowego</li>
+<li>typy puste</li>
+<li>tablice wielowymiarowe</li>
+<li>tablice postrzępione</li>
+<li>klasa <code>Array</code></li>
+</ul>
+<p><strong>Klasy:</strong></p>
+<ul>
+<li><strong>Klasa</strong> może dziedziczyć z jednej klasy, ale może implementować wiele interfejsów</li>
+<li><strong>metody</strong> klasy (methods)</li>
+<li><strong>pola</strong> klasy (fields)</li>
+<li><strong>właściwości</strong> klasy (properties) - Właściwości nie służą do przechowywania wartości. Przy pomocy accesorów <strong>mają dostęp do pól</strong>, które reprezentują.</li>
+</ul>
+<hr>
+<p><strong>Class member, np. pole lub metoda</strong></p>
+<p>Class members, in C#, are the members of a class that represent the data and behavior of a class.</p>
+<p>Class members are members declared in the class and all those (excluding constructors and destructors) declared in all classes in its inheritance hierarchy.</p>
+<p><strong>Class members</strong> can be of the following types:</p>
+<ul>
+<li><strong>Constants</strong> representing constant values</li>
+<li><strong>Fields</strong> representing variables</li>
+<li><strong>Methods</strong> providing services like calculation or other actions on its members</li>
+<li><strong>Properties</strong> that define the class features and include actions to fetch and modify them</li>
+<li><strong>Events</strong> generated to communicate between different classes /objects</li>
+<li><strong>Indexers</strong> that help in accessing class instances similar to arrays</li>
+<li><strong>Operators</strong> that define semantics when used in expressions with class instances</li>
+<li><strong>Instance constructors</strong> to initialize members of class instances</li>
+<li><strong>Static constructor</strong> to initialize the class itself</li>
+<li><strong>Destructors</strong> to execute actions necessary to be performed before class instances are discarded</li>
+<li>Types that are local to the class (nested type)</li>
+</ul>
+<p><strong>Class members are initialized in constructors</strong> which can be overloaded with different signatures. For classes that do not have constructor, <strong>a default constructor that initializes the class members (to default values) will be generated</strong>.</p>
+<p>Source: <a target="_blank" rel="noopener" href="https://www.techopedia.com/definition/25589/class-members-c-sharp">https://www.techopedia.com/definition/25589/class-members-c-sharp</a></p>
+<hr>
+<p><strong>Dalej o klasach:</strong></p>
+<ul>
+<li>instancje klasy</li>
+<li><strong>hermetyzacja/enkapsulacja,</strong> inaczej <strong>data hiding</strong> (or more accurately <strong>encapsulation</strong>)</li>
+<li><strong>modyfikatory dostępu</strong> w C# jako część hermetyzacji - public, private, protected, internal, protected internal</li>
+<li>typy wyliczeniowe <strong>enum</strong> - wartościowy typ danych - wartości, których nie można dziedziczyć oraz przekazać przez dziedzicznie</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">enum</span> DniTygodnia</span><br><span class="line">&#123;</span><br><span class="line">  Poniedzialek = <span class="number">1</span>,</span><br><span class="line">  Wtorek,</span><br><span class="line">  Sroda,</span><br><span class="line">  Czwartek,</span><br><span class="line">  Piatek,</span><br><span class="line">  Sobota,</span><br><span class="line">  Niedziela</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>struktury <strong>struct</strong> - W języku C# struktura to <strong>wartościowy</strong> typ danych.</li>
+</ul>
+<hr>
+<p><strong>Klasy i struktury</strong> mają następujące różnice:</p>
+<ul>
+<li>klasy są typem referencyjnym a struktury typem wartościowym;</li>
+<li>struktury nie wspierają dziedziczenia;</li>
+<li>struktury nie mogą mieć domyślnego konstruktora.</li>
+</ul>
+<hr>
+<p>  <strong>Dalej o klasach:</strong></p>
+<ul>
+<li><strong>konstruktor</strong> i <strong>destruktor</strong> klasy</li>
+<li><strong>statyczne składniki</strong> klasy</li>
+</ul>
+<p>Składniki statyczne możemy zdefiniować za pomocą słowa kluczowego <strong>static</strong>. Jeżeli zadeklarujemy składową jako statyczną nie ważne jak wiele obiektów klasy utworzymy, <strong>istnieje zawsze tylko jedna kopia składowej statycznej.</strong></p>
+<ul>
+<li><strong>klasa statyczna</strong></li>
+</ul>
+<p>Możemy utworzyć statyczną klasę. Klasa taka mówi, iż nie została napisana po to, aby tworzyć nowe obiekty. Nawet, gdybyśmy chcieli utworzyć nowy obiekt klasy statycznej kompilator zgłosi błąd. Mogą być wywołane bez tworzenia instancji danej klasy. </p>
+<ul>
+<li>dziedziczenie - <strong>inheritance</strong></li>
+<li>klasa bazowa i pochodna - <strong>base/parent</strong> and <strong>derived/child class</strong></li>
+<li>polimorfizm - <strong>polymorphism</strong></li>
+<li><strong>statyczny polimorfizm,</strong> tj. przeciążanie metod i przeciążanie operatorów</li>
+<li><strong>polimorfizm dynamiczny, czyli klasy abstrakcyjne i metody wirtualne</strong></li>
+</ul>
+<p>Polimorfizm dynamiczny jest realizowany za pomocą klas abstrakcyjnych oraz metod wirtualnych. Metoda może mieć różne implementacje dla różnych klas.</p>
+<hr>
+<p><strong>Klasa abstrakcyjna</strong>. Klasa taka zawiera abstrakcyjne metody, których implementacja zależy od wykorzystania w poszczególnych klasach pochodnych. </p>
+<p>Poniżej lista zasad, o których należy pamiętać, tworząc klasy abstrakcyjne:</p>
+<ul>
+<li>nie można utworzyć instancji klasy abstrakcyjnej;</li>
+<li>nie można zadeklarować metody abstrakcyjnej poza klasą abstrakcyjną;</li>
+<li>kiedy klasa opatrzona jest modyfikatorem dostępu sealed nie może być dziedziczona. Dodatkowo, klasa abstrakcyjna nie może być zdefiniowana jako sealed.</li>
+</ul>
+<hr>
+<ul>
+<li><strong>metody wirtualne</strong></li>
+</ul>
+<p>Jeżeli masz zdefiniowaną metodę w klasie bazowej, ale chcesz, żeby została zaimplementowana w klasach pochodnych możesz do tego celu zastosować metody wirtualne.</p>
+<ul>
+<li><strong>interfejsy</strong></li>
+</ul>
+<p>Język C# nie obsługuje wielokrotnego dziedziczenia. <strong>Klasa może dziedziczyć po jednej klasie bazowej, ale może implementować wiele interfejsów</strong>.</p>
+<p><strong>Inne cechy C#:</strong></p>
+<ul>
+<li>przestrzenie nazw</li>
+<li>dyrektywy preprocesora</li>
+<li>wyrażenia regularne</li>
+<li>obsługa wyjątków</li>
+<li>odczyt i zapis pliku</li>
+</ul>
+<hr>
+<h1 id="Czesc-2"><a href="#Czesc-2" class="headerlink" title="Część 2"></a>Część 2</h1><p><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty</a></p>
+<p><strong>Indeksery:</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Indeksery">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Indeksery</a></li>
+<li><strong>Indeksery</strong> pozwalają na indeksowanie obiektów w taki sam sposób jak ma to miejsce w tablicach.</li>
+<li>przeciążanie indekserów</li>
+</ul>
+<p><strong>Delegaty:</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Delegaty">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Delegaty</a></li>
+<li><strong>Delegaty</strong> to referencyjny typ danych, który przechowuje referencje do metody.</li>
+<li><strong>Delegaty złożone</strong> - Delegat złożony wywołuje dwa delegaty tak jakby były złączone. Operacja taka to tzw. <strong>multicasting</strong>.</li>
+<li>W JS nie ma typu delegatów, przekazujemy funkcje przez referencje do zmiennej.</li>
+</ul>
+<p><strong>Zdarzenia:</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Zdarzenia">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Zdarzenia</a></li>
+<li>Klasa, w której definiujemy nasze zdarzenie to tzw. „<strong>publisher</strong>”. Z kolej klasa, która odbiera to zdarzenie to tzw. „<strong>subscriber</strong>”.</li>
+</ul>
+<p><strong>Kolekcje:</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Kolekcje">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Kolekcje</a></li>
+<li><strong>ArrayList</strong> reprezentuje uporządkowaną kolekcję obiektu, który może być indeksowany indywidualnie. Wykorzystuje klucz do dostępu do elementu kolekcji.</li>
+<li><strong>Kolekcje</strong>: ArrayList, Hashtable, SortedList, Stack, Queue</li>
+</ul>
+<p><strong>Typy generyczne:</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Typy_generyczne">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Typy_generyczne</a></li>
+<li><strong>Typy generyczne</strong> pozwalają na opóźnienie w dostarczeniu specyfikacji typu danych w elementach takich jak klasy czy metody do momentu użycia ich w trakcie wykonywania programu. Innymi słowy, typy generyczne pozwalają na napisanie klasy lub metody, która może działać z każdym typem danych.</li>
+</ul>
+<p><strong>Refleksja:</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Refleksja">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Refleksja</a></li>
+<li>jest możliwe pobranie informacji dotyczących używanych typów w trakcie wykonywania programu – za pomocą <strong>mechanizmu refleksji</strong>.</li>
+</ul>
+<p><strong>Unsafe code:</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Unsafe_code">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Unsafe_code</a></li>
+<li><strong>Kod niezabezpieczony</strong> lub też kod <strong>niekontrolowany</strong> to blok <strong>kodu używający wskaźników</strong>.</li>
+</ul>
+<h1 id="Czesc-3"><a href="#Czesc-3" class="headerlink" title="Część 3"></a>Część 3</h1><p>Inne materiały i informacje</p>
+<h2 id="Implicit-Interface-Implementation-vs-Explicit-Interface-Implementation"><a href="#Implicit-Interface-Implementation-vs-Explicit-Interface-Implementation" class="headerlink" title="Implicit Interface Implementation vs Explicit Interface Implementation"></a>Implicit Interface Implementation vs Explicit Interface Implementation</h2><ul>
+<li><strong>Implicit</strong>: you access the interface methods and properties as <strong>if they were part of the class</strong>.</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span> : <span class="title">ITest</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">string</span> Id <span class="comment">// Generated by Implement Interface</span></span><br><span class="line">  &#123;</span><br><span class="line">  <span class="keyword">get</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(); &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Test t = <span class="keyword">new</span> Test();</span><br><span class="line">t.Id; <span class="comment">// OK</span></span><br><span class="line">((ITest)t).Id; <span class="comment">// OK</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>Explicit</strong>: you can only access methods and properties <strong>when treating the class as the implemented interface</strong>.</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span> : <span class="title">ITest</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">string</span> ITest.Id <span class="comment">// Generated by Implement Interface Explicitly</span></span><br><span class="line">  &#123;</span><br><span class="line">  <span class="keyword">get</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(); &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Test t = <span class="keyword">new</span> Test();</span><br><span class="line">t.Id; <span class="comment">// Not OK</span></span><br><span class="line">((ITest)t).Id; <span class="comment">// OK</span></span><br><span class="line"></span><br><span class="line">ITest it = t;</span><br><span class="line">it.Id; <span class="comment">// OK</span></span><br></pre></td></tr></table></figure>
+
+<p><strong><em>It allows you to implement two interfaces that define the same method</em></strong>. However, if you explicitly implement the interface, the methods can only be accessed when the variable is typed to that explicit interface.</p>
+<p>In terms of “when” you have to implement an interface explicitly, it is <strong>when your class already has a method with the same signature</strong> as one of the methods of your interface, or when your class implements <strong>several interfaces that share methods with the same signatures</strong> but incompatible contracts. Source: <a target="_blank" rel="noopener" href="https://softwareengineering.stackexchange.com/questions/136319/whats-the-difference-between-implementing-an-interface-explicitly-or-implicitly">https://softwareengineering.stackexchange.com/questions/136319/whats-the-difference-between-implementing-an-interface-explicitly-or-implicitly</a></p>
+<p>More about explicit interface implementation: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/explicit-interface-implementation">https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/explicit-interface-implementation</a></p>
+<h2 id="Casting-struct-to-interface"><a href="#Casting-struct-to-interface" class="headerlink" title="Casting struct to interface"></a>Casting struct to interface</h2><p>The fact that a struct can implement an interface is well known and so is the fact that casting a value type into an interface <strong>leads to boxing of the value type.</strong> This is because methods in interfaces are defined as virtual and to resolve virtual references, vtable (method table) look up is required. <strong>Since value types do not have pointers to vtable they are first boxed into a reference type</strong> and then the look up happens. <a target="_blank" rel="noopener" href="https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/">https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/</a></p>
+<p>Po polsku, chodzi o to, że kiedy jako <code>struct</code> zaimplementujemy jakiś <code>interface</code> , to <code>struct</code> będzie zapakowany w dodatkowy obiekt. Metody wywoływane na instancji tego <code>struct</code>, który jest rzutowany na <code>interface</code> , na przykład:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Employee employee = <span class="keyword">new</span> Employee(<span class="string">&quot;Cool Guy&quot;</span>, <span class="number">65</span>);</span><br><span class="line">IPromotion p = employee;</span><br><span class="line">Console.WriteLine(employee);</span><br><span class="line">p.promote();</span><br><span class="line">Console.WriteLine(employee);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Cool Guy (65)</span></span><br><span class="line"><span class="comment">//Cool Guy (65)</span></span><br></pre></td></tr></table></figure>
+<p>modyfikują wartości tego dodatkowego obiektu, a nie w oryginalnym obiekcie <code>employee</code>. Jeśli zmienimy <code>struct</code> na <code>class</code> to nie będzie tego boxowania, tworzenia dodatkowego obiektu i wszystko będzie działać jak należy. Wynika to z tego, że:</p>
+<ul>
+<li><strong>casting a value type into an interface leads to boxing of the value type</strong></li>
+<li>This is because methods in interfaces are defined as virtual and to resolve virtual references, vtable (method table) look up is required. Since value types do not have pointers to vtable they are first boxed into a reference type and then the look up happens.</li>
+</ul>
+<p>więcej tutaj: <a target="_blank" rel="noopener" href="https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/">https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/</a></p>
+<h2 id="Deadlocks"><a href="#Deadlocks" class="headerlink" title="Deadlocks"></a>Deadlocks</h2><ul>
+<li>TODO: jak dochodzi do deadlocków?</li>
+<li><strong>Transaction levels</strong>: snapshot, commitread</li>
+</ul>
+<h2 id="ASP-NET-MVC-ASP-NET-Core-MVC"><a href="#ASP-NET-MVC-ASP-NET-Core-MVC" class="headerlink" title="ASP.NET MVC, ASP.NET Core MVC:"></a>ASP.NET MVC, ASP.NET Core MVC:</h2><ul>
+<li>ASP.NET CORE <a target="_blank" rel="noopener" href="https://docs.microsoft.com/pl-pl/aspnet/core/tutorials/first-mvc-app/?view=aspnetcore-2.2">https://docs.microsoft.com/pl-pl/aspnet/core/tutorials/first-mvc-app/?view=aspnetcore-2.2</a></li>
+<li>ASP.NET <a target="_blank" rel="noopener" href="https://docs.microsoft.com/pl-pl/aspnet/mvc/overview/getting-started/index">https://docs.microsoft.com/pl-pl/aspnet/mvc/overview/getting-started/index</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-PL-C-OOP/" data-id="ckqjsv8kj001x0jrtavkl1mpj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Nodejs/DRAFT-Nodejs-notes" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/01/01/Nodejs/DRAFT-Nodejs-notes/" class="article-date">
+  <time datetime="2019-01-01T09:00:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/blog/categories/Node-js/Basics/">Basics</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/01/01/Nodejs/DRAFT-Nodejs-notes/">[DRAFT] Node.js - ACLs, authentication, JWT, API Key validation, ElasticSearch</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><ul>
+<li>go through some articles <a target="_blank" rel="noopener" href="https://medium.com/@pankaj.panigrahi/list-of-node-js-articles-ededa6dd304b">https://medium.com/@pankaj.panigrahi/list-of-node-js-articles-ededa6dd304b</a></li>
+<li>go through ACL / Roles and permissions</li>
+</ul>
+<h3 id="Libraries-for-automatically-parsing-the-data-most-commonly-through-middlewares"><a href="#Libraries-for-automatically-parsing-the-data-most-commonly-through-middlewares" class="headerlink" title="Libraries for automatically parsing the data, most commonly through middlewares"></a>Libraries for automatically parsing the data, most commonly through middlewares</h3><p>querystring, body, and cookies parsing</p>
+<h1 id="ACL-Roles-and-permissions"><a href="#ACL-Roles-and-permissions" class="headerlink" title="ACL / Roles and permissions"></a>ACL / Roles and permissions</h1><p>TODO:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api">https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api</a></li>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/facultymatt/6370903">https://gist.github.com/facultymatt/6370903</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/accesscontrol">https://www.npmjs.com/package/accesscontrol</a></li>
+</ul>
+<h1 id="Token-JWT-Authentication"><a href="#Token-JWT-Authentication" class="headerlink" title="Token/JWT Authentication"></a>Token/JWT Authentication</h1><h2 id="Authorization-header"><a href="#Authorization-header" class="headerlink" title="Authorization header"></a>Authorization header</h2><p>Example header is as below:</p>
+<p><code>Authorization: Bearer a1194981-b541-416e-935</code></p>
+<p>The header field should be “Authorization” and the first part of the value should be the keyword “Bearer” and then the second part separated by a space should contain the token.</p>
+<p>This is a standard given by W3C. The keyword “Bearer” was used to distinguish this from the existing Basic auth.</p>
+<h1 id="API-Key-validation"><a href="#API-Key-validation" class="headerlink" title="API Key validation"></a>API Key validation</h1><p>Simple example by using a dedicated api key header: <a target="_blank" rel="noopener" href="https://medium.com/better-programming/getting-data-from-mongodb-creating-an-api-key-validation-middleware-in-express-944382205d3e">https://medium.com/better-programming/getting-data-from-mongodb-creating-an-api-key-validation-middleware-in-express-944382205d3e</a></p>
+<h1 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h1><p>In theory: <a target="_blank" rel="noopener" href="https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-1-164311327557">https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-1-164311327557</a></p>
+<p>In practice in Node.js:<br><a target="_blank" rel="noopener" href="https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-2-4c804427bc94">https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-2-4c804427bc94</a></p>
+<p>Elasticsearch course on Udemy to buy and watch:<br><a target="_blank" rel="noopener" href="https://www.udemy.com/course/elasticsearch-complete-guide/">https://www.udemy.com/course/elasticsearch-complete-guide/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/Nodejs/DRAFT-Nodejs-notes/" data-id="ckqjsv8k700130jrt3rnc5yyx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
 
     </footer>
   </div>
@@ -651,546 +1234,10 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/JavaScript/DRAFT-JavaScript-When-a-JavaScript-Developer-steps-into-the-object-oriented-world-Classical-vs-Prototypal-Inheritance/" data-id="ckqh02sr4000gzfvhcgg8a8o1" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/JavaScript/DRAFT-JavaScript-When-a-JavaScript-Developer-steps-into-the-object-oriented-world-Classical-vs-Prototypal-Inheritance/" data-id="ckqjsv8jl00080jrt2m7le8my" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Software Engineering/DRAFT-Software-Engineering-OOP-SOLID" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-OOP-SOLID/" class="article-date">
-  <time datetime="2019-01-01T09:00:00.000Z" itemprop="datePublished">2019-01-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-OOP-SOLID/">[DRAFT] OOP - SOLID</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a target="_blank" rel="noopener" href="https://blog.bitsrc.io/solid-principles-every-developer-should-know-b3bfa96bb688">Examples with JS code</a></p>
-<h1 id="S-SRP-Single-Responsibility-Principle"><a href="#S-SRP-Single-Responsibility-Principle" class="headerlink" title="S - SRP - Single Responsibility Principle"></a>S - SRP - Single Responsibility Principle</h1><ul>
-<li>class should have just a one purpose - so for example <code>Animal</code> class shouldn’t perform logs to different outputs or shouldn’t perform a role of database of animals</li>
-<li>don’t:</li>
-</ul>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name: <span class="built_in">string</span></span>)</span> &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">getAnimalName</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">saveAnimal</span>(<span class="params">a: Animal</span>)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>do:</li>
-</ul>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name: <span class="built_in">string</span></span>)</span> &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">getAnimalName</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnimalDB</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">getAnimal</span>(<span class="params">a: Animal</span>)</span> &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">saveAnimal</span>(<span class="params">a: Animal</span>)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>animal class shouldn’t be responsible for database management like saving</li>
-</ul>
-<h1 id="O-OCP-Open-Closed-Principle"><a href="#O-OCP-Open-Closed-Principle" class="headerlink" title="O - OCP - Open/Closed Principle"></a>O - OCP - <strong>Open/Closed Principle</strong></h1><ul>
-<li>classes should be open for extensions (new methods) but <strong>closed for modifications</strong> (don’t change method) - I’d say, you can change methods but not the contract what they receive and return</li>
-<li>I’d say this role is more about abstraction and use of inheritance, for example by having a base class <code>Animal</code> with method <code>makeSound</code>, which is going to be implemented by child classes <code>Lion</code> or <code>Snake</code></li>
-<li>don’t:</li>
-</ul>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">AnimalSound</span>(<span class="params">a: <span class="built_in">Array</span>&lt;Animal&gt;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt;= a.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">&#x27;lion&#x27;</span>)</span><br><span class="line">            log(<span class="string">&#x27;roar&#x27;</span>);</span><br><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">&#x27;mouse&#x27;</span>)</span><br><span class="line">            log(<span class="string">&#x27;squeak&#x27;</span>);</span><br><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">&#x27;snake&#x27;</span>)</span><br><span class="line">        log(<span class="string">&#x27;hiss&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">AnimalSound(animals);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>You see, for every new animal, a new logic is added to the AnimalSound function. This is quite a simple example. When your application grows and becomes complex, you will see that the <code>if</code> statement would be repeated over and over again in the <code>AnimalSound</code> function each time a new animal is added, all over the application. Do instead:</li>
-</ul>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    makeSound();</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Lion</span> <span class="keyword">extends</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">makeSound</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;roar&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Squirrel</span> <span class="keyword">extends</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">makeSound</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;squeak&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Snake</span> <span class="keyword">extends</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">makeSound</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;hiss&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">AnimalSound</span>(<span class="params">a: <span class="built_in">Array</span>&lt;Animal&gt;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt;= a.length; i++) &#123;</span><br><span class="line">        log(a[i].makeSound());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">AnimalSound(animals);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>another example:</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Discount</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">giveDiscount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.customer == <span class="string">&quot;fav&quot;</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.price * <span class="number">0.2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.customer == <span class="string">&quot;vip&quot;</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.price * <span class="number">0.4</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>do instead:</li>
-</ul>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Discount</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">giveDiscount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.price * <span class="number">0.2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class VIPDiscount: Discount &#123;</span><br><span class="line">    <span class="function"><span class="title">getDiscount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>.getDiscount() * <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h1 id="L-LSP-Liskov-Substitution-Principle"><a href="#L-LSP-Liskov-Substitution-Principle" class="headerlink" title="L - LSP - Liskov Substitution Principle"></a>L - LSP - <strong>Liskov Substitution Principle</strong></h1><ul>
-<li>if something uses a class, it should be able to use the class and the base class / child class of it</li>
-<li>sub-class must be substitutable for its super-class</li>
-<li>PL: nie sprawdzamy typu klasy, wykorzystujemy metody wirtualne i implementujemy je różnie w róznych klasach, ale wywołujemy tak samo</li>
-</ul>
-<h1 id="I-ISP-Interface-Segregation-Principle"><a href="#I-ISP-Interface-Segregation-Principle" class="headerlink" title="I - ISP - Interface Segregation Principle"></a>I - ISP - <strong>Interface Segregation Principle</strong></h1><ul>
-<li>you should write few interfaces instead of a big one interface that contains all the interfaces</li>
-<li>make fine grained interfaces that are client specific</li>
-<li>clients should not be forced to depend upon interfaces that they do not use</li>
-<li>PL: nie tworzymy metod, których nie będziemy mogli zaimplementować w klasach korzystających z interfejsu, np. przykład z <code>draw</code> vs <code>drawCircle</code>, <code>drawTriangle</code></li>
-</ul>
-<h1 id="D-DIP-Dependency-Inversion-Principle"><a href="#D-DIP-Dependency-Inversion-Principle" class="headerlink" title="D - DIP - Dependency Inversion Principle"></a>D - DIP - Dependency Inversion Principle</h1><ul>
-<li>you should create new class by placing in the constructor of it the interface of a class that the new class depends on</li>
-<li>PL: polegamy na interfejsach, nie ich implementacjach - aby można było podmienić lub zamockować</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-OOP-SOLID/" data-id="ckqh02ss30023zfvh03ej6xzw" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Software Engineering/DRAFT-Software-Engineering-PL-C-OOP" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-PL-C-OOP/" class="article-date">
-  <time datetime="2019-01-01T09:00:00.000Z" itemprop="datePublished">2019-01-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-PL-C-OOP/">[DRAFT] [PL] C# &amp; OOP</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Poniższe notatki to głównie skrót i spis pojęć z kursu dostępnego na stronie <a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku">https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku</a> i <a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty</a> , uzupełniony o inne źródła.</p>
-<h2 id="Cechy-C"><a href="#Cechy-C" class="headerlink" title="Cechy C#:"></a>Cechy C#:</h2><ul>
-<li>warunki logiczne (boolean conditions)</li>
-<li>garbage collector<ul>
-<li>TODO: jak działa?</li>
-</ul>
-</li>
-<li>standardowe biblioteki<ul>
-<li>TODO: na przykład jakie?</li>
-</ul>
-</li>
-<li>właściwości i zdarzenia (properties, events)</li>
-<li>delegaty oraz zarządzanie zdarzeniami (Delegates, Events Management)</li>
-<li>łatwość używania typów generycznych (Generics)</li>
-<li>kompilacja warunkowa</li>
-<li>wielowątkowość</li>
-<li>LINQ i wyrażenia lambda (lambda expressions)</li>
-<li>deklaracje przestrzeni nazw</li>
-</ul>
-<hr>
-<h1 id="Czesc-1"><a href="#Czesc-1" class="headerlink" title="Część 1"></a>Część 1</h1><p><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku">https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku</a></p>
-<h2 id="Notatki-z-C"><a href="#Notatki-z-C" class="headerlink" title="Notatki z C#:"></a>Notatki z C#:</h2><ul>
-<li>główna metoda całego programu to <code>Main</code></li>
-</ul>
-<p><strong>Podstawowe części języka:</strong></p>
-<ul>
-<li>instrukcje i wyrażenia</li>
-<li>komentarze</li>
-<li>kompilowanie i wykonywanie</li>
-<li>słowa kluczowe</li>
-</ul>
-<p><strong>Typy:</strong></p>
-<ul>
-<li>typy wartościowe (value types) - w tym również struct</li>
-<li>typy referencyjne (reference types)</li>
-<li>typy wskaźnikowe (pointer types)</li>
-<li>konwersja niejawna (implicit type conversion)</li>
-<li>konwersja jawna (explicit type conversion)</li>
-<li>zmienne, typy integralne (integral types)</li>
-<li>typy zmiennoprzecinkowe (floating point types)</li>
-<li>typy dziesiętne (decimal types)</li>
-<li>typy logiczne (boolean types)</li>
-<li>typy puste (nullable types)</li>
-</ul>
-<p><strong>Stałe i literały:</strong></p>
-<ul>
-<li>Stałe odnoszą się do wartości, których program nie może zmieniać w trakcie wykonywania. Te stałe wartości nazywane są również literałami. Stałe traktowane są jak zwykłe zmienne z zaznaczeniem, że ich wartości nie mogą być modyfikowane.</li>
-<li>literały całkowite (integer literals)</li>
-<li>literały zmiennoprzecinkowe (floating-point literals)</li>
-<li>literały znakowe (character literals)</li>
-<li>literały łańcuchowe (string literals)</li>
-</ul>
-<p><strong>Operatory:</strong></p>
-<ul>
-<li>operatory arytmetyczne</li>
-<li>operatory relacyjne</li>
-<li>operatory logiczne</li>
-<li>operatory bitowe</li>
-<li>operatory przypisania</li>
-<li>różne inne operatory</li>
-</ul>
-<p><strong>Sterowanie:</strong></p>
-<ul>
-<li>instrukcja warunkowa if</li>
-<li>instrukcja warunkowa if..else</li>
-<li>zagnieżdżona instrukcja warunkowa if</li>
-<li>instrukcja wyboru switch</li>
-<li>zagnieżdżona instrukcja wyboru switch</li>
-<li>pętla while</li>
-<li>pętla for</li>
-<li>pętla do..while</li>
-<li>polecenie break</li>
-<li>polecenie continue</li>
-</ul>
-<p><strong>Parametry, inne typy i tablice:</strong></p>
-<ul>
-<li>parametry typu wartościowego, referencyjnego, wyjściowego</li>
-<li>typy puste</li>
-<li>tablice wielowymiarowe</li>
-<li>tablice postrzępione</li>
-<li>klasa <code>Array</code></li>
-</ul>
-<p><strong>Klasy:</strong></p>
-<ul>
-<li><strong>Klasa</strong> może dziedziczyć z jednej klasy, ale może implementować wiele interfejsów</li>
-<li><strong>metody</strong> klasy (methods)</li>
-<li><strong>pola</strong> klasy (fields)</li>
-<li><strong>właściwości</strong> klasy (properties) - Właściwości nie służą do przechowywania wartości. Przy pomocy accesorów <strong>mają dostęp do pól</strong>, które reprezentują.</li>
-</ul>
-<hr>
-<p><strong>Class member, np. pole lub metoda</strong></p>
-<p>Class members, in C#, are the members of a class that represent the data and behavior of a class.</p>
-<p>Class members are members declared in the class and all those (excluding constructors and destructors) declared in all classes in its inheritance hierarchy.</p>
-<p><strong>Class members</strong> can be of the following types:</p>
-<ul>
-<li><strong>Constants</strong> representing constant values</li>
-<li><strong>Fields</strong> representing variables</li>
-<li><strong>Methods</strong> providing services like calculation or other actions on its members</li>
-<li><strong>Properties</strong> that define the class features and include actions to fetch and modify them</li>
-<li><strong>Events</strong> generated to communicate between different classes /objects</li>
-<li><strong>Indexers</strong> that help in accessing class instances similar to arrays</li>
-<li><strong>Operators</strong> that define semantics when used in expressions with class instances</li>
-<li><strong>Instance constructors</strong> to initialize members of class instances</li>
-<li><strong>Static constructor</strong> to initialize the class itself</li>
-<li><strong>Destructors</strong> to execute actions necessary to be performed before class instances are discarded</li>
-<li>Types that are local to the class (nested type)</li>
-</ul>
-<p><strong>Class members are initialized in constructors</strong> which can be overloaded with different signatures. For classes that do not have constructor, <strong>a default constructor that initializes the class members (to default values) will be generated</strong>.</p>
-<p>Source: <a target="_blank" rel="noopener" href="https://www.techopedia.com/definition/25589/class-members-c-sharp">https://www.techopedia.com/definition/25589/class-members-c-sharp</a></p>
-<hr>
-<p><strong>Dalej o klasach:</strong></p>
-<ul>
-<li>instancje klasy</li>
-<li><strong>hermetyzacja/enkapsulacja,</strong> inaczej <strong>data hiding</strong> (or more accurately <strong>encapsulation</strong>)</li>
-<li><strong>modyfikatory dostępu</strong> w C# jako część hermetyzacji - public, private, protected, internal, protected internal</li>
-<li>typy wyliczeniowe <strong>enum</strong> - wartościowy typ danych - wartości, których nie można dziedziczyć oraz przekazać przez dziedzicznie</li>
-</ul>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">enum</span> DniTygodnia</span><br><span class="line">&#123;</span><br><span class="line">  Poniedzialek = <span class="number">1</span>,</span><br><span class="line">  Wtorek,</span><br><span class="line">  Sroda,</span><br><span class="line">  Czwartek,</span><br><span class="line">  Piatek,</span><br><span class="line">  Sobota,</span><br><span class="line">  Niedziela</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>struktury <strong>struct</strong> - W języku C# struktura to <strong>wartościowy</strong> typ danych.</li>
-</ul>
-<hr>
-<p><strong>Klasy i struktury</strong> mają następujące różnice:</p>
-<ul>
-<li>klasy są typem referencyjnym a struktury typem wartościowym;</li>
-<li>struktury nie wspierają dziedziczenia;</li>
-<li>struktury nie mogą mieć domyślnego konstruktora.</li>
-</ul>
-<hr>
-<p>  <strong>Dalej o klasach:</strong></p>
-<ul>
-<li><strong>konstruktor</strong> i <strong>destruktor</strong> klasy</li>
-<li><strong>statyczne składniki</strong> klasy</li>
-</ul>
-<p>Składniki statyczne możemy zdefiniować za pomocą słowa kluczowego <strong>static</strong>. Jeżeli zadeklarujemy składową jako statyczną nie ważne jak wiele obiektów klasy utworzymy, <strong>istnieje zawsze tylko jedna kopia składowej statycznej.</strong></p>
-<ul>
-<li><strong>klasa statyczna</strong></li>
-</ul>
-<p>Możemy utworzyć statyczną klasę. Klasa taka mówi, iż nie została napisana po to, aby tworzyć nowe obiekty. Nawet, gdybyśmy chcieli utworzyć nowy obiekt klasy statycznej kompilator zgłosi błąd. Mogą być wywołane bez tworzenia instancji danej klasy. </p>
-<ul>
-<li>dziedziczenie - <strong>inheritance</strong></li>
-<li>klasa bazowa i pochodna - <strong>base/parent</strong> and <strong>derived/child class</strong></li>
-<li>polimorfizm - <strong>polymorphism</strong></li>
-<li><strong>statyczny polimorfizm,</strong> tj. przeciążanie metod i przeciążanie operatorów</li>
-<li><strong>polimorfizm dynamiczny, czyli klasy abstrakcyjne i metody wirtualne</strong></li>
-</ul>
-<p>Polimorfizm dynamiczny jest realizowany za pomocą klas abstrakcyjnych oraz metod wirtualnych. Metoda może mieć różne implementacje dla różnych klas.</p>
-<hr>
-<p><strong>Klasa abstrakcyjna</strong>. Klasa taka zawiera abstrakcyjne metody, których implementacja zależy od wykorzystania w poszczególnych klasach pochodnych. </p>
-<p>Poniżej lista zasad, o których należy pamiętać, tworząc klasy abstrakcyjne:</p>
-<ul>
-<li>nie można utworzyć instancji klasy abstrakcyjnej;</li>
-<li>nie można zadeklarować metody abstrakcyjnej poza klasą abstrakcyjną;</li>
-<li>kiedy klasa opatrzona jest modyfikatorem dostępu sealed nie może być dziedziczona. Dodatkowo, klasa abstrakcyjna nie może być zdefiniowana jako sealed.</li>
-</ul>
-<hr>
-<ul>
-<li><strong>metody wirtualne</strong></li>
-</ul>
-<p>Jeżeli masz zdefiniowaną metodę w klasie bazowej, ale chcesz, żeby została zaimplementowana w klasach pochodnych możesz do tego celu zastosować metody wirtualne.</p>
-<ul>
-<li><strong>interfejsy</strong></li>
-</ul>
-<p>Język C# nie obsługuje wielokrotnego dziedziczenia. <strong>Klasa może dziedziczyć po jednej klasie bazowej, ale może implementować wiele interfejsów</strong>.</p>
-<p><strong>Inne cechy C#:</strong></p>
-<ul>
-<li>przestrzenie nazw</li>
-<li>dyrektywy preprocesora</li>
-<li>wyrażenia regularne</li>
-<li>obsługa wyjątków</li>
-<li>odczyt i zapis pliku</li>
-</ul>
-<hr>
-<h1 id="Czesc-2"><a href="#Czesc-2" class="headerlink" title="Część 2"></a>Część 2</h1><p><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty</a></p>
-<p><strong>Indeksery:</strong></p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Indeksery">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Indeksery</a></li>
-<li><strong>Indeksery</strong> pozwalają na indeksowanie obiektów w taki sam sposób jak ma to miejsce w tablicach.</li>
-<li>przeciążanie indekserów</li>
-</ul>
-<p><strong>Delegaty:</strong></p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Delegaty">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Delegaty</a></li>
-<li><strong>Delegaty</strong> to referencyjny typ danych, który przechowuje referencje do metody.</li>
-<li><strong>Delegaty złożone</strong> - Delegat złożony wywołuje dwa delegaty tak jakby były złączone. Operacja taka to tzw. <strong>multicasting</strong>.</li>
-<li>W JS nie ma typu delegatów, przekazujemy funkcje przez referencje do zmiennej.</li>
-</ul>
-<p><strong>Zdarzenia:</strong></p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Zdarzenia">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Zdarzenia</a></li>
-<li>Klasa, w której definiujemy nasze zdarzenie to tzw. „<strong>publisher</strong>”. Z kolej klasa, która odbiera to zdarzenie to tzw. „<strong>subscriber</strong>”.</li>
-</ul>
-<p><strong>Kolekcje:</strong></p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Kolekcje">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Kolekcje</a></li>
-<li><strong>ArrayList</strong> reprezentuje uporządkowaną kolekcję obiektu, który może być indeksowany indywidualnie. Wykorzystuje klucz do dostępu do elementu kolekcji.</li>
-<li><strong>Kolekcje</strong>: ArrayList, Hashtable, SortedList, Stack, Queue</li>
-</ul>
-<p><strong>Typy generyczne:</strong></p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Typy_generyczne">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Typy_generyczne</a></li>
-<li><strong>Typy generyczne</strong> pozwalają na opóźnienie w dostarczeniu specyfikacji typu danych w elementach takich jak klasy czy metody do momentu użycia ich w trakcie wykonywania programu. Innymi słowy, typy generyczne pozwalają na napisanie klasy lub metody, która może działać z każdym typem danych.</li>
-</ul>
-<p><strong>Refleksja:</strong></p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Refleksja">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Refleksja</a></li>
-<li>jest możliwe pobranie informacji dotyczących używanych typów w trakcie wykonywania programu – za pomocą <strong>mechanizmu refleksji</strong>.</li>
-</ul>
-<p><strong>Unsafe code:</strong></p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Unsafe_code">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Unsafe_code</a></li>
-<li><strong>Kod niezabezpieczony</strong> lub też kod <strong>niekontrolowany</strong> to blok <strong>kodu używający wskaźników</strong>.</li>
-</ul>
-<h1 id="Czesc-3"><a href="#Czesc-3" class="headerlink" title="Część 3"></a>Część 3</h1><p>Inne materiały i informacje</p>
-<h2 id="Implicit-Interface-Implementation-vs-Explicit-Interface-Implementation"><a href="#Implicit-Interface-Implementation-vs-Explicit-Interface-Implementation" class="headerlink" title="Implicit Interface Implementation vs Explicit Interface Implementation"></a>Implicit Interface Implementation vs Explicit Interface Implementation</h2><ul>
-<li><strong>Implicit</strong>: you access the interface methods and properties as <strong>if they were part of the class</strong>.</li>
-</ul>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span> : <span class="title">ITest</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">string</span> Id <span class="comment">// Generated by Implement Interface</span></span><br><span class="line">  &#123;</span><br><span class="line">  <span class="keyword">get</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(); &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Test t = <span class="keyword">new</span> Test();</span><br><span class="line">t.Id; <span class="comment">// OK</span></span><br><span class="line">((ITest)t).Id; <span class="comment">// OK</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong>Explicit</strong>: you can only access methods and properties <strong>when treating the class as the implemented interface</strong>.</li>
-</ul>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span> : <span class="title">ITest</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">string</span> ITest.Id <span class="comment">// Generated by Implement Interface Explicitly</span></span><br><span class="line">  &#123;</span><br><span class="line">  <span class="keyword">get</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(); &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Test t = <span class="keyword">new</span> Test();</span><br><span class="line">t.Id; <span class="comment">// Not OK</span></span><br><span class="line">((ITest)t).Id; <span class="comment">// OK</span></span><br><span class="line"></span><br><span class="line">ITest it = t;</span><br><span class="line">it.Id; <span class="comment">// OK</span></span><br></pre></td></tr></table></figure>
-
-<p><strong><em>It allows you to implement two interfaces that define the same method</em></strong>. However, if you explicitly implement the interface, the methods can only be accessed when the variable is typed to that explicit interface.</p>
-<p>In terms of “when” you have to implement an interface explicitly, it is <strong>when your class already has a method with the same signature</strong> as one of the methods of your interface, or when your class implements <strong>several interfaces that share methods with the same signatures</strong> but incompatible contracts. Source: <a target="_blank" rel="noopener" href="https://softwareengineering.stackexchange.com/questions/136319/whats-the-difference-between-implementing-an-interface-explicitly-or-implicitly">https://softwareengineering.stackexchange.com/questions/136319/whats-the-difference-between-implementing-an-interface-explicitly-or-implicitly</a></p>
-<p>More about explicit interface implementation: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/explicit-interface-implementation">https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/explicit-interface-implementation</a></p>
-<h2 id="Casting-struct-to-interface"><a href="#Casting-struct-to-interface" class="headerlink" title="Casting struct to interface"></a>Casting struct to interface</h2><p>The fact that a struct can implement an interface is well known and so is the fact that casting a value type into an interface <strong>leads to boxing of the value type.</strong> This is because methods in interfaces are defined as virtual and to resolve virtual references, vtable (method table) look up is required. <strong>Since value types do not have pointers to vtable they are first boxed into a reference type</strong> and then the look up happens. <a target="_blank" rel="noopener" href="https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/">https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/</a></p>
-<p>Po polsku, chodzi o to, że kiedy jako <code>struct</code> zaimplementujemy jakiś <code>interface</code> , to <code>struct</code> będzie zapakowany w dodatkowy obiekt. Metody wywoływane na instancji tego <code>struct</code>, który jest rzutowany na <code>interface</code> , na przykład:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Employee employee = <span class="keyword">new</span> Employee(<span class="string">&quot;Cool Guy&quot;</span>, <span class="number">65</span>);</span><br><span class="line">IPromotion p = employee;</span><br><span class="line">Console.WriteLine(employee);</span><br><span class="line">p.promote();</span><br><span class="line">Console.WriteLine(employee);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Cool Guy (65)</span></span><br><span class="line"><span class="comment">//Cool Guy (65)</span></span><br></pre></td></tr></table></figure>
-<p>modyfikują wartości tego dodatkowego obiektu, a nie w oryginalnym obiekcie <code>employee</code>. Jeśli zmienimy <code>struct</code> na <code>class</code> to nie będzie tego boxowania, tworzenia dodatkowego obiektu i wszystko będzie działać jak należy. Wynika to z tego, że:</p>
-<ul>
-<li><strong>casting a value type into an interface leads to boxing of the value type</strong></li>
-<li>This is because methods in interfaces are defined as virtual and to resolve virtual references, vtable (method table) look up is required. Since value types do not have pointers to vtable they are first boxed into a reference type and then the look up happens.</li>
-</ul>
-<p>więcej tutaj: <a target="_blank" rel="noopener" href="https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/">https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/</a></p>
-<h2 id="Deadlocks"><a href="#Deadlocks" class="headerlink" title="Deadlocks"></a>Deadlocks</h2><ul>
-<li>TODO: jak dochodzi do deadlocków?</li>
-<li><strong>Transaction levels</strong>: snapshot, commitread</li>
-</ul>
-<h2 id="ASP-NET-MVC-ASP-NET-Core-MVC"><a href="#ASP-NET-MVC-ASP-NET-Core-MVC" class="headerlink" title="ASP.NET MVC, ASP.NET Core MVC:"></a>ASP.NET MVC, ASP.NET Core MVC:</h2><ul>
-<li>ASP.NET CORE <a target="_blank" rel="noopener" href="https://docs.microsoft.com/pl-pl/aspnet/core/tutorials/first-mvc-app/?view=aspnetcore-2.2">https://docs.microsoft.com/pl-pl/aspnet/core/tutorials/first-mvc-app/?view=aspnetcore-2.2</a></li>
-<li>ASP.NET <a target="_blank" rel="noopener" href="https://docs.microsoft.com/pl-pl/aspnet/mvc/overview/getting-started/index">https://docs.microsoft.com/pl-pl/aspnet/mvc/overview/getting-started/index</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-PL-C-OOP/" data-id="ckqh02ss40026zfvhcbj72f94" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Nodejs/DRAFT-Nodejs-notes" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/01/01/Nodejs/DRAFT-Nodejs-notes/" class="article-date">
-  <time datetime="2019-01-01T09:00:00.000Z" itemprop="datePublished">2019-01-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/blog/categories/Node-js/Basics/">Basics</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/01/01/Nodejs/DRAFT-Nodejs-notes/">[DRAFT] Node.js - ACLs, authentication, JWT, API Key validation, ElasticSearch</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><ul>
-<li>go through some articles <a target="_blank" rel="noopener" href="https://medium.com/@pankaj.panigrahi/list-of-node-js-articles-ededa6dd304b">https://medium.com/@pankaj.panigrahi/list-of-node-js-articles-ededa6dd304b</a></li>
-<li>go through ACL / Roles and permissions</li>
-</ul>
-<h3 id="Libraries-for-automatically-parsing-the-data-most-commonly-through-middlewares"><a href="#Libraries-for-automatically-parsing-the-data-most-commonly-through-middlewares" class="headerlink" title="Libraries for automatically parsing the data, most commonly through middlewares"></a>Libraries for automatically parsing the data, most commonly through middlewares</h3><p>querystring, body, and cookies parsing</p>
-<h1 id="ACL-Roles-and-permissions"><a href="#ACL-Roles-and-permissions" class="headerlink" title="ACL / Roles and permissions"></a>ACL / Roles and permissions</h1><p>TODO:</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api">https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api</a></li>
-<li><a target="_blank" rel="noopener" href="https://gist.github.com/facultymatt/6370903">https://gist.github.com/facultymatt/6370903</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/accesscontrol">https://www.npmjs.com/package/accesscontrol</a></li>
-</ul>
-<h1 id="Token-JWT-Authentication"><a href="#Token-JWT-Authentication" class="headerlink" title="Token/JWT Authentication"></a>Token/JWT Authentication</h1><h2 id="Authorization-header"><a href="#Authorization-header" class="headerlink" title="Authorization header"></a>Authorization header</h2><p>Example header is as below:</p>
-<p><code>Authorization: Bearer a1194981-b541-416e-935</code></p>
-<p>The header field should be “Authorization” and the first part of the value should be the keyword “Bearer” and then the second part separated by a space should contain the token.</p>
-<p>This is a standard given by W3C. The keyword “Bearer” was used to distinguish this from the existing Basic auth.</p>
-<h1 id="API-Key-validation"><a href="#API-Key-validation" class="headerlink" title="API Key validation"></a>API Key validation</h1><p>Simple example by using a dedicated api key header: <a target="_blank" rel="noopener" href="https://medium.com/better-programming/getting-data-from-mongodb-creating-an-api-key-validation-middleware-in-express-944382205d3e">https://medium.com/better-programming/getting-data-from-mongodb-creating-an-api-key-validation-middleware-in-express-944382205d3e</a></p>
-<h1 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h1><p>In theory: <a target="_blank" rel="noopener" href="https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-1-164311327557">https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-1-164311327557</a></p>
-<p>In practice in Node.js:<br><a target="_blank" rel="noopener" href="https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-2-4c804427bc94">https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-2-4c804427bc94</a></p>
-<p>Elasticsearch course on Udemy to buy and watch:<br><a target="_blank" rel="noopener" href="https://www.udemy.com/course/elasticsearch-complete-guide/">https://www.udemy.com/course/elasticsearch-complete-guide/</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/Nodejs/DRAFT-Nodejs-notes/" data-id="ckqh02srt001ezfvhdtun867u" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript/DRAFT-JavaScript-How-to-test-extended-classes-in-JavaScript" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/01/01/JavaScript/DRAFT-JavaScript-How-to-test-extended-classes-in-JavaScript/" class="article-date">
-  <time datetime="2019-01-01T09:00:00.000Z" itemprop="datePublished">2019-01-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Tests/">Tests</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/01/01/JavaScript/DRAFT-JavaScript-How-to-test-extended-classes-in-JavaScript/">[DRAFT] How to test extended classes in JavaScript</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><a target="_blank" rel="noopener" href="https://blog.arkency.com/2014/09/unit-tests-vs-class-tests/">https://blog.arkency.com/2014/09/unit-tests-vs-class-tests/</a></li>
-<li><a target="_blank" rel="noopener" href="https://martinfowler.com/bliki/UnitTest.html">https://martinfowler.com/bliki/UnitTest.html</a></li>
-<li>testowanie tylko “publicznych” metod klas/obiektów pozwala zaoszczędzić czas na refaktor poprzez brak konieczności zmiany istniejących testów, zapewniając że główna logika API działa dobrze — Existing tests not only helped him to assert correctness of the new solution but more importantly they did not stand in his way during the refactoring. As he admitted, he wouldn’t get it done as quickly as he did had he had to address failing unit tests throughout the process.</li>
-<li>test “class” units because pragmatically it makes our tests much more stable — like, you don’t need to change test if you extracted something to a method or splitted one coupled class to two. Do you really want to test against structure of your code, or against what the code does? I choose latter solution.</li>
-<li>About the “Integration Test” and “Unit Test” from Martin Fowler:<br>“Object-oriented design tends to treat a class as the unit, procedural or functional approaches might consider a single function as a unit. But really it’s a situational thing — the team decides what makes sense to be a unit for the purposes of their understanding of the system and its testing. Although I start with the notion of the unit being a class, I often take a bunch of closely related classes and treat them as a single unit. Rarely I might take a subset of methods in a class as a unit. However you define it doesn’t really matter.” <a target="_blank" rel="noopener" href="https://martinfowler.com/bliki/UnitTest.html">https://martinfowler.com/bliki/UnitTest.html</a></li>
-<li>Tests are meant to protect you from regressions and you don’t get that value when you need to update the tests whenever the implementation changes. For the same reason it destroys the point of Red-Green-Refactor approach.</li>
-<li>Now, would I see value in having a test for the Pricing class directly? Having more tests is good, right? Well, no — tests are code. The more code you have the more you need to maintain. It makes a bigger cost. It also builds a more complex mental model. Low-level tests are often causing more troubles than profit.</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/JavaScript/DRAFT-JavaScript-How-to-test-extended-classes-in-JavaScript/" data-id="ckqh02sr3000ezfvhcovzao5t" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-React/DRAFT-React-rendering-and-reconciliation-algorithm" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/01/01/React/DRAFT-React-rendering-and-reconciliation-algorithm/" class="article-date">
-  <time datetime="2019-01-01T09:00:00.000Z" itemprop="datePublished">2019-01-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/Basics/">Basics</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/01/01/React/DRAFT-React-rendering-and-reconciliation-algorithm/">[DRAFT] React rendering and reconciliation algorithm</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/reconciliation.html">https://reactjs.org/docs/reconciliation.html</a></p>
-<ul>
-<li>React implements a heuristic O(n) algorithm to compare rendered tree nodes</li>
-<li>Two elements of different types will produce different trees</li>
-<li>The developer can hint at which child elements may be stable across different renders with a <code>key</code> prop</li>
-<li>When a component updates, the instance stays the same, so that state is maintained across renders</li>
-<li>Keys should be stable, predictable, and unique. Unstable keys (like those produced by <code>Math.random()</code>) will cause many component instances and DOM nodes to be unnecessarily recreated, which can cause performance degradation and lost state in child components</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/React/DRAFT-React-rendering-and-reconciliation-algorithm/" data-id="ckqh02ss0001vzfvhfyvhhl7v" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li></ul>
 
     </footer>
   </div>
@@ -1245,7 +1292,7 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Backend/" style="font-size: 12px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 14px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 12px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 16px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 14px;">Programming languages</a> <a href="/blog/tags/React/" style="font-size: 18px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 14px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 18px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 12px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
+      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Backend/" style="font-size: 14px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 14px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 12px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 16px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 14px;">Programming languages</a> <a href="/blog/tags/React/" style="font-size: 18px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 14px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 18px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 12px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
     </div>
   </div>
 
@@ -1254,7 +1301,7 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
     </div>
   </div>
 
@@ -1267,6 +1314,10 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
       <ul>
         
           <li>
+            <a href="/blog/2021/06/29/Nodejs/Nodejs-threads/">Node.js threads</a>
+          </li>
+        
+          <li>
             <a href="/blog/2020/12/22/Mobile/Mobile-Swift/">Notes on Swift</a>
           </li>
         
@@ -1276,10 +1327,6 @@ Instead of using `extends`, you need to set `WomanFn` prototype manually.
         
           <li>
             <a href="/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/">MobX vs Redux</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/">JavaScript static classes, methods &amp; properties</a>
           </li>
         
           <li>
