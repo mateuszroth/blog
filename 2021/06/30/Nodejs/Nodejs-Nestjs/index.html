@@ -5,15 +5,20 @@
   
 
   
-  <title>Category: Basics | Software Sensei&#39;s Notes</title>
+  <title>Node.js - Nest.js framework | Software Sensei&#39;s Notes</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Software Sensei&#39;s Notes">
-<meta property="og:url" content="https://mateuszroth.github.io/blog/categories/Node-js/Basics/index.html">
+  <meta name="description" content="Nest.js framework Currently, it supports two libraries — Express and Fastify it forces developers to use a specific architecture by introducing Angular-like modules, services, and controllers, ensurin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node.js - Nest.js framework">
+<meta property="og:url" content="https://mateuszroth.github.io/blog/2021/06/30/Nodejs/Nodejs-Nestjs/index.html">
 <meta property="og:site_name" content="Software Sensei&#39;s Notes">
+<meta property="og:description" content="Nest.js framework Currently, it supports two libraries — Express and Fastify it forces developers to use a specific architecture by introducing Angular-like modules, services, and controllers, ensurin">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-30T22:00:00.000Z">
+<meta property="article:modified_time" content="2021-07-02T17:31:07.004Z">
 <meta property="article:author" content="Mateusz Roth">
-<meta property="article:tag" content="konsultant, specjalista, programista, developer, consultant, specialist, Software Engineer, iOS, App, Mac, Android, Chrome, Safari, Firefox, Front End, Web, Development, JavaScript, ECMAScript, ES6, ES5, React, Node.js, Express, React Native, Vue, Angular, AngularJS, Ionic, Cordova, Bootstrap, SASS, LESS, Haml, Jade, Design, UI, UX, web apps, web applications, aplikacje internetowe, tworzenie aplikacji internetowych, tworzenie stron internetowych, tworzenie aplikacji mobilnych, tworzenie wizytówek internetowych">
+<meta property="article:tag" content="Backend">
+<meta property="article:tag" content="Node.js">
 <meta name="twitter:card" content="summary">
   
   
@@ -72,107 +77,73 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/blog/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2021/06/30/Nodejs/Nodejs-Nestjs/" class="archive-article-date">
-  <time datetime="2021-06-30T22:00:00.000Z" itemprop="datePublished">Jul 1</time>
+        <section id="main"><article id="post-Nodejs/Nodejs-Nestjs" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/06/30/Nodejs/Nodejs-Nestjs/" class="article-date">
+  <time datetime="2021-06-30T22:00:00.000Z" itemprop="datePublished">2021-07-01</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/blog/categories/Node-js/Basics/">Basics</a>►<a class="article-category-link" href="/blog/categories/Node-js/Basics/Nest-js/">Nest.js</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2021/06/30/Nodejs/Nodejs-Nestjs/">Node.js - Nest.js framework</a>
+    <h1 class="article-title" itemprop="name">
+      Node.js - Nest.js framework
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2021/06/29/Nodejs/Nodejs-threads/" class="archive-article-date">
-  <time datetime="2021-06-29T22:00:00.000Z" itemprop="datePublished">Jun 30</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2021/06/29/Nodejs/Nodejs-threads/">Node.js threads</a>
-    </h1>
-  
+        <h1 id="Nest-js-framework"><a href="#Nest-js-framework" class="headerlink" title="Nest.js framework"></a>Nest.js framework</h1><ul>
+<li>Currently, it supports two libraries — Express and Fastify</li>
+<li>it forces developers to use a specific architecture by introducing <strong>Angular-like modules, services, and controllers</strong>, ensuring the application is scalable, highly testable, and loosely coupled</li>
+<li>A controller is a class annotated with the <code>@Controller</code> decorator and it checks what request comes in and calls the appropriate service’s method. They don’t care about what’s going on between the request and the response.</li>
+<li>A service is a class annotated with the @Injectable decorator. It contains domain (business) logic. By separating the access layer (controllers) and logic layer (services), we have a clear separation of concerns.</li>
+<li><strong>Dependency injection is one of the most important aspects of Nest</strong>. By providing the support out of the box, Nest allows us to write <strong>loosely coupled code</strong>, which, in turn, is also <strong>easily testable</strong>.</li>
+<li>By using dependency injection, it is very easy to mock out the modules we are not currently testing thanks to Nest’s <em>custom providers</em> feature.</li>
+<li>Nest stays on top of the new trends and makes it very easy to write an application based on the microservices architecture.</li>
+<li>Nest is used for building REST APIs but also the architecture can be used to create a GraphQL API as well.</li>
+</ul>
+<h2 id="Sample-Controller"><a href="#Sample-Controller" class="headerlink" title="Sample Controller"></a>Sample Controller</h2><h3 id="Sample-1"><a href="#Sample-1" class="headerlink" title="Sample 1"></a>Sample 1</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">@Controller(<span class="string">&#x27;cats&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">CatsController</span> </span>&#123;</span><br><span class="line">  @Post()</span><br><span class="line">  <span class="function"><span class="title">create</span>(<span class="params">@Body() createCatDto: CreateCatDto</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;This action adds a new cat&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Get()</span><br><span class="line">  <span class="function"><span class="title">findAll</span>(<span class="params">@Query() query: ListAllEntities</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`This action returns all cats (limit: <span class="subst">$&#123;query.limit&#125;</span> items)`</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Get(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  <span class="function"><span class="title">findOne</span>(<span class="params">@Param(<span class="string">&#x27;id&#x27;</span>) id: string</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`This action returns a #<span class="subst">$&#123;id&#125;</span> cat`</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Put(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  <span class="function"><span class="title">update</span>(<span class="params">@Param(<span class="string">&#x27;id&#x27;</span>) id: string, @Body() updateCatDto: UpdateCatDto</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`This action updates a #<span class="subst">$&#123;id&#125;</span> cat`</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Delete(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  <span class="function"><span class="title">remove</span>(<span class="params">@Param(<span class="string">&#x27;id&#x27;</span>) id: string</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`This action removes a #<span class="subst">$&#123;id&#125;</span> cat`</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Sample-2"><a href="#Sample-2" class="headerlink" title="Sample 2"></a>Sample 2</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Controller(<span class="string">&#x27;cats&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">CatsController</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">private readonly catsService: CatsService</span>)</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">  @Post()</span><br><span class="line">  <span class="keyword">async</span> <span class="function"><span class="title">create</span>(<span class="params">@Body() createCatDto: CreateCatDto</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.catsService.create(createCatDto);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Get()</span><br><span class="line">  <span class="keyword">async</span> findAll(): <span class="built_in">Promise</span>&lt;Cat[]&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.catsService.findAll();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Sample-Service"><a href="#Sample-Service" class="headerlink" title="Sample Service"></a>Sample Service</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">CatsService</span> </span>&#123;</span><br><span class="line">  private readonly cats: Cat[] = [];</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">create</span>(<span class="params">cat: Cat</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.cats.push(cat);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  findAll(): Cat[] &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.cats;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a>Sources</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.logrocket.com/node-back-end-next-level-nestjs/">Take your Node backend to the next level with NestJS</a></li>
+</ul>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
       
-        </div></section>
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2021/06/30/Nodejs/Nodejs-Nestjs/" data-id="ckqmm5ctc00191powgidk63oc" class="article-share-link">Share</a>
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/blog/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2019/10/24/Nodejs/Nodejs-basics/" class="archive-article-date">
-  <time datetime="2019-10-24T20:33:05.000Z" itemprop="datePublished">Oct 24</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2019/10/24/Nodejs/Nodejs-basics/">Node.js introduction - pros and cons, qualities</a>
-    </h1>
-  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
 
-    </header>
+    </footer>
   </div>
-</article>
   
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2019/01/01/Nodejs/DRAFT-Nodejs-notes/" class="archive-article-date">
-  <time datetime="2019-01-01T09:00:00.000Z" itemprop="datePublished">Jan 1</time>
-</a>
-      
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2019/01/01/Nodejs/DRAFT-Nodejs-notes/">[DRAFT] Node.js - ACLs, authentication, JWT, API Key validation, ElasticSearch</a>
-    </h1>
   
+    <a href="/blog/2021/06/29/Nodejs/Nodejs-threads/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Node.js threads</div>
+    </a>
+  
+</nav>
 
-    </header>
-  </div>
+  
 </article>
-  
-  
-    </div></section>
-  
-
 
 </section>
         
