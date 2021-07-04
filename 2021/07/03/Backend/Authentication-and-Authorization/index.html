@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Authentication and Authorization | Software Sensei&#39;s Notes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Authentication and Authorization• Authentication (pl. uwierzytelnianie, autentykacja) describes the process of claiming an identity. That’s what you do when you log in to a service with a username and">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Authentication and Authorization">
+<meta property="og:url" content="https://mateuszroth.github.io/blog/2021/07/03/Backend/Authentication-and-Authorization/index.html">
+<meta property="og:site_name" content="Software Sensei&#39;s Notes">
+<meta property="og:description" content="Authentication and Authorization• Authentication (pl. uwierzytelnianie, autentykacja) describes the process of claiming an identity. That’s what you do when you log in to a service with a username and">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-07-03T22:00:00.000Z">
+<meta property="article:modified_time" content="2021-07-04T12:40:35.451Z">
+<meta property="article:author" content="Mateusz Roth">
+<meta property="article:tag" content="Backend">
+<meta property="article:tag" content="Authorization">
+<meta property="article:tag" content="Authentication">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">
+          <div><img src="https://mateuszroth.pl/img/mateusz@2x1.png" width="100" style="position: relative; top: -20px;" /></div>
+          Software Sensei&#39;s Notes
+        </a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/about-me">About me</a>
+        
+          <a class="main-nav-link" href="/blog/categories/JavaScript/">JavaScript</a>
+        
+          <a class="main-nav-link" href="/blog/categories/Node-js/">Node.js</a>
+        
+          <a class="main-nav-link" href="/blog/categories/React/">React</a>
+        
+          <a class="main-nav-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Other archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://mateuszroth.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Backend/Authentication-and-Authorization" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/07/03/Backend/Authentication-and-Authorization/" class="article-date">
+  <time datetime="2021-07-03T22:00:00.000Z" itemprop="datePublished">2021-07-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Backend/">Backend</a>►<a class="article-category-link" href="/blog/categories/Backend/Authentication/">Authentication</a>►<a class="article-category-link" href="/blog/categories/Backend/Authentication/Authorization/">Authorization</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Authentication and Authorization
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Authentication-and-Authorization"><a href="#Authentication-and-Authorization" class="headerlink" title="Authentication and Authorization"></a>Authentication and Authorization</h1><p>• <strong>Authentication</strong> (pl. <em>uwierzytelnianie, autentykacja</em>) describes the process of claiming an identity. That’s what you do when you log in to a service with a username and password, you authenticate yourself.<br>• <strong>Authorization</strong> on the other hand describes permission rules that specify the access rights of individual users and user groups to certain parts of the system, i.e. ACL.</p>
+<h2 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h2><ul>
+<li>When we do token-based authentication, such as OpenID, OAuth, or OpenID Connect, we receive an <code>access_token</code> (and sometimes <code>id_token</code>) from a trusted authority</li>
+</ul>
+<h3 id="OAuth2"><a href="#OAuth2" class="headerlink" title="OAuth2"></a>OAuth2</h3><ul>
+<li>i.e. Facebook, Google</li>
+<li>You need to register your app on authorization server such as Google. You will get <code>client id</code> for your app, you will have defined both <code>redirect URL</code> and <code>client secret</code>.</li>
+<li>The <code>redirect URL</code> is used by the authorization server after an user logs in successfully to the server.</li>
+<li>Sample steps:<ol>
+<li>To get authorization code user calls authorization server <a target="_blank" rel="noopener" href="https://cloud.digitalocean.com/v1/oauth/authorize?response_type=code&amp;client_id=CLIENT_ID&amp;redirect_uri=CALLBACK_URL&amp;scope=read">https://cloud.digitalocean.com/v1/oauth/authorize?response_type=code&amp;client_id=CLIENT_ID&amp;redirect_uri=CALLBACK_URL&amp;scope=read</a></li>
+<li>Send authorization code to our app <a target="_blank" rel="noopener" href="https://dropletbook.com/callback?code=AUTHORIZATION_CODE">https://dropletbook.com/callback?code=AUTHORIZATION_CODE</a></li>
+<li>After receiveing authorization code, our app calls authorization server to get access token <a target="_blank" rel="noopener" href="https://cloud.digitalocean.com/v1/oauth/token?client_id=CLIENT_ID&amp;client_secret=CLIENT_SECRET&amp;grant_type=authorization_code&amp;code=AUTHORIZATION_CODE&amp;redirect_uri=CALLBACK_URL">https://cloud.digitalocean.com/v1/oauth/token?client_id=CLIENT_ID&amp;client_secret=CLIENT_SECRET&amp;grant_type=authorization_code&amp;code=AUTHORIZATION_CODE&amp;redirect_uri=CALLBACK_URL</a></li>
+<li>Our app gets access token <code>&#123;&quot;access_token&quot;:&quot;ACCESS_TOKEN&quot;,&quot;token_type&quot;:&quot;bearer&quot;,&quot;expires_in&quot;:2592000,&quot;refresh_token&quot;:&quot;REFRESH_TOKEN&quot;,&quot;scope&quot;:&quot;read&quot;,&quot;uid&quot;:100101,&quot;info&quot;:&#123;&quot;name&quot;:&quot;Mark E. Mark&quot;,&quot;email&quot;:&quot;mark@thefunkybunch.com&quot;&#125;&#125;</code></li>
+</ol>
+</li>
+<li>visual explanation: <a target="_blank" rel="noopener" href="https://darutk.medium.com/the-simplest-guide-to-oauth-2-0-8c71bd9a15bb">https://darutk.medium.com/the-simplest-guide-to-oauth-2-0-8c71bd9a15bb</a></li>
+<li>another explanation for steps:<ol>
+<li>User wants to request a resource that requires auth</li>
+<li>Authorization server returns an <em>authorization code</em> to the client</li>
+<li>Client then uses that <em>authorization code</em> in order to request an <em>authorization token</em> - e.g. a JWT</li>
+</ol>
+</li>
+</ul>
+<h2 id="Authorization"><a href="#Authorization" class="headerlink" title="Authorization"></a>Authorization</h2><h3 id="JWT-JSON-Web-Tokens"><a href="#JWT-JSON-Web-Tokens" class="headerlink" title="JWT (JSON Web Tokens)"></a>JWT (JSON Web Tokens)</h3><ul>
+<li>JSON Web Token (JWT) is an open standard that defines a compact and self-contained way for securely transmitting information between parties as a JSON object.</li>
+<li>JWTs can be signed using a secret (with HMAC algorithm) or a public/private key pair using RSA.</li>
+<li>JWTs consist of three parts separated by dots (.), which are:<ul>
+<li>Header<ul>
+<li>consists of two parts: the type of the token, which is JWT, and the hashing algorithm such as HMAC SHA256 or RSA</li>
+<li>JSON is encoded to Base64Url<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;alg&quot;: &quot;HS256&quot;,</span><br><span class="line">  &quot;typ&quot;: &quot;JWT&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>Payload<ul>
+<li>The payload contains all the required information about the user</li>
+<li>do not store passwords here or secret data<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;sub&quot;: &quot;1234567890&quot;,</span><br><span class="line">  &quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">  &quot;admin&quot;: true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>Signature<ul>
+<li>you have to take the encoded header, the encoded payload, a secret, the algorithm specified in the header, and sign that to create signature<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">  base64UrlEncode(header) + &quot;.&quot; +</span><br><span class="line">  base64UrlEncode(payload),</span><br><span class="line">  secret)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>can be sent through an URL, POST parameter, or inside an HTTP header</li>
+<li>JWT sent over as an <code>Authentication Bearer</code> header is a stateless authentication mechanism as the user state is never saved in the server memory</li>
+</ul>
+<h4 id="Advantages"><a href="#Advantages" class="headerlink" title="Advantages"></a>Advantages</h4><ul>
+<li>They are easy to scale horizontally</li>
+<li>due to its size its transmission is fast</li>
+<li>They are easier to maintain and debug</li>
+<li>They have the ability to create truly RESTful Services</li>
+<li>They have built-in expiration functionality</li>
+<li>JSON Web Tokens are self-contained</li>
+<li>a good way of securely transmitting information between parties</li>
+</ul>
+<h4 id="Invalidation"><a href="#Invalidation" class="headerlink" title="Invalidation"></a>Invalidation</h4><ul>
+<li>Simply remove the token from the client</li>
+<li>Create a token blocklist or whitelist</li>
+<li>Just keep token expiry times short and rotate them often</li>
+</ul>
+<h4 id="Use-cases"><a href="#Use-cases" class="headerlink" title="Use cases"></a>Use cases</h4><ul>
+<li>Authorization: This is the most common scenario for using JWT. Once the user is logged in, each subsequent request will include the JWT, allowing the user to access routes, services, and resources that are permitted with that token. Single Sign On is a feature that widely uses JWT nowadays, because of its small overhead and its ability to be easily used across different domains.</li>
+</ul>
+<h4 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a>Sources</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://auth0.com/learn/json-web-tokens/">https://auth0.com/learn/json-web-tokens/</a></li>
+</ul>
+<h3 id="ACL-Roles-and-permissions"><a href="#ACL-Roles-and-permissions" class="headerlink" title="ACL / Roles and permissions"></a>ACL / Roles and permissions</h3><h4 id="TODO"><a href="#TODO" class="headerlink" title="TODO:"></a>TODO:</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api">https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api</a></li>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/facultymatt/6370903">https://gist.github.com/facultymatt/6370903</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/accesscontrol">https://www.npmjs.com/package/accesscontrol</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/Authentication-and-Authorization/" data-id="ckqp6nffw0002y8stb7ofhdsb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Authentication/" rel="tag">Authentication</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Authorization/" rel="tag">Authorization</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2021/07/03/Backend/Redis/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Redis</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  <div style="
+    padding-top: 10px;
+    text-align: center;
+  ">
+      <img
+        src="https://media-exp3.licdn.com/dms/image/C4D03AQHSPZuJ5qNfZQ/profile-displayphoto-shrink_400_400/0/1623702873861?e=1630540800&v=beta&t=_FJd7kn-GBZisr6Qb4_iieu9n3VA2-SIT4nTPF7_21Q"
+        width="150" style="border-radius: 50%; padding-bottom: 10px;" />
+      <div>
+        <a href="https://www.linkedin.com/in/mateuszroth" target="_blank">Linkedin</a> | <a href="https://github.com/mateuszroth" target="_blank">Github</a> | <a href="https://www.facebook.com/mateuszroth" target="_blank">Facebook</a>
+      </div>
+  </div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/">Backend</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/Authentication/">Authentication</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/Authentication/Authorization/">Authorization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/ElasticSearch/">ElasticSearch</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/Redis/">Redis</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/Other/">Other</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/">Mobile</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Cordova/">Cordova</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/">Swift</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/iOS/">iOS</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/Nest-js/">Nest.js</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Scripts/">Scripts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/State-management/">State management</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authentication/" rel="tag">Authentication</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authorization/" rel="tag">Authorization</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Authentication/" style="font-size: 10px;">Authentication</a> <a href="/blog/tags/Authorization/" style="font-size: 10px;">Authorization</a> <a href="/blog/tags/Backend/" style="font-size: 18px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 14px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 12px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 16px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 14px;">Programming languages</a> <a href="/blog/tags/React/" style="font-size: 18px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 14px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 18px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 12px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2021/07/03/Backend/Authentication-and-Authorization/">Authentication and Authorization</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/07/03/Backend/Redis/">Redis</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/07/02/Backend/ElasticSearch/">ElasticSearch</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/06/30/Nodejs/Nodejs-Nestjs/">Node.js - Nest.js framework</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/06/29/Nodejs/Nodejs-threads/">Node.js threads</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Mateusz Roth<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/about-me" class="mobile-nav-link">About me</a>
+  
+    <a href="/blog/categories/JavaScript/" class="mobile-nav-link">JavaScript</a>
+  
+    <a href="/blog/categories/Node-js/" class="mobile-nav-link">Node.js</a>
+  
+    <a href="/blog/categories/React/" class="mobile-nav-link">React</a>
+  
+    <a href="/blog/categories/Software-Engineering/" class="mobile-nav-link">Software Engineering</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Other archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

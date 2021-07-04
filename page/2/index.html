@@ -83,6 +83,153 @@
 </div>
 
   
+    <article id="post-JavaScript/JavaScript-prototype-creation-example" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" class="article-date">
+  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Basics/">Basics</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/">JavaScript prototype creation example</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Stwórzmy nową klasę korzystającą z dziedziczenia prototypowego, a następnie utwórzmy nowy obiekt klasy <code>Person</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) &#125;;</span><br><span class="line"><span class="keyword">new</span> Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Person</span></span><br><span class="line"><span class="comment">// &quot;Matt&quot;</span></span><br></pre></td></tr></table></figure>
+<p>Gdy nie użyjemy operatora <code>new</code> nie jest tworzony nowy obiekt i używany jest kontekst wywołania funkcji, co zwraca błąd:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) &#125;;</span><br><span class="line">Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Window - ta linijka inna, bez new</span></span><br><span class="line"><span class="comment">// VM973:3 Uncaught TypeError: this.hello is not a function</span></span><br><span class="line"><span class="comment">//    at Person (&lt;anonymous&gt;:3:8)</span></span><br><span class="line"><span class="comment">//    at &lt;anonymous&gt;:6:1</span></span><br></pre></td></tr></table></figure>
+<p>Teraz użyjmy arrow function dla funkcji dodanej do prototypu:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="built_in">this</span>.name)  <span class="comment">// ta linijka inna, używamy arrow function </span></span><br><span class="line"><span class="keyword">new</span> Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Person</span></span><br></pre></td></tr></table></figure>
+<p>Jednak nadal otrzymujemy ten sam błąd gdy pominiemy operator <code>new</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">VM231:<span class="number">4</span> Uncaught <span class="built_in">TypeError</span>: <span class="built_in">this</span>.hello is not a <span class="function"><span class="keyword">function</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">Person</span> (<span class="params">&lt;anonymous&gt;:<span class="number">4</span>:<span class="number">8</span></span>)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> &lt;<span class="title">anonymous</span>&gt;:7:1</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" data-id="ckqp6nfgj000uy8st6mu87w3l" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-JavaScript/DRAFT-JavaScript-static-classes-methods-properties" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/" class="article-date">
+  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Basics/">Basics</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/">JavaScript static classes, methods &amp; properties</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Static-methods"><a href="#Static-methods" class="headerlink" title="Static methods"></a>Static methods</h1><p>In other words, static methods have no access to data stored in specific objects, so no access to this.<br>Since these methods operate on the class instead of instances of the class, they are called on the class.<br>Static methods can be overriden.<br>You can call a static method from another static method within the same class with this.<br>prototype-based inheritance, super calls, constructors, instance and static methods</p>
+<h1 id="Static-properties"><a href="#Static-properties" class="headerlink" title="Static properties"></a>Static properties</h1><p>static get Leader(){<br>  return new User(‘wat’)<br>}</p>
+<p>Note that static properties are a separate concept from static methods, and are still under development.</p>
+<h1 id="Prototypes-in-JS"><a href="#Prototypes-in-JS" class="headerlink" title="Prototypes in JS"></a>Prototypes in JS</h1><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/7694583">https://stackoverflow.com/a/7694583</a></p>
+<h1 id="Static-methods-1"><a href="#Static-methods-1" class="headerlink" title="Static methods"></a>Static methods</h1><p>function Clazz() {};<br>Clazz.staticMethod = function() {<br>    alert(‘STATIC!!!’);<br>};</p>
+<p>Clazz.prototype.func = function() {<br>    this.constructor.staticMethod();<br>}</p>
+<h1 id="TS-transpiled-class"><a href="#TS-transpiled-class" class="headerlink" title="TS transpiled class"></a>TS transpiled class</h1><p>var Greeter = /** @class */ (function () {<br>    function Greeter(message) {<br>        this.greeting = message;<br>    }<br>    Greeter.prototype.greet = function () {<br>        return “Hello, “ + this.greeting;<br>    };<br>    return Greeter;<br>}());</p>
+<h1 id="Static-variables-vs-instance"><a href="#Static-variables-vs-instance" class="headerlink" title="Static variables vs instance"></a>Static variables vs instance</h1><p>function Animal(name) {<br>    Animal.count = Animal.count+1||1;// static variables, use function name “Animal”<br>    this.name = name; //instance variable, using “this”<br>}</p>
+<h1 id="Static-vs-instance-method"><a href="#Static-vs-instance-method" class="headerlink" title="Static vs instance method"></a>Static vs instance method</h1><p>Animal.showCount = function () {//static method<br>    alert(Animal.count)<br>}</p>
+<p>Animal.prototype.showName=function(){//instance method<br>    alert(this.name);<br>}</p>
+<p>Klasa Parent z dwoma statycznymi metodami:</p>
+<ul>
+<li>obiekt child i parent nie mają dostępu do metod</li>
+<li>metody mogą być wywołane tylko z klasy Child i Parent.sayHello()</li>
+</ul>
+<p>class Parent {<br>  static sayHello() {<br>    this.speak(‘world’);<br>  }</p>
+<p>  static speak(phrase) {<br>     console.log(phrase);<br>  }<br>}</p>
+<p>class Child extends Parent {<br>}</p>
+<p>Parent.sayHello();<br>Child.sayHello();<br>const parent = new Parent();<br>parent.sayHello();<br>const child = new Child()<br>child.sayHello();</p>
+<p>Klasa Parent z niestatycznym sayHello:</p>
+<ul>
+<li>metoda moze być wywołana z obiektów, ale metoda nie ma dostępu do statycznej metody</li>
+<li>metody NIE mogą być wywołane bezpośrednio z klas Child i Parent.sayHello()</li>
+</ul>
+<p>class Parent {<br>  sayHello() {<br>    this.speak(‘world’);<br>  }</p>
+<p>  static speak(phrase) {<br>     console.log(phrase);<br>  }<br>}</p>
+<p>class Child extends Parent {<br>}</p>
+<p>Parent.sayHello();<br>Child.sayHello();<br>const parent = new Parent();<br>parent.sayHello();<br>const child = new Child()<br>child.sayHello();</p>
+<p>Klasa Parent ze statyczną metodą korzystająca ze statycznej metody dziecka:</p>
+<ul>
+<li>Parent nie ma dostępu, ale Child ma</li>
+<li>ani child, ani parent nie mają dostępu do sayHello</li>
+</ul>
+<p>class Parent {<br>  static sayHello() {<br>    this.speak(‘world’);<br>  }<br>}</p>
+<p>class Child extends Parent {<br>  static speak(phrase) {<br>     console.log(phrase);<br>  }<br>}</p>
+<p>Parent.sayHello();<br>Child.sayHello();<br>const parent = new Parent();<br>parent.sayHello();<br>const child = new Child()<br>child.sayHello();</p>
+<p>Klasa Parent z metodą korzystająca ze statycznej metody dziecka:</p>
+<ul>
+<li>ani Child, Parent nie ma dostępu do sayHello</li>
+<li>ani child, ani parent nie ma dostepu do speak</li>
+</ul>
+<p>class Parent {<br>  sayHello() {<br>    this.speak(‘world’);<br>  }<br>}</p>
+<p>class Child extends Parent {<br>  static speak(phrase) {<br>     console.log(phrase);<br>  }<br>}</p>
+<p>Parent.sayHello();<br>Child.sayHello();<br>const parent = new Parent();<br>parent.sayHello();<br>const child = new Child()<br>child.sayHello();</p>
+<p>Klasa Parent z metodą korzystająca z metody dziecka:</p>
+<ul>
+<li>tylko child moze bez bledow wywolac metode sayHello</li>
+</ul>
+<p>class Parent {<br>  sayHello() {<br>    this.speak(‘world’);<br>  }<br>}</p>
+<p>class Child extends Parent {<br>  speak(phrase) {<br>     console.log(phrase);<br>  }<br>}</p>
+<p>Parent.sayHello();<br>Child.sayHello();<br>const parent = new Parent();<br>parent.sayHello();<br>const child = new Child()<br>child.sayHello();</p>
+<p>Wnioski:</p>
+<ul>
+<li>bezpośrednio z klas mamy dostęp do metod statycznych, do innych metod nie</li>
+<li>obiekty natomiast nie mają dostępu do metod statycznych</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/" data-id="ckqp6nfga000gy8st5bq83uo0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Frontend/CSS-How-to-make-child-div-wider-than-parent-div" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/" class="article-date">
@@ -116,7 +263,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/" data-id="ckqo4bfu200031foz1ejke21g" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/" data-id="ckqp6nfg10007y8st6x06h0tb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li></ul>
@@ -173,7 +320,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Languages/Lang-Elm-language/" data-id="ckqo4bfum000s1fozavis1vyz" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Languages/Lang-Elm-language/" data-id="ckqp6nfgl000wy8stcx5sgk7u" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
@@ -239,66 +386,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Languages/Lang-Objective-C-language/" data-id="ckqo4bfun000u1fozcfkvbob5" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Languages/Lang-Objective-C-language/" data-id="ckqp6nfgm0010y8stbqzp6wyk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Languages/Lang-Reason-language" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/Languages/Lang-Reason-language/" class="article-date">
-  <time datetime="2020-07-17T18:00:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/Languages/Lang-Reason-language/">Reason programming language attributes</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="How-to-start-React-project-in-Reason"><a href="#How-to-start-React-project-in-Reason" class="headerlink" title="How to start React project in Reason:"></a>How to start React project in Reason:</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://blog.pusher.com/reason-react-bucklescript/">https://blog.pusher.com/reason-react-bucklescript/</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.pusher.com/react-vs-reasonreact/">https://blog.pusher.com/react-vs-reasonreact/</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.pusher.com/reason-javascript/">https://blog.pusher.com/reason-javascript/</a></li>
-</ul>
-<h2 id="Variants"><a href="#Variants" class="headerlink" title="Variants"></a>Variants</h2><p><em>Variants</em> in Reason are data types and structures. It can be used to define sets of symbols and data structures.<br><code>type animal = Cat(string) | Dog(string);</code></p>
-<h2 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h2><p><em>Functions</em> in Reason are declared with an arrow and a return expression.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let speak &#x3D; (animal) &#x3D;&gt;</span><br><span class="line">  switch (animal) &#123;</span><br><span class="line">  | Cat(name) &#x3D;&gt; name ++ &quot; says: meow&quot;</span><br><span class="line">  | Dog(name) &#x3D;&gt; name ++ &quot; says: woof&quot;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><p>A React <code>component</code> can either be stateless or stateful. In <code>ReasonReact</code>, there are different ways of defining them:</p>
-<ul>
-<li>Stateless components: defined as <code>ReasonReact.statelessComponent(&quot;componentName&quot;)</code></li>
-<li>Stateful components: defined as <code>ReasonReact.reducerComponent(&quot;componentName&quot;)</code></li>
-</ul>
-<p><code>let make = (~message, _children) =&gt; &#123;</code><br>The first parameter has a symbol ~ indicating that it was passed into the App component as a props and the second parameter has _, this is a more explicit way of showing that the parameter isn’t used and ignored.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Languages/Lang-Reason-language/" data-id="ckqo4bfuo000x1foz10qy8frk" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
 
     </footer>
   </div>
@@ -354,10 +445,73 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Mobile/Mobile-Cordova/" data-id="ckqo4bfuq000y1foz0zv63il0" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Mobile/Mobile-Cordova/" data-id="ckqp6nfgp0013y8stgryabbyi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Nodejs/Nodejs-GraphQL-Apollo-links" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/" class="article-date">
+  <time datetime="2020-07-17T18:00:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/">GraphQL Apollo links</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>self-documentation - you build your types</li>
+<li>types information available to the client coder through introspection with tools like GraphiQL</li>
+<li>specification which forms a standardization</li>
+<li>make everything go through an API gateway which would usually do the auth resolution for all microservices</li>
+</ul>
+<p>GraphCMS:<br><a target="_blank" rel="noopener" href="https://docs.graphcms.com/">https://docs.graphcms.com/</a><br><a target="_blank" rel="noopener" href="https://github.com/GraphCMS/graphcms-examples/blob/master/current/next-apollo-blog/lib/initApollo.js">https://github.com/GraphCMS/graphcms-examples/blob/master/current/next-apollo-blog/lib/initApollo.js</a></p>
+<p>GraphQL example:<br><a target="_blank" rel="noopener" href="https://nec.is/writing/graphql-with-next-js-and-apollo/">https://nec.is/writing/graphql-with-next-js-and-apollo/</a></p>
+<p>Next, Apollo, Postgraphile:<br><a target="_blank" rel="noopener" href="https://github.com/graphile/postgraphile-apollo-server">https://github.com/graphile/postgraphile-apollo-server</a></p>
+<p>Next, Apollo, Graphcool:<br><a target="_blank" rel="noopener" href="https://github.com/adamsoffer/next-apollo-example">https://github.com/adamsoffer/next-apollo-example</a><br><a target="_blank" rel="noopener" href="https://github.com/zeit/next.js/tree/master/examples/with-apollo">https://github.com/zeit/next.js/tree/master/examples/with-apollo</a></p>
+<p>Next &amp; Apollo:<br><a target="_blank" rel="noopener" href="https://github.com/lfades/next-with-apollo">https://github.com/lfades/next-with-apollo</a><br><a target="_blank" rel="noopener" href="https://github.com/adamsoffer/next-apollo">https://github.com/adamsoffer/next-apollo</a></p>
+<p>Next, Express, Apollo:<br><a target="_blank" rel="noopener" href="https://github.com/ooade/next-apollo-auth">https://github.com/ooade/next-apollo-auth</a></p>
+<p>Hasura and Apollo:<br><a target="_blank" rel="noopener" href="https://medium.com/@f71uday/building-production-ready-application-with-hasura-and-apollo-476b18ccb44">https://medium.com/@f71uday/building-production-ready-application-with-hasura-and-apollo-476b18ccb44</a></p>
+<p>Hasura vs Postgraphile:<br><a target="_blank" rel="noopener" href="https://news.ycombinator.com/item?id=17540866">https://news.ycombinator.com/item?id=17540866</a></p>
+<p>Postgraphile:<br><a target="_blank" rel="noopener" href="https://www.graphile.org/postgraphile/">https://www.graphile.org/postgraphile/</a></p>
+<p>Hasura - GraphQL on Postgres:<br><a target="_blank" rel="noopener" href="https://hasura.io/">https://hasura.io/</a></p>
+<p>Graphcool - GraphQL BaaS:<br><a target="_blank" rel="noopener" href="https://www.graph.cool/">https://www.graph.cool/</a></p>
+<p>Prisma - GrapQL on any database:<br><a target="_blank" rel="noopener" href="https://www.prisma.io/with-graphql/">https://www.prisma.io/with-graphql/</a></p>
+<p>Nextjs, Apollo, Prisma:<br><a target="_blank" rel="noopener" href="https://github.com/mbaranovski/nextjs-apollo-oauth-prisma">https://github.com/mbaranovski/nextjs-apollo-oauth-prisma</a></p>
+<p>RAN! React . GraphQL . Next.js Toolkit - bez backendu, przykład z Graphcool:<br><a target="_blank" rel="noopener" href="https://github.com/Sly777/ran">https://github.com/Sly777/ran</a><br><a target="_blank" rel="noopener" href="https://github.com/mshameer/ran-with-prisma">https://github.com/mshameer/ran-with-prisma</a></p>
+<p>Vulcan - React, GraphQL, Meteor:<br><a target="_blank" rel="noopener" href="http://docs.vulcanjs.org/">http://docs.vulcanjs.org/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/" data-id="ckqp6nfgs0019y8st6zlqcncp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
 
     </footer>
   </div>
@@ -406,10 +560,66 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/Frontend-printing-documents/" data-id="ckqo4bfu500061foz9tn837iv" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/Frontend-printing-documents/" data-id="ckqp6nfg6000by8stcxp2gpag" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Languages/Lang-Reason-language" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/Languages/Lang-Reason-language/" class="article-date">
+  <time datetime="2020-07-17T18:00:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/Languages/Lang-Reason-language/">Reason programming language attributes</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="How-to-start-React-project-in-Reason"><a href="#How-to-start-React-project-in-Reason" class="headerlink" title="How to start React project in Reason:"></a>How to start React project in Reason:</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.pusher.com/reason-react-bucklescript/">https://blog.pusher.com/reason-react-bucklescript/</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.pusher.com/react-vs-reasonreact/">https://blog.pusher.com/react-vs-reasonreact/</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.pusher.com/reason-javascript/">https://blog.pusher.com/reason-javascript/</a></li>
+</ul>
+<h2 id="Variants"><a href="#Variants" class="headerlink" title="Variants"></a>Variants</h2><p><em>Variants</em> in Reason are data types and structures. It can be used to define sets of symbols and data structures.<br><code>type animal = Cat(string) | Dog(string);</code></p>
+<h2 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h2><p><em>Functions</em> in Reason are declared with an arrow and a return expression.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let speak &#x3D; (animal) &#x3D;&gt;</span><br><span class="line">  switch (animal) &#123;</span><br><span class="line">  | Cat(name) &#x3D;&gt; name ++ &quot; says: meow&quot;</span><br><span class="line">  | Dog(name) &#x3D;&gt; name ++ &quot; says: woof&quot;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><p>A React <code>component</code> can either be stateless or stateful. In <code>ReasonReact</code>, there are different ways of defining them:</p>
+<ul>
+<li>Stateless components: defined as <code>ReasonReact.statelessComponent(&quot;componentName&quot;)</code></li>
+<li>Stateful components: defined as <code>ReasonReact.reducerComponent(&quot;componentName&quot;)</code></li>
+</ul>
+<p><code>let make = (~message, _children) =&gt; &#123;</code><br>The first parameter has a symbol ~ indicating that it was passed into the App component as a props and the second parameter has _, this is a more explicit way of showing that the parameter isn’t used and ignored.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Languages/Lang-Reason-language/" data-id="ckqp6nfgo0011y8staaw002wm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
 
     </footer>
   </div>
@@ -497,215 +707,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/React/React-various-notes/" data-id="ckqo4bfv7001w1fozh9979x5i" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/React/React-various-notes/" data-id="ckqp6nfh2001yy8stb3x18dnv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-TypeScript/TypeScript-React" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/12/01/TypeScript/TypeScript-React/" class="article-date">
-  <time datetime="2019-12-01T15:13:00.000Z" itemprop="datePublished">2019-12-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/Hooks/">Hooks</a>►<a class="article-category-link" href="/blog/categories/React/TypeScript/">TypeScript</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/12/01/TypeScript/TypeScript-React/">TypeScript with React</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Common-Operators-and-Signatures"><a href="#Common-Operators-and-Signatures" class="headerlink" title="Common Operators and Signatures"></a>Common Operators and Signatures</h1><h3 id="Type-intersection-operator-amp"><a href="#Type-intersection-operator-amp" class="headerlink" title="Type intersection operator (&amp;)"></a>Type intersection operator (&amp;)</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WithLoading</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span>&lt;<span class="title">P</span> &amp; <span class="title">WithLoadingProps</span>&gt; </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Generic-function"><a href="#Generic-function" class="headerlink" title="Generic function"></a>Generic function</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> funcComponent = &lt;P extends object&gt;(Component: React.ComponentType&lt;P&gt;): ... =&gt; &#123; ... &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Type-cast"><a href="#Type-cast" class="headerlink" title="Type cast"></a>Type cast</h3><p>A type cast (props as P) is required when passing props forward from TypeScript v3.2 onwards, due to a likely bug in TypeScript.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> loading ? <span class="xml"><span class="tag">&lt;<span class="name">LoadingSpinner</span> /&gt;</span></span> : <span class="xml"><span class="tag">&lt;<span class="name">Component</span> &#123;<span class="attr">...props</span> <span class="attr">as</span> <span class="attr">P</span>&#125; /&gt;</span></span>;</span><br></pre></td></tr></table></figure>
-<h1 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h1><p>Worth to read:</p>
-<ul>
-<li>about HOCs: <a target="_blank" rel="noopener" href="https://medium.com/@jrwebdev/react-higher-order-component-patterns-in-typescript-42278f7590fb">https://medium.com/@jrwebdev/react-higher-order-component-patterns-in-typescript-42278f7590fb</a></li>
-</ul>
-<h2 id="Higher-Order-Components"><a href="#Higher-Order-Components" class="headerlink" title="Higher Order Components"></a>Higher Order Components</h2><h3 id="Higher-Order-Component-in-JS"><a href="#Higher-Order-Component-in-JS" class="headerlink" title="Higher Order Component in JS"></a>Higher Order Component in JS</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> withLoading = <span class="function"><span class="params">Component</span> =&gt;</span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">WithLoading</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; loading, ...props &#125; = <span class="built_in">this</span>.props;</span><br><span class="line">      <span class="keyword">return</span> loading ? <span class="xml"><span class="tag">&lt;<span class="name">LoadingSpinner</span> /&gt;</span></span> : <span class="xml"><span class="tag">&lt;<span class="name">Component</span> &#123;<span class="attr">...props</span>&#125; /&gt;</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="Higher-Order-Component-in-TS"><a href="#Higher-Order-Component-in-TS" class="headerlink" title="Higher Order Component in TS"></a>Higher Order Component in TS</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> WithLoadingProps &#123;</span><br><span class="line">  loading: <span class="built_in">boolean</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> withLoading = &lt;P extends object&gt;(Component: React.ComponentType&lt;P&gt;) =&gt;</span><br><span class="line">  class WithLoading extends React.Component&lt;P &amp; WithLoadingProps&gt; &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">      const &#123; loading, ...props &#125; = this.props;</span><br><span class="line">      return loading ? &lt;LoadingSpinner /&gt; : &lt;Component &#123;...props as P&#125; /&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="Function-Higher-Order-Component-in-TS"><a href="#Function-Higher-Order-Component-in-TS" class="headerlink" title="Function Higher Order Component in TS"></a>Function Higher Order Component in TS</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> withLoading = <span class="xml"><span class="tag">&lt;<span class="name">P</span> <span class="attr">extends</span> <span class="attr">object</span>&gt;</span>(</span></span><br><span class="line">  Component: React.ComponentType&lt;P&gt;</span><br><span class="line">): React.FC&lt;P &amp; WithLoadingProps&gt; =&gt; (&#123;</span><br><span class="line">  loading,</span><br><span class="line">  ...props</span><br><span class="line">&#125;: WithLoadingProps) =&gt;</span><br><span class="line">  loading ? &lt;LoadingSpinner /&gt; : &lt;Component &#123;...props as P&#125; /&gt;;</span><br></pre></td></tr></table></figure>
-<h3 id="Render-Prop-Component"><a href="#Render-Prop-Component" class="headerlink" title="Render Prop Component"></a>Render Prop Component</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> InjectedCounterProps &#123;</span><br><span class="line">  value: <span class="built_in">number</span>;</span><br><span class="line">  onIncrement(): <span class="built_in">void</span>;</span><br><span class="line">  onDecrement(): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> MakeCounterProps &#123;</span><br><span class="line">  minValue?: <span class="built_in">number</span>;</span><br><span class="line">  maxValue?: <span class="built_in">number</span>;</span><br><span class="line">  children(props: InjectedCounterProps): JSX.Element;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> MakeCounterState &#123;</span><br><span class="line">  value: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MakeCounter</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span>&lt;<span class="title">MakeCounterProps</span>, <span class="title">MakeCounterState</span>&gt; </span>&#123;</span><br><span class="line">  state: MakeCounterState = &#123;</span><br><span class="line">    value: <span class="number">0</span>,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  increment = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.setState(<span class="function"><span class="params">prevState</span> =&gt;</span> (&#123;</span><br><span class="line">      value:</span><br><span class="line">        prevState.value === <span class="built_in">this</span>.props.maxValue</span><br><span class="line">          ? prevState.value</span><br><span class="line">          : prevState.value + <span class="number">1</span>,</span><br><span class="line">    &#125;));</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  decrement = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.setState(<span class="function"><span class="params">prevState</span> =&gt;</span> (&#123;</span><br><span class="line">      value:</span><br><span class="line">        prevState.value === <span class="built_in">this</span>.props.minValue</span><br><span class="line">          ? prevState.value</span><br><span class="line">          : prevState.value - <span class="number">1</span>,</span><br><span class="line">    &#125;));</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.props.children(&#123;</span><br><span class="line">      value: <span class="built_in">this</span>.state.value,</span><br><span class="line">      onIncrement: <span class="built_in">this</span>.increment,</span><br><span class="line">      onDecrement: <span class="built_in">this</span>.decrement,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><a target="_blank" rel="noopener" href="https://gist.github.com/jrwebdev/b8fea9723d4f86743c29a1888dbbe090#file-make-counter-render-prop-tsx">make-counter-render-prop.tsx</a></p>
-<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">interface CounterProps extends InjectedCounterProps &#123;</span><br><span class="line">  style: React.CSSProperties;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const Counter &#x3D; (props: CounterProps) &#x3D;&gt; (</span><br><span class="line">  &lt;div style&#x3D;&#123;props.style&#125;&gt;</span><br><span class="line">    &lt;button onClick&#x3D;&#123;props.onDecrement&#125;&gt; - &lt;&#x2F;button&gt;</span><br><span class="line">    &#123;props.value&#125;</span><br><span class="line">    &lt;button onClick&#x3D;&#123;props.onIncrement&#125;&gt; + &lt;&#x2F;button&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">interface WrappedCounterProps extends CounterProps &#123;</span><br><span class="line">  minValue?: number;</span><br><span class="line">  maxValue?: number;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const WrappedCounter &#x3D; (&#123;</span><br><span class="line">  minValue,</span><br><span class="line">  maxValue,</span><br><span class="line">  ...props</span><br><span class="line">&#125;: WrappedCounterProps) &#x3D;&gt; (</span><br><span class="line">  &lt;MakeCounter minValue&#x3D;&#123;minValue&#125; maxValue&#x3D;&#123;maxValue&#125;&gt;</span><br><span class="line">    &#123;injectedProps &#x3D;&gt; &lt;Counter &#123;...props&#125; &#123;...injectedProps&#125; &#x2F;&gt;&#125;</span><br><span class="line">  &lt;&#x2F;MakeCounter&gt;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-<p><a target="_blank" rel="noopener" href="https://gist.github.com/jrwebdev/c0392dfc25d3fc30893f324a89c8a16d#file-wrapped-counter-tsx">wrapped-counter.tsx</a></p>
-<h3 id="Wrapping-Render-Prop-as-HOC"><a href="#Wrapping-Render-Prop-as-HOC" class="headerlink" title="Wrapping Render Prop as HOC"></a>Wrapping Render Prop as HOC</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Subtract, Omit &#125; <span class="keyword">from</span> <span class="string">&#x27;utility-types&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> MakeCounter, &#123; MakeCounterProps, InjectedCounterProps &#125; <span class="keyword">from</span> <span class="string">&#x27;./MakeCounter&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> MakeCounterHocProps = Omit&lt;MakeCounterProps, <span class="string">&#x27;children&#x27;</span>&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> makeCounter = <span class="xml"><span class="tag">&lt;<span class="name">P</span> <span class="attr">extends</span> <span class="attr">InjectedCounterProps</span>&gt;</span>(</span></span><br><span class="line">  Component: React.ComponentType&lt;P&gt;</span><br><span class="line">): React.SFC&lt;Subtract&lt;P, InjectedCounterProps&gt; &amp; MakeCounterHocProps&gt; =&gt; (&#123;</span><br><span class="line">  minValue,</span><br><span class="line">  maxValue,</span><br><span class="line">  ...props</span><br><span class="line">&#125;: MakeCounterHocProps) =&gt; (</span><br><span class="line">  &lt;MakeCounter minValue=&#123;minValue&#125; maxValue=&#123;maxValue&#125;&gt;</span><br><span class="line">    &#123;injectedProps =&gt; &lt;Component &#123;...props as P&#125; &#123;...injectedProps&#125; /&gt;&#125;</span><br><span class="line">  &lt;/MakeCounter&gt;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-<p>Source: <a target="_blank" rel="noopener" href="https://medium.com/@jrwebdev/react-render-props-in-typescript-b561b00bc67c">https://medium.com/@jrwebdev/react-render-props-in-typescript-b561b00bc67c</a></p>
-<h2 id="React-Hooks"><a href="#React-Hooks" class="headerlink" title="React Hooks"></a>React Hooks</h2><h3 id="Function-Components-with-Hooks-in-TS-example"><a href="#Function-Components-with-Hooks-in-TS-example" class="headerlink" title="Function Components with Hooks in TS example"></a>Function Components with Hooks in TS example</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// import useState next to FunctionComponent</span></span><br><span class="line"><span class="keyword">import</span> React, &#123; FunctionComponent, useState &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// our components props accept a number for the initial value</span></span><br><span class="line"><span class="keyword">const</span> Counter: FunctionComponent&lt;&#123; initial?: <span class="built_in">number</span> &#125;&gt; = <span class="function">(<span class="params">&#123; initial = <span class="number">0</span> &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// since we pass a number here, clicks is going to be a number.</span></span><br><span class="line">  <span class="comment">// setClicks is a function that accepts either a number or a function returning</span></span><br><span class="line">  <span class="comment">// a number</span></span><br><span class="line">  <span class="keyword">const</span> [clicks, setClicks] = useState(initial);</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;&gt;</span><br><span class="line">      &lt;p&gt;Clicks: &#123;clicks&#125;&lt;/p&gt;</span><br><span class="line">      &lt;button onClick=&#123;<span class="function">() =&gt;</span> setClicks(clicks + <span class="number">1</span>)&#125;&gt;+&lt;/button&gt;</span><br><span class="line">      &lt;button onClick=&#123;<span class="function">() =&gt;</span> setClicks(clicks - <span class="number">1</span>)&#125;&gt;-&lt;/button&gt;</span><br><span class="line">    &lt;/&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h1 id="Details-about-React-Hooks-with-TypeScript"><a href="#Details-about-React-Hooks-with-TypeScript" class="headerlink" title="Details about React Hooks with TypeScript"></a>Details about React Hooks with TypeScript</h1><ul>
-<li>Examples how to use with TS: <a target="_blank" rel="noopener" href="https://fettblog.eu/typescript-react/hooks/">https://fettblog.eu/typescript-react/hooks/</a></li>
-<li>TS advanced: <a target="_blank" rel="noopener" href="https://medium.com/@jrwebdev/react-hooks-in-typescript-88fce7001d0d">https://medium.com/@jrwebdev/react-hooks-in-typescript-88fce7001d0d</a></li>
-<li>super advanced: <a target="_blank" rel="noopener" href="https://levelup.gitconnected.com/usetypescript-a-complete-guide-to-react-hooks-and-typescript-db1858d1fb9c">https://levelup.gitconnected.com/usetypescript-a-complete-guide-to-react-hooks-and-typescript-db1858d1fb9c</a></li>
-</ul>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Counter:FunctionComponent&lt;&#123; initial?: <span class="built_in">number</span> &#125;&gt; = <span class="function">(<span class="params">&#123; initial = <span class="number">0</span> &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="with-useState"><a href="#with-useState" class="headerlink" title="with useState"></a>with <code>useState</code></h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// explicitly setting the types</span></span><br><span class="line"><span class="keyword">const</span> [value, setValue] = (useState &lt; <span class="built_in">number</span>) | (<span class="literal">undefined</span> &gt; <span class="literal">undefined</span>);</span><br><span class="line"><span class="keyword">const</span> [value, setValue] = useState &lt; <span class="built_in">Array</span> &lt; <span class="built_in">number</span> &gt;&gt; [];</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> MyObject &#123;</span><br><span class="line">  foo: <span class="built_in">string</span>;</span><br><span class="line">  bar?: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> [value, setValue] = useState &lt;MyObject&gt; &#123; <span class="attr">foo</span>: <span class="string">&quot;hello&quot;</span> &#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="with-useRef"><a href="#with-useRef" class="headerlink" title="with useRef"></a>with <code>useRef</code></h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> inputEl = useRef &lt;HTMLInputElement&gt; <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
-<h3 id="with-useContext"><a href="#with-useContext" class="headerlink" title="with useContext"></a>with <code>useContext</code></h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Theme = <span class="string">&quot;light&quot;</span> | <span class="string">&quot;dark&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> ThemeContext = createContext &lt;Theme&gt; <span class="string">&quot;dark&quot;</span>;</span><br></pre></td></tr></table></figure>
-<h3 id="with-useReducer"><a href="#with-useReducer" class="headerlink" title="with useReducer"></a>with <code>useReducer</code></h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> State &#123;</span><br><span class="line">  value: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Action =</span><br><span class="line">  | &#123; <span class="attr">type</span>: <span class="string">&quot;increment&quot;</span> &#125;</span><br><span class="line">  | &#123; <span class="attr">type</span>: <span class="string">&quot;decrement&quot;</span> &#125;</span><br><span class="line">  | &#123; <span class="attr">type</span>: <span class="string">&quot;incrementAmount&quot;</span>, <span class="attr">amount</span>: <span class="built_in">number</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> counterReducer = <span class="function">(<span class="params">state: State, action: Action</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;increment&quot;</span>:</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">value</span>: state.value + <span class="number">1</span> &#125;;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;decrement&quot;</span>:</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">value</span>: state.value - <span class="number">1</span> &#125;;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;incrementAmount&quot;</span>:</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">value</span>: state.value + action.amount &#125;;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> [state, dispatch] = useReducer(counterReducer, &#123; <span class="attr">value</span>: <span class="number">0</span> &#125;);</span><br><span class="line"></span><br><span class="line">dispatch(&#123; <span class="attr">type</span>: <span class="string">&quot;increment&quot;</span> &#125;);</span><br><span class="line">dispatch(&#123; <span class="attr">type</span>: <span class="string">&quot;decrement&quot;</span> &#125;);</span><br><span class="line">dispatch(&#123; <span class="attr">type</span>: <span class="string">&quot;incrementAmount&quot;</span>, <span class="attr">amount</span>: <span class="number">10</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// TypeScript compilation error</span></span><br><span class="line">dispatch(&#123; <span class="attr">type</span>: <span class="string">&quot;invalidActionType&quot;</span> &#125;);</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/TypeScript/TypeScript-React/" data-id="ckqo4bfvb00231fozek0u78a2" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-TypeScript/TypeScript-basics" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/12/01/TypeScript/TypeScript-basics/" class="article-date">
-  <time datetime="2019-12-01T15:13:00.000Z" itemprop="datePublished">2019-12-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/12/01/TypeScript/TypeScript-basics/">TypeScript basics</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="operator"><a href="#operator" class="headerlink" title="! operator"></a>! operator</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a!.b!.c) &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>compiles to JS:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a.b.c) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="operator-1"><a href="#operator-1" class="headerlink" title="? operator"></a>? operator</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = foo?.bar.baz();</span><br></pre></td></tr></table></figure>
-<p>compiles to JS:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = foo === <span class="literal">null</span> || foo === <span class="literal">undefined</span> ? <span class="literal">undefined</span> : foo.bar.baz();</span><br></pre></td></tr></table></figure>
-<p>And:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (someObj?.bar) &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>is equivalent in JS to:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (someObj &amp;amp;&amp;amp; someObj.someProperty) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>TS:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">interface Content &#123;</span><br><span class="line">  getUrl?: <span class="function">() =&gt;</span> string;</span><br><span class="line">  url?: string;</span><br><span class="line">&#125;</span><br><span class="line">interface Data &#123;</span><br><span class="line">  content?: Content;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> data: Data | <span class="literal">undefined</span>;</span><br><span class="line"><span class="keyword">const</span> url: string | <span class="literal">undefined</span> = data?.content?.getUrl?.();</span><br><span class="line"><span class="keyword">const</span> url2: string | <span class="literal">undefined</span> = data?.content?.url;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/TypeScript/TypeScript-basics/" data-id="ckqo4bfvc00271foz1tknh1t7" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-React/React-Hooks-introduction-and-API-pitfalls" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/12/01/React/React-Hooks-introduction-and-API-pitfalls/" class="article-date">
-  <time datetime="2019-12-01T09:00:00.000Z" itemprop="datePublished">2019-12-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/Hooks/">Hooks</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/12/01/React/React-Hooks-introduction-and-API-pitfalls/">React Hooks - introduction and API pitfalls</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>Hooks are <strong>a new addition in React 16.8</strong>. They let you use state and other React features without writing a class.</li>
-</ul>
-<h2 id="Hooks-list"><a href="#Hooks-list" class="headerlink" title="Hooks list"></a>Hooks list</h2><ul>
-<li>basic hooks: <code>useState</code>, <code>useEffect</code>, <code>useContext</code></li>
-<li>additional hooks: <code>useReducer</code>, <code>useCallback</code>, <code>useMemo</code>, <code>useRef</code>, <code>useImperativeHandle</code>, <code>useLayoutEffect</code>, <code>useDebugValue</code></li>
-</ul>
-<h3 id="Hook-setState"><a href="#Hook-setState" class="headerlink" title="Hook setState"></a>Hook <code>setState</code></h3><ul>
-<li>unlike the <code>setState</code> method found in class components, <code>useState</code> does not automatically merge update objects, so we have to manually set state for previous state values that we’re not intend to modify:</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">setState(<span class="function"><span class="params">prevState</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// Object.assign would also work</span></span><br><span class="line">  <span class="keyword">return</span> &#123; ...prevState, ...updatedValues &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>alternative to the <code>setState</code> hook is the <code>useReducer</code> hook, which is more suited for managing state objects that contain multiple sub-values and not simple primitives like numbers, strings.</li>
-<li><code>setState</code> - if the initial state is the result of an expensive computation, you may provide a function instead, which will be executed only on the initial render:</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [state, setState] = useState(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> initialState = someExpensiveComputation(props);</span><br><span class="line">  <span class="keyword">return</span> initialState;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Hook-useEffect"><a href="#Hook-useEffect" class="headerlink" title="Hook useEffect"></a>Hook <code>useEffect</code></h3><ul>
-<li>you should call hooks at the top level of the render function, this means no conditional hooks:</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// BAD:</span></span><br><span class="line"><span class="keyword">if</span> (user.isAdmin) &#123;</span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// GOOD:</span></span><br><span class="line">useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (user.isAdmin) &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>a second argument to <code>useEffect</code> that is the array of values that the effect depends on, so in below example the effect will be executed only when <code>props.source</code> changes:</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> subscription = props.source.subscribe();</span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    subscription.unsubscribe();</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;, [props.source]);</span><br></pre></td></tr></table></figure>
-<h3 id="Hook-useCallback"><a href="#Hook-useCallback" class="headerlink" title="Hook useCallback"></a>Hook <code>useCallback</code></h3><ul>
-<li>returns a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Memoization">memoized</a> callback</li>
-<li>will return a memoized version of the callback that only changes if one of the dependencies has changed</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> memoizedCallback = useCallback(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  doSomething(a, b);</span><br><span class="line">&#125;, [a, b]);</span><br></pre></td></tr></table></figure>
-<h3 id="Hook-useMemo"><a href="#Hook-useMemo" class="headerlink" title="Hook useMemo"></a>Hook <code>useMemo</code></h3><ul>
-<li>If you’re doing expensive calculations while rendering, you can optimize them with <code>useMemo</code>:</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [c1, setC1] = useState(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">const</span> [c2, setC2] = useState(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// This value will not be recomputed between re-renders</span></span><br><span class="line"><span class="comment">// unless the value of c1 changes</span></span><br><span class="line"><span class="keyword">const</span> sinOfC1: number = useMemo(<span class="function">() =&gt;</span> <span class="built_in">Math</span>.sin(c1), [c1]);</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>useMemo</code> is generalized version of  <code>useCallback</code> hook. <code>useMemo</code> is primarily used for caching values but can also be used for caching functions as <code>useCallback</code> is used for because <code>useCallback(fn, deps)</code> is equivalent to <code>useMemo(() =&gt; fn, deps)</code>:</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Some function ...</span></span><br><span class="line"><span class="keyword">const</span> f = <span class="function">() =&gt;</span> &#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The following are functionally equivalent</span></span><br><span class="line"><span class="keyword">const</span> callbackF = useCallback(f, [])</span><br><span class="line"><span class="keyword">const</span> callbackF = useMemo(<span class="function">() =&gt;</span> f, [])</span><br></pre></td></tr></table></figure>
-<h2 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a>Sources</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://reactjs.org/docs/hooks-reference.html">https://reactjs.org/docs/hooks-reference.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://hackernoon.com/why-react-hooks-a-developers-perspective-2aedb8511f38">https://hackernoon.com/why-react-hooks-a-developers-perspective-2aedb8511f38</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/React/React-Hooks-introduction-and-API-pitfalls/" data-id="ckqo4bfv5001r1foz0wuvb4yp" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li></ul>
 
     </footer>
   </div>
@@ -740,7 +745,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/Other/">Other</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/">Mobile</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Cordova/">Cordova</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/">Swift</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/iOS/">iOS</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/Nest-js/">Nest.js</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Scripts/">Scripts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/State-management/">State management</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/">Backend</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/Authentication/">Authentication</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/Authentication/Authorization/">Authorization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/ElasticSearch/">ElasticSearch</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/Redis/">Redis</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/Other/">Other</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/">Mobile</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Cordova/">Cordova</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/">Swift</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/iOS/">iOS</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/Nest-js/">Nest.js</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Scripts/">Scripts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/State-management/">State management</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -750,7 +755,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authentication/" rel="tag">Authentication</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authorization/" rel="tag">Authorization</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
     </div>
   </div>
 
@@ -760,7 +765,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Backend/" style="font-size: 16px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 14px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 12px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 18px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 14px;">Programming languages</a> <a href="/blog/tags/React/" style="font-size: 18px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 14px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 18px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 12px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
+      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Authentication/" style="font-size: 10px;">Authentication</a> <a href="/blog/tags/Authorization/" style="font-size: 10px;">Authorization</a> <a href="/blog/tags/Backend/" style="font-size: 18px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 14px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 12px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 16px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 14px;">Programming languages</a> <a href="/blog/tags/React/" style="font-size: 18px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 14px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 18px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 12px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
     </div>
   </div>
 
@@ -782,23 +787,23 @@
       <ul>
         
           <li>
+            <a href="/blog/2021/07/03/Backend/Authentication-and-Authorization/">Authentication and Authorization</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/07/03/Backend/Redis/">Redis</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/07/02/Backend/ElasticSearch/">ElasticSearch</a>
+          </li>
+        
+          <li>
             <a href="/blog/2021/06/30/Nodejs/Nodejs-Nestjs/">Node.js - Nest.js framework</a>
           </li>
         
           <li>
             <a href="/blog/2021/06/29/Nodejs/Nodejs-threads/">Node.js threads</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/12/22/Mobile/Mobile-Swift/">Notes on Swift</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/">Software Engineering notes</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/">MobX vs Redux</a>
           </li>
         
       </ul>
