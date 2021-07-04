@@ -112,6 +112,16 @@
         <h1 id="Authentication-and-Authorization"><a href="#Authentication-and-Authorization" class="headerlink" title="Authentication and Authorization"></a>Authentication and Authorization</h1><p>• <strong>Authentication</strong> (pl. <em>uwierzytelnianie, autentykacja</em>) describes the process of claiming an identity. That’s what you do when you log in to a service with a username and password, you authenticate yourself.<br>• <strong>Authorization</strong> on the other hand describes permission rules that specify the access rights of individual users and user groups to certain parts of the system, i.e. ACL.</p>
 <h2 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h2><ul>
 <li>When we do token-based authentication, such as OpenID, OAuth, or OpenID Connect, we receive an <code>access_token</code> (and sometimes <code>id_token</code>) from a trusted authority</li>
+<li>Passport is an authentication middleware for Node.js<ul>
+<li>Packages<ul>
+<li><code>bcrypt</code> for hashing user passwords</li>
+<li><code>jsonwebtoken</code> for signing tokens</li>
+<li><code>passport-local</code> for implementing local strategy</li>
+<li><code>passport-jwt</code> for retrieving and verifying JWTs</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <h3 id="OAuth2"><a href="#OAuth2" class="headerlink" title="OAuth2"></a>OAuth2</h3><ul>
 <li>i.e. Facebook, Google</li>
@@ -153,7 +163,7 @@
 </ul>
 </li>
 <li>can be sent through an URL, POST parameter, or inside an HTTP header</li>
-<li>JWT sent over as an <code>Authentication Bearer</code> header is a stateless authentication mechanism as the user state is never saved in the server memory</li>
+<li>JWT sent over as an <code>Authorization: Bearer &lt;token&gt;</code> header is a stateless authentication mechanism as the user state is never saved in the server memory</li>
 </ul>
 <h4 id="Advantages"><a href="#Advantages" class="headerlink" title="Advantages"></a>Advantages</h4><ul>
 <li>They are easy to scale horizontally</li>
@@ -162,12 +172,29 @@
 <li>They have the ability to create truly RESTful Services</li>
 <li>They have built-in expiration functionality</li>
 <li>JSON Web Tokens are self-contained</li>
+<li>JWT is a <strong>stateless authentication</strong> mechanism as the user state is never saved in the server memory</li>
+<li>doesn’t matter which domains are serving your APIs, as <strong>Cross-Origin Resource Sharing (CORS) won’t be an issue</strong> as it doesn’t use cookies</li>
 <li>a good way of securely transmitting information between parties</li>
+</ul>
+<h4 id="Precautions"><a href="#Precautions" class="headerlink" title="Precautions"></a>Precautions</h4><ul>
+<li>a great care must be taken to prevent security issues and you <strong>should not keep tokens longer than required</strong></li>
+<li><strong>you also should not store sensitive session data in browser storage due to lack of security</strong></li>
 </ul>
 <h4 id="Invalidation"><a href="#Invalidation" class="headerlink" title="Invalidation"></a>Invalidation</h4><ul>
 <li>Simply remove the token from the client</li>
 <li>Create a token blocklist or whitelist</li>
 <li>Just keep token expiry times short and rotate them often</li>
+</ul>
+<h4 id="While-using-cookies"><a href="#While-using-cookies" class="headerlink" title="While using cookies"></a>While using cookies</h4><ul>
+<li>Cookies/session id is not self contained. It is a reference token. During each validation the Gmail server needs to fetch the information corresponding to it.<ul>
+<li>Cookie/session based authentication doesn’t scale well</li>
+</ul>
+</li>
+<li>JWT is self contained. It is a value token. So during each validation the Gmail server does not needs to fetch the information corresponding to it. It is most suitable for Microservices Architecture<ul>
+<li>with JWTs REST API is stateless and therefore without side effects means that maintainability and debugging are made much easier</li>
+<li>CORS - for an API to be served from one server and for the actual application to consume it from another. To make this happen, we need to enable Cross-Origin Resource Sharing (CORS). Since cookies can only be used for the domain from which they originated, they aren’t much help for APIs on different domains than the application. Using JWTs for authentication in this case ensures that the RESTful API is stateless</li>
+</ul>
+</li>
 </ul>
 <h4 id="Use-cases"><a href="#Use-cases" class="headerlink" title="Use cases"></a>Use cases</h4><ul>
 <li>Authorization: This is the most common scenario for using JWT. Once the user is logged in, each subsequent request will include the JWT, allowing the user to access routes, services, and resources that are permitted with that token. Single Sign On is a feature that widely uses JWT nowadays, because of its small overhead and its ability to be easily used across different domains.</li>
@@ -184,7 +211,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/Authentication-and-Authorization/" data-id="ckqp6nffw0002y8stb7ofhdsb" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/Authentication-and-Authorization/" data-id="ckqp6o9d10002zbr1b8gg0fds" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Authentication/" rel="tag">Authentication</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Authorization/" rel="tag">Authorization</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li></ul>
@@ -230,7 +257,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/Redis/" data-id="ckqp6nffz0005y8st3l246nrw" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/Redis/" data-id="ckqp6o9d50005zbr1a9o0a3wn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Redis/" rel="tag">Redis</a></li></ul>
@@ -277,7 +304,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/02/Backend/ElasticSearch/" data-id="ckqp6nffx0003y8std58nb0sa" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/02/Backend/ElasticSearch/" data-id="ckqp6o9d30003zbr1edtq18ed" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li></ul>
@@ -335,7 +362,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/06/30/Nodejs/Nodejs-Nestjs/" data-id="ckqp6nfgt001cy8stgg21fx7m" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/06/30/Nodejs/Nodejs-Nestjs/" data-id="ckqp6o9e0001czbr1cqljainp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
@@ -389,7 +416,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/06/29/Nodejs/Nodejs-threads/" data-id="ckqp6nfgw001ky8st2gdqbecg" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/06/29/Nodejs/Nodejs-threads/" data-id="ckqp6o9e3001kzbr145fp3eef" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
@@ -452,7 +479,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/12/22/Mobile/Mobile-Swift/" data-id="ckqp6nfgr0017y8st20yj6hni" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/12/22/Mobile/Mobile-Swift/" data-id="ckqp6o9dy0017zbr181k2hhm3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
@@ -635,7 +662,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" data-id="ckqp6nfj7008ay8stg05jgq5m" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" data-id="ckqp6o9go008azbr14vdr6skt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
@@ -726,7 +753,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-Hooks/" data-id="ckqp6nfgx001oy8stfe8n2q1g" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-Hooks/" data-id="ckqp6o9e4001ozbr102do5ynj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li></ul>
@@ -778,7 +805,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" data-id="ckqp6nfgc000ly8sta4t93tdf" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" data-id="ckqp6o9dj000lzbr1281cf1gy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
@@ -856,7 +883,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/" data-id="ckqp6nfgy001qy8std7hs1aki" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/" data-id="ckqp6o9e6001qzbr1gnsehy9w" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li></ul>
