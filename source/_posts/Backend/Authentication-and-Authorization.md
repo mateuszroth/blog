@@ -36,6 +36,13 @@ date: 2021-07-04
   2. Authorization server returns an *authorization code* to the client
   3. Client then uses that *authorization code* in order to request an *authorization token* - e.g. a JWT
 
+
+### Scalability of token/cookie based authentication
+* in horizontal scaling scenario you have to start replicating servers
+  * for **cookie based authentication has a disadvantage of need for central session storage system** that all of your application servers have access to
+    * Setting up and maintaining this type of distributed system involves in-depth technical knowledge and subsequently **incurs higher financial costs**
+  * for **JWT based authentication our application can scale easily** because we can use tokens to access resources from different servers without worrying if the user was actually logged in on a particular server. You also save costs because you don’t need a dedicated server to store your sessions. Why? Because there are no sessions!
+
 ## Authorization
 ### JWT (JSON Web Tokens)
 * JSON Web Token (JWT) is an open standard that defines a compact and self-contained way for securely transmitting information between parties as a JSON object.
