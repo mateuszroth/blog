@@ -4,7 +4,7 @@ tags:
   - Backend
   - Node.js
 categories:
-  - [Node.js, Basics, Nest.js]
+  - [Node.js, Nest.js]
 date: 2021-07-01
 ---
 # Nest.js framework
