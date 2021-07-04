@@ -4,7 +4,7 @@ tags:
   - Backend
   - ElasticSearch
 categories:
-  - [Backend, ElasticSearch]
+  - [Backend]
 date: 2021-07-03
 ---
 # ElasticSearch

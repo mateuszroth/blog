@@ -4,7 +4,7 @@ tags:
   - Backend
   - Redis
 categories:
-  - [Backend, Redis]
+  - [Backend]
 date: 2021-07-04
 ---
 # Redis

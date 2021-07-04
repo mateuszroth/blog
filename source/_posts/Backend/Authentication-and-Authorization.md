@@ -5,7 +5,7 @@ tags:
   - Authorization
   - Authentication
 categories:
-  - [Backend, Authentication, Authorization]
+  - [Backend]
 date: 2021-07-04
 ---
 # Authentication and Authorization

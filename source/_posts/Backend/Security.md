@@ -4,7 +4,7 @@ tags:
   - Backend
   - Security
 categories:
-  - [Backend, Security]
+  - [Backend]
 date: 2021-07-04
 ---
 # Security

@@ -4,7 +4,7 @@ tags:
   - Backend
   - REST APIs
 categories:
-  - [Backend, REST APIs]
+  - [Backend]
 date: 2021-07-04
 ---
 # REST APIs
