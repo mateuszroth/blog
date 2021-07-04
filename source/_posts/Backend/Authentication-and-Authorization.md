@@ -14,6 +14,12 @@ date: 2021-07-04
 
 ## Authentication
 * When we do token-based authentication, such as OpenID, OAuth, or OpenID Connect, we receive an `access_token` (and sometimes `id_token`) from a trusted authority
+* Passport is an authentication middleware for Node.js
+  * Packages
+    * `bcrypt` for hashing user passwords
+    * `jsonwebtoken` for signing tokens
+    * `passport-local` for implementing local strategy
+    * `passport-jwt` for retrieving and verifying JWTs
 
 ### OAuth2
 * i.e. Facebook, Google
@@ -63,7 +69,7 @@ HMACSHA256(
   secret)
 ```
 * can be sent through an URL, POST parameter, or inside an HTTP header
-* JWT sent over as an `Authentication Bearer` header is a stateless authentication mechanism as the user state is never saved in the server memory
+* JWT sent over as an `Authorization: Bearer <token>` header is a stateless authentication mechanism as the user state is never saved in the server memory
 
 #### Advantages
 * They are easy to scale horizontally
@@ -72,19 +78,31 @@ HMACSHA256(
 * They have the ability to create truly RESTful Services
 * They have built-in expiration functionality
 * JSON Web Tokens are self-contained
+* JWT is a **stateless authentication** mechanism as the user state is never saved in the server memory
+* doesn’t matter which domains are serving your APIs, as **Cross-Origin Resource Sharing (CORS) won’t be an issue** as it doesn’t use cookies
 * a good way of securely transmitting information between parties
+
+#### Precautions
+* a great care must be taken to prevent security issues and you **should not keep tokens longer than required**
+* **you also should not store sensitive session data in browser storage due to lack of security**
 
 #### Invalidation
 * Simply remove the token from the client
 * Create a token blocklist or whitelist
 * Just keep token expiry times short and rotate them often
 
+#### While using cookies
+* Cookies/session id is not self contained. It is a reference token. During each validation the Gmail server needs to fetch the information corresponding to it.
+  * Cookie/session based authentication doesn't scale well
+* JWT is self contained. It is a value token. So during each validation the Gmail server does not needs to fetch the information corresponding to it. It is most suitable for Microservices Architecture
+  * with JWTs REST API is stateless and therefore without side effects means that maintainability and debugging are made much easier
+  * CORS - for an API to be served from one server and for the actual application to consume it from another. To make this happen, we need to enable Cross-Origin Resource Sharing (CORS). Since cookies can only be used for the domain from which they originated, they aren’t much help for APIs on different domains than the application. Using JWTs for authentication in this case ensures that the RESTful API is stateless
+
 #### Use cases
 * Authorization: This is the most common scenario for using JWT. Once the user is logged in, each subsequent request will include the JWT, allowing the user to access routes, services, and resources that are permitted with that token. Single Sign On is a feature that widely uses JWT nowadays, because of its small overhead and its ability to be easily used across different domains.
 
 #### Sources
 * https://auth0.com/learn/json-web-tokens/
-
 
 ### ACL / Roles and permissions
 #### TODO:
