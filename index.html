@@ -158,7 +158,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/04/Backend/Message-brokers/" data-id="ckqpdv817000715uegnaz2i7w" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/04/Backend/Message-brokers/" data-id="ckqpjyuux000710sk19qf3bmg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/RabbitMQ/" rel="tag">RabbitMQ</a></li></ul>
@@ -196,7 +196,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Authentication-and-Authorization"><a href="#Authentication-and-Authorization" class="headerlink" title="Authentication and Authorization"></a>Authentication and Authorization</h1><p>• <strong>Authentication</strong> (pl. <em>uwierzytelnianie, autentykacja</em>) describes the process of claiming an identity. That’s what you do when you log in to a service with a username and password, you authenticate yourself.<br>• <strong>Authorization</strong> on the other hand describes permission rules that specify the access rights of individual users and user groups to certain parts of the system, i.e. ACL.</p>
+        <h1 id="Authentication-and-Authorization"><a href="#Authentication-and-Authorization" class="headerlink" title="Authentication and Authorization"></a>Authentication and Authorization</h1><ul>
+<li><strong>Authentication</strong> (pl. <em>uwierzytelnianie, autentykacja</em>) describes the process of claiming an identity. That’s what you do when you log in to a service with a username and password, you authenticate yourself.</li>
+<li><strong>Authorization</strong> on the other hand describes permission rules that specify the access rights of individual users and user groups to certain parts of the system, i.e. ACL.</li>
+<li>In modern era, everyone is going for token based authentication instead of session based cookies.</li>
+<li>A spreadsheet describing authentication techniques: (Authentication Techniques for APIs)[<a target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1tAX5ZJzluilhoYKjra-uHbMCZraaQkqIHl3RIQ8mVkM/edit#gid=0]">https://docs.google.com/spreadsheets/d/1tAX5ZJzluilhoYKjra-uHbMCZraaQkqIHl3RIQ8mVkM/edit#gid=0]</a></li>
+</ul>
 <h2 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h2><ul>
 <li>When we do token-based authentication, such as OpenID, OAuth, or OpenID Connect, we receive an <code>access_token</code> (and sometimes <code>id_token</code>) from a trusted authority</li>
 <li>Passport is an authentication middleware for Node.js<ul>
@@ -273,6 +278,9 @@
 <li>doesn’t matter which domains are serving your APIs, as <strong>Cross-Origin Resource Sharing (CORS) won’t be an issue</strong> as it doesn’t use cookies</li>
 <li>a good way of securely transmitting information between parties</li>
 </ul>
+<h4 id="Disadvantages"><a href="#Disadvantages" class="headerlink" title="Disadvantages"></a>Disadvantages</h4><ul>
+<li>(Why JWTs Suck as Session Tokens)[<a target="_blank" rel="noopener" href="https://developer.okta.com/blog/2017/08/17/why-jwts-suck-as-session-tokens]">https://developer.okta.com/blog/2017/08/17/why-jwts-suck-as-session-tokens]</a></li>
+</ul>
 <h4 id="Precautions"><a href="#Precautions" class="headerlink" title="Precautions"></a>Precautions</h4><ul>
 <li>a great care must be taken to prevent security issues and you <strong>should not keep tokens longer than required</strong></li>
 <li><strong>you also should not store sensitive session data in browser storage due to lack of security</strong></li>
@@ -296,19 +304,20 @@
 <h4 id="Use-cases"><a href="#Use-cases" class="headerlink" title="Use cases"></a>Use cases</h4><ul>
 <li>Authorization: This is the most common scenario for using JWT. Once the user is logged in, each subsequent request will include the JWT, allowing the user to access routes, services, and resources that are permitted with that token. Single Sign On is a feature that widely uses JWT nowadays, because of its small overhead and its ability to be easily used across different domains.</li>
 </ul>
-<h4 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a>Sources</h4><ul>
-<li><a target="_blank" rel="noopener" href="https://auth0.com/learn/json-web-tokens/">https://auth0.com/learn/json-web-tokens/</a></li>
+<h3 id="ACL-Roles-and-permissions"><a href="#ACL-Roles-and-permissions" class="headerlink" title="ACL / Roles and permissions"></a>ACL / Roles and permissions</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api">Permissions should be handled by defining specific user roles with their access control lists</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/OptimalBits/node_acl"><code>node_acl</code></a> package</li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/accesscontrol"><code>accesscontrol</code></a> package</li>
 </ul>
-<h3 id="ACL-Roles-and-permissions"><a href="#ACL-Roles-and-permissions" class="headerlink" title="ACL / Roles and permissions"></a>ACL / Roles and permissions</h3><h4 id="TODO"><a href="#TODO" class="headerlink" title="TODO:"></a>TODO:</h4><ul>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api">https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api</a></li>
-<li><a target="_blank" rel="noopener" href="https://gist.github.com/facultymatt/6370903">https://gist.github.com/facultymatt/6370903</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/accesscontrol">https://www.npmjs.com/package/accesscontrol</a></li>
+<h2 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a>Sources</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://auth0.com/learn/json-web-tokens/">https://auth0.com/learn/json-web-tokens/</a></li>
+<li><a target="_blank" rel="noopener" href="https://betterprogramming.pub/authentication-and-authorization-using-redis-49c5f0e6b311">https://betterprogramming.pub/authentication-and-authorization-using-redis-49c5f0e6b311</a></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/Authentication-and-Authorization/" data-id="ckqpdv80s000215uebo0xhfp3" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/Authentication-and-Authorization/" data-id="ckqpjyuuo000210skezj13jlo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Authentication/" rel="tag">Authentication</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Authorization/" rel="tag">Authorization</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li></ul>
@@ -359,7 +368,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/HTTP/" data-id="ckqpdv814000515ue3oipgxxz" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/HTTP/" data-id="ckqpjyuuw000510sk236xgy7e" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/HTTP/" rel="tag">HTTP</a></li></ul>
@@ -421,7 +430,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/REST-APIs/" data-id="ckqpdv819000815ueas821ris" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/REST-APIs/" data-id="ckqpjyuuy000810sk0nubfeso" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/REST-APIs/" rel="tag">REST APIs</a></li></ul>
@@ -467,7 +476,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/Redis/" data-id="ckqpdv81b000b15ue39ldhhy7" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/Redis/" data-id="ckqpjyuv0000b10skhkau40le" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Redis/" rel="tag">Redis</a></li></ul>
@@ -526,7 +535,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/Security/" data-id="ckqpdv81c000c15ue40vj3hjv" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/Security/" data-id="ckqpjyuv1000c10sk38nxhjb8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Security/" rel="tag">Security</a></li></ul>
@@ -573,7 +582,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/02/Backend/ElasticSearch/" data-id="ckqpdv80x000315ue064odw8g" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/02/Backend/ElasticSearch/" data-id="ckqpjyuur000310sk0f1pekzc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li></ul>
@@ -631,7 +640,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/06/30/Nodejs/Nodejs-Nestjs/" data-id="ckqpdv82a001x15uec9m32vu9" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/06/30/Nodejs/Nodejs-Nestjs/" data-id="ckqpjyuvu001x10ska5wkfis8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
@@ -685,7 +694,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/06/29/Nodejs/Nodejs-threads/" data-id="ckqpdv82e002515ue768xaeq3" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/06/29/Nodejs/Nodejs-threads/" data-id="ckqpjyuvx002510sk97xj9qh2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
@@ -748,7 +757,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/12/22/Mobile/Mobile-Swift/" data-id="ckqpdv826001p15ueevg0eui3" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/12/22/Mobile/Mobile-Swift/" data-id="ckqpjyuvs001p10skb1wy2yw6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
