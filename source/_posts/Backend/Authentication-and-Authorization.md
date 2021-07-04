@@ -9,8 +9,10 @@ categories:
 date: 2021-07-04
 ---
 # Authentication and Authorization
-• **Authentication** (pl. *uwierzytelnianie, autentykacja*) describes the process of claiming an identity. That’s what you do when you log in to a service with a username and password, you authenticate yourself.
-• **Authorization** on the other hand describes permission rules that specify the access rights of individual users and user groups to certain parts of the system, i.e. ACL.
+* **Authentication** (pl. *uwierzytelnianie, autentykacja*) describes the process of claiming an identity. That’s what you do when you log in to a service with a username and password, you authenticate yourself.
+* **Authorization** on the other hand describes permission rules that specify the access rights of individual users and user groups to certain parts of the system, i.e. ACL.
+* In modern era, everyone is going for token based authentication instead of session based cookies.
+* A spreadsheet describing authentication techniques: (Authentication Techniques for APIs)[https://docs.google.com/spreadsheets/d/1tAX5ZJzluilhoYKjra-uHbMCZraaQkqIHl3RIQ8mVkM/edit#gid=0]
 
 ## Authentication
 * When we do token-based authentication, such as OpenID, OAuth, or OpenID Connect, we receive an `access_token` (and sometimes `id_token`) from a trusted authority
@@ -89,6 +91,9 @@ HMACSHA256(
 * doesn’t matter which domains are serving your APIs, as **Cross-Origin Resource Sharing (CORS) won’t be an issue** as it doesn’t use cookies
 * a good way of securely transmitting information between parties
 
+#### Disadvantages
+* (Why JWTs Suck as Session Tokens)[https://developer.okta.com/blog/2017/08/17/why-jwts-suck-as-session-tokens]
+
 #### Precautions
 * a great care must be taken to prevent security issues and you **should not keep tokens longer than required**
 * **you also should not store sensitive session data in browser storage due to lack of security**
@@ -108,11 +113,11 @@ HMACSHA256(
 #### Use cases
 * Authorization: This is the most common scenario for using JWT. Once the user is logged in, each subsequent request will include the JWT, allowing the user to access routes, services, and resources that are permitted with that token. Single Sign On is a feature that widely uses JWT nowadays, because of its small overhead and its ability to be easily used across different domains.
 
-#### Sources
-* https://auth0.com/learn/json-web-tokens/
-
 ### ACL / Roles and permissions
-#### TODO:
-* [https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api](https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api)
-* [https://gist.github.com/facultymatt/6370903](https://gist.github.com/facultymatt/6370903)
-* [https://www.npmjs.com/package/accesscontrol](https://www.npmjs.com/package/accesscontrol)
+* [Permissions should be handled by defining specific user roles with their access control lists](https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api)
+* [`node_acl`](https://github.com/OptimalBits/node_acl) package
+* [`accesscontrol`](https://www.npmjs.com/package/accesscontrol) package
+
+## Sources
+* https://auth0.com/learn/json-web-tokens/
+* https://betterprogramming.pub/authentication-and-authorization-using-redis-49c5f0e6b311
