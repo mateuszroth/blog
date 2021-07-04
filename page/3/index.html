@@ -83,6 +83,212 @@
 </div>
 
   
+    <article id="post-Frontend/Frontend-printing-documents" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/Frontend/Frontend-printing-documents/" class="article-date">
+  <time datetime="2020-07-17T18:00:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Frontend/">Frontend</a>►<a class="article-category-link" href="/blog/categories/Frontend/Other/">Other</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/Frontend/Frontend-printing-documents/">Frontend - printing documents</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Print-iframe"><a href="#Print-iframe" class="headerlink" title="Print iframe"></a>Print <code>iframe</code></h1><p>JS:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">window.frames[&quot;printf&quot;].focus();</span><br><span class="line">window.frames[&quot;printf&quot;].print();</span><br></pre></td></tr></table></figure>
+<p>HTML:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe id&#x3D;&quot;printf&quot; name&#x3D;&quot;printf&quot;&gt;&lt;&#x2F;iframe&gt;</span><br></pre></td></tr></table></figure>
+<p>JS:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.getElementById(&quot;printf&quot;).contentWindow.print()​​​​​​;</span><br></pre></td></tr></table></figure>
+<p>More: <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/9616426/javascript-print-iframe-contents-only">https://stackoverflow.com/questions/9616426/javascript-print-iframe-contents-only</a></p>
+<h1 id="Print-div"><a href="#Print-div" class="headerlink" title="Print div"></a>Print <code>div</code></h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printDiv</span>(<span class="params">divName</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> printContents = <span class="built_in">document</span>.getElementById(divName).innerHTML;</span><br><span class="line">  <span class="keyword">var</span> originalContents = <span class="built_in">document</span>.body.innerHTML;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">document</span>.body.innerHTML = printContents;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">window</span>.print();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">document</span>.body.innerHTML = originalContents;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="jspdf-nie-nadaje-sie-do-robienia-plikow-HTML"><a href="#jspdf-nie-nadaje-sie-do-robienia-plikow-HTML" class="headerlink" title="jspdf nie nadaje się do robienia plików HTML"></a><code>jspdf</code> nie nadaje się do robienia plików HTML</h1><p>More: <a target="_blank" rel="noopener" href="https://cdn.rawgit.com/MrRio/jsPDF/master/examples/html2pdf/showcase_supported_html.html">https://cdn.rawgit.com/MrRio/jsPDF/master/examples/html2pdf/showcase_supported_html.html</a></p>
+<h1 id="My-implementation"><a href="#My-implementation" class="headerlink" title="My implementation"></a>My implementation</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> replace <span class="keyword">from</span> <span class="string">&quot;lodash/replace&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; getDataBase64String, MIME_HTML &#125; <span class="keyword">from</span> <span class="string">&quot;../constants/mimeTypes&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> REPLACE_SCRIPT = <span class="string">`</span></span><br><span class="line"><span class="string">&lt;script&gt;</span></span><br><span class="line"><span class="string">  window.loadPrint = function loadPrint() &#123;</span></span><br><span class="line"><span class="string">    window.print();</span></span><br><span class="line"><span class="string">    setTimeout(function () &#123; window.close(); document.clear(); document.close(); &#125;, 100);</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  window.onload = function() &#123; window.loadPrint(); &#125;</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br><span class="line"><span class="string">`</span>;</span><br><span class="line"><span class="keyword">const</span> HTML_TAG = <span class="string">&quot;&lt;/html&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> HTML_TAG_CAPITALIZED = <span class="string">&quot;&lt;/HTML&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printHtmlDocument</span>(<span class="params">dataBase64Source, iframeElement</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> dataBase64Prefix = getDataBase64String(MIME_HTML);</span><br><span class="line">  <span class="keyword">const</span> base64Source = dataBase64Source.slice(dataBase64Prefix.length);</span><br><span class="line">  <span class="keyword">const</span> source = atob(base64Source);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> hasHtmlTag = source.indexOf(HTML_TAG) &gt; -<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">const</span> hasCapitalizedHtmlTag = source.indexOf(HTML_TAG_CAPITALIZED) &gt; -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> processedHtml;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (hasHtmlTag &amp;&amp; !hasCapitalizedHtmlTag) &#123;</span><br><span class="line">    processedHtml = replace(source, HTML_TAG, REPLACE_SCRIPT + HTML_TAG);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!hasHtmlTag &amp;&amp; hasCapitalizedHtmlTag) &#123;</span><br><span class="line">    processedHtml = replace(</span><br><span class="line">      source,</span><br><span class="line">      HTML_TAG_CAPITALIZED,</span><br><span class="line">      REPLACE_SCRIPT + HTML_TAG_CAPITALIZED</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!processedHtml) &#123;</span><br><span class="line">    processedHtml = source + REPLACE_SCRIPT;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> processedBase64Source = btoa(processedHtml);</span><br><span class="line">  <span class="keyword">const</span> processedDataBase64Source = dataBase64Prefix + processedBase64Source;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> iframe = iframeElement || <span class="built_in">document</span>.createElement(<span class="string">&quot;iframe&quot;</span>);</span><br><span class="line">  iframe.src = processedDataBase64Source;</span><br><span class="line">  iframe.height = <span class="string">&quot;0&quot;</span>;</span><br><span class="line">  iframe.width = <span class="string">&quot;0&quot;</span>;</span><br><span class="line">  iframe.title = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(iframe);</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> iframe.remove(), <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    html: processedHtml,</span><br><span class="line">    dataBase64: processedDataBase64Source,</span><br><span class="line">    iframe: iframe,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> printHtmlDocument;</span><br></pre></td></tr></table></figure>
+<h2 id="Tests"><a href="#Tests" class="headerlink" title="Tests"></a>Tests</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> printHtmlDocument, &#123; REPLACE_SCRIPT &#125; <span class="keyword">from</span> <span class="string">&quot;./printHtmlDocument&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; DATA_MIME_HTML_BASE64 &#125; <span class="keyword">from</span> <span class="string">&quot;../constants/mimeTypes&quot;</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">&quot;printHtmlDocument&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> HTML = <span class="string">&quot;&lt;html&gt;&lt;body&gt;Hello&lt;/body&gt;&lt;/html&gt;&quot;</span>;</span><br><span class="line">  <span class="keyword">const</span> HTML_EXPECTED = <span class="string">`&lt;html&gt;&lt;body&gt;Hello&lt;/body&gt;<span class="subst">$&#123;REPLACE_SCRIPT&#125;</span>&lt;/html&gt;`</span>;</span><br><span class="line">  <span class="keyword">const</span> SOURCE = DATA_MIME_HTML_BASE64 + btoa(HTML);</span><br><span class="line">  <span class="keyword">const</span> SOURCE_EXPECTED = DATA_MIME_HTML_BASE64 + btoa(HTML_EXPECTED);</span><br><span class="line"></span><br><span class="line">  test(<span class="string">&quot;it should return properly modified HTML with included REPLACE_SCRIPT script&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    expect(printHtmlDocument(SOURCE).html).toEqual(HTML_EXPECTED);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  test(<span class="string">&quot;it should return properly modified BASE64 source&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    expect(printHtmlDocument(SOURCE).dataBase64).toEqual(SOURCE_EXPECTED);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  test(<span class="string">&quot;it should create iframe element with proper attributes&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> result = printHtmlDocument(SOURCE);</span><br><span class="line">    expect(result.iframe.src).toEqual(SOURCE_EXPECTED);</span><br><span class="line">    expect(result.iframe.height).toEqual(<span class="string">&quot;0&quot;</span>);</span><br><span class="line">    expect(result.iframe.width).toEqual(<span class="string">&quot;0&quot;</span>);</span><br><span class="line">    expect(result.iframe.title).toEqual(<span class="string">&quot;&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/Frontend-printing-documents/" data-id="ckqp75iiz000gyqoi451ef2e2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Nodejs/Nodejs-GraphQL-Apollo-links" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/" class="article-date">
+  <time datetime="2020-07-17T18:00:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/">GraphQL Apollo links</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>self-documentation - you build your types</li>
+<li>types information available to the client coder through introspection with tools like GraphiQL</li>
+<li>specification which forms a standardization</li>
+<li>make everything go through an API gateway which would usually do the auth resolution for all microservices</li>
+</ul>
+<p>GraphCMS:<br><a target="_blank" rel="noopener" href="https://docs.graphcms.com/">https://docs.graphcms.com/</a><br><a target="_blank" rel="noopener" href="https://github.com/GraphCMS/graphcms-examples/blob/master/current/next-apollo-blog/lib/initApollo.js">https://github.com/GraphCMS/graphcms-examples/blob/master/current/next-apollo-blog/lib/initApollo.js</a></p>
+<p>GraphQL example:<br><a target="_blank" rel="noopener" href="https://nec.is/writing/graphql-with-next-js-and-apollo/">https://nec.is/writing/graphql-with-next-js-and-apollo/</a></p>
+<p>Next, Apollo, Postgraphile:<br><a target="_blank" rel="noopener" href="https://github.com/graphile/postgraphile-apollo-server">https://github.com/graphile/postgraphile-apollo-server</a></p>
+<p>Next, Apollo, Graphcool:<br><a target="_blank" rel="noopener" href="https://github.com/adamsoffer/next-apollo-example">https://github.com/adamsoffer/next-apollo-example</a><br><a target="_blank" rel="noopener" href="https://github.com/zeit/next.js/tree/master/examples/with-apollo">https://github.com/zeit/next.js/tree/master/examples/with-apollo</a></p>
+<p>Next &amp; Apollo:<br><a target="_blank" rel="noopener" href="https://github.com/lfades/next-with-apollo">https://github.com/lfades/next-with-apollo</a><br><a target="_blank" rel="noopener" href="https://github.com/adamsoffer/next-apollo">https://github.com/adamsoffer/next-apollo</a></p>
+<p>Next, Express, Apollo:<br><a target="_blank" rel="noopener" href="https://github.com/ooade/next-apollo-auth">https://github.com/ooade/next-apollo-auth</a></p>
+<p>Hasura and Apollo:<br><a target="_blank" rel="noopener" href="https://medium.com/@f71uday/building-production-ready-application-with-hasura-and-apollo-476b18ccb44">https://medium.com/@f71uday/building-production-ready-application-with-hasura-and-apollo-476b18ccb44</a></p>
+<p>Hasura vs Postgraphile:<br><a target="_blank" rel="noopener" href="https://news.ycombinator.com/item?id=17540866">https://news.ycombinator.com/item?id=17540866</a></p>
+<p>Postgraphile:<br><a target="_blank" rel="noopener" href="https://www.graphile.org/postgraphile/">https://www.graphile.org/postgraphile/</a></p>
+<p>Hasura - GraphQL on Postgres:<br><a target="_blank" rel="noopener" href="https://hasura.io/">https://hasura.io/</a></p>
+<p>Graphcool - GraphQL BaaS:<br><a target="_blank" rel="noopener" href="https://www.graph.cool/">https://www.graph.cool/</a></p>
+<p>Prisma - GrapQL on any database:<br><a target="_blank" rel="noopener" href="https://www.prisma.io/with-graphql/">https://www.prisma.io/with-graphql/</a></p>
+<p>Nextjs, Apollo, Prisma:<br><a target="_blank" rel="noopener" href="https://github.com/mbaranovski/nextjs-apollo-oauth-prisma">https://github.com/mbaranovski/nextjs-apollo-oauth-prisma</a></p>
+<p>RAN! React . GraphQL . Next.js Toolkit - bez backendu, przykład z Graphcool:<br><a target="_blank" rel="noopener" href="https://github.com/Sly777/ran">https://github.com/Sly777/ran</a><br><a target="_blank" rel="noopener" href="https://github.com/mshameer/ran-with-prisma">https://github.com/mshameer/ran-with-prisma</a></p>
+<p>Vulcan - React, GraphQL, Meteor:<br><a target="_blank" rel="noopener" href="http://docs.vulcanjs.org/">http://docs.vulcanjs.org/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/" data-id="ckqp75ijm001nyqoi1l6h810r" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-React/React-various-notes" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/12/01/React/React-various-notes/" class="article-date">
+  <time datetime="2019-12-01T16:55:26.000Z" itemprop="datePublished">2019-12-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/Basics/">Basics</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/12/01/React/React-various-notes/">React - miscellaneous notes</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="General-notes"><a href="#General-notes" class="headerlink" title="General notes"></a>General notes</h1><ul>
+<li>treat components like pure functions and don’t modify props</li>
+</ul>
+<h1 id="Terms"><a href="#Terms" class="headerlink" title="Terms"></a>Terms</h1><h2 id="Prop-drilling"><a href="#Prop-drilling" class="headerlink" title="Prop drilling"></a>Prop drilling</h2><p>Passing props through a component tree, not a good pattern in most cases:</p>
+<p><a target="_blank" rel="noopener" href="https://miro.medium.com/max/2052/1*p_K7-j3GUX3A1XSzaFo0fQ.png">Props drilling example</a></p>
+<img src="https://miro.medium.com/max/2052/1*p_K7-j3GUX3A1XSzaFo0fQ.png" width="400"/>
+
+<h2 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h2><p>Context is a way to essentially create global variables that can be passed around in a React app so no prop drilling would be needed.</p>
+<p>Context is often touted as a <strong>simpler, lighter solution to using Redux</strong> for state management.</p>
+<h1 id="Snapshot-testing"><a href="#Snapshot-testing" class="headerlink" title="Snapshot testing"></a>Snapshot testing</h1><ul>
+<li>To make our tests really useful, we should run them before each commit. So we can be sure, that we didn’t break anything accidentally. For example <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/husky">_<em>husky_</em></a> package can help to setup and run pre-commit hooks.</li>
+<li>The snapshot tests become really powerful when you are working on larger application or multiple developers are working on the same codebase.</li>
+<li>Life examples when snapshot tests fail are available here in the section “Typical regressions”: <a target="_blank" rel="noopener" href="https://medium.com/simply/snapshots-painless-testing-of-react-components-6bce3c4d51fc">https://medium.com/simply/snapshots-painless-testing-of-react-components-6bce3c4d51fc</a></li>
+</ul>
+<h1 id="Higher-Order-Components"><a href="#Higher-Order-Components" class="headerlink" title="Higher Order Components"></a>Higher Order Components</h1><h2 id="Comparison-to-Render-Props-and-React-Hooks"><a href="#Comparison-to-Render-Props-and-React-Hooks" class="headerlink" title="Comparison to Render Props and React Hooks:"></a>Comparison to Render Props and React Hooks:</h2><p><a target="_blank" rel="noopener" href="https://medium.com/simply/comparison-hocs-vs-render-props-vs-hooks-55f9ffcd5dc6">https://medium.com/simply/comparison-hocs-vs-render-props-vs-hooks-55f9ffcd5dc6</a></p>
+<h2 id="HOCs-pitfalls"><a href="#HOCs-pitfalls" class="headerlink" title="HOCs pitfalls"></a>HOCs pitfalls</h2><h3 id="Don’t-Use-HOCs-Inside-the-render-Method"><a href="#Don’t-Use-HOCs-Inside-the-render-Method" class="headerlink" title="Don’t Use HOCs Inside the render Method"></a>Don’t Use HOCs Inside the render Method</h3><p>Apply HOCs outside the component definition so that the resulting component is created only once. Then, its identity will be consistent across renders. This is usually what you want, anyway.</p>
+<p>Docs: <a target="_blank" rel="noopener" href="https://reactjs.org/docs/higher-order-components.html#dont-use-hocs-inside-the-render-method">https://reactjs.org/docs/higher-order-components.html#dont-use-hocs-inside-the-render-method</a></p>
+<h3 id="Class-Static-Methods-Must-Be-Copied-Over"><a href="#Class-Static-Methods-Must-Be-Copied-Over" class="headerlink" title="Class Static Methods Must Be Copied Over"></a>Class Static Methods Must Be Copied Over</h3><p>Docs: <a target="_blank" rel="noopener" href="https://reactjs.org/docs/higher-order-components.html#static-methods-must-be-copied-over">https://reactjs.org/docs/higher-order-components.html#static-methods-must-be-copied-over</a></p>
+<p>When you use HOC or just wrap a component by a function, static methods are not being exposed by that HOC/function:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Define a static method</span></span><br><span class="line">WrappedComponent.staticMethod = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;<span class="comment">/*...*/</span>&#125;</span><br><span class="line"><span class="comment">// Now apply a HOC</span></span><br><span class="line"><span class="keyword">const</span> EnhancedComponent = enhance(WrappedComponent);</span><br><span class="line"></span><br><span class="line"><span class="comment">// The enhanced component has no static method</span></span><br><span class="line"><span class="keyword">typeof</span> EnhancedComponent.staticMethod === <span class="string">&#x27;undefined&#x27;</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>How to solve: <a target="_blank" rel="noopener" href="https://reactjs.org/docs/higher-order-components.html#static-methods-must-be-copied-over">https://reactjs.org/docs/higher-order-components.html#static-methods-must-be-copied-over</a></p>
+<h3 id="Refs-Aren’t-Passed-Through"><a href="#Refs-Aren’t-Passed-Through" class="headerlink" title="Refs Aren’t Passed Through"></a>Refs Aren’t Passed Through</h3><p>If you add a ref to an element whose component is the result of a HOC, the ref refers to an instance of the outermost container component, not the wrapped component.</p>
+<p>How to solve: <a target="_blank" rel="noopener" href="https://reactjs.org/docs/higher-order-components.html#static-methods-must-be-copied-over"><a target="_blank" rel="noopener" href="https://reactjs.org/docs/higher-order-components.html#refs-arent-passed-through">https://reactjs.org/docs/higher-order-components.html#static-methods-must-be-copied-over</a></a></p>
+<h2 id="Types-of-HOCs"><a href="#Types-of-HOCs" class="headerlink" title="Types of HOCs"></a>Types of HOCs</h2><ul>
+<li><strong>Enhancers</strong>: Wrap a component with additional functionality/props.</li>
+<li><strong>Injectors</strong>: Inject props into a component.</li>
+<li>Recommended article about: <a target="_blank" rel="noopener" href="https://medium.com/@jrwebdev/react-higher-order-component-patterns-in-typescript-42278f7590fb">https://medium.com/@jrwebdev/react-higher-order-component-patterns-in-typescript-42278f7590fb</a></li>
+</ul>
+<h1 id="Render-Props"><a href="#Render-Props" class="headerlink" title="Render Props"></a>Render Props</h1><h2 id="Issues-of"><a href="#Issues-of" class="headerlink" title="Issues of"></a>Issues of</h2><ul>
+<li>Firstly, there is an <strong>issue with separation of concerns</strong> with Render Props; if you wrap a component with a render prop in the same component, it will make it more difficult to test the two in isolation. May be fixed by creating more boilerplate code and creating separate component for what is rendered inside the render prop</li>
+<li>Secondly, as the props are injected in the render function of component, you cannot make use of them in the lifecycle methods</li>
+<li>Source: <a target="_blank" rel="noopener" href="https://medium.com/@jrwebdev/react-render-props-in-typescript-b561b00bc67c">https://medium.com/@jrwebdev/react-render-props-in-typescript-b561b00bc67c</a></li>
+</ul>
+<h2 id="Render-Prop-vs-HOC"><a href="#Render-Prop-vs-HOC" class="headerlink" title="Render Prop vs HOC"></a>Render Prop vs HOC</h2><ul>
+<li>In the end, the tradeoff between HOCs and render prop components comes down to <strong>flexibility vs convenience</strong>. This can be solved by writing render prop components first, then generating HOCs from them, which gives the consumer the power to choose between the two.</li>
+<li>As far as TypeScript goes, there is no doubt that typing HOCs is much more difficult.</li>
+<li>Prior to React v16.8.0, I’d recommend <strong>sticking with render prop components for the flexibility and simplicity of typing</strong>, and if the need arises, such as building a reusable library of components, or for render prop components that are simple and/or widely used across a project, I would only then generate a HOC from them.</li>
+<li>in React v16.8.0, I would strongly recommend using them over both higher-order components or render props where possible, as they are much simpler to type.</li>
+<li>Source: <a target="_blank" rel="noopener" href="https://medium.com/@jrwebdev/react-render-props-in-typescript-b561b00bc67c">https://medium.com/@jrwebdev/react-render-props-in-typescript-b561b00bc67c</a></li>
+</ul>
+<h1 id="React-Hooks"><a href="#React-Hooks" class="headerlink" title="React Hooks"></a>React Hooks</h1><h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://reactjs.org/docs/hooks-faq.html#is-there-something-like-instance-variables">Is there something like class instance variables so we won’t need to use state and rerender component?</a></li>
+</ul>
+<h2 id="Hook-as-HOC"><a href="#Hook-as-HOC" class="headerlink" title="Hook as HOC"></a>Hook as HOC</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useDataFetching</span>(<span class="params">dataSource</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [loading, setLoading] = useState(<span class="literal">true</span>);</span><br><span class="line">  <span class="keyword">const</span> [results, setResults] = useState([]);</span><br><span class="line">  <span class="keyword">const</span> [error, setError] = useState(<span class="string">&quot;&quot;</span>);</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="function">() =&gt;</span></span><br><span class="line">   &#123;</span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fetchData</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> data = <span class="keyword">await</span> fetch(dataSource);</span><br><span class="line">        <span class="keyword">const</span> json = <span class="keyword">await</span> data.json();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (json) &#123;</span><br><span class="line">          setLoading(<span class="literal">false</span>);</span><br><span class="line">          setResults(json);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">        setLoading(<span class="literal">false</span>);</span><br><span class="line">        setError(error.message);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      setLoading(<span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fetchData();</span><br><span class="line">  &#125;, [dataSource]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    error,</span><br><span class="line">    loading,</span><br><span class="line">    results</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> useDataFetching;</span><br></pre></td></tr></table></figure>
+<p>Data Fetching HOC as React Hooks, source <a target="_blank" rel="noopener" href="https://dev.to/gethackteam/from-higher-order-components-hoc-to-react-hooks-2bm9">https://dev.to/gethackteam/from-higher-order-components-hoc-to-react-hooks-2bm9</a></p>
+<p>Source and comparison to standard HOC: <a target="_blank" rel="noopener" href="https://dev.to/gethackteam/from-higher-order-components-hoc-to-react-hooks-2bm9">https://dev.to/gethackteam/from-higher-order-components-hoc-to-react-hooks-2bm9</a></p>
+<h2 id="Use-only-Hooks-for-global-state-management"><a href="#Use-only-Hooks-for-global-state-management" class="headerlink" title="Use only Hooks for global state management"></a>Use only Hooks for global state management</h2><p>You can use <code>useContext</code> and <code>useReducer</code> to create a Redux-like store management in your app. Checkout <a target="_blank" rel="noopener" href="https://medium.com/simply/state-management-with-react-hooks-and-context-api-at-10-lines-of-code-baf6be8302c">https://medium.com/simply/state-management-with-react-hooks-and-context-api-at-10-lines-of-code-baf6be8302c</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; StateProvider &#125; <span class="keyword">from</span> <span class="string">&#x27;../state&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> App = <span class="function">() =&gt;</span></span><br><span class="line"> &#123;</span><br><span class="line">  <span class="keyword">const</span> initialState = &#123;</span><br><span class="line">    theme: &#123; <span class="attr">primary</span>: <span class="string">&#x27;green&#x27;</span> &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> reducer = <span class="function">(<span class="params">state, action</span>) =&gt;</span></span><br><span class="line">   &#123;</span><br><span class="line">    <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;changeTheme&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">          ...state,</span><br><span class="line">          theme: action.newTheme</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">return</span> state;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;StateProvider initialState=&#123;initialState&#125; reducer=&#123;reducer&#125;&gt;</span><br><span class="line">        <span class="comment">// App content ...</span></span><br><span class="line">    &lt;/StateProvider&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>usage</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useStateValue &#125; <span class="keyword">from</span> <span class="string">&#x27;./state&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ThemedButton = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> [&#123; theme &#125;, dispatch] = useStateValue();</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;Button</span><br><span class="line">      primaryColor=&#123;theme.primary&#125;</span><br><span class="line">      onClick=&#123;<span class="function">() =&gt;</span> dispatch(&#123;</span><br><span class="line">        type: <span class="string">&#x27;changeTheme&#x27;</span>,</span><br><span class="line">        newTheme: &#123; <span class="attr">primary</span>: <span class="string">&#x27;blue&#x27;</span>&#125;</span><br><span class="line">      &#125;)&#125;</span><br><span class="line">    &gt;</span><br><span class="line">      Make me blue!</span><br><span class="line">    &lt;/Button&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/React/React-various-notes/" data-id="ckqp75ik6002fyqoi8qs01z9u" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-TypeScript/TypeScript-basics" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2019/12/01/TypeScript/TypeScript-basics/" class="article-date">
@@ -124,7 +330,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/TypeScript/TypeScript-basics/" data-id="ckqp6o9ee0029zbr19kkmehlb" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/TypeScript/TypeScript-basics/" data-id="ckqp75ikc002pyqoiafq88tro" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li></ul>
@@ -193,7 +399,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/TypeScript/TypeScript-React/" data-id="ckqp6o9ed0026zbr10nkh0qvh" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/TypeScript/TypeScript-React/" data-id="ckqp75ika002myqoigalp5bzu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li></ul>
@@ -276,7 +482,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/React/React-Hooks-introduction-and-API-pitfalls/" data-id="ckqp6o9e8001vzbr11em2b76i" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/React/React-Hooks-introduction-and-API-pitfalls/" data-id="ckqp75ijw002byqoi642nai8r" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li></ul>
@@ -331,7 +537,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/11/01/Frontend/DRAFT-Frontend-various-notes/" data-id="ckqp6o9d90008zbr160c60hl9" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/11/01/Frontend/DRAFT-Frontend-various-notes/" data-id="ckqp75iiy000fyqoie0zd7dak" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li></ul>
@@ -428,7 +634,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/10/24/Nodejs/Nodejs-basics/" data-id="ckqp6o9e1001dzbr1gqmebaoi" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/10/24/Nodejs/Nodejs-basics/" data-id="ckqp75ijp001vyqoi2q9m4924" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
@@ -485,7 +691,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/09/22/JavaScript/JavaScript-CommonJS-vs-AMD/" data-id="ckqp6o9dj000jzbr10e8fbpf7" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/09/22/JavaScript/JavaScript-CommonJS-vs-AMD/" data-id="ckqp75ij8000ryqoih8b8gs3q" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
@@ -530,225 +736,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/09/22/JavaScript/JavaScript-performance-time-measurement-of-function-calls/" data-id="ckqp6o9do000rzbr145d26ixp" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/09/22/JavaScript/JavaScript-performance-time-measurement-of-function-calls/" data-id="ckqp75ijd0011yqoi12rydum3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript/JavaScript-parseInt-vs-Number-comparision" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/07/05/JavaScript/JavaScript-parseInt-vs-Number-comparision/" class="article-date">
-  <time datetime="2019-07-05T21:00:00.000Z" itemprop="datePublished">2019-07-05</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Basics/">Basics</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/07/05/JavaScript/JavaScript-parseInt-vs-Number-comparision/">JavaScript - `parseInt` vs `Number` comparision</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(string, radix);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="string">&#x27;123&#x27;</span>); <span class="comment">// a === 123 is false</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="built_in">Number</span>(<span class="string">&#x27;123&#x27;</span>); <span class="comment">// b === 123 is true</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>parseInt</code> takes 2 arguments</li>
-</ul>
-<p><code>Number</code>:</p>
-<ul>
-<li>returns <code>NaN</code> for string <code>123sdfdsf</code></li>
-<li>returns <code>NaN</code> for <code>undefined</code>, <code>NaN</code> and <code>&#123;&#125;</code></li>
-<li>returns <code>0</code> for <code>false</code>, <code>null</code>, <code>&quot;&quot;</code>, <code>&quot; &quot;</code></li>
-<li>returns <code>1</code> for <code>true</code></li>
-</ul>
-<p><code>parseInt</code>:</p>
-<ul>
-<li>returns <code>123</code> for string <code>123sdfdsf</code></li>
-<li>returns <code>NaN</code> for all <code>false</code>, <code>null</code>, <code>&quot;&quot;</code>, <code>&quot; &quot;</code>, <code>true</code>, <code>&#123;&#125;</code>, <code>undefined</code> and <code>NaN</code></li>
-<li><code>parseInt</code> preferable for inputs where user can leave some additional characters</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/07/05/JavaScript/JavaScript-parseInt-vs-Number-comparision/" data-id="ckqp6o9dn000pzbr15jvra31g" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Software Engineering/Software-Engineering-Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/07/03/Software%20Engineering/Software-Engineering-Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps/" class="article-date">
-  <time datetime="2019-07-03T12:25:41.000Z" itemprop="datePublished">2019-07-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/07/03/Software%20Engineering/Software-Engineering-Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps/">Why the test pyramid is a bullshit - guide to testing towards modern frontend and backend apps</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="https://cdn-images-1.medium.com/max/1600/0*4W87Ed6xZGIuHp4E.png" alt=""><br><em>image source</em>: <a target="_blank" rel="noopener" href="https://martinfowler.com/bliki/TestPyramid.html"><em>https://martinfowler.com/bliki/TestPyramid.html</em></a></p>
-<p>TL;DR; The shape and levels of the test pyramid highly depends on your application (and it mustn’t be a pyramid!) but there are known anti-patterns.</p>
-<p>In this guide I want to address the types of testing of web apps especially in the face of the increase of the popularity of Single Page Applications and microservices, the diversified terminology and how we can refer to the well-known test pyramid which will be also covered here. I want to answer question what’s the good approach to test frontend and backend apps that are created by us today but in general and not in relevance to any specific tools.</p>
-<p>After reading this article I hope you’ll find why following patterns it’s not always a good solution. I tried to make a precise research about it but if you see anything that can be improved or where I got wrong, please write a comment about it.</p>
-<h3 id="Intro-—-purpose-of-testing"><a href="#Intro-—-purpose-of-testing" class="headerlink" title="Intro — purpose of testing"></a>Intro — purpose of testing</h3><p>We test to verify that a software we develop meets client’s requirements and works as expected. More often to just check if we hadn’t broken something due to our last changes in codebase. Although, when our software is getting more complex, we are not able to test all possible broken cases manually. I’d say, we are able to test it manually but it’s so time-consuming and boring that for sure it will lead to overlook a lot of bugs because of the human factor. That’s why we start to automate and write them. It gives us confidence that we made no mistake in the path of a use case and the automation speeds up the whole process. Both developers and QA engineers write tests. Anyway, we still need to do manual tests because not everything can be covered with automation, so we have also QA manual testers.</p>
-<h3 id="The-not-well-known-three"><a href="#The-not-well-known-three" class="headerlink" title="The (not)well-known three"></a>The (not)well-known three</h3><p>Before we start to talk about the test pyramid let’s introduce the basic three types of tests used within the test pyramid.</p>
-<h4 id="Unit-tests"><a href="#Unit-tests" class="headerlink" title="Unit tests"></a>Unit tests</h4><p>Unit tests are mostly written by developers and are done in the manner of white-box testing. We have to keep them simple, easy to debug and isolated which means less cases to cover by testing a one method/function at the same time. If we for example test 3 functions at the same time which returns different booleans values then it may give us 2<em>2</em>2 = 8 different cases to test. Unit tests gives us fast feedback because units are tested separately in isolated environment with mocked dependencies.</p>
-<h4 id="But-what-the-heck-is-a-unit"><a href="#But-what-the-heck-is-a-unit" class="headerlink" title="But what the heck is a unit?"></a>But what the heck is a unit?</h4><p>That is highly dependent on adopted approach to programming. In object-oriented programming (OOP) a unit mostly means a class and main approach is to test public methods of classes. We don’t reason about private methods which are used by the public ones because we treat a class like an indivisible unit. But there are also approaches where people treat single methods as units and that also may be fine in some cases. In the functional programming (FP) we test all functions separately as a function is our smallest unit. We just want to make sure that depending on parameters which we used to call our function it then returns the expected values.</p>
-<p>However I think there is no one correct answer. It’s just fine to have agreed on a one term used within your team and stick to it. For me, what we call a unit, it’s just an agreement.</p>
-<p>Good advice from <a target="_blank" rel="noopener" href="https://martinfowler.com/articles/practical-test-pyramid.html">Ham Vocke on the Martin Fowler’s w</a>ebsite is to don’t reflect internal code structure within unit tests and tests only for behavior that is observable, so think:</p>
-<p><em>if I enter values <code>x</code> and <code>y</code>, will the result be <code>z</code>?</em></p>
-<p>instead of</p>
-<p><em>if I enter <code>x</code> and <code>y</code>, will the method call class A first, then call class B and then return the result of class A plus the result of class B?</em></p>
-<p>so we can easily refactor and make changes within our codebases.</p>
-<p>Often we tend to have test coverage as high as it is needed to fell confident that our codebase is not highly liable to bugs. I here recommend <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/153234/how-deep-are-your-unit-tests/153565#153565">Kent Beck opinion</a> about how thorough our tests should be.<br><img src="https://cdn-images-1.medium.com/max/1600/1*NCbDeRM2IwxofXPcu6CejA.png" alt=""><br>source <a target="_blank" rel="noopener" href="https://auth0.com/blog/testing-react-applications-with-jest/">https://auth0.com/blog/testing-react-applications-with-jest/</a></p>
-<h4 id="Integration-tests"><a href="#Integration-tests" class="headerlink" title="Integration tests"></a>Integration tests</h4><p>That’s a type of tests that makes the most confusion for me. Let’s say we have a React app, what integration tests should cover? What in the case of a monolith serverside app? What in the case of microservices architecture? Is writing some automatic tests on our app’s UI the integration testing? Some definitions say that integration tests are for processes and components but what exactly is a process or a component? They have different meanings regarding an app we’re currently testing and there is no clear answer. We can do integration tests of our whole environment (client, server side, database, etc.) but it tends to be called the end to end testing. For me testing few main parts of whole system together like database and server was integration testing and that’s how I’ve been thinking of them a long time from what I’ve learned on university studies and what you’ll find mostly on the Internet. However, in the microservices world we often tend to write tests of integration between our several serverside-services apps. Hence, some people call integration tests as <strong>components or services tests</strong>. I feel there is no one right term since there are lot of variations and they are mostly related to the architecture of a system. One approach is to test a lot of parts of our system at once and another just to test two parts of a system at once. One part can be from external service but it’s used by our system and needs it to work properly so it’s an inseparable part of our system and needs to be tested just the same as the parts that we created ourselves. We can still treat integration tests as white box tests since we test components of our box like server and database which are the part of our whole box — so we know something about the structure of our box. Still, some people call them black box and that’s still may be fine as we treat for example backend and database as something we don’t know implementation details. Let’s postpone more concerns about them until we I think through the test pyramid.</p>
-<h4 id="End-to-end-tests-E2E"><a href="#End-to-end-tests-E2E" class="headerlink" title="End to end tests (E2E)"></a>End to end tests (E2E)</h4><p>Called also sometimes UI tests but not always meaning the same. In the case of web apps end to end tests are performed on working instance of our application what involves also the serverside part. They are usually executed in a browser and they perform operations that simulates popular user paths within our app.</p>
-<p>Opposite to unit and integration tests they don’t give us exact feedback. They just inform us overall what parts of UI fail no referring back to the frontend or the backend code. Each failing part needs to be manually checked first for errors before reporting a bug. That tests are hard to debug and slow, so we often don’t cover the whole app with them. They are a lot more expensive because writing an automation takes 10 to 50 times more than writing a scenario of a manual test.</p>
-<p>But basically what differs them from integration tests? We still test integration between parts of our system — modules of our code, UI with frontend logic, frontend integration with backend. Is it different category or just more general type of integration tests? I’ll leave you with those doubts ;)</p>
-<h3 id="The-test-pyramid"><a href="#The-test-pyramid" class="headerlink" title="The test pyramid"></a>The test pyramid</h3><p>The test pyramid was first mentioned in Mike Cohn’s book <em>Succeeding with Agile</em>. He recommends that applications should be covered by a lot of unit tests which is the base of our tests. Then we write integration (service) tests and the peak is made from E2E (UI) tests. These are all of the type functional and automated tests.<br><img src="https://cdn-images-1.medium.com/max/1600/0*4W87Ed6xZGIuHp4E.png" alt=""><br><em>image source</em>: <a target="_blank" rel="noopener" href="https://martinfowler.com/bliki/TestPyramid.html"><em>https://martinfowler.com/bliki/TestPyramid.html</em></a></p>
-<p>I like also to look at the test pyramid upside down <strong>as a bug filter</strong> where bugs not detected on a one stage are going to be detected on the next stage.<br><img src="https://cdn-images-1.medium.com/max/1600/1*kwXazFfzwPHWpJ0oZ8gHDw.png" alt=""><br><em>the testing pyramid as a filter, image source:</em> <a target="_blank" rel="noopener" href="https://twitter.com/noahsussman/status/836612175707930625">https://twitter.com/noahsussman/status/836612175707930625</a></p>
-<p>The test pyramid was the answer for the issue of having a lot of E2E/UI tests that were for example recorded by a special software. They are causing a definite increase time of building, are really brittle — prone to every change in the UI and gives deficient feedback about encountered errors. So you should write much more unit tests which are faster and then you catch other on a thin layer of E2E tests which cover as much main features as they can. The anti-pattern where our codebase is barely covered with unit tests make a shape of an ice cream cone which is overflowing with manual and automated GUI tests. Unfortunately, it’s a common situation in many projects. Effects are tragic, after few years of no writing tests adding 50 lines of code make them as much time-consuming as adding 5000 or 50000 lines in the past what is painful for developers and not understood by business. Release process takes longer due to slow GUI testing and still lets slip bugs that causes lot of frustration for end users who finally will abandon your product. Finally, inevitably the development of the app will be suspended and all sources addressed for bug fixing and refactoring. It’s your responsibility to write as much unit tests early on in the project. Although in cases of pressure from upper management, it’s your duty to fight for paying off technical debt as early as you can negotiate to prevent such situations.<br><img src="https://cdn-images-1.medium.com/max/1600/1*k1na189FYze-QKwpWekQVw.png" alt=""><br><em>the ice-cream cone anti-pattern, image source:</em> <a target="_blank" rel="noopener" href="https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/">https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/</a></p>
-<p>As you can see in the diagram of the ice cream cone anti-pattern, there is also the addition of manual tests to the original test pyramid. Currently, it’s often pattern to extend the original test pyramid which is fully automated by adding some manual tests. I believe manual tests are necessary to test newly introduced bugs and some cases that can’t be covered by automated tests.<br><em><img src="https://cdn-images-1.medium.com/max/1600/1*6HTj6mBJAcME722MW-tb1g.png" alt=""><br>image source:</em> <a target="_blank" rel="noopener" href="https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/">https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/</a></p>
-<p>As the service tests layer is split often into 3 layers in object-oriented serverside apps: API, Integration and Component, how can we treat modern frontend apps and is there any right pyramid for that?</p>
-<h4 id="Frontend-testing"><a href="#Frontend-testing" class="headerlink" title="Frontend testing"></a><strong>Frontend testing</strong></h4><p><img src="https://cdn-images-1.medium.com/max/1600/1*TuU-H8ZK2YQf80WOksLqwQ.png" alt=""><br>two-level test pyramid may be a solution for frontend&nbsp;apps</p>
-<p>The pyramid where we have only two layers: unit and E2E tests with isolated integration tests seems pretty straightforward and still may be accurate to some types of apps which have no services to integrate. It may happen that there are needed some integration tests but there will be less of them than E2E tests. In this approach, while testing a frontend app, we treat logic, stores and UI components always as separated units. However, there is also another “pyramid” worth mentioning, that was presented by Kent C. Dodds is <strong>the testing trophy</strong>:<br><img src="https://cdn-images-1.medium.com/max/1600/0*ucVRlPUm_9nM6F29" alt=""><br>The Testing Trophy for frontend apps, source: <a target="_blank" rel="noopener" href="https://twitter.com/kentcdodds/status/960723172591992832/photo/1">https://twitter.com/kentcdodds/status/960723172591992832/photo/1</a></p>
-<p>By static tests he means code linters and formatters and also type checkers (in JavaScript he mentioned flow but you can use TypeScript instead). They catch typos and type errors as you write and modify code. In this approach he proposes to write more integration tests between components and logic because these two are often brittle. A button in a component works but action it’s handling and mutating some data may not. He says integration tests strike a great balance on the trade-offs between confidence, speed and expense. Is it good approach? Does it look for you like the universal solution for frontend apps nowadays? I believe this style of testing may work for some apps, but for others not. Without understanding your codebase, common issues and then deciding about the approach to testing, following these patterns may make you go wrong way.</p>
-<p><strong>Microservices testing</strong></p>
-<blockquote>
-<p>More modern software development organisations have found ways of scaling their development efforts by spreading the development of a system across different teams. Individual teams build individual, loosely coupled services without stepping on each others toes and integrate these services into a big, cohesive system. The more recent buzz around microservices focuses on exactly that.</p>
-</blockquote>
-<blockquote>
-<p><em>The Practical Test Pyramid, Ham Vocke, <a target="_blank" rel="noopener" href="https://martinfowler.com/articles/practical-test-pyramid.html">https://martinfowler.com/articles/practical-test-pyramid.html</a></em></p>
-</blockquote>
-<p>Another pyramid which I encountered during my research was related to microservices architecture. André Schaffer in <a target="_blank" rel="noopener" href="https://labs.spotify.com/2018/01/11/testing-of-microservices/">his article on Spotify Labs blog</a> presented the microservices testing honeycomb:<br><img src="https://cdn-images-1.medium.com/max/1600/0*bHkfFls3yRSgrRVT" alt=""><br>The Microservices Testing Honeycomb, source <a target="_blank" rel="noopener" href="https://labs.spotify.com/2018/01/11/testing-of-microservices/">https://labs.spotify.com/2018/01/11/testing-of-microservices/</a></p>
-<p>In this approach we focus on integration tests. We want to be sure that our services work together well and the implementation details of them are not so important. They should be easy to change and refactor without causing bugs in another services. He mentions that trade-off is a decrease in execution of tests however he believes the time is paid off by a faster coding and ease of maintenance. I’d say that in this approach we treat services as units. The type of tests where we test APIs between services we call <strong>contract tests</strong>.</p>
-<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>As we went through several types of tests pyramid, I almost sure you’ve noticed the correlation between tests and the app we want to test. And basically it’s the essence: we shouldn’t follow any patterns before thinking and understanding what we want to test. However, writing tests is crucial. As fast as you understand it, your life will be more pleasant in case of development of your growing app.</p>
-<hr>
-<p>Sources:</p>
-<ul>
-<li>Mike Cohn, Succeeding with Agile: Software Development Using Scrum, Addison-Wesley Professional, 2009</li>
-<li>Testing of Microservices, André Schaffer, <a target="_blank" rel="noopener" href="https://labs.spotify.com/2018/01/11/testing-of-microservices/">https://labs.spotify.com/2018/01/11/testing-of-microservices/</a></li>
-<li>What is functional testing with example?, Neha Sharma, <a target="_blank" rel="noopener" href="https://www.quora.com/What-is-functional-testing-with-example/answer/Neha-Sharma-3421">https://www.quora.com/What-is-functional-testing-with-example/answer/Neha-Sharma-3421</a></li>
-<li>3 typy testów, które musisz zrozumieć, by robić efektywne TDD, Wojciech Zawistowski, <a target="_blank" rel="noopener" href="https://it.esky.pl/programowanie/3-typy-testow-ktore-musisz-zrozumiec-by-robic-efektywne-tdd/">https://it.esky.pl/programowanie/3-typy-testow-ktore-musisz-zrozumiec-by-robic-efektywne-tdd/</a></li>
-<li>White-box testing, Wikipedia, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/White-box_testing">https://en.wikipedia.org/wiki/White-box_testing</a></li>
-<li>Black Box Testing, Software testing fundamentals, <a target="_blank" rel="noopener" href="http://softwaretestingfundamentals.com/black-box-testing/">http://softwaretestingfundamentals.com/black-box-testing/</a></li>
-<li>How deep are your unit tests?, Kent Beck, <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/153234/how-deep-are-your-unit-tests/153565#153565">https://stackoverflow.com/questions/153234/how-deep-are-your-unit-tests/153565#153565</a></li>
-<li>Błędy popełniane przy automatyzacji testów, Radek Smilgin, <a target="_blank" rel="noopener" href="http://testerzy.pl/baza-wiedzy/bledy-popelniane-przy-automatyzacji-testow">http://testerzy.pl/baza-wiedzy/bledy-popelniane-przy-automatyzacji-testow</a></li>
-<li>TestPyramid, Martin Fowler, <a target="_blank" rel="noopener" href="https://martinfowler.com/bliki/TestPyramid.html">https://martinfowler.com/bliki/TestPyramid.html</a></li>
-<li>Test Pyramid as a Risk Filter, Amit Kulkarni, <a target="_blank" rel="noopener" href="https://amtoya.com/blogs/test-pyramid-as-a-risk-filter/">https://amtoya.com/blogs/test-pyramid-as-a-risk-filter/</a></li>
-<li>Piramida automatyzacji testów, Code Coverage, <a target="_blank" rel="noopener" href="http://pisz-kod.pl/2018/06/07/piramida-automatyzacji-testow-code-coverage/">http://pisz-kod.pl/2018/06/07/piramida-automatyzacji-testow-code-coverage/</a></li>
-<li>The testing pyramid, Automation Panda, <a target="_blank" rel="noopener" href="https://automationpanda.com/2018/08/01/the-testing-pyramid/">https://automationpanda.com/2018/08/01/the-testing-pyramid/</a></li>
-<li>The Evolution of the Testing Pyramid, James Willett, <a target="_blank" rel="noopener" href="https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/">https://james-willett.com/2016/09/the-evolution-of-the-testing-pyramid/</a></li>
-<li>Functional Testing Vs Non-Functional Testing: What’s the Difference?, <a target="_blank" rel="noopener" href="https://www.guru99.com/functional-testing-vs-non-functional-testing.html">https://www.guru99.com/functional-testing-vs-non-functional-testing.html</a></li>
-<li>What is functional testing with example?, <a target="_blank" rel="noopener" href="https://www.quora.com/What-is-functional-testing-with-example">https://www.quora.com/What-is-functional-testing-with-example</a></li>
-<li>Acceptance Testing, Software testing fundamentals, <a target="_blank" rel="noopener" href="http://softwaretestingfundamentals.com/acceptance-testing/">http://softwaretestingfundamentals.com/acceptance-testing/</a></li>
-<li>Sanity Testing Vs Smoke Testing: Introduction &amp; Differences, <a target="_blank" rel="noopener" href="https://www.guru99.com/smoke-sanity-testing.html">https://www.guru99.com/smoke-sanity-testing.html</a></li>
-<li>Functional Testing, <a target="_blank" rel="noopener" href="https://www.techopedia.com/definition/19509/functional-testing">https://www.techopedia.com/definition/19509/functional-testing</a></li>
-<li>Snapshot testing, <a target="_blank" rel="noopener" href="https://jestjs.io/docs/en/snapshot-testing">https://jestjs.io/docs/en/snapshot-testing</a></li>
-<li>Write tests. Not too many. Mostly integration., Kent C. Dodds, <a target="_blank" rel="noopener" href="https://blog.kentcdodds.com/write-tests-not-too-many-mostly-integration-5e8c7fff591c">https://blog.kentcdodds.com/write-tests-not-too-many-mostly-integration-5e8c7fff591c</a></li>
-<li>Performance Testing Tutorial: What is, Types, Metrics &amp; Example, <a target="_blank" rel="noopener" href="https://www.guru99.com/performance-testing.html">https://www.guru99.com/performance-testing.html</a></li>
-<li>Load Testing Tutorial: What is? How to? (with Examples), <a target="_blank" rel="noopener" href="https://www.guru99.com/load-testing-tutorial.html">https://www.guru99.com/load-testing-tutorial.html</a></li>
-<li>Manual Testing Tutorial for Beginners: Concepts, Types, Tool, <a target="_blank" rel="noopener" href="https://www.guru99.com/manual-testing.html">https://www.guru99.com/manual-testing.html</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/07/03/Software%20Engineering/Software-Engineering-Why-the-test-pyramid-is-a-bullshit-guide-to-testing-towards-modern-frontend-and-backend-apps/" data-id="ckqp6o9gn0089zbr1htgx7ysw" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-React/DRAFT-React-rendering-and-reconciliation-algorithm" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/01/01/React/DRAFT-React-rendering-and-reconciliation-algorithm/" class="article-date">
-  <time datetime="2019-01-01T09:00:00.000Z" itemprop="datePublished">2019-01-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/Basics/">Basics</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/01/01/React/DRAFT-React-rendering-and-reconciliation-algorithm/">[DRAFT] React rendering and reconciliation algorithm</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/reconciliation.html">https://reactjs.org/docs/reconciliation.html</a></p>
-<ul>
-<li>React implements a heuristic O(n) algorithm to compare rendered tree nodes</li>
-<li>Two elements of different types will produce different trees</li>
-<li>The developer can hint at which child elements may be stable across different renders with a <code>key</code> prop</li>
-<li>When a component updates, the instance stays the same, so that state is maintained across renders</li>
-<li>Keys should be stable, predictable, and unique. Unstable keys (like those produced by <code>Math.random()</code>) will cause many component instances and DOM nodes to be unnecessarily recreated, which can cause performance degradation and lost state in child components</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/React/DRAFT-React-rendering-and-reconciliation-algorithm/" data-id="ckqp6o9e7001tzbr1dinnacyh" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li></ul>
 
     </footer>
   </div>
@@ -783,7 +774,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/">Backend</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/Authentication/">Authentication</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/Authentication/Authorization/">Authorization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/ElasticSearch/">ElasticSearch</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/Redis/">Redis</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/Other/">Other</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/">Mobile</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Cordova/">Cordova</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/">Swift</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/iOS/">iOS</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/Nest-js/">Nest.js</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Scripts/">Scripts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/State-management/">State management</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/">Backend</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/Authentication/">Authentication</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/Authentication/Authorization/">Authorization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/ElasticSearch/">ElasticSearch</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/HTTP/">HTTP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/REST-APIs/">REST APIs</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/Security/">Security</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/Other/">Other</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/">Mobile</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Cordova/">Cordova</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/">Swift</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/iOS/">iOS</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/Nest-js/">Nest.js</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Scripts/">Scripts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/State-management/">State management</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -793,7 +784,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authentication/" rel="tag">Authentication</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authorization/" rel="tag">Authorization</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authentication/" rel="tag">Authentication</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authorization/" rel="tag">Authorization</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/REST-APIs/" rel="tag">REST APIs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Security/" rel="tag">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
     </div>
   </div>
 
@@ -803,7 +794,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Authentication/" style="font-size: 10px;">Authentication</a> <a href="/blog/tags/Authorization/" style="font-size: 10px;">Authorization</a> <a href="/blog/tags/Backend/" style="font-size: 18px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 14px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 12px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 16px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 12px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 14px;">Programming languages</a> <a href="/blog/tags/React/" style="font-size: 18px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 14px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 18px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 12px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 12px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
+      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Authentication/" style="font-size: 10px;">Authentication</a> <a href="/blog/tags/Authorization/" style="font-size: 10px;">Authorization</a> <a href="/blog/tags/Backend/" style="font-size: 18.33px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 13.33px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/blog/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 11.67px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 15px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 11.67px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 13.33px;">Programming languages</a> <a href="/blog/tags/REST-APIs/" style="font-size: 10px;">REST APIs</a> <a href="/blog/tags/React/" style="font-size: 16.67px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 13.33px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Security/" style="font-size: 10px;">Security</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 16.67px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 11.67px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 11.67px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
     </div>
   </div>
 
@@ -829,19 +820,19 @@
           </li>
         
           <li>
+            <a href="/blog/2021/07/03/Backend/HTTP/">HTTP</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/07/03/Backend/REST-APIs/">REST APIs</a>
+          </li>
+        
+          <li>
             <a href="/blog/2021/07/03/Backend/Redis/">Redis</a>
           </li>
         
           <li>
-            <a href="/blog/2021/07/02/Backend/ElasticSearch/">ElasticSearch</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2021/06/30/Nodejs/Nodejs-Nestjs/">Node.js - Nest.js framework</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2021/06/29/Nodejs/Nodejs-threads/">Node.js threads</a>
+            <a href="/blog/2021/07/03/Backend/Security/">Security</a>
           </li>
         
       </ul>
