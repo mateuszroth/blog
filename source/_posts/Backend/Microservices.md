@@ -15,8 +15,8 @@ date: 2021-07-05
 ## Advantages
 * teams can develop, maintain, and deploy each microservice independently
 * scalability, you can scale them separately; the cost of scaling is comparatively less than the monolithic architecture
-* faster development cycles (easier deployment and debugging)
-* speed up your CI/CD pipeline (against big monolithic apps)
+* faster development cycles - easier deployment and debugging
+* speed up your CI/CD pipeline against big monolithic apps
 * it’s easier to maintain and debug a lightweight microservice than a complex application
 * isolated services have a better failure tolerance
 
