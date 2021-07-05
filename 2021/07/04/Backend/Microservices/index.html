@@ -5,15 +5,20 @@
   
 
   
-  <title>Category: OOP | Software Sensei&#39;s Notes</title>
+  <title>Microservices | Software Sensei&#39;s Notes</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Software Sensei&#39;s Notes">
-<meta property="og:url" content="https://mateuszroth.github.io/blog/categories/Software-Engineering/OOP/index.html">
+  <meta name="description" content="Microservices a software design architecture that breaks apart monolithic systems applications are built as collections of loosely coupled services data moves between microservices using “dumb pipes”">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Microservices">
+<meta property="og:url" content="https://mateuszroth.github.io/blog/2021/07/04/Backend/Microservices/index.html">
 <meta property="og:site_name" content="Software Sensei&#39;s Notes">
+<meta property="og:description" content="Microservices a software design architecture that breaks apart monolithic systems applications are built as collections of loosely coupled services data moves between microservices using “dumb pipes”">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-07-04T22:00:00.000Z">
+<meta property="article:modified_time" content="2021-07-05T16:47:43.124Z">
 <meta property="article:author" content="Mateusz Roth">
-<meta property="article:tag" content="konsultant, specjalista, programista, developer, consultant, specialist, Software Engineer, iOS, App, Mac, Android, Chrome, Safari, Firefox, Front End, Web, Development, JavaScript, ECMAScript, ES6, ES5, React, Node.js, Express, React Native, Vue, Angular, AngularJS, Ionic, Cordova, Bootstrap, SASS, LESS, Haml, Jade, Design, UI, UX, web apps, web applications, aplikacje internetowe, tworzenie aplikacji internetowych, tworzenie stron internetowych, tworzenie aplikacji mobilnych, tworzenie wizytówek internetowych">
+<meta property="article:tag" content="Backend">
+<meta property="article:tag" content="Microservices">
 <meta name="twitter:card" content="summary">
   
   
@@ -74,59 +79,89 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/blog/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-OOP-SOLID/" class="archive-article-date">
-  <time datetime="2019-01-01T09:00:00.000Z" itemprop="datePublished">Jan 1</time>
+        <section id="main"><article id="post-Backend/Microservices" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/07/04/Backend/Microservices/" class="article-date">
+  <time datetime="2021-07-04T22:00:00.000Z" itemprop="datePublished">2021-07-05</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Backend/">Backend</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-OOP-SOLID/">[DRAFT] OOP - SOLID</a>
+    <h1 class="article-title" itemprop="name">
+      Microservices
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-PL-C-OOP/" class="archive-article-date">
-  <time datetime="2019-01-01T09:00:00.000Z" itemprop="datePublished">Jan 1</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-PL-C-OOP/">[DRAFT] [PL] C# &amp; OOP</a>
-    </h1>
-  
+        <h1 id="Microservices"><a href="#Microservices" class="headerlink" title="Microservices"></a>Microservices</h1><ul>
+<li>a software design architecture that breaks apart monolithic systems</li>
+<li>applications are built as collections of loosely coupled services</li>
+<li>data moves between microservices using “dumb pipes” such as an event broker and/or a lightweight protocol like REST</li>
+</ul>
+<h2 id="Advantages"><a href="#Advantages" class="headerlink" title="Advantages"></a>Advantages</h2><ul>
+<li>teams can develop, maintain, and deploy each microservice independently</li>
+<li>scalability, you can scale them separately; the cost of scaling is comparatively less than the monolithic architecture</li>
+<li>faster development cycles (easier deployment and debugging)</li>
+<li>speed up your CI/CD pipeline (against big monolithic apps)</li>
+<li>it’s easier to maintain and debug a lightweight microservice than a complex application</li>
+<li>isolated services have a better failure tolerance</li>
+</ul>
+<h2 id="Disadvantages"><a href="#Disadvantages" class="headerlink" title="Disadvantages"></a>Disadvantages</h2><ul>
+<li>communication between microservices can mean poorer performance, as sending messages back and forth comes with a certain overhead</li>
+<li>microservice has all the associated complexities of the distributed system</li>
+<li>complex testing over a distributed environment; while unit testing may be easier with microservices, integration testing is not</li>
+<li>up-front costs may be higher with microservices</li>
+</ul>
+<h2 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a>Sources</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://raygun.com/blog/what-are-microservices/">https://raygun.com/blog/what-are-microservices/</a></li>
+<li><a target="_blank" rel="noopener" href="https://solace.com/blog/microservices-advantages-and-disadvantages/">https://solace.com/blog/microservices-advantages-and-disadvantages/</a></li>
+</ul>
 
-    </header>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/04/Backend/Microservices/" data-id="ckqqux39i00080tvf8qvt65ss" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Microservices/" rel="tag">Microservices</a></li></ul>
+
+    </footer>
   </div>
-</article>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2021/07/04/Backend/Message-brokers/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Message brokers
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/blog/2021/07/03/Backend/Redis/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Redis</div>
+    </a>
   
+</nav>
 
+  
+</article>
 
 </section>
         
