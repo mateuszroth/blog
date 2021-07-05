@@ -29,3 +29,4 @@ date: 2021-07-05
 ## Sources
 * https://raygun.com/blog/what-are-microservices/
 * https://solace.com/blog/microservices-advantages-and-disadvantages/
+* https://cloudacademy.com/blog/microservices-architecture-challenge-advantage-drawback/
