@@ -35,6 +35,9 @@ date: 2021-07-05
 * There’s a steep learning curve at first
   * size of queues and messages, the behavior of queues, delivery settings or messages TTL
 
+## Amazon SQS & SNS
+* you can combine Amazon SNS power of publishing to multiple recipients with Amazon SQS durable queues
+
 ## Examples
 * (tutorial for Node.js using amqp and RabbitMQ)[https://www.rabbitmq.com/tutorials/tutorial-one-javascript.html]
 * (tutorial for Node.js using amqplib and RabbitMQ)(https://medium.com/swlh/communicating-using-rabbitmq-in-node-js-e63a4dffc8bb)
