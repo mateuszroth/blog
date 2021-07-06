@@ -85,6 +85,60 @@
 </div>
 
   
+    <article id="post-Nodejs/Nodejs-threads" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/06/29/Nodejs/Nodejs-threads/" class="article-date">
+  <time datetime="2021-06-29T22:00:00.000Z" itemprop="datePublished">2021-06-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/blog/categories/Node-js/Basics/">Basics</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2021/06/29/Nodejs/Nodejs-threads/">Node.js threads</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Backgrounds"><a href="#Backgrounds" class="headerlink" title="Backgrounds"></a>Backgrounds</h1><ul>
+<li>The virtual machine and the operating system run the I/O in parallel for us, and when it’s time to send data back to our JavaScript code, the JavaScript part is the one that runs in a single thread. So everything runs in parallel except for our JavaScript code:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> flag = <span class="literal">false</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doSomething</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  flag = <span class="literal">true</span></span><br><span class="line">  <span class="comment">// More code (that doesn&#x27;t change `flag`)...</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// We can be sure that `flag` here is true.</span></span><br><span class="line">  <span class="comment">// There&#x27;s no way another code block could have changed</span></span><br><span class="line">  <span class="comment">// `flag` since this block is synchronous.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>For example, in Java, even some numeric types are not atomic; if you don’t synchronize their access, you could end up having two threads change the value of a variable. The result would be that after both threads have accessed the variable, it has a few bytes changed by one thread and a few bytes changed by the other thread — and, thus, not resulting in any valid value.</li>
+<li>Worker pool is an execution model that spawns and handles separate threads, which then synchronously perform the task and return the result to the event loop. The event loop then executes the provided callback with said result. A worker pool is a given number of previously created workers sitting and listening for the message event. Eight workers created below:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pool = <span class="keyword">new</span> WorkerPool(path.join(__dirname, <span class="string">&#x27;./test-worker.js&#x27;</span>), <span class="number">8</span>);</span><br></pre></td></tr></table></figure></li>
+<li>In short, main event pool takes care of asynchronous I/O operations — primarily, interactions with the system’s disk and network. It is mainly used by modules such as <code>fs</code> (I/O-heavy) or <code>crypto</code> (CPU-heavy). Worker pool is implemented in libuv.<br><a target="_blank" rel="noopener" href="https://blog.logrocket.com/node-js-multithreading-what-are-worker-threads-and-why-do-they-matter-48ab102f8b10/">source 1</a><br><a target="_blank" rel="noopener" href="https://blog.logrocket.com/a-complete-guide-to-threads-in-node-js-4fa3898fe74f/">source 2</a></li>
+</ul>
+<h1 id="worker-threads-module"><a href="#worker-threads-module" class="headerlink" title="worker_threads module"></a><code>worker_threads</code> module</h1><ul>
+<li>A thread worker is a piece of code (usually taken out of a file) spawned in a separate thread.</li>
+<li>Here’s an example of a file that contains a worker that is spawned, executed, and then closed:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; parentPort &#125; <span class="keyword">from</span> <span class="string">&#x27;worker_threads&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> collection = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i += <span class="number">1</span>) &#123;</span><br><span class="line"> collection[i] = i;</span><br><span class="line">&#125;</span><br><span class="line">parentPort.postMessage(collection);</span><br></pre></td></tr></table></figure></li>
+<li>Here’s an example of a worker that can wait for a long period of time before it is given a task:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; parentPort &#125; <span class="keyword">from</span> <span class="string">&#x27;worker_threads&#x27;</span>;</span><br><span class="line">parentPort.on(<span class="string">&#x27;message&#x27;</span>, <span class="function">(<span class="params">data: any</span>) =&gt;</span> &#123;</span><br><span class="line"> <span class="keyword">const</span> result = doSomething(data);</span><br><span class="line"> parentPort.postMessage(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<a target="_blank" rel="noopener" href="https://blog.logrocket.com/a-complete-guide-to-threads-in-node-js-4fa3898fe74f/">source</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2021/06/29/Nodejs/Nodejs-threads/" data-id="ckqs47tpt002806rt7gv2croq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Mobile/Mobile-Swift" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2020/12/22/Mobile/Mobile-Swift/" class="article-date">
@@ -136,7 +190,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/12/22/Mobile/Mobile-Swift/" data-id="ckqqv06r9001szonwg7uv5vrj" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/12/22/Mobile/Mobile-Swift/" data-id="ckqs47tpg001s06rtb4kvdkdq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
@@ -319,280 +373,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" data-id="ckqqv06tr008ozonw25wkaw3a" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" data-id="ckqs47ts0008v06rth9tj0vf6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-React/DRAFT-React-Hooks" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/React/DRAFT-React-Hooks/" class="article-date">
-  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/Hooks/">Hooks</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/React/DRAFT-React-Hooks/">React Hooks</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="React-Hooks"><a href="#React-Hooks" class="headerlink" title="React Hooks"></a>React Hooks</h1><h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h2><ul>
-<li>basic hooks: <code>useState</code>, <code>useEffect</code>, <code>useContext</code></li>
-<li>additional: <code>useReducer</code>, <code>useCallback</code>, <code>useMemo</code>, <code>useRef</code>, <code>useImperativeHandle</code>, <code>useLayoutEffect</code>, <code>useDebugValue</code></li>
-</ul>
-<h3 id="setState"><a href="#setState" class="headerlink" title="setState"></a><code>setState</code></h3><ul>
-<li>Unlike the <code>setState</code> method found in class components, <code>useState</code> does not automatically merge update objects.</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">setState(prevState &#x3D;&gt; &#123;</span><br><span class="line">  &#x2F;&#x2F; Object.assign would also work</span><br><span class="line">  return &#123;...prevState, ...updatedValues&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Another option is <code>useReducer</code>, which is more suited for managing state objects that contain multiple sub-values.</li>
-<li><code>setState</code> - If the initial state is the result of an expensive computation, you may provide a function instead, which will be executed only on the initial render</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const [state, setState] &#x3D; useState(() &#x3D;&gt; &#123;</span><br><span class="line">  const initialState &#x3D; someExpensiveComputation(props);</span><br><span class="line">  return initialState;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a><code>useEffect</code></h3><ul>
-<li>you should call hooks at the top level of the render function, this means no conditional hooks</li>
-<li>a second argument to <code>useEffect</code> that is the array of values that the effect depends on:</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">useEffect(</span><br><span class="line">  () &#x3D;&gt; &#123;</span><br><span class="line">    const subscription &#x3D; props.source.subscribe();</span><br><span class="line">    return () &#x3D;&gt; &#123;</span><br><span class="line">      subscription.unsubscribe();</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  [props.source],</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-<h3 id="useMemo"><a href="#useMemo" class="headerlink" title="useMemo"></a><code>useMemo</code></h3><ul>
-<li>If you’re doing expensive calculations while rendering, you can optimize them with <code>useMemo</code>.</li>
-</ul>
-<h2 id="React-Hooks-advantages"><a href="#React-Hooks-advantages" class="headerlink" title="React Hooks advantages"></a>React Hooks advantages</h2><ul>
-<li>hooks are easier to test (as separated functions) and make the code look cleaner/easier to read (i.e. less LOCs)</li>
-<li>code that uses hooks is more readable and have less LOC (<a target="_blank" rel="noopener" href="https://m.habr.com/en/post/443500/">https://m.habr.com/en/post/443500/</a>)</li>
-<li>hooks make code more reusable / composable (also they don’t create another element in DOM like HOCs do)</li>
-<li>you can define several seperate lifecycle methods instead of having all in one method</li>
-<li>hooks are going to work better with future React optimizations (like ahead of time compilation and components folding) - components folding in future (<a target="_blank" rel="noopener" href="https://github.com/facebook/react/issues/7323">https://github.com/facebook/react/issues/7323</a>) - what means dead code elimination at compile time (less JS code to download, less to execute)</li>
-<li>hooks show real nature of React which is functional, using classes make developer easier to do mistakes and use React antipatterns</li>
-<li>hooks are very convenient to re-use stateful logic, this is one of their selling point. But this not applicable when app is built using some state management library and stateful logic doesn’t live in React components. So for desktop in its current state hooks are mostly for readability and to make it future-proof.</li>
-<li>With HOCs we are separating unrelated state logic into different functions and injecting them into the main component as props, although with Hooks, we can solve this just like HOCs but without a wrapper hell (<a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/2000/1*t4NuFEZWHcfPHV_f487GRA.png">https://cdn-images-1.medium.com/max/2000/1*t4NuFEZWHcfPHV_f487GRA.png</a>)</li>
-</ul>
-<h2 id="React-Hooks-vs-HOCs-and-render-props"><a href="#React-Hooks-vs-HOCs-and-render-props" class="headerlink" title="React Hooks vs HOCs and render props"></a>React Hooks vs HOCs and render props</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.freecodecamp.org/news/why-react-hooks-and-how-did-we-even-get-here-aa5ed5dc96af/">https://www.freecodecamp.org/news/why-react-hooks-and-how-did-we-even-get-here-aa5ed5dc96af/</a></li>
-<li><a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*skhvS29DZ6sBkCPBmaMz7g.png">https://cdn-images-1.medium.com/max/800/1*skhvS29DZ6sBkCPBmaMz7g.png</a></li>
-<li>mixins <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*nkp3K5sbw6FuGvoLofVk8g.png">https://cdn-images-1.medium.com/max/800/1*nkp3K5sbw6FuGvoLofVk8g.png</a></li>
-<li>hocs <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*qJZXnzuAgXQsSoibXZH6Zg.png">https://cdn-images-1.medium.com/max/800/1*qJZXnzuAgXQsSoibXZH6Zg.png</a></li>
-<li>render props <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*ii7bRuk2u7jBqunmIzwGrQ.png">https://cdn-images-1.medium.com/max/800/1*ii7bRuk2u7jBqunmIzwGrQ.png</a></li>
-<li>hooks <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*11zyjavrNZlqDypso2EaeQ.png">https://cdn-images-1.medium.com/max/800/1*11zyjavrNZlqDypso2EaeQ.png</a></li>
-</ul>
-<h2 id="Function-Components-and-Hooks-in-TypeScript-example"><a href="#Function-Components-and-Hooks-in-TypeScript-example" class="headerlink" title="Function Components and Hooks in TypeScript example"></a>Function Components and Hooks in TypeScript example</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; import useState next to FunctionComponent</span><br><span class="line">import React, &#123; FunctionComponent, useState &#125; from &#39;react&#39;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; our components props accept a number for the initial value</span><br><span class="line">const Counter:FunctionComponent&lt;&#123; initial?: number &#125;&gt; &#x3D; (&#123; initial &#x3D; 0 &#125;) &#x3D;&gt; &#123;</span><br><span class="line">  &#x2F;&#x2F; since we pass a number here, clicks is going to be a number.</span><br><span class="line">  &#x2F;&#x2F; setClicks is a function that accepts either a number or a function returning</span><br><span class="line">  &#x2F;&#x2F; a number</span><br><span class="line">  const [clicks, setClicks] &#x3D; useState(initial);</span><br><span class="line">  return &lt;&gt;</span><br><span class="line">    &lt;p&gt;Clicks: &#123;clicks&#125;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;button onClick&#x3D;&#123;() &#x3D;&gt; setClicks(clicks+1)&#125;&gt;+&lt;&#x2F;button&gt;</span><br><span class="line">    &lt;button onClick&#x3D;&#123;() &#x3D;&gt; setClicks(clicks-1)&#125;&gt;-&lt;&#x2F;button&gt;</span><br><span class="line">  &lt;&#x2F;&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Hooks-with-TypeScript"><a href="#Hooks-with-TypeScript" class="headerlink" title="Hooks with TypeScript"></a>Hooks with TypeScript</h2><ul>
-<li>Examples how to use with TS: <a target="_blank" rel="noopener" href="https://fettblog.eu/typescript-react/hooks/">https://fettblog.eu/typescript-react/hooks/</a></li>
-<li>TS advanced: <a target="_blank" rel="noopener" href="https://medium.com/@jrwebdev/react-hooks-in-typescript-88fce7001d0d">https://medium.com/@jrwebdev/react-hooks-in-typescript-88fce7001d0d</a></li>
-<li>super advanced: <a target="_blank" rel="noopener" href="https://levelup.gitconnected.com/usetypescript-a-complete-guide-to-react-hooks-and-typescript-db1858d1fb9c">https://levelup.gitconnected.com/usetypescript-a-complete-guide-to-react-hooks-and-typescript-db1858d1fb9c</a></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const Counter:FunctionComponent&lt;&#123; initial?: number &#125;&gt; &#x3D; (&#123; initial &#x3D; 0 &#125;) &#x3D;&gt; &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="with-useState"><a href="#with-useState" class="headerlink" title="with useState"></a>with <code>useState</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; explicitly setting the types</span><br><span class="line">const [value, setValue] &#x3D; useState&lt;number | undefined&gt;(undefined);</span><br><span class="line">const [value, setValue] &#x3D; useState&lt;Array&lt;number&gt;&gt;([]);</span><br><span class="line"></span><br><span class="line">interface MyObject &#123;</span><br><span class="line">  foo: string;</span><br><span class="line">  bar?: number;</span><br><span class="line">&#125;</span><br><span class="line">const [value, setValue] &#x3D; useState&lt;MyObject&gt;(&#123; foo: &#39;hello&#39; &#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="with-useRef"><a href="#with-useRef" class="headerlink" title="with useRef"></a>with <code>useRef</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const inputEl &#x3D; useRef&lt;HTMLInputElement&gt;(null);</span><br></pre></td></tr></table></figure>
-<h3 id="with-useContext"><a href="#with-useContext" class="headerlink" title="with useContext"></a>with <code>useContext</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type Theme &#x3D; &#39;light&#39; | &#39;dark&#39;;</span><br><span class="line">const ThemeContext &#x3D; createContext&lt;Theme&gt;(&#39;dark&#39;);</span><br></pre></td></tr></table></figure>
-<h3 id="with-useReducer"><a href="#with-useReducer" class="headerlink" title="with useReducer"></a>with <code>useReducer</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">interface State &#123;</span><br><span class="line">  value: number;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type Action &#x3D;</span><br><span class="line">  | &#123; type: &#39;increment&#39; &#125;</span><br><span class="line">  | &#123; type: &#39;decrement&#39; &#125;</span><br><span class="line">  | &#123; type: &#39;incrementAmount&#39;; amount: number &#125;;</span><br><span class="line"></span><br><span class="line">const counterReducer &#x3D; (state: State, action: Action) &#x3D;&gt; &#123;</span><br><span class="line">  switch (action.type) &#123;</span><br><span class="line">    case &#39;increment&#39;:</span><br><span class="line">      return &#123; value: state.value + 1 &#125;;</span><br><span class="line">    case &#39;decrement&#39;:</span><br><span class="line">      return &#123; value: state.value - 1 &#125;;</span><br><span class="line">    case &#39;incrementAmount&#39;:</span><br><span class="line">      return &#123; value: state.value + action.amount &#125;;</span><br><span class="line">    default:</span><br><span class="line">      throw new Error();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const [state, dispatch] &#x3D; useReducer(counterReducer, &#123; value: 0 &#125;);</span><br><span class="line"></span><br><span class="line">dispatch(&#123; type: &#39;increment&#39; &#125;);</span><br><span class="line">dispatch(&#123; type: &#39;decrement&#39; &#125;);</span><br><span class="line">dispatch(&#123; type: &#39;incrementAmount&#39;, amount: 10 &#125;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; TypeScript compilation error</span><br><span class="line">dispatch(&#123; type: &#39;invalidActionType&#39; &#125;);</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-Hooks/" data-id="ckqqv06rg002bzonw9wmk4kqn" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript/JavaScript-forin-forof-loops" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" class="article-date">
-  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Basics/">Basics</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/">JavaScript `for..in` `for..of` and other loops</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><code>for..in</code> - iterates over keys of all objects - loops over enumerable property names of an object.</li>
-<li><code>for..of</code> - iterates over values of iterable objects (Array, TypedArray, String, Map, Set) - does use an object-specific iterator and loops over the values generated by that.</li>
-<li><code>forEach</code> - specific method for arrays</li>
-<li><code>map</code> - specific method for arrays</li>
-</ul>
-<h2 id="Example-with-an-object"><a href="#Example-with-an-object" class="headerlink" title="Example with an object"></a>Example with an object</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123; <span class="number">1</span>: <span class="number">1</span>, <span class="number">2</span>: <span class="literal">true</span>, <span class="number">3</span>: <span class="string">&quot;str&quot;</span> &#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">in</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console logs 1, 2, 3</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console error `Uncaught TypeError: obj is not iterable`</span></span><br><span class="line"></span><br><span class="line">obj[<span class="built_in">Symbol</span>.iterator] = <span class="function"><span class="keyword">function</span>*(<span class="params"></span>) </span>&#123; <span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">in</span> obj) <span class="keyword">yield</span> obj[i] &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console logs 1, true, &quot;str&quot;</span></span><br></pre></td></tr></table></figure>
-<h2 id="Example-with-a-set"><a href="#Example-with-a-set" class="headerlink" title="Example with a set"></a>Example with a set</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pets = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="string">&quot;Cat&quot;</span>, <span class="string">&quot;Dog&quot;</span>, <span class="string">&quot;Hamster&quot;</span>])</span><br><span class="line">pets[<span class="string">&quot;species&quot;</span>] = <span class="string">&quot;mammals&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> pet <span class="keyword">in</span> pets) &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(pet) <span class="comment">// &quot;species&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> pet <span class="keyword">of</span> pets) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(pet) <span class="comment">// &quot;Cat&quot;, &quot;Dog&quot;, &quot;Hamster&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Example-with-for-in-and-enumerable-method"><a href="#Example-with-for-in-and-enumerable-method" class="headerlink" title="Example with for..in and enumerable method"></a>Example with <code>for..in</code> and enumerable method</h2><p>Because <code>for..in</code> loops over all enumerable properties, this means if you add any additional properties to the array’s prototype, then those properties will also appear in the loop.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.decimalfy = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="built_in">this</span>.length; i++) &#123;</span><br><span class="line">    <span class="built_in">this</span>[i] = <span class="built_in">this</span>[i].toFixed(<span class="number">2</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> digits = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> index <span class="keyword">in</span> digits) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(digits[index]) <span class="comment">// it also print decimalfy function</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Above-for-for-of"><a href="#Above-for-for-of" class="headerlink" title="Above for for..of"></a>Above for <code>for..of</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> digits = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> digit <span class="keyword">of</span> digits) &#123;</span><br><span class="line">  <span class="keyword">if</span> (digit % <span class="number">2</span> === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(digit)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// prints 1, 3, 5, 7, 9</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" data-id="ckqqv06qz0017zonw2zj7aj8q" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-React/DRAFT-React-MobX-vs-Redux" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/" class="article-date">
-  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/State-management/">State management</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/">MobX vs Redux</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>MobX diagram: <a target="_blank" rel="noopener" href="https://github.com/mobxjs/mobx/blob/mobx6/docs/assets/flow.png">https://github.com/mobxjs/mobx/blob/mobx6/docs/assets/flow.png</a></li>
-<li>MobX Github: <a target="_blank" rel="noopener" href="https://github.com/mobxjs/mobx">https://github.com/mobxjs/mobx</a></li>
-<li>Flux vs Redux: <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/1600/1*3lvNEQE4SF6Z1l-680cfSQ.jpeg">https://cdn-images-1.medium.com/max/1600/1*3lvNEQE4SF6Z1l-680cfSQ.jpeg</a></li>
-<li>When To Add Redux: <a target="_blank" rel="noopener" href="https://daveceddia.com/what-does-redux-do/">https://daveceddia.com/what-does-redux-do/</a></li>
-<li>Why Redux adds some complexity to your application: <a target="_blank" rel="noopener" href="https://www.quora.com/Do-I-need-Redux">https://www.quora.com/Do-I-need-Redux</a></li>
-</ul>
-<h2 id="Attributes"><a href="#Attributes" class="headerlink" title="Attributes"></a>Attributes</h2><ul>
-<li>these are state management libraries</li>
-<li>Redux has single store, Mobx can have multiple stores</li>
-<li>Redux uses normal objects, Mobx uses observables<ul>
-<li>You can listen to an observable and automatically track changes that occur to the data</li>
-<li>In Redux all the updates have to be tracked manually</li>
-</ul>
-</li>
-<li>Redux has immutable state, state is read-only and is pure<ul>
-<li>In Redux it’s easy to revert back to a previous state. Eg — An undo action.</li>
-</ul>
-</li>
-<li>MobX can have state overwritten</li>
-<li>MobX is much easier to learn and has a steady learning curve</li>
-<li>Redux follows functional programming paradigm</li>
-<li>MobX functional reactive programming</li>
-<li>In MobX there is lot of built in abstraction, and this leads to less code</li>
-<li>When implementing Redux you will end up writing lot of boilerplate code</li>
-<li>Since there is more abstraction, debugging becomes a lot harder for MobX</li>
-<li>Redux provides kickass developer tools including time travelling</li>
-<li>With pure functions and less abstraction, debugging in Redux will be a better experience compared to MobX</li>
-<li>Following the flux paradigm makes Redux more predictable</li>
-<li>Because of the whole pure functions things and functional programming paradigm Redux is more maintainable</li>
-<li>The developer community of Redux is way ahead of the MobX community</li>
-<li>MobX is great for small and simple apps</li>
-<li>It’s faster to build apps with MobX</li>
-<li>Redux allows to create more maintainable code</li>
-<li>For complex app with scalable option Redux is great choice</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/" data-id="ckqqv06rh002dzonwfe9n6mvh" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript/JavaScript-prototype-creation-example" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" class="article-date">
-  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Basics/">Basics</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/">JavaScript prototype creation example</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Stwórzmy nową klasę korzystającą z dziedziczenia prototypowego, a następnie utwórzmy nowy obiekt klasy <code>Person</code>:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) &#125;;</span><br><span class="line"><span class="keyword">new</span> Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Person</span></span><br><span class="line"><span class="comment">// &quot;Matt&quot;</span></span><br></pre></td></tr></table></figure>
-<p>Gdy nie użyjemy operatora <code>new</code> nie jest tworzony nowy obiekt i używany jest kontekst wywołania funkcji, co zwraca błąd:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) &#125;;</span><br><span class="line">Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Window - ta linijka inna, bez new</span></span><br><span class="line"><span class="comment">// VM973:3 Uncaught TypeError: this.hello is not a function</span></span><br><span class="line"><span class="comment">//    at Person (&lt;anonymous&gt;:3:8)</span></span><br><span class="line"><span class="comment">//    at &lt;anonymous&gt;:6:1</span></span><br></pre></td></tr></table></figure>
-<p>Teraz użyjmy arrow function dla funkcji dodanej do prototypu:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="built_in">this</span>.name)  <span class="comment">// ta linijka inna, używamy arrow function </span></span><br><span class="line"><span class="keyword">new</span> Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Person</span></span><br></pre></td></tr></table></figure>
-<p>Jednak nadal otrzymujemy ten sam błąd gdy pominiemy operator <code>new</code>:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">VM231:<span class="number">4</span> Uncaught <span class="built_in">TypeError</span>: <span class="built_in">this</span>.hello is not a <span class="function"><span class="keyword">function</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">Person</span> (<span class="params">&lt;anonymous&gt;:<span class="number">4</span>:<span class="number">8</span></span>)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> &lt;<span class="title">anonymous</span>&gt;:7:1</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" data-id="ckqqv06r3001ezonwh6l84k4i" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
 
     </footer>
   </div>
@@ -687,10 +471,280 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/" data-id="ckqqv06qv000zzonw7cysbjij" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/" data-id="ckqs47tp0000z06rtbnp5h11o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-JavaScript/JavaScript-forin-forof-loops" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" class="article-date">
+  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Basics/">Basics</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/">JavaScript `for..in` `for..of` and other loops</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><code>for..in</code> - iterates over keys of all objects - loops over enumerable property names of an object.</li>
+<li><code>for..of</code> - iterates over values of iterable objects (Array, TypedArray, String, Map, Set) - does use an object-specific iterator and loops over the values generated by that.</li>
+<li><code>forEach</code> - specific method for arrays</li>
+<li><code>map</code> - specific method for arrays</li>
+</ul>
+<h2 id="Example-with-an-object"><a href="#Example-with-an-object" class="headerlink" title="Example with an object"></a>Example with an object</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123; <span class="number">1</span>: <span class="number">1</span>, <span class="number">2</span>: <span class="literal">true</span>, <span class="number">3</span>: <span class="string">&quot;str&quot;</span> &#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">in</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console logs 1, 2, 3</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console error `Uncaught TypeError: obj is not iterable`</span></span><br><span class="line"></span><br><span class="line">obj[<span class="built_in">Symbol</span>.iterator] = <span class="function"><span class="keyword">function</span>*(<span class="params"></span>) </span>&#123; <span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">in</span> obj) <span class="keyword">yield</span> obj[i] &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console logs 1, true, &quot;str&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Example-with-a-set"><a href="#Example-with-a-set" class="headerlink" title="Example with a set"></a>Example with a set</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pets = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="string">&quot;Cat&quot;</span>, <span class="string">&quot;Dog&quot;</span>, <span class="string">&quot;Hamster&quot;</span>])</span><br><span class="line">pets[<span class="string">&quot;species&quot;</span>] = <span class="string">&quot;mammals&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> pet <span class="keyword">in</span> pets) &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(pet) <span class="comment">// &quot;species&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> pet <span class="keyword">of</span> pets) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(pet) <span class="comment">// &quot;Cat&quot;, &quot;Dog&quot;, &quot;Hamster&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Example-with-for-in-and-enumerable-method"><a href="#Example-with-for-in-and-enumerable-method" class="headerlink" title="Example with for..in and enumerable method"></a>Example with <code>for..in</code> and enumerable method</h2><p>Because <code>for..in</code> loops over all enumerable properties, this means if you add any additional properties to the array’s prototype, then those properties will also appear in the loop.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.decimalfy = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="built_in">this</span>.length; i++) &#123;</span><br><span class="line">    <span class="built_in">this</span>[i] = <span class="built_in">this</span>[i].toFixed(<span class="number">2</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> digits = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> index <span class="keyword">in</span> digits) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(digits[index]) <span class="comment">// it also print decimalfy function</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Above-for-for-of"><a href="#Above-for-for-of" class="headerlink" title="Above for for..of"></a>Above for <code>for..of</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> digits = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> digit <span class="keyword">of</span> digits) &#123;</span><br><span class="line">  <span class="keyword">if</span> (digit % <span class="number">2</span> === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(digit)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// prints 1, 3, 5, 7, 9</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" data-id="ckqs47tp4001706rteou9gmlr" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-React/DRAFT-React-MobX-vs-Redux" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/" class="article-date">
+  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/State-management/">State management</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/">MobX vs Redux</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>MobX diagram: <a target="_blank" rel="noopener" href="https://github.com/mobxjs/mobx/blob/mobx6/docs/assets/flow.png">https://github.com/mobxjs/mobx/blob/mobx6/docs/assets/flow.png</a></li>
+<li>MobX Github: <a target="_blank" rel="noopener" href="https://github.com/mobxjs/mobx">https://github.com/mobxjs/mobx</a></li>
+<li>Flux vs Redux: <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/1600/1*3lvNEQE4SF6Z1l-680cfSQ.jpeg">https://cdn-images-1.medium.com/max/1600/1*3lvNEQE4SF6Z1l-680cfSQ.jpeg</a></li>
+<li>When To Add Redux: <a target="_blank" rel="noopener" href="https://daveceddia.com/what-does-redux-do/">https://daveceddia.com/what-does-redux-do/</a></li>
+<li>Why Redux adds some complexity to your application: <a target="_blank" rel="noopener" href="https://www.quora.com/Do-I-need-Redux">https://www.quora.com/Do-I-need-Redux</a></li>
+</ul>
+<h2 id="Attributes"><a href="#Attributes" class="headerlink" title="Attributes"></a>Attributes</h2><ul>
+<li>these are state management libraries</li>
+<li>Redux has single store, Mobx can have multiple stores</li>
+<li>Redux uses normal objects, Mobx uses observables<ul>
+<li>You can listen to an observable and automatically track changes that occur to the data</li>
+<li>In Redux all the updates have to be tracked manually</li>
+</ul>
+</li>
+<li>Redux has immutable state, state is read-only and is pure<ul>
+<li>In Redux it’s easy to revert back to a previous state. Eg — An undo action.</li>
+</ul>
+</li>
+<li>MobX can have state overwritten</li>
+<li>MobX is much easier to learn and has a steady learning curve</li>
+<li>Redux follows functional programming paradigm</li>
+<li>MobX functional reactive programming</li>
+<li>In MobX there is lot of built in abstraction, and this leads to less code</li>
+<li>When implementing Redux you will end up writing lot of boilerplate code</li>
+<li>Since there is more abstraction, debugging becomes a lot harder for MobX</li>
+<li>Redux provides kickass developer tools including time travelling</li>
+<li>With pure functions and less abstraction, debugging in Redux will be a better experience compared to MobX</li>
+<li>Following the flux paradigm makes Redux more predictable</li>
+<li>Because of the whole pure functions things and functional programming paradigm Redux is more maintainable</li>
+<li>The developer community of Redux is way ahead of the MobX community</li>
+<li>MobX is great for small and simple apps</li>
+<li>It’s faster to build apps with MobX</li>
+<li>Redux allows to create more maintainable code</li>
+<li>For complex app with scalable option Redux is great choice</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-MobX-vs-Redux/" data-id="ckqs47tpv002d06rt1go19gmu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-JavaScript/JavaScript-prototype-creation-example" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" class="article-date">
+  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Basics/">Basics</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/">JavaScript prototype creation example</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Stwórzmy nową klasę korzystającą z dziedziczenia prototypowego, a następnie utwórzmy nowy obiekt klasy <code>Person</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) &#125;;</span><br><span class="line"><span class="keyword">new</span> Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Person</span></span><br><span class="line"><span class="comment">// &quot;Matt&quot;</span></span><br></pre></td></tr></table></figure>
+<p>Gdy nie użyjemy operatora <code>new</code> nie jest tworzony nowy obiekt i używany jest kontekst wywołania funkcji, co zwraca błąd:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) &#125;;</span><br><span class="line">Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Window - ta linijka inna, bez new</span></span><br><span class="line"><span class="comment">// VM973:3 Uncaught TypeError: this.hello is not a function</span></span><br><span class="line"><span class="comment">//    at Person (&lt;anonymous&gt;:3:8)</span></span><br><span class="line"><span class="comment">//    at &lt;anonymous&gt;:6:1</span></span><br></pre></td></tr></table></figure>
+<p>Teraz użyjmy arrow function dla funkcji dodanej do prototypu:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="built_in">this</span>.name)  <span class="comment">// ta linijka inna, używamy arrow function </span></span><br><span class="line"><span class="keyword">new</span> Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Person</span></span><br></pre></td></tr></table></figure>
+<p>Jednak nadal otrzymujemy ten sam błąd gdy pominiemy operator <code>new</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">VM231:<span class="number">4</span> Uncaught <span class="built_in">TypeError</span>: <span class="built_in">this</span>.hello is not a <span class="function"><span class="keyword">function</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">Person</span> (<span class="params">&lt;anonymous&gt;:<span class="number">4</span>:<span class="number">8</span></span>)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> &lt;<span class="title">anonymous</span>&gt;:7:1</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" data-id="ckqs47tp9001e06rtabgff1pb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-React/DRAFT-React-Hooks" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/React/DRAFT-React-Hooks/" class="article-date">
+  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/Hooks/">Hooks</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/React/DRAFT-React-Hooks/">React Hooks</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="React-Hooks"><a href="#React-Hooks" class="headerlink" title="React Hooks"></a>React Hooks</h1><h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h2><ul>
+<li>basic hooks: <code>useState</code>, <code>useEffect</code>, <code>useContext</code></li>
+<li>additional: <code>useReducer</code>, <code>useCallback</code>, <code>useMemo</code>, <code>useRef</code>, <code>useImperativeHandle</code>, <code>useLayoutEffect</code>, <code>useDebugValue</code></li>
+</ul>
+<h3 id="setState"><a href="#setState" class="headerlink" title="setState"></a><code>setState</code></h3><ul>
+<li>Unlike the <code>setState</code> method found in class components, <code>useState</code> does not automatically merge update objects.</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">setState(prevState &#x3D;&gt; &#123;</span><br><span class="line">  &#x2F;&#x2F; Object.assign would also work</span><br><span class="line">  return &#123;...prevState, ...updatedValues&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Another option is <code>useReducer</code>, which is more suited for managing state objects that contain multiple sub-values.</li>
+<li><code>setState</code> - If the initial state is the result of an expensive computation, you may provide a function instead, which will be executed only on the initial render</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const [state, setState] &#x3D; useState(() &#x3D;&gt; &#123;</span><br><span class="line">  const initialState &#x3D; someExpensiveComputation(props);</span><br><span class="line">  return initialState;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a><code>useEffect</code></h3><ul>
+<li>you should call hooks at the top level of the render function, this means no conditional hooks</li>
+<li>a second argument to <code>useEffect</code> that is the array of values that the effect depends on:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">useEffect(</span><br><span class="line">  () &#x3D;&gt; &#123;</span><br><span class="line">    const subscription &#x3D; props.source.subscribe();</span><br><span class="line">    return () &#x3D;&gt; &#123;</span><br><span class="line">      subscription.unsubscribe();</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  [props.source],</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h3 id="useMemo"><a href="#useMemo" class="headerlink" title="useMemo"></a><code>useMemo</code></h3><ul>
+<li>If you’re doing expensive calculations while rendering, you can optimize them with <code>useMemo</code>.</li>
+</ul>
+<h2 id="React-Hooks-advantages"><a href="#React-Hooks-advantages" class="headerlink" title="React Hooks advantages"></a>React Hooks advantages</h2><ul>
+<li>hooks are easier to test (as separated functions) and make the code look cleaner/easier to read (i.e. less LOCs)</li>
+<li>code that uses hooks is more readable and have less LOC (<a target="_blank" rel="noopener" href="https://m.habr.com/en/post/443500/">https://m.habr.com/en/post/443500/</a>)</li>
+<li>hooks make code more reusable / composable (also they don’t create another element in DOM like HOCs do)</li>
+<li>you can define several seperate lifecycle methods instead of having all in one method</li>
+<li>hooks are going to work better with future React optimizations (like ahead of time compilation and components folding) - components folding in future (<a target="_blank" rel="noopener" href="https://github.com/facebook/react/issues/7323">https://github.com/facebook/react/issues/7323</a>) - what means dead code elimination at compile time (less JS code to download, less to execute)</li>
+<li>hooks show real nature of React which is functional, using classes make developer easier to do mistakes and use React antipatterns</li>
+<li>hooks are very convenient to re-use stateful logic, this is one of their selling point. But this not applicable when app is built using some state management library and stateful logic doesn’t live in React components. So for desktop in its current state hooks are mostly for readability and to make it future-proof.</li>
+<li>With HOCs we are separating unrelated state logic into different functions and injecting them into the main component as props, although with Hooks, we can solve this just like HOCs but without a wrapper hell (<a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/2000/1*t4NuFEZWHcfPHV_f487GRA.png">https://cdn-images-1.medium.com/max/2000/1*t4NuFEZWHcfPHV_f487GRA.png</a>)</li>
+</ul>
+<h2 id="React-Hooks-vs-HOCs-and-render-props"><a href="#React-Hooks-vs-HOCs-and-render-props" class="headerlink" title="React Hooks vs HOCs and render props"></a>React Hooks vs HOCs and render props</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.freecodecamp.org/news/why-react-hooks-and-how-did-we-even-get-here-aa5ed5dc96af/">https://www.freecodecamp.org/news/why-react-hooks-and-how-did-we-even-get-here-aa5ed5dc96af/</a></li>
+<li><a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*skhvS29DZ6sBkCPBmaMz7g.png">https://cdn-images-1.medium.com/max/800/1*skhvS29DZ6sBkCPBmaMz7g.png</a></li>
+<li>mixins <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*nkp3K5sbw6FuGvoLofVk8g.png">https://cdn-images-1.medium.com/max/800/1*nkp3K5sbw6FuGvoLofVk8g.png</a></li>
+<li>hocs <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*qJZXnzuAgXQsSoibXZH6Zg.png">https://cdn-images-1.medium.com/max/800/1*qJZXnzuAgXQsSoibXZH6Zg.png</a></li>
+<li>render props <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*ii7bRuk2u7jBqunmIzwGrQ.png">https://cdn-images-1.medium.com/max/800/1*ii7bRuk2u7jBqunmIzwGrQ.png</a></li>
+<li>hooks <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/800/1*11zyjavrNZlqDypso2EaeQ.png">https://cdn-images-1.medium.com/max/800/1*11zyjavrNZlqDypso2EaeQ.png</a></li>
+</ul>
+<h2 id="Function-Components-and-Hooks-in-TypeScript-example"><a href="#Function-Components-and-Hooks-in-TypeScript-example" class="headerlink" title="Function Components and Hooks in TypeScript example"></a>Function Components and Hooks in TypeScript example</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; import useState next to FunctionComponent</span><br><span class="line">import React, &#123; FunctionComponent, useState &#125; from &#39;react&#39;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; our components props accept a number for the initial value</span><br><span class="line">const Counter:FunctionComponent&lt;&#123; initial?: number &#125;&gt; &#x3D; (&#123; initial &#x3D; 0 &#125;) &#x3D;&gt; &#123;</span><br><span class="line">  &#x2F;&#x2F; since we pass a number here, clicks is going to be a number.</span><br><span class="line">  &#x2F;&#x2F; setClicks is a function that accepts either a number or a function returning</span><br><span class="line">  &#x2F;&#x2F; a number</span><br><span class="line">  const [clicks, setClicks] &#x3D; useState(initial);</span><br><span class="line">  return &lt;&gt;</span><br><span class="line">    &lt;p&gt;Clicks: &#123;clicks&#125;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;button onClick&#x3D;&#123;() &#x3D;&gt; setClicks(clicks+1)&#125;&gt;+&lt;&#x2F;button&gt;</span><br><span class="line">    &lt;button onClick&#x3D;&#123;() &#x3D;&gt; setClicks(clicks-1)&#125;&gt;-&lt;&#x2F;button&gt;</span><br><span class="line">  &lt;&#x2F;&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Hooks-with-TypeScript"><a href="#Hooks-with-TypeScript" class="headerlink" title="Hooks with TypeScript"></a>Hooks with TypeScript</h2><ul>
+<li>Examples how to use with TS: <a target="_blank" rel="noopener" href="https://fettblog.eu/typescript-react/hooks/">https://fettblog.eu/typescript-react/hooks/</a></li>
+<li>TS advanced: <a target="_blank" rel="noopener" href="https://medium.com/@jrwebdev/react-hooks-in-typescript-88fce7001d0d">https://medium.com/@jrwebdev/react-hooks-in-typescript-88fce7001d0d</a></li>
+<li>super advanced: <a target="_blank" rel="noopener" href="https://levelup.gitconnected.com/usetypescript-a-complete-guide-to-react-hooks-and-typescript-db1858d1fb9c">https://levelup.gitconnected.com/usetypescript-a-complete-guide-to-react-hooks-and-typescript-db1858d1fb9c</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const Counter:FunctionComponent&lt;&#123; initial?: number &#125;&gt; &#x3D; (&#123; initial &#x3D; 0 &#125;) &#x3D;&gt; &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="with-useState"><a href="#with-useState" class="headerlink" title="with useState"></a>with <code>useState</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; explicitly setting the types</span><br><span class="line">const [value, setValue] &#x3D; useState&lt;number | undefined&gt;(undefined);</span><br><span class="line">const [value, setValue] &#x3D; useState&lt;Array&lt;number&gt;&gt;([]);</span><br><span class="line"></span><br><span class="line">interface MyObject &#123;</span><br><span class="line">  foo: string;</span><br><span class="line">  bar?: number;</span><br><span class="line">&#125;</span><br><span class="line">const [value, setValue] &#x3D; useState&lt;MyObject&gt;(&#123; foo: &#39;hello&#39; &#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="with-useRef"><a href="#with-useRef" class="headerlink" title="with useRef"></a>with <code>useRef</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const inputEl &#x3D; useRef&lt;HTMLInputElement&gt;(null);</span><br></pre></td></tr></table></figure>
+<h3 id="with-useContext"><a href="#with-useContext" class="headerlink" title="with useContext"></a>with <code>useContext</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type Theme &#x3D; &#39;light&#39; | &#39;dark&#39;;</span><br><span class="line">const ThemeContext &#x3D; createContext&lt;Theme&gt;(&#39;dark&#39;);</span><br></pre></td></tr></table></figure>
+<h3 id="with-useReducer"><a href="#with-useReducer" class="headerlink" title="with useReducer"></a>with <code>useReducer</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">interface State &#123;</span><br><span class="line">  value: number;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type Action &#x3D;</span><br><span class="line">  | &#123; type: &#39;increment&#39; &#125;</span><br><span class="line">  | &#123; type: &#39;decrement&#39; &#125;</span><br><span class="line">  | &#123; type: &#39;incrementAmount&#39;; amount: number &#125;;</span><br><span class="line"></span><br><span class="line">const counterReducer &#x3D; (state: State, action: Action) &#x3D;&gt; &#123;</span><br><span class="line">  switch (action.type) &#123;</span><br><span class="line">    case &#39;increment&#39;:</span><br><span class="line">      return &#123; value: state.value + 1 &#125;;</span><br><span class="line">    case &#39;decrement&#39;:</span><br><span class="line">      return &#123; value: state.value - 1 &#125;;</span><br><span class="line">    case &#39;incrementAmount&#39;:</span><br><span class="line">      return &#123; value: state.value + action.amount &#125;;</span><br><span class="line">    default:</span><br><span class="line">      throw new Error();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const [state, dispatch] &#x3D; useReducer(counterReducer, &#123; value: 0 &#125;);</span><br><span class="line"></span><br><span class="line">dispatch(&#123; type: &#39;increment&#39; &#125;);</span><br><span class="line">dispatch(&#123; type: &#39;decrement&#39; &#125;);</span><br><span class="line">dispatch(&#123; type: &#39;incrementAmount&#39;, amount: 10 &#125;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; TypeScript compilation error</span><br><span class="line">dispatch(&#123; type: &#39;invalidActionType&#39; &#125;);</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/DRAFT-React-Hooks/" data-id="ckqs47tpv002b06rt4koy07a9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li></ul>
 
     </footer>
   </div>
@@ -732,7 +786,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/" data-id="ckqqv06ql000hzonw6k8sezpq" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/" data-id="ckqs47toq000h06rtekue52eq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li></ul>
@@ -789,76 +843,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Languages/Lang-Elm-language/" data-id="ckqqv06r5001hzonw94pd214a" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Languages/Lang-Elm-language/" data-id="ckqs47tpb001h06rt2fr6f3w1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Languages/Lang-Objective-C-language" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/Languages/Lang-Objective-C-language/" class="article-date">
-  <time datetime="2020-07-17T18:00:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/Languages/Lang-Objective-C-language/">Objective C programming language attributes</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Wypisywanie-w-konsoli"><a href="#Wypisywanie-w-konsoli" class="headerlink" title="Wypisywanie w konsoli:"></a>Wypisywanie w konsoli:</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSLog</span>(<span class="string">@&quot;%@&quot;</span>, strValue);</span><br><span class="line"><span class="built_in">NSLog</span>(flag ? <span class="string">@&quot;Yes&quot;</span> : <span class="string">@&quot;No&quot;</span>);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>For Strings you use <code>%@</code></li>
-<li>For int  you use <code>%i</code></li>
-<li>For float and double you use <code>%f</code></li>
-<li>For bool you use <code>%d</code></li>
-</ul>
-<h2 id="Consty-i-zmienne"><a href="#Consty-i-zmienne" class="headerlink" title="Consty i zmienne:"></a>Consty i zmienne:</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> NEWLINE = <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line"><span class="keyword">int</span> area;  </span><br></pre></td></tr></table></figure>
-<h2 id="Tworzenie-klas-i-obiektow"><a href="#Tworzenie-klas-i-obiektow" class="headerlink" title="Tworzenie klas i obiektów:"></a>Tworzenie klas i obiektów:</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SampleClass</span>:<span class="title">NSObject</span></span></span><br><span class="line">- (<span class="keyword">void</span>)sampleMethod;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">SampleClass</span></span></span><br><span class="line">- (<span class="keyword">void</span>)sampleMethod &#123;</span><br><span class="line">   <span class="built_in">NSLog</span>(<span class="string">@&quot;Hello, World! \n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main() &#123;</span><br><span class="line">   <span class="comment">/* my first program in Objective-C */</span></span><br><span class="line">   SampleClass *sampleClass = [[SampleClass alloc]init];</span><br><span class="line">   [sampleClass sampleMethod];</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Tworzenie-struct"><a href="#Tworzenie-struct" class="headerlink" title="Tworzenie struct:"></a>Tworzenie <code>struct</code>:</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> Books &#123;</span><br><span class="line">   <span class="built_in">NSString</span> *title;</span><br><span class="line">   <span class="built_in">NSString</span> *author;</span><br><span class="line">   <span class="built_in">NSString</span> *subject;</span><br><span class="line">   <span class="keyword">int</span>   book_id;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="Manipulowanie-struct"><a href="#Manipulowanie-struct" class="headerlink" title="Manipulowanie struct:"></a>Manipulowanie <code>struct</code>:</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">BookLogger</span>:<span class="title">NSObject</span></span></span><br><span class="line"><span class="comment">/* function declaration */</span></span><br><span class="line">- (<span class="keyword">void</span>) printBook:(<span class="keyword">struct</span> Books*) book;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">BookLogger</span></span></span><br><span class="line">- (<span class="keyword">void</span>) printBook:(<span class="keyword">struct</span> Books*) book &#123;</span><br><span class="line">   <span class="built_in">NSLog</span>(<span class="string">@&quot;Book title: %@\n&quot;</span>, book-&gt;title);</span><br><span class="line">   <span class="built_in">NSLog</span>(<span class="string">@&quot;Book author: %@\n&quot;</span>, book-&gt;author);</span><br><span class="line">   <span class="built_in">NSLog</span>(<span class="string">@&quot;Book subject: %@\n&quot;</span>, book-&gt;subject);</span><br><span class="line">   <span class="built_in">NSLog</span>(<span class="string">@&quot;Book book_id: %d\n&quot;</span>, book-&gt;book_id);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main() &#123;</span><br><span class="line">   <span class="keyword">struct</span> Books Book1;        <span class="comment">/* Declare Book1 of type Book */</span></span><br><span class="line">   <span class="keyword">struct</span> Books Book2;        <span class="comment">/* Declare Book2 of type Book */</span></span><br><span class="line"></span><br><span class="line">  BookLogger *bookLogger = [[BookLogger alloc]init];</span><br><span class="line">  <span class="comment">/* print Book1 info */</span></span><br><span class="line">  [sampleClass bookLogger: Book1];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Tworzenie-blokow-funkcji"><a href="#Tworzenie-blokow-funkcji" class="headerlink" title="Tworzenie bloków funkcji:"></a>Tworzenie bloków funkcji:</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (return_type) method_name:(argumentType1)argumentName1 </span><br><span class="line">joiningArgument2:(argumentType2)argumentName2 ... </span><br><span class="line">joiningArgumentn:(argumentTypen)argumentNamen &#123;</span><br><span class="line">   body of the function</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>i.e.:</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> (^multiplyTwoValues)(<span class="keyword">double</span>, <span class="keyword">double</span>) = </span><br><span class="line">   ^(<span class="keyword">double</span> firstValue, <span class="keyword">double</span> secondValue) &#123;</span><br><span class="line">      <span class="keyword">return</span> firstValue * secondValue;</span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> result = multiplyTwoValues(<span class="number">2</span>,<span class="number">4</span>); </span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@&quot;The result is %f&quot;</span>, result);</span><br></pre></td></tr></table></figure>
-<h2 id="Struktury-danych"><a href="#Struktury-danych" class="headerlink" title="Struktury danych:"></a>Struktury danych:</h2><ul>
-<li><code>NSDictionary</code> could be accessed like <code>dict[@&quot;key&quot;]</code> or <code>[dict objectForKey:@&quot;key&quot;]</code></li>
-<li><code>NSArray</code> is accessible via indexes: 0, 1, 2 etc:</li>
-</ul>
-<h3 id="Inicjacja-NSArray"><a href="#Inicjacja-NSArray" class="headerlink" title="Inicjacja NSArray:"></a>Inicjacja <code>NSArray</code>:</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span>* array = @[<span class="string">@&quot;One&quot;</span>, <span class="string">@&quot;Two&quot;</span>, <span class="string">@&quot;Three&quot;</span>];</span><br><span class="line"><span class="built_in">NSArray</span>* array = @[Object1, Object2]</span><br></pre></td></tr></table></figure>
-<h3 id="Iterowanie-po-NSDictionary"><a href="#Iterowanie-po-NSDictionary" class="headerlink" title="Iterowanie po NSDictionary:"></a>Iterowanie po <code>NSDictionary</code>:</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">NSString</span>* key <span class="keyword">in</span> yourDict) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@&quot;%@&quot;</span>, yourDict[key]);</span><br><span class="line">    <span class="comment">//or</span></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@&quot;%@&quot;</span>, [yourDict objectForKey:key]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Inicjalizacja-NSDictionary"><a href="#Inicjalizacja-NSDictionary" class="headerlink" title="Inicjalizacja NSDictionary:"></a>Inicjalizacja <code>NSDictionary</code>:</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSDictionary</span>* dict = @&#123; key : value, key2 : value2&#125;;</span><br></pre></td></tr></table></figure>
-<h4 id="Dodawanie-do-NSDictionary-wartosci-niebedajacej-obiektem-wymaga-jej-rzutowania-na-odpowiedni-obiekt-Objective-C"><a href="#Dodawanie-do-NSDictionary-wartosci-niebedajacej-obiektem-wymaga-jej-rzutowania-na-odpowiedni-obiekt-Objective-C" class="headerlink" title="Dodawanie do NSDictionary wartości niebędającej obiektem wymaga jej rzutowania na odpowiedni obiekt Objective C:"></a>Dodawanie do <code>NSDictionary</code> wartości niebędającej obiektem wymaga jej rzutowania na odpowiedni obiekt Objective C:</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">@&quot;facebookId&quot;</span>: [<span class="built_in">NSNumber</span> numberWithInt:[fbId intValue]];</span><br><span class="line"><span class="string">@&quot;facebookId&quot;</span>: @(fbId) <span class="comment">// for non pointer datatype value store in Dictionary</span></span><br></pre></td></tr></table></figure>
-<h2 id="property"><a href="#property" class="headerlink" title="@property:"></a><code>@property:</code></h2><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/15541505">atomic, nonatomic, etc.</a></p>
-<h2 id="synthesize"><a href="#synthesize" class="headerlink" title="@synthesize:"></a><code>@synthesize:</code></h2><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/24890137">@synthesize</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Languages/Lang-Objective-C-language/" data-id="ckqqv06r6001jzonw5tm7dr9m" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
 
     </footer>
   </div>
@@ -871,7 +859,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/blog/">&amp;laquo; Prev</a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/3/">Next &amp;raquo;</a>
+    <a class="extend prev" rel="prev" href="/blog/">&amp;laquo; Prev</a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><a class="page-number" href="/blog/page/4/">4</a><a class="page-number" href="/blog/page/5/">5</a><a class="extend next" rel="next" href="/blog/page/3/">Next &amp;raquo;</a>
   </nav>
 
 </section>
@@ -913,7 +901,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Authentication/" style="font-size: 10px;">Authentication</a> <a href="/blog/tags/Authorization/" style="font-size: 10px;">Authorization</a> <a href="/blog/tags/Backend/" style="font-size: 20px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 13.33px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/blog/tags/JavaScript/" style="font-size: 18.33px;">JavaScript</a> <a href="/blog/tags/Microservices/" style="font-size: 10px;">Microservices</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 11.67px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 15px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 11.67px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 13.33px;">Programming languages</a> <a href="/blog/tags/REST-APIs/" style="font-size: 10px;">REST APIs</a> <a href="/blog/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/blog/tags/React/" style="font-size: 16.67px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 13.33px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Security/" style="font-size: 10px;">Security</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 16.67px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 11.67px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 11.67px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
+      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Authentication/" style="font-size: 10px;">Authentication</a> <a href="/blog/tags/Authorization/" style="font-size: 10px;">Authorization</a> <a href="/blog/tags/Backend/" style="font-size: 20px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 12.86px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/blog/tags/JavaScript/" style="font-size: 18.57px;">JavaScript</a> <a href="/blog/tags/Microservices/" style="font-size: 10px;">Microservices</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 11.43px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 14.29px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 11.43px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 12.86px;">Programming languages</a> <a href="/blog/tags/REST-APIs/" style="font-size: 10px;">REST APIs</a> <a href="/blog/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/blog/tags/React/" style="font-size: 17.14px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.86px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Security/" style="font-size: 10px;">Security</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 15.71px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 11.43px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 11.43px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
     </div>
   </div>
 
@@ -935,6 +923,10 @@
       <ul>
         
           <li>
+            <a href="/blog/2021/07/05/React/React-code-reusability/">React - code reusability</a>
+          </li>
+        
+          <li>
             <a href="/blog/2021/07/04/Backend/Message-brokers/">Message brokers</a>
           </li>
         
@@ -943,11 +935,7 @@
           </li>
         
           <li>
-            <a href="/blog/2021/07/03/Backend/Redis/">Redis</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2021/07/03/Backend/Authentication-and-Authorization/">Authentication and Authorization</a>
+            <a href="/blog/2021/07/03/Backend/Security/">Security</a>
           </li>
         
           <li>
