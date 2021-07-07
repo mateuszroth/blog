@@ -5,15 +5,22 @@
   
 
   
-  <title>Archives | Software Sensei&#39;s Notes</title>
+  <title>MobX vs Redux | Software Sensei&#39;s Notes</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Software Sensei&#39;s Notes">
-<meta property="og:url" content="https://mateuszroth.github.io/blog/archives/page/5/index.html">
+  <meta name="description" content="MobX diagram: https:&#x2F;&#x2F;camo.githubusercontent.com&#x2F;c8e97f5bf3e6908e68b34fd187d97fac599afc4efc2807a3434782285db46357&#x2F;68747470733a2f2f6d6f62782e6a732e6f72672f6173736574732f666c6f77322e706e67 MobX Github:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MobX vs Redux">
+<meta property="og:url" content="https://mateuszroth.github.io/blog/2020/07/17/React/React-MobX-vs-Redux/index.html">
 <meta property="og:site_name" content="Software Sensei&#39;s Notes">
+<meta property="og:description" content="MobX diagram: https:&#x2F;&#x2F;camo.githubusercontent.com&#x2F;c8e97f5bf3e6908e68b34fd187d97fac599afc4efc2807a3434782285db46357&#x2F;68747470733a2f2f6d6f62782e6a732e6f72672f6173736574732f666c6f77322e706e67 MobX Github:">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-17T19:25:00.000Z">
+<meta property="article:modified_time" content="2021-07-07T09:38:49.801Z">
 <meta property="article:author" content="Mateusz Roth">
-<meta property="article:tag" content="konsultant, specjalista, programista, developer, consultant, specialist, Software Engineer, iOS, App, Mac, Android, Chrome, Safari, Firefox, Front End, Web, Development, JavaScript, ECMAScript, ES6, ES5, React, Node.js, Express, React Native, Vue, Angular, AngularJS, Ionic, Cordova, Bootstrap, SASS, LESS, Haml, Jade, Design, UI, UX, web apps, web applications, aplikacje internetowe, tworzenie aplikacji internetowych, tworzenie stron internetowych, tworzenie aplikacji mobilnych, tworzenie wizytówek internetowych">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="MobX">
+<meta property="article:tag" content="Redux">
+<meta property="article:tag" content="React state management">
 <meta name="twitter:card" content="summary">
   
   
@@ -74,45 +81,102 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/blog/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2018/12/31/Nodejs/Nodejs-scripts/" class="archive-article-date">
-  <time datetime="2018-12-31T23:00:00.000Z" itemprop="datePublished">Jan 1</time>
+        <section id="main"><article id="post-React/React-MobX-vs-Redux" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/React/React-MobX-vs-Redux/" class="article-date">
+  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/State-management/">State management</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/12/31/Nodejs/Nodejs-scripts/">[DRAFT] JavaScript Node.js Scripts</a>
+    <h1 class="article-title" itemprop="name">
+      MobX vs Redux
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
+      </header>
     
-    <a class="extend prev" rel="prev" href="/blog/archives/page/4/">&amp;laquo; Prev</a><a class="page-number" href="/blog/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/archives/page/3/">3</a><a class="page-number" href="/blog/archives/page/4/">4</a><span class="page-number current">5</span>
-  </nav>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>MobX diagram: <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/c8e97f5bf3e6908e68b34fd187d97fac599afc4efc2807a3434782285db46357/68747470733a2f2f6d6f62782e6a732e6f72672f6173736574732f666c6f77322e706e67">https://camo.githubusercontent.com/c8e97f5bf3e6908e68b34fd187d97fac599afc4efc2807a3434782285db46357/68747470733a2f2f6d6f62782e6a732e6f72672f6173736574732f666c6f77322e706e67</a></li>
+<li>MobX Github: <a target="_blank" rel="noopener" href="https://github.com/mobxjs/mobx">https://github.com/mobxjs/mobx</a></li>
+<li>Flux vs Redux: <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/1600/1*3lvNEQE4SF6Z1l-680cfSQ.jpeg">https://cdn-images-1.medium.com/max/1600/1*3lvNEQE4SF6Z1l-680cfSQ.jpeg</a></li>
+<li>When To Add Redux: <a target="_blank" rel="noopener" href="https://daveceddia.com/what-does-redux-do/">https://daveceddia.com/what-does-redux-do/</a></li>
+<li>Why Redux adds some complexity to your application: <a target="_blank" rel="noopener" href="https://www.quora.com/Do-I-need-Redux">https://www.quora.com/Do-I-need-Redux</a></li>
+</ul>
+<h2 id="Attributes"><a href="#Attributes" class="headerlink" title="Attributes"></a>Attributes</h2><ul>
+<li>these two are state management libraries</li>
+<li>Redux has <strong>single store</strong>, Mobx can have <strong>multiple stores</strong></li>
+<li>Redux uses <strong>normal objects</strong>, Mobx uses <strong>observables</strong><ul>
+<li>You can listen to an observable and automatically track changes that occur to the data</li>
+<li>In Redux all the updates have to be tracked manually by proper functions</li>
+</ul>
+</li>
+<li>Redux has <strong>immutable state</strong>, state is read-only and is pure<ul>
+<li>In Redux it’s easy to revert back to a previous state. Eg — An undo action.</li>
+</ul>
+</li>
+<li>MobX can have state overwritten (<strong>mutable state</strong>)</li>
+<li>MobX is much easier to learn and has a steady learning curve</li>
+<li>Redux follows <strong>functional</strong> programming paradigm</li>
+<li>MobX <strong>functional reactive</strong> programming</li>
+<li>In MobX there is lot of built in <strong>abstraction</strong>, and this leads to less code</li>
+<li>When implementing <strong>Redux</strong> you will end up writing <strong>lot of boilerplate code</strong></li>
+<li>Since there is more abstraction, <strong>debugging becomes a lot harder for MobX</strong></li>
+<li>Redux provides kickass <strong>developer tools including time travelling</strong></li>
+<li>With <strong>pure functions and less abstraction, debugging in Redux will be a better experience</strong> compared to MobX</li>
+<li>Following the flux paradigm makes Redux more predictable</li>
+<li>Because of the whole pure functions things and functional programming paradigm <strong>Redux is more maintainable</strong></li>
+<li>The developer community of Redux is way ahead of the MobX community</li>
+<li><strong>MobX is great for small and simple apps</strong></li>
+<li>It’s faster to build apps with MobX</li>
+<li>Redux allows to create more maintainable code</li>
+<li>For <strong>complex app with scalable option Redux is great choice</strong></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/React-MobX-vs-Redux/" data-id="ckqtah8xs002gyzsj33pq084w" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          JavaScript `for..in` `for..of` and other loops
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JavaScript prototype creation example</div>
+    </a>
+  
+</nav>
+
+  
+</article>
 
 </section>
         
@@ -153,7 +217,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Authentication/" style="font-size: 10px;">Authentication</a> <a href="/blog/tags/Authorization/" style="font-size: 10px;">Authorization</a> <a href="/blog/tags/Backend/" style="font-size: 20px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 12.86px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/blog/tags/JavaScript/" style="font-size: 18.57px;">JavaScript</a> <a href="/blog/tags/Microservices/" style="font-size: 10px;">Microservices</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 11.43px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 14.29px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 11.43px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 12.86px;">Programming languages</a> <a href="/blog/tags/REST-APIs/" style="font-size: 10px;">REST APIs</a> <a href="/blog/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/blog/tags/React/" style="font-size: 17.14px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.86px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Security/" style="font-size: 10px;">Security</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 15.71px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 11.43px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 11.43px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
+      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Authentication/" style="font-size: 10px;">Authentication</a> <a href="/blog/tags/Authorization/" style="font-size: 10px;">Authorization</a> <a href="/blog/tags/Backend/" style="font-size: 20px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 13.33px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/blog/tags/JavaScript/" style="font-size: 18.33px;">JavaScript</a> <a href="/blog/tags/Microservices/" style="font-size: 10px;">Microservices</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 11.67px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 15px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 11.67px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 13.33px;">Programming languages</a> <a href="/blog/tags/REST-APIs/" style="font-size: 10px;">REST APIs</a> <a href="/blog/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/blog/tags/React/" style="font-size: 16.67px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 13.33px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Security/" style="font-size: 10px;">Security</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 16.67px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 11.67px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 11.67px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
     </div>
   </div>
 
