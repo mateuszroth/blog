@@ -85,72 +85,6 @@
 </div>
 
   
-    <article id="post-Languages/Lang-Objective-C-language" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/Languages/Lang-Objective-C-language/" class="article-date">
-  <time datetime="2020-07-17T18:00:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/Languages/Lang-Objective-C-language/">Objective C programming language attributes</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Wypisywanie-w-konsoli"><a href="#Wypisywanie-w-konsoli" class="headerlink" title="Wypisywanie w konsoli:"></a>Wypisywanie w konsoli:</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSLog</span>(<span class="string">@&quot;%@&quot;</span>, strValue);</span><br><span class="line"><span class="built_in">NSLog</span>(flag ? <span class="string">@&quot;Yes&quot;</span> : <span class="string">@&quot;No&quot;</span>);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>For Strings you use <code>%@</code></li>
-<li>For int  you use <code>%i</code></li>
-<li>For float and double you use <code>%f</code></li>
-<li>For bool you use <code>%d</code></li>
-</ul>
-<h2 id="Consty-i-zmienne"><a href="#Consty-i-zmienne" class="headerlink" title="Consty i zmienne:"></a>Consty i zmienne:</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> NEWLINE = <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line"><span class="keyword">int</span> area;  </span><br></pre></td></tr></table></figure>
-<h2 id="Tworzenie-klas-i-obiektow"><a href="#Tworzenie-klas-i-obiektow" class="headerlink" title="Tworzenie klas i obiektów:"></a>Tworzenie klas i obiektów:</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SampleClass</span>:<span class="title">NSObject</span></span></span><br><span class="line">- (<span class="keyword">void</span>)sampleMethod;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">SampleClass</span></span></span><br><span class="line">- (<span class="keyword">void</span>)sampleMethod &#123;</span><br><span class="line">   <span class="built_in">NSLog</span>(<span class="string">@&quot;Hello, World! \n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main() &#123;</span><br><span class="line">   <span class="comment">/* my first program in Objective-C */</span></span><br><span class="line">   SampleClass *sampleClass = [[SampleClass alloc]init];</span><br><span class="line">   [sampleClass sampleMethod];</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Tworzenie-struct"><a href="#Tworzenie-struct" class="headerlink" title="Tworzenie struct:"></a>Tworzenie <code>struct</code>:</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> Books &#123;</span><br><span class="line">   <span class="built_in">NSString</span> *title;</span><br><span class="line">   <span class="built_in">NSString</span> *author;</span><br><span class="line">   <span class="built_in">NSString</span> *subject;</span><br><span class="line">   <span class="keyword">int</span>   book_id;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="Manipulowanie-struct"><a href="#Manipulowanie-struct" class="headerlink" title="Manipulowanie struct:"></a>Manipulowanie <code>struct</code>:</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">BookLogger</span>:<span class="title">NSObject</span></span></span><br><span class="line"><span class="comment">/* function declaration */</span></span><br><span class="line">- (<span class="keyword">void</span>) printBook:(<span class="keyword">struct</span> Books*) book;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">BookLogger</span></span></span><br><span class="line">- (<span class="keyword">void</span>) printBook:(<span class="keyword">struct</span> Books*) book &#123;</span><br><span class="line">   <span class="built_in">NSLog</span>(<span class="string">@&quot;Book title: %@\n&quot;</span>, book-&gt;title);</span><br><span class="line">   <span class="built_in">NSLog</span>(<span class="string">@&quot;Book author: %@\n&quot;</span>, book-&gt;author);</span><br><span class="line">   <span class="built_in">NSLog</span>(<span class="string">@&quot;Book subject: %@\n&quot;</span>, book-&gt;subject);</span><br><span class="line">   <span class="built_in">NSLog</span>(<span class="string">@&quot;Book book_id: %d\n&quot;</span>, book-&gt;book_id);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main() &#123;</span><br><span class="line">   <span class="keyword">struct</span> Books Book1;        <span class="comment">/* Declare Book1 of type Book */</span></span><br><span class="line">   <span class="keyword">struct</span> Books Book2;        <span class="comment">/* Declare Book2 of type Book */</span></span><br><span class="line"></span><br><span class="line">  BookLogger *bookLogger = [[BookLogger alloc]init];</span><br><span class="line">  <span class="comment">/* print Book1 info */</span></span><br><span class="line">  [sampleClass bookLogger: Book1];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Tworzenie-blokow-funkcji"><a href="#Tworzenie-blokow-funkcji" class="headerlink" title="Tworzenie bloków funkcji:"></a>Tworzenie bloków funkcji:</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (return_type) method_name:(argumentType1)argumentName1 </span><br><span class="line">joiningArgument2:(argumentType2)argumentName2 ... </span><br><span class="line">joiningArgumentn:(argumentTypen)argumentNamen &#123;</span><br><span class="line">   body of the function</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>i.e.:</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> (^multiplyTwoValues)(<span class="keyword">double</span>, <span class="keyword">double</span>) = </span><br><span class="line">   ^(<span class="keyword">double</span> firstValue, <span class="keyword">double</span> secondValue) &#123;</span><br><span class="line">      <span class="keyword">return</span> firstValue * secondValue;</span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> result = multiplyTwoValues(<span class="number">2</span>,<span class="number">4</span>); </span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@&quot;The result is %f&quot;</span>, result);</span><br></pre></td></tr></table></figure>
-<h2 id="Struktury-danych"><a href="#Struktury-danych" class="headerlink" title="Struktury danych:"></a>Struktury danych:</h2><ul>
-<li><code>NSDictionary</code> could be accessed like <code>dict[@&quot;key&quot;]</code> or <code>[dict objectForKey:@&quot;key&quot;]</code></li>
-<li><code>NSArray</code> is accessible via indexes: 0, 1, 2 etc:</li>
-</ul>
-<h3 id="Inicjacja-NSArray"><a href="#Inicjacja-NSArray" class="headerlink" title="Inicjacja NSArray:"></a>Inicjacja <code>NSArray</code>:</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span>* array = @[<span class="string">@&quot;One&quot;</span>, <span class="string">@&quot;Two&quot;</span>, <span class="string">@&quot;Three&quot;</span>];</span><br><span class="line"><span class="built_in">NSArray</span>* array = @[Object1, Object2]</span><br></pre></td></tr></table></figure>
-<h3 id="Iterowanie-po-NSDictionary"><a href="#Iterowanie-po-NSDictionary" class="headerlink" title="Iterowanie po NSDictionary:"></a>Iterowanie po <code>NSDictionary</code>:</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">NSString</span>* key <span class="keyword">in</span> yourDict) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@&quot;%@&quot;</span>, yourDict[key]);</span><br><span class="line">    <span class="comment">//or</span></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@&quot;%@&quot;</span>, [yourDict objectForKey:key]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Inicjalizacja-NSDictionary"><a href="#Inicjalizacja-NSDictionary" class="headerlink" title="Inicjalizacja NSDictionary:"></a>Inicjalizacja <code>NSDictionary</code>:</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSDictionary</span>* dict = @&#123; key : value, key2 : value2&#125;;</span><br></pre></td></tr></table></figure>
-<h4 id="Dodawanie-do-NSDictionary-wartosci-niebedajacej-obiektem-wymaga-jej-rzutowania-na-odpowiedni-obiekt-Objective-C"><a href="#Dodawanie-do-NSDictionary-wartosci-niebedajacej-obiektem-wymaga-jej-rzutowania-na-odpowiedni-obiekt-Objective-C" class="headerlink" title="Dodawanie do NSDictionary wartości niebędającej obiektem wymaga jej rzutowania na odpowiedni obiekt Objective C:"></a>Dodawanie do <code>NSDictionary</code> wartości niebędającej obiektem wymaga jej rzutowania na odpowiedni obiekt Objective C:</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">@&quot;facebookId&quot;</span>: [<span class="built_in">NSNumber</span> numberWithInt:[fbId intValue]];</span><br><span class="line"><span class="string">@&quot;facebookId&quot;</span>: @(fbId) <span class="comment">// for non pointer datatype value store in Dictionary</span></span><br></pre></td></tr></table></figure>
-<h2 id="property"><a href="#property" class="headerlink" title="@property:"></a><code>@property:</code></h2><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/15541505">atomic, nonatomic, etc.</a></p>
-<h2 id="synthesize"><a href="#synthesize" class="headerlink" title="@synthesize:"></a><code>@synthesize:</code></h2><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/24890137">@synthesize</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Languages/Lang-Objective-C-language/" data-id="ckqtah8x8001jyzsj58js24eq" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
     <article id="post-Languages/Lang-Reason-language" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2020/07/17/Languages/Lang-Reason-language/" class="article-date">
@@ -195,7 +129,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Languages/Lang-Reason-language/" data-id="ckqtah8xa001myzsj9zwtft7x" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Languages/Lang-Reason-language/" data-id="ckqtpj4es001mz0uv3lw54im2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
@@ -254,10 +188,67 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Mobile/Mobile-Cordova/" data-id="ckqtah8xb001pyzsjed43fc6c" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Mobile/Mobile-Cordova/" data-id="ckqtpj4et001pz0uvce9kdhmm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Languages/Lang-Elm-language" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/Languages/Lang-Elm-language/" class="article-date">
+  <time datetime="2020-07-17T18:00:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/Languages/Lang-Elm-language/">Elm programming language attributes</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>functional reactive programming language</li>
+<li>compiles to JS</li>
+<li>the compiler catches most errors immediately and provides a clear and understandable error message</li>
+<li>purely functional</li>
+<li>statically typed</li>
+<li>looks like Haskell</li>
+<li>time-travelling debugger</li>
+<li>uses type inference</li>
+<li>has its own virtual DOM implementation</li>
+<li>very fast DOM diff implementation</li>
+<li>your CSS and HTML are written in code :( - looks declarative (YAML-ish), breaks the separation principle</li>
+<li>a steep learning curve for JS devs</li>
+<li>helps dramatically, as the reactive paradigm is part of the language’s architecture</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Languages/Lang-Elm-language/" data-id="ckqtpj4ep001hz0uvh692g6rh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
 
     </footer>
   </div>
@@ -306,7 +297,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/Frontend-printing-documents/" data-id="ckqtah8wp000nyzsjf9n2cx1z" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/Frontend-printing-documents/" data-id="ckqtpj4e7000nz0uvbxc1axzi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li></ul>
@@ -318,14 +309,14 @@
 
 
   
-    <article id="post-Nodejs/Nodejs-GraphQL-Apollo-links" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Frontend/CSS-How-to-make-child-div-wider-than-parent-div" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/" class="article-date">
+    <a href="/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/" class="article-date">
   <time datetime="2020-07-17T18:00:00.000Z" itemprop="datePublished">2020-07-17</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a>
+    <a class="article-category-link" href="/blog/categories/Frontend/">Frontend</a>►<a class="article-category-link" href="/blog/categories/Frontend/CSS/">CSS</a>
   </div>
 
   </div>
@@ -336,7 +327,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/">GraphQL Apollo links</a>
+      <a class="article-title" href="/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/">CSS - How to make child div wider than parent div</a>
     </h1>
   
 
@@ -344,35 +335,83 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li>self-documentation - you build your types</li>
-<li>types information available to the client coder through introspection with tools like GraphiQL</li>
-<li>specification which forms a standardization</li>
-<li>make everything go through an API gateway which would usually do the auth resolution for all microservices</li>
+        <h2 id="By-using-calc"><a href="#By-using-calc" class="headerlink" title="By using calc"></a>By using <code>calc</code></h2><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/24895631">Source</a></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">html</span>,</span><br><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">max-width</span>: <span class="number">800px</span>;</span><br><span class="line">    <span class="attribute">background</span>: grey;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.child-element</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100vw</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="built_in">calc</span>(-<span class="number">50vw</span> + <span class="number">50%</span>);</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">background</span>: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="How-do-we-make-a-full-browser-width-container-when-we’re-inside-a-limited-width-parent"><a href="#How-do-we-make-a-full-browser-width-container-when-we’re-inside-a-limited-width-parent" class="headerlink" title="How do we make a full-browser-width container when we’re inside a limited-width parent?"></a>How do we make a full-browser-width container when we’re inside a limited-width parent?</h2><p><a target="_blank" rel="noopener" href="https://css-tricks.com/full-width-containers-limited-width-parents/">Source</a></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.full-width</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100vw</span>;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">margin-left</span>: -<span class="number">50vw</span>;</span><br><span class="line">  <span class="attribute">margin-right</span>: -<span class="number">50vw</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/" data-id="ckqtpj4e4000hz0uvho9taxke" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Languages/Lang-Objective-C-language" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/Languages/Lang-Objective-C-language/" class="article-date">
+  <time datetime="2020-07-17T18:00:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/Languages/Lang-Objective-C-language/">Objective C programming language attributes</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Wypisywanie-w-konsoli"><a href="#Wypisywanie-w-konsoli" class="headerlink" title="Wypisywanie w konsoli:"></a>Wypisywanie w konsoli:</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSLog</span>(<span class="string">@&quot;%@&quot;</span>, strValue);</span><br><span class="line"><span class="built_in">NSLog</span>(flag ? <span class="string">@&quot;Yes&quot;</span> : <span class="string">@&quot;No&quot;</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>For Strings you use <code>%@</code></li>
+<li>For int  you use <code>%i</code></li>
+<li>For float and double you use <code>%f</code></li>
+<li>For bool you use <code>%d</code></li>
 </ul>
-<p>GraphCMS:<br><a target="_blank" rel="noopener" href="https://docs.graphcms.com/">https://docs.graphcms.com/</a><br><a target="_blank" rel="noopener" href="https://github.com/GraphCMS/graphcms-examples/blob/master/current/next-apollo-blog/lib/initApollo.js">https://github.com/GraphCMS/graphcms-examples/blob/master/current/next-apollo-blog/lib/initApollo.js</a></p>
-<p>GraphQL example:<br><a target="_blank" rel="noopener" href="https://nec.is/writing/graphql-with-next-js-and-apollo/">https://nec.is/writing/graphql-with-next-js-and-apollo/</a></p>
-<p>Next, Apollo, Postgraphile:<br><a target="_blank" rel="noopener" href="https://github.com/graphile/postgraphile-apollo-server">https://github.com/graphile/postgraphile-apollo-server</a></p>
-<p>Next, Apollo, Graphcool:<br><a target="_blank" rel="noopener" href="https://github.com/adamsoffer/next-apollo-example">https://github.com/adamsoffer/next-apollo-example</a><br><a target="_blank" rel="noopener" href="https://github.com/zeit/next.js/tree/master/examples/with-apollo">https://github.com/zeit/next.js/tree/master/examples/with-apollo</a></p>
-<p>Next &amp; Apollo:<br><a target="_blank" rel="noopener" href="https://github.com/lfades/next-with-apollo">https://github.com/lfades/next-with-apollo</a><br><a target="_blank" rel="noopener" href="https://github.com/adamsoffer/next-apollo">https://github.com/adamsoffer/next-apollo</a></p>
-<p>Next, Express, Apollo:<br><a target="_blank" rel="noopener" href="https://github.com/ooade/next-apollo-auth">https://github.com/ooade/next-apollo-auth</a></p>
-<p>Hasura and Apollo:<br><a target="_blank" rel="noopener" href="https://medium.com/@f71uday/building-production-ready-application-with-hasura-and-apollo-476b18ccb44">https://medium.com/@f71uday/building-production-ready-application-with-hasura-and-apollo-476b18ccb44</a></p>
-<p>Hasura vs Postgraphile:<br><a target="_blank" rel="noopener" href="https://news.ycombinator.com/item?id=17540866">https://news.ycombinator.com/item?id=17540866</a></p>
-<p>Postgraphile:<br><a target="_blank" rel="noopener" href="https://www.graphile.org/postgraphile/">https://www.graphile.org/postgraphile/</a></p>
-<p>Hasura - GraphQL on Postgres:<br><a target="_blank" rel="noopener" href="https://hasura.io/">https://hasura.io/</a></p>
-<p>Graphcool - GraphQL BaaS:<br><a target="_blank" rel="noopener" href="https://www.graph.cool/">https://www.graph.cool/</a></p>
-<p>Prisma - GrapQL on any database:<br><a target="_blank" rel="noopener" href="https://www.prisma.io/with-graphql/">https://www.prisma.io/with-graphql/</a></p>
-<p>Nextjs, Apollo, Prisma:<br><a target="_blank" rel="noopener" href="https://github.com/mbaranovski/nextjs-apollo-oauth-prisma">https://github.com/mbaranovski/nextjs-apollo-oauth-prisma</a></p>
-<p>RAN! React . GraphQL . Next.js Toolkit - bez backendu, przykład z Graphcool:<br><a target="_blank" rel="noopener" href="https://github.com/Sly777/ran">https://github.com/Sly777/ran</a><br><a target="_blank" rel="noopener" href="https://github.com/mshameer/ran-with-prisma">https://github.com/mshameer/ran-with-prisma</a></p>
-<p>Vulcan - React, GraphQL, Meteor:<br><a target="_blank" rel="noopener" href="http://docs.vulcanjs.org/">http://docs.vulcanjs.org/</a></p>
+<h2 id="Consty-i-zmienne"><a href="#Consty-i-zmienne" class="headerlink" title="Consty i zmienne:"></a>Consty i zmienne:</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> NEWLINE = <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line"><span class="keyword">int</span> area;  </span><br></pre></td></tr></table></figure>
+<h2 id="Tworzenie-klas-i-obiektow"><a href="#Tworzenie-klas-i-obiektow" class="headerlink" title="Tworzenie klas i obiektów:"></a>Tworzenie klas i obiektów:</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SampleClass</span>:<span class="title">NSObject</span></span></span><br><span class="line">- (<span class="keyword">void</span>)sampleMethod;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">SampleClass</span></span></span><br><span class="line">- (<span class="keyword">void</span>)sampleMethod &#123;</span><br><span class="line">   <span class="built_in">NSLog</span>(<span class="string">@&quot;Hello, World! \n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main() &#123;</span><br><span class="line">   <span class="comment">/* my first program in Objective-C */</span></span><br><span class="line">   SampleClass *sampleClass = [[SampleClass alloc]init];</span><br><span class="line">   [sampleClass sampleMethod];</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Tworzenie-struct"><a href="#Tworzenie-struct" class="headerlink" title="Tworzenie struct:"></a>Tworzenie <code>struct</code>:</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> Books &#123;</span><br><span class="line">   <span class="built_in">NSString</span> *title;</span><br><span class="line">   <span class="built_in">NSString</span> *author;</span><br><span class="line">   <span class="built_in">NSString</span> *subject;</span><br><span class="line">   <span class="keyword">int</span>   book_id;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="Manipulowanie-struct"><a href="#Manipulowanie-struct" class="headerlink" title="Manipulowanie struct:"></a>Manipulowanie <code>struct</code>:</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">BookLogger</span>:<span class="title">NSObject</span></span></span><br><span class="line"><span class="comment">/* function declaration */</span></span><br><span class="line">- (<span class="keyword">void</span>) printBook:(<span class="keyword">struct</span> Books*) book;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">BookLogger</span></span></span><br><span class="line">- (<span class="keyword">void</span>) printBook:(<span class="keyword">struct</span> Books*) book &#123;</span><br><span class="line">   <span class="built_in">NSLog</span>(<span class="string">@&quot;Book title: %@\n&quot;</span>, book-&gt;title);</span><br><span class="line">   <span class="built_in">NSLog</span>(<span class="string">@&quot;Book author: %@\n&quot;</span>, book-&gt;author);</span><br><span class="line">   <span class="built_in">NSLog</span>(<span class="string">@&quot;Book subject: %@\n&quot;</span>, book-&gt;subject);</span><br><span class="line">   <span class="built_in">NSLog</span>(<span class="string">@&quot;Book book_id: %d\n&quot;</span>, book-&gt;book_id);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main() &#123;</span><br><span class="line">   <span class="keyword">struct</span> Books Book1;        <span class="comment">/* Declare Book1 of type Book */</span></span><br><span class="line">   <span class="keyword">struct</span> Books Book2;        <span class="comment">/* Declare Book2 of type Book */</span></span><br><span class="line"></span><br><span class="line">  BookLogger *bookLogger = [[BookLogger alloc]init];</span><br><span class="line">  <span class="comment">/* print Book1 info */</span></span><br><span class="line">  [sampleClass bookLogger: Book1];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Tworzenie-blokow-funkcji"><a href="#Tworzenie-blokow-funkcji" class="headerlink" title="Tworzenie bloków funkcji:"></a>Tworzenie bloków funkcji:</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (return_type) method_name:(argumentType1)argumentName1 </span><br><span class="line">joiningArgument2:(argumentType2)argumentName2 ... </span><br><span class="line">joiningArgumentn:(argumentTypen)argumentNamen &#123;</span><br><span class="line">   body of the function</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>i.e.:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> (^multiplyTwoValues)(<span class="keyword">double</span>, <span class="keyword">double</span>) = </span><br><span class="line">   ^(<span class="keyword">double</span> firstValue, <span class="keyword">double</span> secondValue) &#123;</span><br><span class="line">      <span class="keyword">return</span> firstValue * secondValue;</span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> result = multiplyTwoValues(<span class="number">2</span>,<span class="number">4</span>); </span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@&quot;The result is %f&quot;</span>, result);</span><br></pre></td></tr></table></figure>
+<h2 id="Struktury-danych"><a href="#Struktury-danych" class="headerlink" title="Struktury danych:"></a>Struktury danych:</h2><ul>
+<li><code>NSDictionary</code> could be accessed like <code>dict[@&quot;key&quot;]</code> or <code>[dict objectForKey:@&quot;key&quot;]</code></li>
+<li><code>NSArray</code> is accessible via indexes: 0, 1, 2 etc:</li>
+</ul>
+<h3 id="Inicjacja-NSArray"><a href="#Inicjacja-NSArray" class="headerlink" title="Inicjacja NSArray:"></a>Inicjacja <code>NSArray</code>:</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span>* array = @[<span class="string">@&quot;One&quot;</span>, <span class="string">@&quot;Two&quot;</span>, <span class="string">@&quot;Three&quot;</span>];</span><br><span class="line"><span class="built_in">NSArray</span>* array = @[Object1, Object2]</span><br></pre></td></tr></table></figure>
+<h3 id="Iterowanie-po-NSDictionary"><a href="#Iterowanie-po-NSDictionary" class="headerlink" title="Iterowanie po NSDictionary:"></a>Iterowanie po <code>NSDictionary</code>:</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">NSString</span>* key <span class="keyword">in</span> yourDict) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@&quot;%@&quot;</span>, yourDict[key]);</span><br><span class="line">    <span class="comment">//or</span></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@&quot;%@&quot;</span>, [yourDict objectForKey:key]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Inicjalizacja-NSDictionary"><a href="#Inicjalizacja-NSDictionary" class="headerlink" title="Inicjalizacja NSDictionary:"></a>Inicjalizacja <code>NSDictionary</code>:</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSDictionary</span>* dict = @&#123; key : value, key2 : value2&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="Dodawanie-do-NSDictionary-wartosci-niebedajacej-obiektem-wymaga-jej-rzutowania-na-odpowiedni-obiekt-Objective-C"><a href="#Dodawanie-do-NSDictionary-wartosci-niebedajacej-obiektem-wymaga-jej-rzutowania-na-odpowiedni-obiekt-Objective-C" class="headerlink" title="Dodawanie do NSDictionary wartości niebędającej obiektem wymaga jej rzutowania na odpowiedni obiekt Objective C:"></a>Dodawanie do <code>NSDictionary</code> wartości niebędającej obiektem wymaga jej rzutowania na odpowiedni obiekt Objective C:</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">@&quot;facebookId&quot;</span>: [<span class="built_in">NSNumber</span> numberWithInt:[fbId intValue]];</span><br><span class="line"><span class="string">@&quot;facebookId&quot;</span>: @(fbId) <span class="comment">// for non pointer datatype value store in Dictionary</span></span><br></pre></td></tr></table></figure>
+<h2 id="property"><a href="#property" class="headerlink" title="@property:"></a><code>@property:</code></h2><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/15541505">atomic, nonatomic, etc.</a></p>
+<h2 id="synthesize"><a href="#synthesize" class="headerlink" title="@synthesize:"></a><code>@synthesize:</code></h2><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/24890137">@synthesize</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/" data-id="ckqtah8xe001wyzsjapfh4dv2" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Languages/Lang-Objective-C-language/" data-id="ckqtpj4eq001jz0uvgrbd58np" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
 
     </footer>
   </div>
@@ -422,7 +461,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/TypeScript/TypeScript-basics/" data-id="ckqtah8y2002xyzsjgsxaccqz" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/TypeScript/TypeScript-basics/" data-id="ckqtpj4fm0030z0uv978p3gn9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li></ul>
@@ -491,7 +530,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/TypeScript/TypeScript-React/" data-id="ckqtah8y0002vyzsje369aid5" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/TypeScript/TypeScript-React/" data-id="ckqtpj4fk002xz0uv6jewfzfc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li></ul>
@@ -592,7 +631,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/React/React-Hooks-introduction-and-API-pitfalls/" data-id="ckqtah8xk002dyzsj2sz9g72x" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/12/01/React/React-Hooks-introduction-and-API-pitfalls/" data-id="ckqtpj4f2002dz0uv9y3rbwke" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li></ul>
@@ -656,65 +695,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/11/30/React/React-various-notes/" data-id="ckqtah8xv002kyzsj4yrk6y8f" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2019/11/30/React/React-various-notes/" data-id="ckqtpj4ff002oz0uvbknd30tb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Frontend/DRAFT-Frontend-various-notes" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/11/01/Frontend/DRAFT-Frontend-various-notes/" class="article-date">
-  <time datetime="2019-11-01T16:55:26.000Z" itemprop="datePublished">2019-11-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Frontend/">Frontend</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/11/01/Frontend/DRAFT-Frontend-various-notes/">[DRAFT] Frontend - miscellaneous notes</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Styled-Components"><a href="#Styled-Components" class="headerlink" title="Styled Components"></a>Styled Components</h1><h2 id="Pros-of"><a href="#Pros-of" class="headerlink" title="Pros of"></a>Pros of</h2><ul>
-<li><strong>styles are part of JavaScript</strong> (CSS-in-JS) in this case and allow you to build components from CSS snippets</li>
-<li>with styled components <strong>you can build CSS dynamically based on props and state of the component</strong></li>
-<li><strong>you don’t have to create tons of class names</strong> with related CSS declarations written somewhere else. Class names are generated automatically and you don’t have to care about them anymore.</li>
-</ul>
-<h1 id="Terms"><a href="#Terms" class="headerlink" title="Terms"></a>Terms</h1><h2 id="Codemod"><a href="#Codemod" class="headerlink" title="Codemod"></a>Codemod</h2><p>Codemod is a script run against a codebase for example in purpose of updating the codebase automatically for new changes in the API of an updated library.</p>
-<h2 id="Tree-Shaking"><a href="#Tree-Shaking" class="headerlink" title="Tree Shaking"></a>Tree Shaking</h2><p>// TODO</p>
-<h2 id="Bundle-Splitting"><a href="#Bundle-Splitting" class="headerlink" title="Bundle Splitting"></a>Bundle Splitting</h2><p>// TODO</p>
-<h2 id="AMP"><a href="#AMP" class="headerlink" title="AMP"></a>AMP</h2><p>// TODO</p>
-<p>Supported in Next.js.</p>
-<h2 id="Frontend-integration-tests"><a href="#Frontend-integration-tests" class="headerlink" title="Frontend integration tests"></a>Frontend integration tests</h2><p>// TODO</p>
-<p>Integration tests may be based on <strong>Selenium webdriver</strong>, which may be combined with <strong>chromedriver</strong> to test in <strong>headless Chrome</strong>.</p>
-<h2 id="Module-nomodule-pattern"><a href="#Module-nomodule-pattern" class="headerlink" title="Module/nomodule pattern"></a>Module/nomodule pattern</h2><p>The module/nomodule pattern provides a reliable mechanism for serving modern JavaScript to modern browsers while still allowing older browsers to fall back to polyfilled ES5.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2019/11/01/Frontend/DRAFT-Frontend-various-notes/" data-id="ckqtah8wo000kyzsjd66tex8p" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li></ul>
 
     </footer>
   </div>
@@ -727,7 +711,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/blog/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/4/">Next &amp;raquo;</a>
+    <a class="extend prev" rel="prev" href="/blog/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/blog/page/4/">4</a><a class="page-number" href="/blog/page/5/">5</a><a class="extend next" rel="next" href="/blog/page/4/">Next &amp;raquo;</a>
   </nav>
 
 </section>
@@ -769,7 +753,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Authentication/" style="font-size: 10px;">Authentication</a> <a href="/blog/tags/Authorization/" style="font-size: 10px;">Authorization</a> <a href="/blog/tags/Backend/" style="font-size: 20px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 13.33px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/blog/tags/JavaScript/" style="font-size: 18.33px;">JavaScript</a> <a href="/blog/tags/Microservices/" style="font-size: 10px;">Microservices</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 11.67px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 15px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 11.67px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 13.33px;">Programming languages</a> <a href="/blog/tags/REST-APIs/" style="font-size: 10px;">REST APIs</a> <a href="/blog/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/blog/tags/React/" style="font-size: 16.67px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 13.33px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Security/" style="font-size: 10px;">Security</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 16.67px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 11.67px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 11.67px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
+      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Authentication/" style="font-size: 10px;">Authentication</a> <a href="/blog/tags/Authorization/" style="font-size: 10px;">Authorization</a> <a href="/blog/tags/Backend/" style="font-size: 20px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 12.86px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/blog/tags/JavaScript/" style="font-size: 18.57px;">JavaScript</a> <a href="/blog/tags/Microservices/" style="font-size: 10px;">Microservices</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 11.43px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 14.29px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 11.43px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 12.86px;">Programming languages</a> <a href="/blog/tags/REST-APIs/" style="font-size: 10px;">REST APIs</a> <a href="/blog/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/blog/tags/React/" style="font-size: 17.14px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.86px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 11.43px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/blog/tags/Redux/" style="font-size: 11.43px;">Redux</a> <a href="/blog/tags/Security/" style="font-size: 10px;">Security</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 15.71px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 11.43px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 11.43px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
     </div>
   </div>
 
@@ -791,6 +775,10 @@
       <ul>
         
           <li>
+            <a href="/blog/2021/07/06/React/React-Redux/">MobX Redux</a>
+          </li>
+        
+          <li>
             <a href="/blog/2021/07/05/React/React-code-reusability/">React - code reusability</a>
           </li>
         
@@ -804,10 +792,6 @@
         
           <li>
             <a href="/blog/2021/07/03/Backend/Security/">Security</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2021/07/03/Backend/REST-APIs/">REST APIs</a>
           </li>
         
       </ul>

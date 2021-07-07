@@ -85,6 +85,64 @@
 </div>
 
   
+    <article id="post-Nodejs/Nodejs-Nestjs" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/06/30/Nodejs/Nodejs-Nestjs/" class="article-date">
+  <time datetime="2021-06-30T22:00:00.000Z" itemprop="datePublished">2021-07-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/blog/categories/Node-js/Nest-js/">Nest.js</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2021/06/30/Nodejs/Nodejs-Nestjs/">Node.js - Nest.js framework</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Nest-js-framework"><a href="#Nest-js-framework" class="headerlink" title="Nest.js framework"></a>Nest.js framework</h1><ul>
+<li>Currently, it supports two libraries — Express and Fastify</li>
+<li>it forces developers to use a specific architecture by introducing <strong>Angular-like modules, services, and controllers</strong>, ensuring the application is scalable, highly testable, and loosely coupled</li>
+<li>A controller is a class annotated with the <code>@Controller</code> decorator and it checks what request comes in and calls the appropriate service’s method. They don’t care about what’s going on between the request and the response.</li>
+<li>A service is a class annotated with the @Injectable decorator. It contains domain (business) logic. By separating the access layer (controllers) and logic layer (services), we have a clear separation of concerns.</li>
+<li><strong>Dependency injection is one of the most important aspects of Nest</strong>. By providing the support out of the box, Nest allows us to write <strong>loosely coupled code</strong>, which, in turn, is also <strong>easily testable</strong>.</li>
+<li>By using dependency injection, it is very easy to mock out the modules we are not currently testing thanks to Nest’s <em>custom providers</em> feature.</li>
+<li>Nest stays on top of the new trends and makes it very easy to write an application based on the microservices architecture.</li>
+<li>Nest is used for building REST APIs but also the architecture can be used to create a GraphQL API as well.</li>
+</ul>
+<h2 id="Sample-Controller"><a href="#Sample-Controller" class="headerlink" title="Sample Controller"></a>Sample Controller</h2><h3 id="Sample-1"><a href="#Sample-1" class="headerlink" title="Sample 1"></a>Sample 1</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">@Controller(<span class="string">&#x27;cats&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">CatsController</span> </span>&#123;</span><br><span class="line">  @Post()</span><br><span class="line">  <span class="function"><span class="title">create</span>(<span class="params">@Body() createCatDto: CreateCatDto</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;This action adds a new cat&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Get()</span><br><span class="line">  <span class="function"><span class="title">findAll</span>(<span class="params">@Query() query: ListAllEntities</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`This action returns all cats (limit: <span class="subst">$&#123;query.limit&#125;</span> items)`</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Get(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  <span class="function"><span class="title">findOne</span>(<span class="params">@Param(<span class="string">&#x27;id&#x27;</span>) id: string</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`This action returns a #<span class="subst">$&#123;id&#125;</span> cat`</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Put(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  <span class="function"><span class="title">update</span>(<span class="params">@Param(<span class="string">&#x27;id&#x27;</span>) id: string, @Body() updateCatDto: UpdateCatDto</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`This action updates a #<span class="subst">$&#123;id&#125;</span> cat`</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Delete(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  <span class="function"><span class="title">remove</span>(<span class="params">@Param(<span class="string">&#x27;id&#x27;</span>) id: string</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`This action removes a #<span class="subst">$&#123;id&#125;</span> cat`</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Sample-2"><a href="#Sample-2" class="headerlink" title="Sample 2"></a>Sample 2</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Controller(<span class="string">&#x27;cats&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">CatsController</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">private readonly catsService: CatsService</span>)</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">  @Post()</span><br><span class="line">  <span class="keyword">async</span> <span class="function"><span class="title">create</span>(<span class="params">@Body() createCatDto: CreateCatDto</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.catsService.create(createCatDto);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Get()</span><br><span class="line">  <span class="keyword">async</span> findAll(): <span class="built_in">Promise</span>&lt;Cat[]&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.catsService.findAll();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Sample-Service"><a href="#Sample-Service" class="headerlink" title="Sample Service"></a>Sample Service</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">CatsService</span> </span>&#123;</span><br><span class="line">  private readonly cats: Cat[] = [];</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">create</span>(<span class="params">cat: Cat</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.cats.push(cat);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  findAll(): Cat[] &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.cats;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a>Sources</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.logrocket.com/node-back-end-next-level-nestjs/">Take your Node backend to the next level with NestJS</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2021/06/30/Nodejs/Nodejs-Nestjs/" data-id="ckqtpj4ex0020z0uva8abaqjt" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Nodejs/Nodejs-threads" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2021/06/29/Nodejs/Nodejs-threads/" class="article-date">
@@ -127,7 +185,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/06/29/Nodejs/Nodejs-threads/" data-id="ckqtah8xi0028yzsj1l7f8e9j" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/06/29/Nodejs/Nodejs-threads/" data-id="ckqtpj4f00028z0uv9f8qh75b" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
@@ -190,7 +248,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/12/22/Mobile/Mobile-Swift/" data-id="ckqtah8xc001syzsj34f51tdl" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/12/22/Mobile/Mobile-Swift/" data-id="ckqtpj4eu001sz0uvhhgl0vji" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
@@ -373,10 +431,137 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" data-id="ckqtah8zz008oyzsjbg9qg7p5" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" data-id="ckqtpj4hm008zz0uv612r0e2q" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-React/React-MobX-vs-Redux" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/React/React-MobX-vs-Redux/" class="article-date">
+  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/State-management/">State management</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/React/React-MobX-vs-Redux/">MobX vs Redux</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>MobX diagram: <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/c8e97f5bf3e6908e68b34fd187d97fac599afc4efc2807a3434782285db46357/68747470733a2f2f6d6f62782e6a732e6f72672f6173736574732f666c6f77322e706e67">https://camo.githubusercontent.com/c8e97f5bf3e6908e68b34fd187d97fac599afc4efc2807a3434782285db46357/68747470733a2f2f6d6f62782e6a732e6f72672f6173736574732f666c6f77322e706e67</a></li>
+<li>MobX Github: <a target="_blank" rel="noopener" href="https://github.com/mobxjs/mobx">https://github.com/mobxjs/mobx</a></li>
+<li>Flux vs Redux: <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/1600/1*3lvNEQE4SF6Z1l-680cfSQ.jpeg">https://cdn-images-1.medium.com/max/1600/1*3lvNEQE4SF6Z1l-680cfSQ.jpeg</a></li>
+<li>When To Add Redux: <a target="_blank" rel="noopener" href="https://daveceddia.com/what-does-redux-do/">https://daveceddia.com/what-does-redux-do/</a></li>
+<li>Why Redux adds some complexity to your application: <a target="_blank" rel="noopener" href="https://www.quora.com/Do-I-need-Redux">https://www.quora.com/Do-I-need-Redux</a></li>
+</ul>
+<h2 id="Attributes"><a href="#Attributes" class="headerlink" title="Attributes"></a>Attributes</h2><ul>
+<li>these two are state management libraries</li>
+<li>Redux has <strong>single store</strong>, Mobx can have <strong>multiple stores</strong></li>
+<li>Redux uses <strong>normal objects</strong>, Mobx uses <strong>observables</strong><ul>
+<li>You can listen to an observable and automatically track changes that occur to the data</li>
+<li>In Redux all the updates have to be tracked manually by proper functions</li>
+</ul>
+</li>
+<li>Redux has <strong>immutable state</strong>, state is read-only and is pure<ul>
+<li>In Redux it’s easy to revert back to a previous state. Eg — An undo action.</li>
+</ul>
+</li>
+<li>MobX can have state overwritten (<strong>mutable state</strong>)</li>
+<li>MobX is much easier to learn and has a steady learning curve</li>
+<li>Redux follows <strong>functional</strong> programming paradigm</li>
+<li>MobX <strong>functional reactive</strong> programming</li>
+<li>In MobX there is lot of built in <strong>abstraction</strong>, and this leads to less code</li>
+<li>When implementing <strong>Redux</strong> you will end up writing <strong>lot of boilerplate code</strong></li>
+<li>Since there is more abstraction, <strong>debugging becomes a lot harder for MobX</strong></li>
+<li>Redux provides kickass <strong>developer tools including time travelling</strong></li>
+<li>With <strong>pure functions and less abstraction, debugging in Redux will be a better experience</strong> compared to MobX</li>
+<li>Following the flux paradigm makes Redux more predictable</li>
+<li>Because of the whole pure functions things and functional programming paradigm <strong>Redux is more maintainable</strong></li>
+<li>The developer community of Redux is way ahead of the MobX community</li>
+<li><strong>MobX is great for small and simple apps</strong></li>
+<li>It’s faster to build apps with MobX</li>
+<li>Redux allows to create more maintainable code</li>
+<li>For <strong>complex app with scalable option Redux is great choice</strong></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/React-MobX-vs-Redux/" data-id="ckqtpj4f3002gz0uv03dbgum2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-JavaScript/JavaScript-prototype-creation-example" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" class="article-date">
+  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Basics/">Basics</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/">JavaScript prototype creation example</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Stwórzmy nową klasę korzystającą z dziedziczenia prototypowego, a następnie utwórzmy nowy obiekt klasy <code>Person</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) &#125;;</span><br><span class="line"><span class="keyword">new</span> Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Person</span></span><br><span class="line"><span class="comment">// &quot;Matt&quot;</span></span><br></pre></td></tr></table></figure>
+<p>Gdy nie użyjemy operatora <code>new</code> nie jest tworzony nowy obiekt i używany jest kontekst wywołania funkcji, co zwraca błąd:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) &#125;;</span><br><span class="line">Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Window - ta linijka inna, bez new</span></span><br><span class="line"><span class="comment">// VM973:3 Uncaught TypeError: this.hello is not a function</span></span><br><span class="line"><span class="comment">//    at Person (&lt;anonymous&gt;:3:8)</span></span><br><span class="line"><span class="comment">//    at &lt;anonymous&gt;:6:1</span></span><br></pre></td></tr></table></figure>
+<p>Teraz użyjmy arrow function dla funkcji dodanej do prototypu:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="built_in">this</span>.name)  <span class="comment">// ta linijka inna, używamy arrow function </span></span><br><span class="line"><span class="keyword">new</span> Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Person</span></span><br></pre></td></tr></table></figure>
+<p>Jednak nadal otrzymujemy ten sam błąd gdy pominiemy operator <code>new</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">VM231:<span class="number">4</span> Uncaught <span class="built_in">TypeError</span>: <span class="built_in">this</span>.hello is not a <span class="function"><span class="keyword">function</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">Person</span> (<span class="params">&lt;anonymous&gt;:<span class="number">4</span>:<span class="number">8</span></span>)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> &lt;<span class="title">anonymous</span>&gt;:7:1</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" data-id="ckqtpj4en001ez0uv5j4t0ixh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
 
     </footer>
   </div>
@@ -471,186 +656,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/" data-id="ckqtah8wx000zyzsj14bi6n22" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript/JavaScript-forin-forof-loops" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" class="article-date">
-  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Basics/">Basics</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/">JavaScript `for..in` `for..of` and other loops</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><code>for..in</code> - iterates over keys of all objects - loops over enumerable property names of an object.</li>
-<li><code>for..of</code> - iterates over values of iterable objects (Array, TypedArray, String, Map, Set) - does use an object-specific iterator and loops over the values generated by that.</li>
-<li><code>forEach</code> - specific method for arrays</li>
-<li><code>map</code> - specific method for arrays</li>
-</ul>
-<h2 id="Example-with-an-object"><a href="#Example-with-an-object" class="headerlink" title="Example with an object"></a>Example with an object</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123; <span class="number">1</span>: <span class="number">1</span>, <span class="number">2</span>: <span class="literal">true</span>, <span class="number">3</span>: <span class="string">&quot;str&quot;</span> &#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">in</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console logs 1, 2, 3</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console error `Uncaught TypeError: obj is not iterable`</span></span><br><span class="line"></span><br><span class="line">obj[<span class="built_in">Symbol</span>.iterator] = <span class="function"><span class="keyword">function</span>*(<span class="params"></span>) </span>&#123; <span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">in</span> obj) <span class="keyword">yield</span> obj[i] &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console logs 1, true, &quot;str&quot;</span></span><br></pre></td></tr></table></figure>
-<h2 id="Example-with-a-set"><a href="#Example-with-a-set" class="headerlink" title="Example with a set"></a>Example with a set</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pets = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="string">&quot;Cat&quot;</span>, <span class="string">&quot;Dog&quot;</span>, <span class="string">&quot;Hamster&quot;</span>])</span><br><span class="line">pets[<span class="string">&quot;species&quot;</span>] = <span class="string">&quot;mammals&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> pet <span class="keyword">in</span> pets) &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(pet) <span class="comment">// &quot;species&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> pet <span class="keyword">of</span> pets) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(pet) <span class="comment">// &quot;Cat&quot;, &quot;Dog&quot;, &quot;Hamster&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Example-with-for-in-and-enumerable-method"><a href="#Example-with-for-in-and-enumerable-method" class="headerlink" title="Example with for..in and enumerable method"></a>Example with <code>for..in</code> and enumerable method</h2><p>Because <code>for..in</code> loops over all enumerable properties, this means if you add any additional properties to the array’s prototype, then those properties will also appear in the loop.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.decimalfy = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="built_in">this</span>.length; i++) &#123;</span><br><span class="line">    <span class="built_in">this</span>[i] = <span class="built_in">this</span>[i].toFixed(<span class="number">2</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> digits = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> index <span class="keyword">in</span> digits) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(digits[index]) <span class="comment">// it also print decimalfy function</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Above-for-for-of"><a href="#Above-for-for-of" class="headerlink" title="Above for for..of"></a>Above for <code>for..of</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> digits = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> digit <span class="keyword">of</span> digits) &#123;</span><br><span class="line">  <span class="keyword">if</span> (digit % <span class="number">2</span> === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(digit)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// prints 1, 3, 5, 7, 9</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" data-id="ckqtah8x10017yzsj8o9h3e2z" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-React/React-MobX-vs-Redux" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/React/React-MobX-vs-Redux/" class="article-date">
-  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/React/">React</a>►<a class="article-category-link" href="/blog/categories/React/State-management/">State management</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/React/React-MobX-vs-Redux/">MobX vs Redux</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>MobX diagram: <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/c8e97f5bf3e6908e68b34fd187d97fac599afc4efc2807a3434782285db46357/68747470733a2f2f6d6f62782e6a732e6f72672f6173736574732f666c6f77322e706e67">https://camo.githubusercontent.com/c8e97f5bf3e6908e68b34fd187d97fac599afc4efc2807a3434782285db46357/68747470733a2f2f6d6f62782e6a732e6f72672f6173736574732f666c6f77322e706e67</a></li>
-<li>MobX Github: <a target="_blank" rel="noopener" href="https://github.com/mobxjs/mobx">https://github.com/mobxjs/mobx</a></li>
-<li>Flux vs Redux: <a target="_blank" rel="noopener" href="https://cdn-images-1.medium.com/max/1600/1*3lvNEQE4SF6Z1l-680cfSQ.jpeg">https://cdn-images-1.medium.com/max/1600/1*3lvNEQE4SF6Z1l-680cfSQ.jpeg</a></li>
-<li>When To Add Redux: <a target="_blank" rel="noopener" href="https://daveceddia.com/what-does-redux-do/">https://daveceddia.com/what-does-redux-do/</a></li>
-<li>Why Redux adds some complexity to your application: <a target="_blank" rel="noopener" href="https://www.quora.com/Do-I-need-Redux">https://www.quora.com/Do-I-need-Redux</a></li>
-</ul>
-<h2 id="Attributes"><a href="#Attributes" class="headerlink" title="Attributes"></a>Attributes</h2><ul>
-<li>these two are state management libraries</li>
-<li>Redux has <strong>single store</strong>, Mobx can have <strong>multiple stores</strong></li>
-<li>Redux uses <strong>normal objects</strong>, Mobx uses <strong>observables</strong><ul>
-<li>You can listen to an observable and automatically track changes that occur to the data</li>
-<li>In Redux all the updates have to be tracked manually by proper functions</li>
-</ul>
-</li>
-<li>Redux has <strong>immutable state</strong>, state is read-only and is pure<ul>
-<li>In Redux it’s easy to revert back to a previous state. Eg — An undo action.</li>
-</ul>
-</li>
-<li>MobX can have state overwritten (<strong>mutable state</strong>)</li>
-<li>MobX is much easier to learn and has a steady learning curve</li>
-<li>Redux follows <strong>functional</strong> programming paradigm</li>
-<li>MobX <strong>functional reactive</strong> programming</li>
-<li>In MobX there is lot of built in <strong>abstraction</strong>, and this leads to less code</li>
-<li>When implementing <strong>Redux</strong> you will end up writing <strong>lot of boilerplate code</strong></li>
-<li>Since there is more abstraction, <strong>debugging becomes a lot harder for MobX</strong></li>
-<li>Redux provides kickass <strong>developer tools including time travelling</strong></li>
-<li>With <strong>pure functions and less abstraction, debugging in Redux will be a better experience</strong> compared to MobX</li>
-<li>Following the flux paradigm makes Redux more predictable</li>
-<li>Because of the whole pure functions things and functional programming paradigm <strong>Redux is more maintainable</strong></li>
-<li>The developer community of Redux is way ahead of the MobX community</li>
-<li><strong>MobX is great for small and simple apps</strong></li>
-<li>It’s faster to build apps with MobX</li>
-<li>Redux allows to create more maintainable code</li>
-<li>For <strong>complex app with scalable option Redux is great choice</strong></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/React-MobX-vs-Redux/" data-id="ckqtah8xs002gyzsj33pq084w" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript/JavaScript-prototype-creation-example" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" class="article-date">
-  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Basics/">Basics</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/">JavaScript prototype creation example</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Stwórzmy nową klasę korzystającą z dziedziczenia prototypowego, a następnie utwórzmy nowy obiekt klasy <code>Person</code>:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) &#125;;</span><br><span class="line"><span class="keyword">new</span> Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Person</span></span><br><span class="line"><span class="comment">// &quot;Matt&quot;</span></span><br></pre></td></tr></table></figure>
-<p>Gdy nie użyjemy operatora <code>new</code> nie jest tworzony nowy obiekt i używany jest kontekst wywołania funkcji, co zwraca błąd:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) &#125;;</span><br><span class="line">Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Window - ta linijka inna, bez new</span></span><br><span class="line"><span class="comment">// VM973:3 Uncaught TypeError: this.hello is not a function</span></span><br><span class="line"><span class="comment">//    at Person (&lt;anonymous&gt;:3:8)</span></span><br><span class="line"><span class="comment">//    at &lt;anonymous&gt;:6:1</span></span><br></pre></td></tr></table></figure>
-<p>Teraz użyjmy arrow function dla funkcji dodanej do prototypu:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="built_in">this</span>.name)  <span class="comment">// ta linijka inna, używamy arrow function </span></span><br><span class="line"><span class="keyword">new</span> Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Person</span></span><br></pre></td></tr></table></figure>
-<p>Jednak nadal otrzymujemy ten sam błąd gdy pominiemy operator <code>new</code>:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">VM231:<span class="number">4</span> Uncaught <span class="built_in">TypeError</span>: <span class="built_in">this</span>.hello is not a <span class="function"><span class="keyword">function</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">Person</span> (<span class="params">&lt;anonymous&gt;:<span class="number">4</span>:<span class="number">8</span></span>)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> &lt;<span class="title">anonymous</span>&gt;:7:1</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" data-id="ckqtah8x5001eyzsjblodc2dk" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/" data-id="ckqtpj4ef000zz0uvb9gidsjh" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
@@ -702,7 +708,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/React-Hooks-TypeScript/" data-id="ckqtah8xj002byzsjdpazehyx" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/React-Hooks-TypeScript/" data-id="ckqtpj4f1002bz0uv0ajv6dji" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li></ul>
@@ -714,14 +720,14 @@
 
 
   
-    <article id="post-Frontend/CSS-How-to-make-child-div-wider-than-parent-div" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-JavaScript/JavaScript-forin-forof-loops" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/" class="article-date">
-  <time datetime="2020-07-17T18:00:00.000Z" itemprop="datePublished">2020-07-17</time>
+    <a href="/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" class="article-date">
+  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Frontend/">Frontend</a>►<a class="article-category-link" href="/blog/categories/Frontend/CSS/">CSS</a>
+    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Basics/">Basics</a>
   </div>
 
   </div>
@@ -732,52 +738,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/">CSS - How to make child div wider than parent div</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="By-using-calc"><a href="#By-using-calc" class="headerlink" title="By using calc"></a>By using <code>calc</code></h2><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/24895631">Source</a></p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">html</span>,</span><br><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">max-width</span>: <span class="number">800px</span>;</span><br><span class="line">    <span class="attribute">background</span>: grey;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.child-element</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100vw</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="built_in">calc</span>(-<span class="number">50vw</span> + <span class="number">50%</span>);</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">background</span>: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="How-do-we-make-a-full-browser-width-container-when-we’re-inside-a-limited-width-parent"><a href="#How-do-we-make-a-full-browser-width-container-when-we’re-inside-a-limited-width-parent" class="headerlink" title="How do we make a full-browser-width container when we’re inside a limited-width parent?"></a>How do we make a full-browser-width container when we’re inside a limited-width parent?</h2><p><a target="_blank" rel="noopener" href="https://css-tricks.com/full-width-containers-limited-width-parents/">Source</a></p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.full-width</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100vw</span>;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">margin-left</span>: -<span class="number">50vw</span>;</span><br><span class="line">  <span class="attribute">margin-right</span>: -<span class="number">50vw</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Frontend/CSS-How-to-make-child-div-wider-than-parent-div/" data-id="ckqtah8wn000hyzsj7r3p8i89" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Languages/Lang-Elm-language" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/Languages/Lang-Elm-language/" class="article-date">
-  <time datetime="2020-07-17T18:00:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/Languages/Lang-Elm-language/">Elm programming language attributes</a>
+      <a class="article-title" href="/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/">JavaScript `for..in` `for..of` and other loops</a>
     </h1>
   
 
@@ -786,28 +747,86 @@
     <div class="article-entry" itemprop="articleBody">
       
         <ul>
-<li>functional reactive programming language</li>
-<li>compiles to JS</li>
-<li>the compiler catches most errors immediately and provides a clear and understandable error message</li>
-<li>purely functional</li>
-<li>statically typed</li>
-<li>looks like Haskell</li>
-<li>time-travelling debugger</li>
-<li>uses type inference</li>
-<li>has its own virtual DOM implementation</li>
-<li>very fast DOM diff implementation</li>
-<li>your CSS and HTML are written in code :( - looks declarative (YAML-ish), breaks the separation principle</li>
-<li>a steep learning curve for JS devs</li>
-<li>helps dramatically, as the reactive paradigm is part of the language’s architecture</li>
+<li><code>for..in</code> - iterates over keys of all objects - loops over enumerable property names of an object.</li>
+<li><code>for..of</code> - iterates over values of iterable objects (Array, TypedArray, String, Map, Set) - does use an object-specific iterator and loops over the values generated by that.</li>
+<li><code>forEach</code> - specific method for arrays</li>
+<li><code>map</code> - specific method for arrays</li>
 </ul>
+<h2 id="Example-with-an-object"><a href="#Example-with-an-object" class="headerlink" title="Example with an object"></a>Example with an object</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123; <span class="number">1</span>: <span class="number">1</span>, <span class="number">2</span>: <span class="literal">true</span>, <span class="number">3</span>: <span class="string">&quot;str&quot;</span> &#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">in</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console logs 1, 2, 3</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console error `Uncaught TypeError: obj is not iterable`</span></span><br><span class="line"></span><br><span class="line">obj[<span class="built_in">Symbol</span>.iterator] = <span class="function"><span class="keyword">function</span>*(<span class="params"></span>) </span>&#123; <span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">in</span> obj) <span class="keyword">yield</span> obj[i] &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console logs 1, true, &quot;str&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Example-with-a-set"><a href="#Example-with-a-set" class="headerlink" title="Example with a set"></a>Example with a set</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pets = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="string">&quot;Cat&quot;</span>, <span class="string">&quot;Dog&quot;</span>, <span class="string">&quot;Hamster&quot;</span>])</span><br><span class="line">pets[<span class="string">&quot;species&quot;</span>] = <span class="string">&quot;mammals&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> pet <span class="keyword">in</span> pets) &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(pet) <span class="comment">// &quot;species&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> pet <span class="keyword">of</span> pets) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(pet) <span class="comment">// &quot;Cat&quot;, &quot;Dog&quot;, &quot;Hamster&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Example-with-for-in-and-enumerable-method"><a href="#Example-with-for-in-and-enumerable-method" class="headerlink" title="Example with for..in and enumerable method"></a>Example with <code>for..in</code> and enumerable method</h2><p>Because <code>for..in</code> loops over all enumerable properties, this means if you add any additional properties to the array’s prototype, then those properties will also appear in the loop.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.decimalfy = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="built_in">this</span>.length; i++) &#123;</span><br><span class="line">    <span class="built_in">this</span>[i] = <span class="built_in">this</span>[i].toFixed(<span class="number">2</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> digits = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> index <span class="keyword">in</span> digits) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(digits[index]) <span class="comment">// it also print decimalfy function</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Above-for-for-of"><a href="#Above-for-for-of" class="headerlink" title="Above for for..of"></a>Above for <code>for..of</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> digits = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> digit <span class="keyword">of</span> digits) &#123;</span><br><span class="line">  <span class="keyword">if</span> (digit % <span class="number">2</span> === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(digit)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// prints 1, 3, 5, 7, 9</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" data-id="ckqtpj4ej0017z0uvd4g71qul" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Nodejs/Nodejs-GraphQL-Apollo-links" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/" class="article-date">
+  <time datetime="2020-07-17T18:00:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/">GraphQL Apollo links</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>self-documentation - you build your types</li>
+<li>types information available to the client coder through introspection with tools like GraphiQL</li>
+<li>specification which forms a standardization</li>
+<li>make everything go through an API gateway which would usually do the auth resolution for all microservices</li>
+</ul>
+<p>GraphCMS:<br><a target="_blank" rel="noopener" href="https://docs.graphcms.com/">https://docs.graphcms.com/</a><br><a target="_blank" rel="noopener" href="https://github.com/GraphCMS/graphcms-examples/blob/master/current/next-apollo-blog/lib/initApollo.js">https://github.com/GraphCMS/graphcms-examples/blob/master/current/next-apollo-blog/lib/initApollo.js</a></p>
+<p>GraphQL example:<br><a target="_blank" rel="noopener" href="https://nec.is/writing/graphql-with-next-js-and-apollo/">https://nec.is/writing/graphql-with-next-js-and-apollo/</a></p>
+<p>Next, Apollo, Postgraphile:<br><a target="_blank" rel="noopener" href="https://github.com/graphile/postgraphile-apollo-server">https://github.com/graphile/postgraphile-apollo-server</a></p>
+<p>Next, Apollo, Graphcool:<br><a target="_blank" rel="noopener" href="https://github.com/adamsoffer/next-apollo-example">https://github.com/adamsoffer/next-apollo-example</a><br><a target="_blank" rel="noopener" href="https://github.com/zeit/next.js/tree/master/examples/with-apollo">https://github.com/zeit/next.js/tree/master/examples/with-apollo</a></p>
+<p>Next &amp; Apollo:<br><a target="_blank" rel="noopener" href="https://github.com/lfades/next-with-apollo">https://github.com/lfades/next-with-apollo</a><br><a target="_blank" rel="noopener" href="https://github.com/adamsoffer/next-apollo">https://github.com/adamsoffer/next-apollo</a></p>
+<p>Next, Express, Apollo:<br><a target="_blank" rel="noopener" href="https://github.com/ooade/next-apollo-auth">https://github.com/ooade/next-apollo-auth</a></p>
+<p>Hasura and Apollo:<br><a target="_blank" rel="noopener" href="https://medium.com/@f71uday/building-production-ready-application-with-hasura-and-apollo-476b18ccb44">https://medium.com/@f71uday/building-production-ready-application-with-hasura-and-apollo-476b18ccb44</a></p>
+<p>Hasura vs Postgraphile:<br><a target="_blank" rel="noopener" href="https://news.ycombinator.com/item?id=17540866">https://news.ycombinator.com/item?id=17540866</a></p>
+<p>Postgraphile:<br><a target="_blank" rel="noopener" href="https://www.graphile.org/postgraphile/">https://www.graphile.org/postgraphile/</a></p>
+<p>Hasura - GraphQL on Postgres:<br><a target="_blank" rel="noopener" href="https://hasura.io/">https://hasura.io/</a></p>
+<p>Graphcool - GraphQL BaaS:<br><a target="_blank" rel="noopener" href="https://www.graph.cool/">https://www.graph.cool/</a></p>
+<p>Prisma - GrapQL on any database:<br><a target="_blank" rel="noopener" href="https://www.prisma.io/with-graphql/">https://www.prisma.io/with-graphql/</a></p>
+<p>Nextjs, Apollo, Prisma:<br><a target="_blank" rel="noopener" href="https://github.com/mbaranovski/nextjs-apollo-oauth-prisma">https://github.com/mbaranovski/nextjs-apollo-oauth-prisma</a></p>
+<p>RAN! React . GraphQL . Next.js Toolkit - bez backendu, przykład z Graphcool:<br><a target="_blank" rel="noopener" href="https://github.com/Sly777/ran">https://github.com/Sly777/ran</a><br><a target="_blank" rel="noopener" href="https://github.com/mshameer/ran-with-prisma">https://github.com/mshameer/ran-with-prisma</a></p>
+<p>Vulcan - React, GraphQL, Meteor:<br><a target="_blank" rel="noopener" href="http://docs.vulcanjs.org/">http://docs.vulcanjs.org/</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Languages/Lang-Elm-language/" data-id="ckqtah8x7001hyzsj97aa821b" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/" data-id="ckqtpj4ew001wz0uvf4es20nm" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
 
     </footer>
   </div>
@@ -820,7 +839,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/blog/">&amp;laquo; Prev</a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/3/">Next &amp;raquo;</a>
+    <a class="extend prev" rel="prev" href="/blog/">&amp;laquo; Prev</a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><a class="page-number" href="/blog/page/4/">4</a><a class="page-number" href="/blog/page/5/">5</a><a class="extend next" rel="next" href="/blog/page/3/">Next &amp;raquo;</a>
   </nav>
 
 </section>
@@ -862,7 +881,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Authentication/" style="font-size: 10px;">Authentication</a> <a href="/blog/tags/Authorization/" style="font-size: 10px;">Authorization</a> <a href="/blog/tags/Backend/" style="font-size: 20px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 13.33px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/blog/tags/JavaScript/" style="font-size: 18.33px;">JavaScript</a> <a href="/blog/tags/Microservices/" style="font-size: 10px;">Microservices</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 11.67px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 15px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 11.67px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 13.33px;">Programming languages</a> <a href="/blog/tags/REST-APIs/" style="font-size: 10px;">REST APIs</a> <a href="/blog/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/blog/tags/React/" style="font-size: 16.67px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 13.33px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 10px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/blog/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/blog/tags/Security/" style="font-size: 10px;">Security</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 16.67px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 11.67px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 11.67px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
+      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Authentication/" style="font-size: 10px;">Authentication</a> <a href="/blog/tags/Authorization/" style="font-size: 10px;">Authorization</a> <a href="/blog/tags/Backend/" style="font-size: 20px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 12.86px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/blog/tags/JavaScript/" style="font-size: 18.57px;">JavaScript</a> <a href="/blog/tags/Microservices/" style="font-size: 10px;">Microservices</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 11.43px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 14.29px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 11.43px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 12.86px;">Programming languages</a> <a href="/blog/tags/REST-APIs/" style="font-size: 10px;">REST APIs</a> <a href="/blog/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/blog/tags/React/" style="font-size: 17.14px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.86px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 11.43px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/blog/tags/Redux/" style="font-size: 11.43px;">Redux</a> <a href="/blog/tags/Security/" style="font-size: 10px;">Security</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 15.71px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 11.43px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 11.43px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
     </div>
   </div>
 
@@ -884,6 +903,10 @@
       <ul>
         
           <li>
+            <a href="/blog/2021/07/06/React/React-Redux/">MobX Redux</a>
+          </li>
+        
+          <li>
             <a href="/blog/2021/07/05/React/React-code-reusability/">React - code reusability</a>
           </li>
         
@@ -897,10 +920,6 @@
         
           <li>
             <a href="/blog/2021/07/03/Backend/Security/">Security</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2021/07/03/Backend/REST-APIs/">REST APIs</a>
           </li>
         
       </ul>
