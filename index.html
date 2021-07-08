@@ -85,151 +85,6 @@
 </div>
 
   
-    <article id="post-Software Engineering/Design-Patterns" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2021/07/07/Software%20Engineering/Design-Patterns/" class="article-date">
-  <time datetime="2021-07-07T22:00:00.000Z" itemprop="datePublished">2021-07-08</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2021/07/07/Software%20Engineering/Design-Patterns/">Design Patterns</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Design-Patterns"><a href="#Design-Patterns" class="headerlink" title="Design Patterns"></a>Design Patterns</h1><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Software_design_pattern#Classification_and_list">List of design patterns</a><br><a target="_blank" rel="noopener" href="https://www.raywenderlich.com/470-common-design-patterns-for-android-with-kotlin">Source #1 - Common Design Patterns for Android with Kotlin</a></p>
-<h2 id="Creational-patterns"><a href="#Creational-patterns" class="headerlink" title="Creational patterns"></a>Creational patterns</h2><p>They define how you create objects.</p>
-<ul>
-<li><strong>Builder</strong></li>
-<li><strong>Dependency Injection</strong> - explained below</li>
-<li><strong>Singleton</strong></li>
-</ul>
-<h2 id="Structural-patterns"><a href="#Structural-patterns" class="headerlink" title="Structural patterns"></a>Structural patterns</h2><p>They define how you compose objects.</p>
-<ul>
-<li><strong>Adapter</strong> - this pattern lets two incompatible classes work together by converting the interface of a class into another interface the client expect</li>
-<li><strong>Facade</strong> - The Facade pattern provides a higher-level interface that makes a set of other interfaces easier to use -&gt; for example a repository in Android project can be a facade</li>
-<li><strong>DAO</strong> - a design pattern for writing objects that access data<ul>
-<li>You should use DAOs. The pattern lends itself to <strong>modularized</strong> code. You keep all your persistence logic in one place (separation of concerns, fight leaky abstractions). You allow yourself to test data access separately from the rest of the application. And you allow yourself to test the rest of the application isolated from data access (i.e. you can mock your DAOs).</li>
-</ul>
-</li>
-</ul>
-<h2 id="Behavioral-patterns"><a href="#Behavioral-patterns" class="headerlink" title="Behavioral patterns"></a>Behavioral patterns</h2><p>They define how you coordinate object interactions.</p>
-<ul>
-<li><strong>Command</strong> - Similarly, the Command pattern lets you issue requests without knowing the receiver. You encapsulate a request as an object and send it off; deciding how to complete the request is an entirely separate mechanism.<ul>
-<li><img src="https://koenig-media.raywenderlich.com/uploads/2015/07/EventBus-Publish-Subscribe.png" width="500px"></li>
-<li><a target="_blank" rel="noopener" href="https://www.raywenderlich.com/470-common-design-patterns-for-android-with-kotlin#toc-anchor-010">How to create event bus</a></li>
-</ul>
-</li>
-<li><strong>Observer</strong> - The Observer pattern defines a one-to-many dependency between objects. When one object changes state, all of its dependents are notified and updated automatically.</li>
-<li><strong>Model View Controller</strong></li>
-<li><strong>Model View ViewModel</strong> - The ViewModel object is the “glue” between the model and view layers, but <strong>operates differently than the Controller component. Instead, it exposes commands for the view and binds the view to the model. When the model updates, the corresponding views update as well via the data binding</strong>. Similarly, as the user interacts with the view, the bindings work in the opposite direction to automatically update the model. This reactive pattern removes a lot of glue code.</li>
-</ul>
-<h3 id="Dependency-Injection-amp-Dependency-Inversion-principle-explained"><a href="#Dependency-Injection-amp-Dependency-Inversion-principle-explained" class="headerlink" title="Dependency Injection &amp; Dependency Inversion principle explained"></a>Dependency Injection &amp; Dependency Inversion principle explained</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> child = Child()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>A <code>Parent</code> instance creates its child field when it’s instantiated. The <code>Parent</code> instance is dependent on the concrete implementation of <code>Child</code> and on configuring the child field to use it.</p>
-<p><strong>This presents a coupling or dependency of the <code>Parent</code> class on the <code>Child</code> class</strong>. If the setup of a <code>Child</code> object is complex, all that complexity will be reflected within the <code>Parent</code> class as well. You will need to edit <code>Parent</code> to configure a <code>Child</code> object.</p>
-<p>If the <code>Child</code> class itself depends on a class <code>C</code>, which in turn depends on class <code>D</code>, then all that complexity will propagate throughout the code base and hence result in a tight coupling between the components of the application.</p>
-<p><strong>Dependency Injection is the term used to describe the technique of loosening the coupling</strong> just described. In the simple example above, only one tiny change is needed:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> child: Child)</span><br></pre></td></tr></table></figure>
-<p>Voilà — that’s dependency injection at its core!</p>
-<p>There is also <strong>Dependency Inversion principle</strong>. The gist of the Dependency Inversion principle is that <strong>it is important to depend on abstractions rather than concrete implementations</strong>. In the simple example above, this means changing <code>Child</code> to a Kotlin interface rather than a <code>Kotlin</code> class. With this change, many different types of concrete <code>Child</code> type objects that adhere to the <code>Child</code> interface can be passed into the <code>Parent</code> constructor.</p>
-<p><a target="_blank" rel="noopener" href="https://www.raywenderlich.com/262-dependency-injection-in-android-with-dagger-2-and-kotlin#toc-anchor-003">Source - Dependency Injection in Android with Dagger 2 and Kotlin</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/07/Software%20Engineering/Design-Patterns/" data-id="ckqvb9jry00301tukdzengo7n" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Design-Patterns/" rel="tag">Design Patterns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Software Engineering/Various-terms" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2021/07/07/Software%20Engineering/Various-terms/" class="article-date">
-  <time datetime="2021-07-07T22:00:00.000Z" itemprop="datePublished">2021-07-08</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2021/07/07/Software%20Engineering/Various-terms/">Software Engineering - various terms</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Terms"><a href="#Terms" class="headerlink" title="Terms"></a>Terms</h1><h2 id="function-declaration-vs-definition-parameter-type-return-type"><a href="#function-declaration-vs-definition-parameter-type-return-type" class="headerlink" title="function declaration vs definition, parameter type, return type"></a>function declaration vs definition, parameter type, return type</h2><h2 id="Empty-variables-interpretation"><a href="#Empty-variables-interpretation" class="headerlink" title="Empty variables interpretation"></a>Empty variables interpretation</h2><ul>
-<li><code>null</code> means nothing - we want no value</li>
-<li><code>undefined</code> declared but not defined - we want default value</li>
-</ul>
-<h2 id="coupling-miara-wspolzaleznosci"><a href="#coupling-miara-wspolzaleznosci" class="headerlink" title="coupling (miara współzależności)"></a>coupling (miara współzależności)</h2><p>In software engineering, <strong>coupling</strong> is <strong>the degree of interdependence between software modules</strong>; a <strong>measure of how closely connected two routines or modules are</strong>; <em>the strength of the relationships</em> between modules.</p>
-<p>Coupling is usually <strong>contrasted with cohesion</strong>. <strong>Low coupling often correlates with high cohesion</strong>, and vice versa. Low coupling is often a sign of a <strong>well-structured computer system and a good design</strong>, and when combined with high cohesion, supports the general goals of high readability and maintainability.</p>
-<h2 id="cohesion-miara-spojnosci"><a href="#cohesion-miara-spojnosci" class="headerlink" title="cohesion (miara spójności)"></a>cohesion (miara spójności)</h2><p>In computer programming, cohesion refers to <strong>the degree to which the elements inside a module belong together</strong>. In one sense, it is a measure of the strength of relationship between the methods and data of a class and some unifying purpose or concept served by that class. In another sense, it is a measure of the strength of relationship between the class’s methods and data themselves.</p>
-<p>Cohesion is an ordinal type of measurement and is usually described as “high cohesion” or “low cohesion”. Modules with high cohesion tend to be preferable, because <strong>high cohesion is associated with several desirable traits of software including robustness, reliability, reusability, and understandability</strong>. In contrast, low cohesion is associated with undesirable traits such as being difficult to maintain, test, reuse, or even understand.</p>
-<h2 id="loose-coupling"><a href="#loose-coupling" class="headerlink" title="loose coupling"></a>loose coupling</h2><p>In computing and systems design a loosely coupled system is one in which each of its components has, or makes use of, <strong>little or no knowledge of the definitions of other separate components</strong>. Subareas include the coupling of classes, interfaces, data, and services. Loose coupling is the opposite of tight coupling.</p>
-<h2 id="big-ball-of-mud"><a href="#big-ball-of-mud" class="headerlink" title="big ball of mud"></a>big ball of mud</h2><p>A <strong>big ball of mud</strong> is a software system that <strong>lacks a perceivable architecture</strong>. Although undesirable from a software engineering point of view, such systems are common in practice due to <strong>business pressures, developer turnover and code entropy</strong>. They are a type of design anti-pattern.</p>
-<h2 id="software-entropy"><a href="#software-entropy" class="headerlink" title="software entropy"></a>software entropy</h2><p>The second law of thermodynamics, in principle, states that a closed system’s disorder cannot be reduced, <strong>it can only remain unchanged or increase</strong>. A measure of this disorder is entropy. This law also seems plausible for software systems; <strong>as a system is modified, its disorder, or entropy, tends to increase. This is known as software entropy</strong>.</p>
-<p>The process of code refactoring can result in stepwise reductions in software entropy.</p>
-<p><strong>Software rot,</strong> also known as code rot, software erosion, software decay or software entropy is either a slow deterioration of software performance over time or its diminishing responsiveness that will eventually lead to software becoming faulty, unusable, or in need of upgrade.</p>
-<h2 id="feature-creep"><a href="#feature-creep" class="headerlink" title="feature creep"></a>feature creep</h2><p><strong>Feature creep is the excessive ongoing expansion or addition of new features in a product,</strong>[1] especially in computer software, videogames and consumer and business electronics. These extra features go beyond the basic function of the product and can result in software bloat and over-complication, rather than simple design.</p>
-<h2 id="software-brittleness"><a href="#software-brittleness" class="headerlink" title="software brittleness"></a>software brittleness</h2><p>In computer programming and software engineering, software brittleness is the increased difficulty in fixing older software that may appear reliable, <strong>but fails badly when presented with unusual data or altered in a seemingly minor way</strong>. </p>
-<h2 id="first-class-functions"><a href="#first-class-functions" class="headerlink" title="first-class functions"></a>first-class functions</h2><p>In computer science, a programming language is said to have first-class functions if it <strong>treats functions as first-class citizens</strong>. This means the language supports <strong>passing functions as arguments to other functions, returning them as the values from other functions, and assigning them to variables or storing them in data structures</strong>.[1] Some programming language theorists require support for anonymous functions (function literals) as well.[2] In languages with first-class functions, the names of functions do not have any special status; they are treated like ordinary variables with a function type.[3]<br>First-class functions are a necessity for the <a target="_blank" rel="noopener" href="https://en.m.wikipedia.org/wiki/Functional_programming">functional programming</a> style, in which the use of <a target="_blank" rel="noopener" href="https://en.m.wikipedia.org/wiki/Higher-order_function">higher-order functions</a> is a standard practice. A simple example of a higher-ordered function is the <a target="_blank" rel="noopener" href="https://en.m.wikipedia.org/wiki/Map_(higher-order_function)">map</a> function, which takes, as its arguments, a function and a list, and returns the list formed by applying the function to each member of the list. For a language to support <em>map</em>, it must support passing a function as an argument.<br>Source <a target="_blank" rel="noopener" href="https://en.m.wikipedia.org/wiki/First-class_function">https://en.m.wikipedia.org/wiki/First-class_function</a></p>
-<h2 id="higher-order-function"><a href="#higher-order-function" class="headerlink" title="higher order function"></a>higher order function</h2><p>a function taking another function as argument is called a higher-order function</p>
-<h2 id="Authorization-vs-Authentication"><a href="#Authorization-vs-Authentication" class="headerlink" title="Authorization vs Authentication"></a>Authorization vs Authentication</h2><p>• <strong>Authentication</strong> describes the process of claiming an identity. That’s what you do when you log in to a service with a username and password, you authenticate yourself.<br>• <strong>Authorization</strong> on the other hand describes permission rules that specify the access rights of individual users and user groups to certain parts of the system.</p>
-<h2 id="Monkey-patching"><a href="#Monkey-patching" class="headerlink" title="Monkey patching"></a>Monkey patching</h2><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Monkey_patch">https://en.wikipedia.org/wiki/Monkey_patch</a><br><a target="_blank" rel="noopener" href="https://www.audero.it/blog/2016/12/05/monkey-patching-javascript/">https://www.audero.it/blog/2016/12/05/monkey-patching-javascript/</a></p>
-<h2 id="Domain-driven-design-skrot-DDD"><a href="#Domain-driven-design-skrot-DDD" class="headerlink" title="Domain-driven design (skrót DDD)"></a>Domain-driven design (skrót DDD)</h2><ul>
-<li>podejście do tworzenia oprogramowania kładące nacisk na takie definiowanie obiektów i komponentów systemu oraz ich zachowań, aby wiernie odzwierciedlały rzeczywistość. Dopiero po utworzeniu takiego modelu należy rozważyć zagadnienia związane z techniczną realizacją. Podejście to umożliwia modelowanie systemów informatycznych przez ekspertów, którzy znają specyfikę problemu, lecz nie muszą znać się na projektowaniu architektury systemów informatycznych.</li>
-</ul>
-<h2 id="Command–query-separation-CQS"><a href="#Command–query-separation-CQS" class="headerlink" title="Command–query separation (CQS)"></a>Command–query separation (CQS)</h2><ul>
-<li>is a principle of imperative computer programming. It was devised by Bertrand Meyer as part of his pioneering work on the Eiffel programming language. It states that every method should either be a command that performs an action, or a query that returns data to the caller, but not both. In other words, Asking a question should not change the answer.[1] More formally, methods should return a value only if they are referentially transparent and hence possess no side effects.</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/07/Software%20Engineering/Various-terms/" data-id="ckqvb9jrz00321tukas17bynr" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
     <article id="post-Software Engineering/Architecture" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2021/07/07/Software%20Engineering/Architecture/" class="article-date">
@@ -257,31 +112,43 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="Truths"><a href="#Truths" class="headerlink" title="Truths"></a>Truths</h1><ul>
-<li>Product teams focusing on velocity may argue that in the future they will reach a place where they have time to circle back to fix technical debt. This is never true, there is always pressure. A team needs to consciously decide to make stability a part of value delivery, otherwise lack of stability will become part of the team’s culture. <a target="_blank" rel="noopener" href="https://productcoalition.com/agile-gone-wrong-725c3f0dd8c0?gi=3fe19950694e">source</a></li>
+<li>Product teams focusing on velocity may argue that in the future they will reach a place where they have time to <strong>circle back to fix technical debt. This is never true, there is always pressure</strong>. A team needs to consciously decide to make stability a part of value delivery, otherwise lack of stability will become part of the team’s culture. <a target="_blank" rel="noopener" href="https://productcoalition.com/agile-gone-wrong-725c3f0dd8c0?gi=3fe19950694e">source</a></li>
 <li>A mistake early on in the project regarding the architecture may cost a lot in terms of time spent refactoring the codebase later. <a target="_blank" rel="noopener" href="https://selleo.com/blog/why-choose-nest-js-as-your-backend-framework">source</a></li>
 </ul>
-<h1 id="Qualities-of-well-written-code"><a href="#Qualities-of-well-written-code" class="headerlink" title="Qualities of well written code"></a>Qualities of well written code</h1><p>Write a code like someone after you who you don’t know would read the code.</p>
+<h1 id="Qualities-of-well-written-code"><a href="#Qualities-of-well-written-code" class="headerlink" title="Qualities of well written code"></a>Qualities of well written code</h1><p><em>Write a code like someone after you who you don’t know would read the code.</em></p>
 <p>Well written code is easy to maintain, easy to test, very cohesive, decoupled and redable.</p>
 <ul>
-<li>readability / understandability (pl. <em>czytelność, zrozumiałość</em>) vs obscurity (pl. <em>zaciemnienie</em>)</li>
-<li>clean, readable and concise code - pl. <em>czysty, czytelny, zwięzły kod</em></li>
-<li>complexity (pl. <em>złożoność</em>)</li>
-<li>maintainability (pl. <em>utrzymywalność</em>)</li>
-<li>reliability / testability (pl. <em>niezawodność, testowalność</em>)</li>
-<li>reusability - decoupled and reusable code is preferred</li>
-<li>coupling and code interdependence</li>
-<li>performance</li>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/No_Silver_Bullet">https://en.wikipedia.org/wiki/No_Silver_Bullet</a> essential vs accident complexity</li>
-<li>robustness - the ability of a computer system to cope with errors during execution and cope with erroneous input</li>
-<li>concise vs explicit</li>
-<li>too much <strong>abstractions are bad</strong></li>
+<li><p>readability / understandability (pl. <em>czytelność, zrozumiałość</em>) vs obscurity (pl. <em>zaciemnienie</em>)</p>
+</li>
+<li><p>clean, readable and concise code - pl. <em>czysty, czytelny, zwięzły kod</em></p>
+</li>
+<li><p>maintainability (pl. <em>utrzymywalność</em>)</p>
+</li>
+<li><p>reliability / testability (pl. <em>niezawodność, testowalność</em>)</p>
+</li>
+<li><p>complexity (pl. <em>złożoność</em>)</p>
+</li>
+<li><p>reusability - decoupled and reusable code is preferred</p>
+</li>
+<li><p>coupling and code interdependence</p>
+</li>
+<li><p>performance</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/No_Silver_Bullet">https://en.wikipedia.org/wiki/No_Silver_Bullet</a> essential vs accident complexity</p>
+</li>
+<li><p>robustness - the ability of a computer system to cope with errors during execution and cope with erroneous input</p>
+</li>
+<li><p>concise vs explicit</p>
+</li>
+<li><p>too much <strong>abstractions are bad</strong></p>
+</li>
 </ul>
 <p>PEP20 — The Zen of Python<br><a target="_blank" rel="noopener" href="https://www.python.org/dev/peps/pep-0020/">https://www.python.org/dev/peps/pep-0020</a>/</p>
 <h1 id="System-infrastructure-qualities"><a href="#System-infrastructure-qualities" class="headerlink" title="System infrastructure qualities"></a>System infrastructure qualities</h1><ul>
+<li>reliability - pl. <em>niezawodność</em></li>
 <li>scalability - pl. <em>skalowalność</em></li>
 <li>performance - pl. <em>wydajność</em></li>
 <li>stability - pl. <em>stabilność</em></li>
-<li>reliability - pl. <em>niezawodność</em></li>
 <li>flexibility - pl. <em>jak łatwo się zmienia np. w przypadku mikroserwisów ilość jednostek jednego komponentu/serwisu, czy np. zmiana usługodawcy</em></li>
 </ul>
 <h1 id="Common-software-development-problems"><a href="#Common-software-development-problems" class="headerlink" title="Common software development problems"></a>Common software development problems</h1><ul>
@@ -313,13 +180,15 @@
 </li>
 </ul>
 <h1 id="GoF-Rules"><a href="#GoF-Rules" class="headerlink" title="GoF Rules"></a>GoF Rules</h1><ul>
-<li>“<strong>Program to an ‘interface’</strong>, not an ‘implementation’.” (Gang of Four 1995:18)<ul>
+<li><p>“<strong>Program to an ‘interface’</strong>, not an ‘implementation’.” (Gang of Four 1995:18)</p>
+<ul>
 <li>clients remain unaware of the specific types of objects they use, as long as the object adheres to the interface</li>
 <li>clients remain unaware of the classes that implement these objects; <strong>clients only know about the abstract class(es) defining the interface</strong></li>
 <li>Use of an interface also leads to dynamic binding and polymorphism, which are central features of object-oriented programming.</li>
 </ul>
 </li>
-<li><strong>Composition over inheritance</strong>: “Favor ‘object composition’ over ‘class inheritance’.” (Gang of Four 1995:20)<ul>
+<li><p><strong>Composition over inheritance</strong>: “Favor ‘object composition’ over ‘class inheritance’.” (Gang of Four 1995:20)</p>
+<ul>
 <li>The authors refer to inheritance as white-box reuse, with white-box referring to visibility, because the internals of parent classes are often visible to subclasses. In contrast, the authors refer to object composition (in which objects with well-defined interfaces are used dynamically at runtime by objects obtaining references to other objects) as black-box reuse because no internal details of composed objects need be visible in the code using them.</li>
 <li>The authors discuss the <strong>tension between inheritance and encapsulation</strong> at length and state that in their experience, <strong>designers overuse inheritance</strong> (Gang of Four 1995:20).</li>
 <li>“Because <strong>inheritance exposes a subclass to details of its parent’s implementation, it’s often said that ‘inheritance breaks encapsulation’</strong>“. (Gang of Four 1995:19).</li>
@@ -328,18 +197,21 @@
 <li>Using inheritance is recommended mainly when adding to the functionality of existing components, reusing most of the old code and adding relatively small amounts of new code.</li>
 </ul>
 </li>
-<li>“Dynamic, highly parameterized software is harder to understand and build than more static software.” (Gang of Four 1995:21)</li>
-<li>The authors further distinguish between ‘Aggregation’, where one object ‘has’ or ‘is part of’ another object (implying that an aggregate object and its owner have identical lifetimes) and acquaintance, where one object merely ‘knows of’ another object. <ul>
+<li><p>“Dynamic, highly parameterized software is harder to understand and build than more static software.” (Gang of Four 1995:21)</p>
+</li>
+<li><p>The authors further distinguish between ‘Aggregation’, where one object ‘has’ or ‘is part of’ another object (implying that an aggregate object and its owner have identical lifetimes) and acquaintance, where one object merely ‘knows of’ another object. </p>
+<ul>
 <li>Acquaintance is a weaker relationship than aggregation and suggests much looser coupling between objects, which can often be desirable for maximum maintainability in a design.</li>
 </ul>
 </li>
-<li>A primary criticism of Design Patterns is that its patterns are simply workarounds for missing features in C++, replacing elegant abstract features with lengthy concrete patterns, essentially becoming a “human compiler” or “generating by hand the expansions of some macro”.</li>
+<li><p>A primary criticism of Design Patterns is that its patterns are simply workarounds for missing features in C++, replacing elegant abstract features with lengthy concrete patterns, essentially becoming a “human compiler” or “generating by hand the expansions of some macro”.</p>
+</li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/07/Software%20Engineering/Architecture/" data-id="ckqvb9jru002s1tukbg0ubn1r" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/07/Software%20Engineering/Architecture/" data-id="ckqvbiskr002s0qsm1fvx2zxt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
@@ -396,7 +268,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/06/React/React-Redux/" data-id="ckqvb9jrp002i1tuk7qhd3110" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/06/React/React-Redux/" data-id="ckqvbiskn002i0qsm99eq90xx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li></ul>
@@ -476,76 +348,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/05/React/React-code-reusability/" data-id="ckqvb9jrr002k1tuk05019dr0" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/05/React/React-code-reusability/" data-id="ckqvbiskp002k0qsm4nsf6uxk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Backend/Microservices" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2021/07/04/Backend/Microservices/" class="article-date">
-  <time datetime="2021-07-04T22:00:00.000Z" itemprop="datePublished">2021-07-05</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Backend/">Backend</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2021/07/04/Backend/Microservices/">Microservices</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Microservices"><a href="#Microservices" class="headerlink" title="Microservices"></a>Microservices</h1><ul>
-<li>a software design architecture that breaks apart monolithic systems</li>
-<li>applications are built as collections of loosely coupled services</li>
-<li>data moves between microservices using “dumb pipes” such as an event broker and/or a lightweight protocol like REST</li>
-</ul>
-<h2 id="Advantages"><a href="#Advantages" class="headerlink" title="Advantages"></a>Advantages</h2><ul>
-<li>teams can develop, maintain, and deploy each microservice independently</li>
-<li>scalability, you can scale them separately; the cost of scaling is comparatively less than the monolithic architecture</li>
-<li>faster development cycles - easier deployment and debugging</li>
-<li>speed up your CI/CD pipeline against big monolithic apps</li>
-<li>it’s easier to maintain and debug a lightweight microservice than a complex application</li>
-<li>isolated services have a better failure tolerance</li>
-</ul>
-<h2 id="Disadvantages"><a href="#Disadvantages" class="headerlink" title="Disadvantages"></a>Disadvantages</h2><ul>
-<li>communication between microservices can mean poorer performance, as sending messages back and forth comes with a certain overhead</li>
-<li>microservice has all the associated complexities of the distributed system</li>
-<li>complex testing over a distributed environment; while unit testing may be easier with microservices, integration testing is not</li>
-<li>up-front costs may be higher with microservices</li>
-</ul>
-<h2 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a>Sources</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://raygun.com/blog/what-are-microservices/">https://raygun.com/blog/what-are-microservices/</a></li>
-<li><a target="_blank" rel="noopener" href="https://solace.com/blog/microservices-advantages-and-disadvantages/">https://solace.com/blog/microservices-advantages-and-disadvantages/</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloudacademy.com/blog/microservices-architecture-challenge-advantage-drawback/">https://cloudacademy.com/blog/microservices-architecture-challenge-advantage-drawback/</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/04/Backend/Microservices/" data-id="ckqvb9jqj00081tuk1ls6dtch" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Microservices/" rel="tag">Microservices</a></li></ul>
 
     </footer>
   </div>
@@ -630,10 +436,340 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/04/Backend/Message-brokers/" data-id="ckqvb9jqj00071tuk8wp2dvei" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/04/Backend/Message-brokers/" data-id="ckqvbisj600070qsm0pftbenf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/RabbitMQ/" rel="tag">RabbitMQ</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Backend/Microservices" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/07/04/Backend/Microservices/" class="article-date">
+  <time datetime="2021-07-04T22:00:00.000Z" itemprop="datePublished">2021-07-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Backend/">Backend</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2021/07/04/Backend/Microservices/">Microservices</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Microservices"><a href="#Microservices" class="headerlink" title="Microservices"></a>Microservices</h1><ul>
+<li>a software design architecture that breaks apart monolithic systems</li>
+<li>applications are built as collections of loosely coupled services</li>
+<li>data moves between microservices using “dumb pipes” such as an event broker and/or a lightweight protocol like REST</li>
+</ul>
+<h2 id="Advantages"><a href="#Advantages" class="headerlink" title="Advantages"></a>Advantages</h2><ul>
+<li>teams can develop, maintain, and deploy each microservice independently</li>
+<li>scalability, you can scale them separately; the cost of scaling is comparatively less than the monolithic architecture</li>
+<li>faster development cycles - easier deployment and debugging</li>
+<li>speed up your CI/CD pipeline against big monolithic apps</li>
+<li>it’s easier to maintain and debug a lightweight microservice than a complex application</li>
+<li>isolated services have a better failure tolerance</li>
+</ul>
+<h2 id="Disadvantages"><a href="#Disadvantages" class="headerlink" title="Disadvantages"></a>Disadvantages</h2><ul>
+<li>communication between microservices can mean poorer performance, as sending messages back and forth comes with a certain overhead</li>
+<li>microservice has all the associated complexities of the distributed system</li>
+<li>complex testing over a distributed environment; while unit testing may be easier with microservices, integration testing is not</li>
+<li>up-front costs may be higher with microservices</li>
+</ul>
+<h2 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a>Sources</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://raygun.com/blog/what-are-microservices/">https://raygun.com/blog/what-are-microservices/</a></li>
+<li><a target="_blank" rel="noopener" href="https://solace.com/blog/microservices-advantages-and-disadvantages/">https://solace.com/blog/microservices-advantages-and-disadvantages/</a></li>
+<li><a target="_blank" rel="noopener" href="https://cloudacademy.com/blog/microservices-architecture-challenge-advantage-drawback/">https://cloudacademy.com/blog/microservices-architecture-challenge-advantage-drawback/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/04/Backend/Microservices/" data-id="ckqvbisj700080qsm6ott9097" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Microservices/" rel="tag">Microservices</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Backend/Redis" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/07/03/Backend/Redis/" class="article-date">
+  <time datetime="2021-07-03T22:00:00.000Z" itemprop="datePublished">2021-07-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Backend/">Backend</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2021/07/03/Backend/Redis/">Redis</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><ul>
+<li>Redis is an in-memory data structure store that can be used as a database, cache, or publish/subscribe client.</li>
+<li>In terms of WebSockets there are some ways of “sharing” the pool of open connections between many instances. One way is to use Redis’ publish/subscribe mechanism to forward emitted events between all instances of the application to make sure each open connection receives them.</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/Redis/" data-id="ckqvbisja000c0qsm2ahtgstz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Redis/" rel="tag">Redis</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Backend/Security" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/07/03/Backend/Security/" class="article-date">
+  <time datetime="2021-07-03T22:00:00.000Z" itemprop="datePublished">2021-07-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Backend/">Backend</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2021/07/03/Backend/Security/">Security</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Security"><a href="#Security" class="headerlink" title="Security"></a>Security</h1><ul>
+<li><strong>File inclusion vulnerability</strong> - doesn’t upload files like .exe or some scripts than can be accidentally run on server</li>
+<li><strong>SQL injection</strong> - clean user input</li>
+<li><strong>CSRF (Cross site request forgery)</strong> and cookies<ul>
+<li>In a cross-site request forgery attack, the attacker tries to force/trick you into making a request which you did not intend. This could be sending you a link that makes you involuntarily change your password. A malicious link could look like that: <code>https://security.stackexchange.com/account?new_password=abc123</code></li>
+<li><strong>The browser automatically sending cookies also has a big downside, which is CSRF attacks</strong>. In a CSRF attack, a malicious website takes advantage of the fact that your <strong>browser will automatically attach authentication cookies to requests</strong> to that domain and tricks your browser into executing a request.</li>
+<li>cookies make it more difficult for non-browser based applications (like mobile to tablet apps) to consume your API.</li>
+<li>JWTs are stored as cookies on many occasions, and cookies are vulnerable/susceptible to CSRF (Cross-site Request Forgery) attacks. One of the many ways <strong>to prevent CSRF attacks is to ensure that your cookie is accessible by only your domain</strong>. As a developer, ensure that necessary CSRF protections are put in place to avoid these attacks, regardless of the use of JWTs.</li>
+</ul>
+</li>
+<li><strong>XSS</strong><ul>
+<li>In a <strong>cross-site scripting attack</strong>, the attacker makes you involuntarily execute client-side code, most likely Javascript. A typical reflected XSS attacking attempt could look like this: <code>https://security.stackexchange.com/search?q=&quot;&gt;&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code></li>
+<li>(Cross-site scripting): an attacker embeds a script in the victim site (<strong>the victim site is only vulnerable if inputs are not sanitized correctly</strong>), and the attacker’s script can do anything JavaScript is allowed to do on the page.</li>
+<li><strong>If you store JWT tokens in local storage, the attacker’s script could read those tokens, and also send those tokens to a server they control</strong>. In fact, a lot of people advocate that very sensitive data shouldn’t be stored in Web Storage because of XSS attacks</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/Security/" data-id="ckqvbisjc000f0qsmf0mras7u" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Security/" rel="tag">Security</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Backend/Authentication-and-Authorization" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/07/03/Backend/Authentication-and-Authorization/" class="article-date">
+  <time datetime="2021-07-03T22:00:00.000Z" itemprop="datePublished">2021-07-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Backend/">Backend</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2021/07/03/Backend/Authentication-and-Authorization/">Authentication and Authorization</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Authentication-and-Authorization"><a href="#Authentication-and-Authorization" class="headerlink" title="Authentication and Authorization"></a>Authentication and Authorization</h1><ul>
+<li><strong>Authentication</strong> (pl. <em>uwierzytelnianie, autentykacja</em>) describes the process of claiming an identity. That’s what you do when you log in to a service with a username and password, you authenticate yourself.</li>
+<li><strong>Authorization</strong> on the other hand describes permission rules that specify the access rights of individual users and user groups to certain parts of the system, i.e. ACL.</li>
+<li>In modern era, everyone is going for token based authentication instead of session based cookies.</li>
+<li>A spreadsheet describing authentication techniques: (Authentication Techniques for APIs)[<a target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1tAX5ZJzluilhoYKjra-uHbMCZraaQkqIHl3RIQ8mVkM/edit#gid=0]">https://docs.google.com/spreadsheets/d/1tAX5ZJzluilhoYKjra-uHbMCZraaQkqIHl3RIQ8mVkM/edit#gid=0]</a></li>
+</ul>
+<h2 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h2><ul>
+<li>When we do token-based authentication, such as OpenID, OAuth, or OpenID Connect, we receive an <code>access_token</code> (and sometimes <code>id_token</code>) from a trusted authority</li>
+<li>Passport is an authentication middleware for Node.js<ul>
+<li>Packages<ul>
+<li><code>bcrypt</code> for hashing user passwords</li>
+<li><code>jsonwebtoken</code> for signing tokens</li>
+<li><code>passport-local</code> for implementing local strategy</li>
+<li><code>passport-jwt</code> for retrieving and verifying JWTs</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="OAuth2"><a href="#OAuth2" class="headerlink" title="OAuth2"></a>OAuth2</h3><ul>
+<li>i.e. Facebook, Google</li>
+<li>You need to register your app on authorization server such as Google. You will get <code>client id</code> for your app, you will have defined both <code>redirect URL</code> and <code>client secret</code>.</li>
+<li>The <code>redirect URL</code> is used by the authorization server after an user logs in successfully to the server.</li>
+<li>Sample steps:<ol>
+<li>To get authorization code user calls authorization server <a target="_blank" rel="noopener" href="https://cloud.digitalocean.com/v1/oauth/authorize?response_type=code&amp;client_id=CLIENT_ID&amp;redirect_uri=CALLBACK_URL&amp;scope=read">https://cloud.digitalocean.com/v1/oauth/authorize?response_type=code&amp;client_id=CLIENT_ID&amp;redirect_uri=CALLBACK_URL&amp;scope=read</a></li>
+<li>Send authorization code to our app <a target="_blank" rel="noopener" href="https://dropletbook.com/callback?code=AUTHORIZATION_CODE">https://dropletbook.com/callback?code=AUTHORIZATION_CODE</a></li>
+<li>After receiveing authorization code, our app calls authorization server to get access token <a target="_blank" rel="noopener" href="https://cloud.digitalocean.com/v1/oauth/token?client_id=CLIENT_ID&amp;client_secret=CLIENT_SECRET&amp;grant_type=authorization_code&amp;code=AUTHORIZATION_CODE&amp;redirect_uri=CALLBACK_URL">https://cloud.digitalocean.com/v1/oauth/token?client_id=CLIENT_ID&amp;client_secret=CLIENT_SECRET&amp;grant_type=authorization_code&amp;code=AUTHORIZATION_CODE&amp;redirect_uri=CALLBACK_URL</a></li>
+<li>Our app gets access token <code>&#123;&quot;access_token&quot;:&quot;ACCESS_TOKEN&quot;,&quot;token_type&quot;:&quot;bearer&quot;,&quot;expires_in&quot;:2592000,&quot;refresh_token&quot;:&quot;REFRESH_TOKEN&quot;,&quot;scope&quot;:&quot;read&quot;,&quot;uid&quot;:100101,&quot;info&quot;:&#123;&quot;name&quot;:&quot;Mark E. Mark&quot;,&quot;email&quot;:&quot;mark@thefunkybunch.com&quot;&#125;&#125;</code></li>
+</ol>
+</li>
+<li>visual explanation: <a target="_blank" rel="noopener" href="https://darutk.medium.com/the-simplest-guide-to-oauth-2-0-8c71bd9a15bb">https://darutk.medium.com/the-simplest-guide-to-oauth-2-0-8c71bd9a15bb</a></li>
+<li>another explanation for steps:<ol>
+<li>User wants to request a resource that requires auth</li>
+<li>Authorization server returns an <em>authorization code</em> to the client</li>
+<li>Client then uses that <em>authorization code</em> in order to request an <em>authorization token</em> - e.g. a JWT</li>
+</ol>
+</li>
+</ul>
+<h3 id="Scalability-of-token-cookie-based-authentication"><a href="#Scalability-of-token-cookie-based-authentication" class="headerlink" title="Scalability of token/cookie based authentication"></a>Scalability of token/cookie based authentication</h3><ul>
+<li>in horizontal scaling scenario you have to start replicating servers<ul>
+<li>for <strong>cookie based authentication has a disadvantage of need for central session storage system</strong> that all of your application servers have access to<ul>
+<li>Setting up and maintaining this type of distributed system involves in-depth technical knowledge and subsequently <strong>incurs higher financial costs</strong></li>
+</ul>
+</li>
+<li>for <strong>JWT based authentication our application can scale easily</strong> because we can use tokens to access resources from different servers without worrying if the user was actually logged in on a particular server. You also save costs because you don’t need a dedicated server to store your sessions. Why? Because there are no sessions!</li>
+</ul>
+</li>
+</ul>
+<h2 id="Authorization"><a href="#Authorization" class="headerlink" title="Authorization"></a>Authorization</h2><h3 id="JWT-JSON-Web-Tokens"><a href="#JWT-JSON-Web-Tokens" class="headerlink" title="JWT (JSON Web Tokens)"></a>JWT (JSON Web Tokens)</h3><ul>
+<li>JSON Web Token (JWT) is an open standard that defines a compact and self-contained way for securely transmitting information between parties as a JSON object.</li>
+<li>JWTs can be signed using a secret (with HMAC algorithm) or a public/private key pair using RSA.</li>
+<li>JWTs consist of three parts separated by dots (.), which are:<ul>
+<li>Header<ul>
+<li>consists of two parts: the type of the token, which is JWT, and the hashing algorithm such as HMAC SHA256 or RSA</li>
+<li>JSON is encoded to Base64Url<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;alg&quot;: &quot;HS256&quot;,</span><br><span class="line">  &quot;typ&quot;: &quot;JWT&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>Payload<ul>
+<li>The payload contains all the required information about the user</li>
+<li>do not store passwords here or secret data<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;sub&quot;: &quot;1234567890&quot;,</span><br><span class="line">  &quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">  &quot;admin&quot;: true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>Signature<ul>
+<li>you have to take the encoded header, the encoded payload, a secret, the algorithm specified in the header, and sign that to create signature<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">  base64UrlEncode(header) + &quot;.&quot; +</span><br><span class="line">  base64UrlEncode(payload),</span><br><span class="line">  secret)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>can be sent through an URL, POST parameter, or inside an HTTP header</li>
+<li>JWT sent over as an <code>Authorization: Bearer &lt;token&gt;</code> header is a stateless authentication mechanism as the user state is never saved in the server memory</li>
+</ul>
+<h4 id="Advantages"><a href="#Advantages" class="headerlink" title="Advantages"></a>Advantages</h4><ul>
+<li>They are easy to scale horizontally</li>
+<li>due to its size its transmission is fast</li>
+<li>They are easier to maintain and debug</li>
+<li>They have the ability to create truly RESTful Services</li>
+<li>They have built-in expiration functionality</li>
+<li>JSON Web Tokens are self-contained</li>
+<li>JWT is a <strong>stateless authentication</strong> mechanism as the user state is never saved in the server memory</li>
+<li>doesn’t matter which domains are serving your APIs, as <strong>Cross-Origin Resource Sharing (CORS) won’t be an issue</strong> as it doesn’t use cookies</li>
+<li>a good way of securely transmitting information between parties</li>
+</ul>
+<h4 id="Disadvantages"><a href="#Disadvantages" class="headerlink" title="Disadvantages"></a>Disadvantages</h4><ul>
+<li>(Why JWTs Suck as Session Tokens)[<a target="_blank" rel="noopener" href="https://developer.okta.com/blog/2017/08/17/why-jwts-suck-as-session-tokens]">https://developer.okta.com/blog/2017/08/17/why-jwts-suck-as-session-tokens]</a></li>
+</ul>
+<h4 id="Precautions"><a href="#Precautions" class="headerlink" title="Precautions"></a>Precautions</h4><ul>
+<li>a great care must be taken to prevent security issues and you <strong>should not keep tokens longer than required</strong></li>
+<li><strong>you also should not store sensitive session data in browser storage due to lack of security</strong></li>
+</ul>
+<h4 id="Invalidation"><a href="#Invalidation" class="headerlink" title="Invalidation"></a>Invalidation</h4><ul>
+<li>Simply remove the token from the client</li>
+<li>Create a token blocklist or whitelist</li>
+<li>Just keep token expiry times short and rotate them often</li>
+</ul>
+<h4 id="While-using-cookies"><a href="#While-using-cookies" class="headerlink" title="While using cookies"></a>While using cookies</h4><ul>
+<li>Cookies/session id is not self contained. It is a reference token. During each validation the Gmail server needs to fetch the information corresponding to it.<ul>
+<li>Cookie/session based authentication doesn’t scale well</li>
+</ul>
+</li>
+<li>JWT is self contained. It is a value token. So during each validation the Gmail server does not needs to fetch the information corresponding to it. It is most suitable for Microservices Architecture<ul>
+<li>with JWTs REST API is stateless and therefore without side effects means that maintainability and debugging are made much easier</li>
+<li>CORS - for an API to be served from one server and for the actual application to consume it from another. To make this happen, we need to enable Cross-Origin Resource Sharing (CORS). Since cookies can only be used for the domain from which they originated, they aren’t much help for APIs on different domains than the application. Using JWTs for authentication in this case ensures that the RESTful API is stateless</li>
+</ul>
+</li>
+</ul>
+<h4 id="Use-cases"><a href="#Use-cases" class="headerlink" title="Use cases"></a>Use cases</h4><ul>
+<li>Authorization: This is the most common scenario for using JWT. Once the user is logged in, each subsequent request will include the JWT, allowing the user to access routes, services, and resources that are permitted with that token. Single Sign On is a feature that widely uses JWT nowadays, because of its small overhead and its ability to be easily used across different domains.</li>
+</ul>
+<h3 id="ACL-Roles-and-permissions"><a href="#ACL-Roles-and-permissions" class="headerlink" title="ACL / Roles and permissions"></a>ACL / Roles and permissions</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api">Permissions should be handled by defining specific user roles with their access control lists</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/OptimalBits/node_acl"><code>node_acl</code></a> package</li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/accesscontrol"><code>accesscontrol</code></a> package</li>
+</ul>
+<h2 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a>Sources</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://auth0.com/learn/json-web-tokens/">https://auth0.com/learn/json-web-tokens/</a></li>
+<li><a target="_blank" rel="noopener" href="https://betterprogramming.pub/authentication-and-authorization-using-redis-49c5f0e6b311">https://betterprogramming.pub/authentication-and-authorization-using-redis-49c5f0e6b311</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/Authentication-and-Authorization/" data-id="ckqvbisj100020qsm8j9v3cmk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Authentication/" rel="tag">Authentication</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Authorization/" rel="tag">Authorization</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li></ul>
 
     </footer>
   </div>
@@ -692,56 +828,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/REST-APIs/" data-id="ckqvb9jql000b1tukhhsr49pl" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/REST-APIs/" data-id="ckqvbisj9000b0qsmboto3p1z" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/REST-APIs/" rel="tag">REST APIs</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Backend/Redis" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2021/07/03/Backend/Redis/" class="article-date">
-  <time datetime="2021-07-03T22:00:00.000Z" itemprop="datePublished">2021-07-04</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Backend/">Backend</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2021/07/03/Backend/Redis/">Redis</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><ul>
-<li>Redis is an in-memory data structure store that can be used as a database, cache, or publish/subscribe client.</li>
-<li>In terms of WebSockets there are some ways of “sharing” the pool of open connections between many instances. One way is to use Redis’ publish/subscribe mechanism to forward emitted events between all instances of the application to make sure each open connection receives them.</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/Redis/" data-id="ckqvb9jqm000c1tukfi0s26lv" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Redis/" rel="tag">Redis</a></li></ul>
 
     </footer>
   </div>
@@ -789,7 +879,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/HTTP/" data-id="ckqvb9jqh00051tuk5h24hscr" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/HTTP/" data-id="ckqvbisj500050qsm2u9w5b7k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/HTTP/" rel="tag">HTTP</a></li></ul>
@@ -869,14 +959,6 @@
       <ul>
         
           <li>
-            <a href="/blog/2021/07/07/Software%20Engineering/Design-Patterns/">Design Patterns</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2021/07/07/Software%20Engineering/Various-terms/">Software Engineering - various terms</a>
-          </li>
-        
-          <li>
             <a href="/blog/2021/07/07/Software%20Engineering/Architecture/">Software Engineering - architecture and software design</a>
           </li>
         
@@ -886,6 +968,14 @@
         
           <li>
             <a href="/blog/2021/07/05/React/React-code-reusability/">React - code reusability</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/07/04/Backend/Message-brokers/">Message brokers</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/07/04/Backend/Microservices/">Microservices</a>
           </li>
         
       </ul>

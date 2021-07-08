@@ -15,7 +15,7 @@
 <meta property="og:description" content="Truths Product teams focusing on velocity may argue that in the future they will reach a place where they have time to circle back to fix technical debt. This is never true, there is always pressure.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-07-07T22:00:00.000Z">
-<meta property="article:modified_time" content="2021-07-08T19:36:21.497Z">
+<meta property="article:modified_time" content="2021-07-08T19:43:33.537Z">
 <meta property="article:author" content="Mateusz Roth">
 <meta property="article:tag" content="Software Engineering">
 <meta name="twitter:card" content="summary">
@@ -105,31 +105,43 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="Truths"><a href="#Truths" class="headerlink" title="Truths"></a>Truths</h1><ul>
-<li>Product teams focusing on velocity may argue that in the future they will reach a place where they have time to circle back to fix technical debt. This is never true, there is always pressure. A team needs to consciously decide to make stability a part of value delivery, otherwise lack of stability will become part of the team’s culture. <a target="_blank" rel="noopener" href="https://productcoalition.com/agile-gone-wrong-725c3f0dd8c0?gi=3fe19950694e">source</a></li>
+<li>Product teams focusing on velocity may argue that in the future they will reach a place where they have time to <strong>circle back to fix technical debt. This is never true, there is always pressure</strong>. A team needs to consciously decide to make stability a part of value delivery, otherwise lack of stability will become part of the team’s culture. <a target="_blank" rel="noopener" href="https://productcoalition.com/agile-gone-wrong-725c3f0dd8c0?gi=3fe19950694e">source</a></li>
 <li>A mistake early on in the project regarding the architecture may cost a lot in terms of time spent refactoring the codebase later. <a target="_blank" rel="noopener" href="https://selleo.com/blog/why-choose-nest-js-as-your-backend-framework">source</a></li>
 </ul>
-<h1 id="Qualities-of-well-written-code"><a href="#Qualities-of-well-written-code" class="headerlink" title="Qualities of well written code"></a>Qualities of well written code</h1><p>Write a code like someone after you who you don’t know would read the code.</p>
+<h1 id="Qualities-of-well-written-code"><a href="#Qualities-of-well-written-code" class="headerlink" title="Qualities of well written code"></a>Qualities of well written code</h1><p><em>Write a code like someone after you who you don’t know would read the code.</em></p>
 <p>Well written code is easy to maintain, easy to test, very cohesive, decoupled and redable.</p>
 <ul>
-<li>readability / understandability (pl. <em>czytelność, zrozumiałość</em>) vs obscurity (pl. <em>zaciemnienie</em>)</li>
-<li>clean, readable and concise code - pl. <em>czysty, czytelny, zwięzły kod</em></li>
-<li>complexity (pl. <em>złożoność</em>)</li>
-<li>maintainability (pl. <em>utrzymywalność</em>)</li>
-<li>reliability / testability (pl. <em>niezawodność, testowalność</em>)</li>
-<li>reusability - decoupled and reusable code is preferred</li>
-<li>coupling and code interdependence</li>
-<li>performance</li>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/No_Silver_Bullet">https://en.wikipedia.org/wiki/No_Silver_Bullet</a> essential vs accident complexity</li>
-<li>robustness - the ability of a computer system to cope with errors during execution and cope with erroneous input</li>
-<li>concise vs explicit</li>
-<li>too much <strong>abstractions are bad</strong></li>
+<li><p>readability / understandability (pl. <em>czytelność, zrozumiałość</em>) vs obscurity (pl. <em>zaciemnienie</em>)</p>
+</li>
+<li><p>clean, readable and concise code - pl. <em>czysty, czytelny, zwięzły kod</em></p>
+</li>
+<li><p>maintainability (pl. <em>utrzymywalność</em>)</p>
+</li>
+<li><p>reliability / testability (pl. <em>niezawodność, testowalność</em>)</p>
+</li>
+<li><p>complexity (pl. <em>złożoność</em>)</p>
+</li>
+<li><p>reusability - decoupled and reusable code is preferred</p>
+</li>
+<li><p>coupling and code interdependence</p>
+</li>
+<li><p>performance</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/No_Silver_Bullet">https://en.wikipedia.org/wiki/No_Silver_Bullet</a> essential vs accident complexity</p>
+</li>
+<li><p>robustness - the ability of a computer system to cope with errors during execution and cope with erroneous input</p>
+</li>
+<li><p>concise vs explicit</p>
+</li>
+<li><p>too much <strong>abstractions are bad</strong></p>
+</li>
 </ul>
 <p>PEP20 — The Zen of Python<br><a target="_blank" rel="noopener" href="https://www.python.org/dev/peps/pep-0020/">https://www.python.org/dev/peps/pep-0020</a>/</p>
 <h1 id="System-infrastructure-qualities"><a href="#System-infrastructure-qualities" class="headerlink" title="System infrastructure qualities"></a>System infrastructure qualities</h1><ul>
+<li>reliability - pl. <em>niezawodność</em></li>
 <li>scalability - pl. <em>skalowalność</em></li>
 <li>performance - pl. <em>wydajność</em></li>
 <li>stability - pl. <em>stabilność</em></li>
-<li>reliability - pl. <em>niezawodność</em></li>
 <li>flexibility - pl. <em>jak łatwo się zmienia np. w przypadku mikroserwisów ilość jednostek jednego komponentu/serwisu, czy np. zmiana usługodawcy</em></li>
 </ul>
 <h1 id="Common-software-development-problems"><a href="#Common-software-development-problems" class="headerlink" title="Common software development problems"></a>Common software development problems</h1><ul>
@@ -161,13 +173,15 @@
 </li>
 </ul>
 <h1 id="GoF-Rules"><a href="#GoF-Rules" class="headerlink" title="GoF Rules"></a>GoF Rules</h1><ul>
-<li>“<strong>Program to an ‘interface’</strong>, not an ‘implementation’.” (Gang of Four 1995:18)<ul>
+<li><p>“<strong>Program to an ‘interface’</strong>, not an ‘implementation’.” (Gang of Four 1995:18)</p>
+<ul>
 <li>clients remain unaware of the specific types of objects they use, as long as the object adheres to the interface</li>
 <li>clients remain unaware of the classes that implement these objects; <strong>clients only know about the abstract class(es) defining the interface</strong></li>
 <li>Use of an interface also leads to dynamic binding and polymorphism, which are central features of object-oriented programming.</li>
 </ul>
 </li>
-<li><strong>Composition over inheritance</strong>: “Favor ‘object composition’ over ‘class inheritance’.” (Gang of Four 1995:20)<ul>
+<li><p><strong>Composition over inheritance</strong>: “Favor ‘object composition’ over ‘class inheritance’.” (Gang of Four 1995:20)</p>
+<ul>
 <li>The authors refer to inheritance as white-box reuse, with white-box referring to visibility, because the internals of parent classes are often visible to subclasses. In contrast, the authors refer to object composition (in which objects with well-defined interfaces are used dynamically at runtime by objects obtaining references to other objects) as black-box reuse because no internal details of composed objects need be visible in the code using them.</li>
 <li>The authors discuss the <strong>tension between inheritance and encapsulation</strong> at length and state that in their experience, <strong>designers overuse inheritance</strong> (Gang of Four 1995:20).</li>
 <li>“Because <strong>inheritance exposes a subclass to details of its parent’s implementation, it’s often said that ‘inheritance breaks encapsulation’</strong>“. (Gang of Four 1995:19).</li>
@@ -176,18 +190,21 @@
 <li>Using inheritance is recommended mainly when adding to the functionality of existing components, reusing most of the old code and adding relatively small amounts of new code.</li>
 </ul>
 </li>
-<li>“Dynamic, highly parameterized software is harder to understand and build than more static software.” (Gang of Four 1995:21)</li>
-<li>The authors further distinguish between ‘Aggregation’, where one object ‘has’ or ‘is part of’ another object (implying that an aggregate object and its owner have identical lifetimes) and acquaintance, where one object merely ‘knows of’ another object. <ul>
+<li><p>“Dynamic, highly parameterized software is harder to understand and build than more static software.” (Gang of Four 1995:21)</p>
+</li>
+<li><p>The authors further distinguish between ‘Aggregation’, where one object ‘has’ or ‘is part of’ another object (implying that an aggregate object and its owner have identical lifetimes) and acquaintance, where one object merely ‘knows of’ another object. </p>
+<ul>
 <li>Acquaintance is a weaker relationship than aggregation and suggests much looser coupling between objects, which can often be desirable for maximum maintainability in a design.</li>
 </ul>
 </li>
-<li>A primary criticism of Design Patterns is that its patterns are simply workarounds for missing features in C++, replacing elegant abstract features with lengthy concrete patterns, essentially becoming a “human compiler” or “generating by hand the expansions of some macro”.</li>
+<li><p>A primary criticism of Design Patterns is that its patterns are simply workarounds for missing features in C++, replacing elegant abstract features with lengthy concrete patterns, essentially becoming a “human compiler” or “generating by hand the expansions of some macro”.</p>
+</li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/07/07/Software%20Engineering/Architecture/" data-id="ckqvb9jru002s1tukbg0ubn1r" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/07/Software%20Engineering/Architecture/" data-id="ckqvbiskr002s0qsm1fvx2zxt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
@@ -197,15 +214,6 @@
   
     
 <nav id="article-nav">
-  
-    <a href="/blog/2021/07/07/Software%20Engineering/Various-terms/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Software Engineering - various terms
-        
-      </div>
-    </a>
   
   
     <a href="/blog/2021/07/06/React/React-Redux/" id="article-nav-older" class="article-nav-link-wrap">
@@ -279,14 +287,6 @@
       <ul>
         
           <li>
-            <a href="/blog/2021/07/07/Software%20Engineering/Design-Patterns/">Design Patterns</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2021/07/07/Software%20Engineering/Various-terms/">Software Engineering - various terms</a>
-          </li>
-        
-          <li>
             <a href="/blog/2021/07/07/Software%20Engineering/Architecture/">Software Engineering - architecture and software design</a>
           </li>
         
@@ -296,6 +296,14 @@
         
           <li>
             <a href="/blog/2021/07/05/React/React-code-reusability/">React - code reusability</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/07/04/Backend/Message-brokers/">Message brokers</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/07/04/Backend/Microservices/">Microservices</a>
           </li>
         
       </ul>
