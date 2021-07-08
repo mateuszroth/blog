@@ -8,7 +8,9 @@ categories:
 date: 2019-12-01 10:00:00
 ---
 
-- Hooks are **a new addition in React 16.8**. They let you use state and other React features without writing a class.
+* Hooks are **a new addition in React 16.8**. They let you use state and other React features without writing a class.
+* Hooks allow you to reuse stateful logic without changing your component hierarchy.
+* Without hooks mutually related code that changes together gets split apart different lifecycle methods. Hooks let you split one component into smaller functions based on what pieces are related (such as setting up a subscription or fetching data), rather than forcing a split based on lifecycle methods.
 
 ## React Hooks advantages
 * hooks are **easier to test** (as separated functions) and make the code look cleaner/easier to read (i.e. less LOCs)
@@ -36,6 +38,17 @@ date: 2019-12-01 10:00:00
 
 ### Hook `setState`
 
+- if you call `useState` many times, you do it in the same order during every render
+  - React relies on the order in which Hooks are called
+  - React remembers initial order of calling hooks so we can't conditionally add or remove any new hook
+- React will remember its current value between re-renders, and provide the most recent one to our function.
+```js
+import React, { useState } from 'react';
+
+function Example() {
+  // Declare a new state variable, which we'll call "count"
+  const [count, setCount] = useState(0);
+```
 - unlike the `setState` method found in class components, `useState` does not automatically merge update objects, so we have to manually set state for previous state values that we're not intend to modify:
 
 ```js
@@ -57,6 +70,9 @@ const [state, setState] = useState(() => {
 
 ### Hook `useEffect`
 
+- it serves the same purpose as `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount` in React classes
+- React will remember the function you passed (we’ll refer to it as our “effect”), and call it later after performing the DOM updates
+- Hooks let you organize side effects in a component by what pieces are related (such as adding and removing a subscription), rather than forcing a split based on lifecycle methods
 - you should call hooks at the top level of the render function, this means no conditional hooks:
 
 ```js
@@ -74,7 +90,38 @@ useEffect(() => {
   };
 })
 ```
+- the function passed to `useEffect` is going to be different on every render. This is intentional. In fact, this is what lets us read the count value from inside the effect without worrying about it getting stale. **Every time we re-render, we schedule a different effect, replacing the previous one**
+- Unlike `componentDidMount` or `componentDidUpdate`, **effects scheduled with `useEffect` don’t block the browser from updating the screen**
+#### Cleaning subscriptions
+- we might want to set up a subscription to some external data source
+- In a React class, you would typically set up a subscription in `componentDidMount`, and clean it up in `componentWillUnmount`
+- that **function what we return from our effect is the optional cleanup mechanism for effects**
+```js
+import React, { useState, useEffect } from 'react';
 
+function FriendStatus(props) {
+  const [isOnline, setIsOnline] = useState(null);
+
+  useEffect(() => {
+    function handleStatusChange(status) {
+      setIsOnline(status.isOnline);
+    }
+    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
+    // Specify how to clean up after this effect:
+    return function cleanup() {
+      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
+    };
+  });
+
+  if (isOnline === null) {
+    return 'Loading...';
+  }
+  return isOnline ? 'Online' : 'Offline';
+}
+```
+- React performs the cleanup when the component unmounts. However, as we learned earlier, **effects run for every render and not just once**. This is why React **also cleans up effects from the previous render** before running the effects next time. We will discuss optimalization in next section.
+
+#### Second parameter
 - a second argument to `useEffect` that is the array of values that the effect depends on, so in below example the effect will be executed only when `props.source` changes:
 
 ```js
@@ -85,6 +132,13 @@ useEffect(() => {
   };
 }, [props.source]);
 ```
+- this way you can tell React to **skip applying an effect if certain values haven’t changed between re-renders**
+- this also works for effects that have a cleanup phase
+- **If you want to run an effect and clean it up only once (on mount and unmount), you can pass an empty array ([]) as a second argument**
+
+### Hook `useContext`
+* A component calling useContext will always re-render when the context value changes. If re-rendering the component is expensive, [you can optimize it by using memoization](https://github.com/facebook/react/issues/15156#issuecomment-474590693).
+
 
 ### Hook `useCallback`
 
@@ -119,6 +173,61 @@ const f = () => { ... }
 // The following are functionally equivalent
 const callbackF = useCallback(f, [])
 const callbackF = useMemo(() => f, [])
+```
+
+### Extracting custom hook
+```js
+import React, { useState, useEffect } from 'react';
+
+function FriendListItem(props) {
+  const [isOnline, setIsOnline] = useState(null);
+  useEffect(() => {
+    function handleStatusChange(status) {
+      setIsOnline(status.isOnline);
+    }
+    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
+    return () => {
+      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
+    };
+  });
+
+  return (
+    <li style={{ color: isOnline ? 'green' : 'black' }}>
+      {props.friend.name}
+    </li>
+  );
+}
+```
+to
+```js
+mport { useState, useEffect } from 'react';
+
+function useFriendStatus(friendID) {
+  const [isOnline, setIsOnline] = useState(null);
+
+  useEffect(() => {
+    function handleStatusChange(status) {
+      setIsOnline(status.isOnline);
+    }
+
+    ChatAPI.subscribeToFriendStatus(friendID, handleStatusChange);
+    return () => {
+      ChatAPI.unsubscribeFromFriendStatus(friendID, handleStatusChange);
+    };
+  });
+
+  return isOnline;
+}
+```
+```js
+function FriendStatus(props) {
+  const isOnline = useFriendStatus(props.friend.id);
+
+  if (isOnline === null) {
+    return 'Loading...';
+  }
+  return isOnline ? 'Online' : 'Offline';
+}
 ```
 
 ## Sources
