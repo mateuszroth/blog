@@ -23,7 +23,6 @@ Well written code is easy to maintain, easy to test, very cohesive, decoupled an
 * reliability / testability (pl. *niezawodność, testowalność*)
 * complexity (pl. *złożoność*)
 * reusability - decoupled and reusable code is preferred
-
 * coupling and code interdependence
 * performance
 * [https://en.wikipedia.org/wiki/No_Silver_Bullet](https://en.wikipedia.org/wiki/No_Silver_Bullet) essential vs accident complexity
