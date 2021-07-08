@@ -5,7 +5,7 @@ tags:
   - Design Patterns
 categories:
   - [Software Engineering, Basics]
-date: 2021-07-08
+date: 2020-07-08
 ---
 # Design Patterns
 
