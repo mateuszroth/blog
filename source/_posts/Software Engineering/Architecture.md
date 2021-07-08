@@ -17,6 +17,7 @@ date: 2021-07-08
 
 Well written code is easy to maintain, easy to test, very cohesive, decoupled and redable.
 
+## Qualities
 * readability / understandability (pl. *czytelność, zrozumiałość*) vs obscurity (pl. *zaciemnienie*)
 * clean, readable and concise code - pl. *czysty, czytelny, zwięzły kod*
 * maintainability (pl. *utrzymywalność*)
