@@ -85,6 +85,271 @@
 </div>
 
   
+    <article id="post-Backend/Security" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/07/03/Backend/Security/" class="article-date">
+  <time datetime="2021-07-03T22:00:00.000Z" itemprop="datePublished">2021-07-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Backend/">Backend</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2021/07/03/Backend/Security/">Security</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Security"><a href="#Security" class="headerlink" title="Security"></a>Security</h1><ul>
+<li><strong>File inclusion vulnerability</strong> - doesn’t upload files like .exe or some scripts than can be accidentally run on server</li>
+<li><strong>SQL injection</strong> - clean user input</li>
+<li><strong>CSRF (Cross site request forgery)</strong> and cookies<ul>
+<li>In a cross-site request forgery attack, the attacker tries to force/trick you into making a request which you did not intend. This could be sending you a link that makes you involuntarily change your password. A malicious link could look like that: <code>https://security.stackexchange.com/account?new_password=abc123</code></li>
+<li><strong>The browser automatically sending cookies also has a big downside, which is CSRF attacks</strong>. In a CSRF attack, a malicious website takes advantage of the fact that your <strong>browser will automatically attach authentication cookies to requests</strong> to that domain and tricks your browser into executing a request.</li>
+<li>cookies make it more difficult for non-browser based applications (like mobile to tablet apps) to consume your API.</li>
+<li>JWTs are stored as cookies on many occasions, and cookies are vulnerable/susceptible to CSRF (Cross-site Request Forgery) attacks. One of the many ways <strong>to prevent CSRF attacks is to ensure that your cookie is accessible by only your domain</strong>. As a developer, ensure that necessary CSRF protections are put in place to avoid these attacks, regardless of the use of JWTs.</li>
+</ul>
+</li>
+<li><strong>XSS</strong><ul>
+<li>In a <strong>cross-site scripting attack</strong>, the attacker makes you involuntarily execute client-side code, most likely Javascript. A typical reflected XSS attacking attempt could look like this: <code>https://security.stackexchange.com/search?q=&quot;&gt;&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code></li>
+<li>(Cross-site scripting): an attacker embeds a script in the victim site (<strong>the victim site is only vulnerable if inputs are not sanitized correctly</strong>), and the attacker’s script can do anything JavaScript is allowed to do on the page.</li>
+<li><strong>If you store JWT tokens in local storage, the attacker’s script could read those tokens, and also send those tokens to a server they control</strong>. In fact, a lot of people advocate that very sensitive data shouldn’t be stored in Web Storage because of XSS attacks</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/Security/" data-id="ckqvb9jqo000f1tuk33tz5z03" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Security/" rel="tag">Security</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Backend/Authentication-and-Authorization" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/07/03/Backend/Authentication-and-Authorization/" class="article-date">
+  <time datetime="2021-07-03T22:00:00.000Z" itemprop="datePublished">2021-07-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Backend/">Backend</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2021/07/03/Backend/Authentication-and-Authorization/">Authentication and Authorization</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Authentication-and-Authorization"><a href="#Authentication-and-Authorization" class="headerlink" title="Authentication and Authorization"></a>Authentication and Authorization</h1><ul>
+<li><strong>Authentication</strong> (pl. <em>uwierzytelnianie, autentykacja</em>) describes the process of claiming an identity. That’s what you do when you log in to a service with a username and password, you authenticate yourself.</li>
+<li><strong>Authorization</strong> on the other hand describes permission rules that specify the access rights of individual users and user groups to certain parts of the system, i.e. ACL.</li>
+<li>In modern era, everyone is going for token based authentication instead of session based cookies.</li>
+<li>A spreadsheet describing authentication techniques: (Authentication Techniques for APIs)[<a target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1tAX5ZJzluilhoYKjra-uHbMCZraaQkqIHl3RIQ8mVkM/edit#gid=0]">https://docs.google.com/spreadsheets/d/1tAX5ZJzluilhoYKjra-uHbMCZraaQkqIHl3RIQ8mVkM/edit#gid=0]</a></li>
+</ul>
+<h2 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h2><ul>
+<li>When we do token-based authentication, such as OpenID, OAuth, or OpenID Connect, we receive an <code>access_token</code> (and sometimes <code>id_token</code>) from a trusted authority</li>
+<li>Passport is an authentication middleware for Node.js<ul>
+<li>Packages<ul>
+<li><code>bcrypt</code> for hashing user passwords</li>
+<li><code>jsonwebtoken</code> for signing tokens</li>
+<li><code>passport-local</code> for implementing local strategy</li>
+<li><code>passport-jwt</code> for retrieving and verifying JWTs</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="OAuth2"><a href="#OAuth2" class="headerlink" title="OAuth2"></a>OAuth2</h3><ul>
+<li>i.e. Facebook, Google</li>
+<li>You need to register your app on authorization server such as Google. You will get <code>client id</code> for your app, you will have defined both <code>redirect URL</code> and <code>client secret</code>.</li>
+<li>The <code>redirect URL</code> is used by the authorization server after an user logs in successfully to the server.</li>
+<li>Sample steps:<ol>
+<li>To get authorization code user calls authorization server <a target="_blank" rel="noopener" href="https://cloud.digitalocean.com/v1/oauth/authorize?response_type=code&amp;client_id=CLIENT_ID&amp;redirect_uri=CALLBACK_URL&amp;scope=read">https://cloud.digitalocean.com/v1/oauth/authorize?response_type=code&amp;client_id=CLIENT_ID&amp;redirect_uri=CALLBACK_URL&amp;scope=read</a></li>
+<li>Send authorization code to our app <a target="_blank" rel="noopener" href="https://dropletbook.com/callback?code=AUTHORIZATION_CODE">https://dropletbook.com/callback?code=AUTHORIZATION_CODE</a></li>
+<li>After receiveing authorization code, our app calls authorization server to get access token <a target="_blank" rel="noopener" href="https://cloud.digitalocean.com/v1/oauth/token?client_id=CLIENT_ID&amp;client_secret=CLIENT_SECRET&amp;grant_type=authorization_code&amp;code=AUTHORIZATION_CODE&amp;redirect_uri=CALLBACK_URL">https://cloud.digitalocean.com/v1/oauth/token?client_id=CLIENT_ID&amp;client_secret=CLIENT_SECRET&amp;grant_type=authorization_code&amp;code=AUTHORIZATION_CODE&amp;redirect_uri=CALLBACK_URL</a></li>
+<li>Our app gets access token <code>&#123;&quot;access_token&quot;:&quot;ACCESS_TOKEN&quot;,&quot;token_type&quot;:&quot;bearer&quot;,&quot;expires_in&quot;:2592000,&quot;refresh_token&quot;:&quot;REFRESH_TOKEN&quot;,&quot;scope&quot;:&quot;read&quot;,&quot;uid&quot;:100101,&quot;info&quot;:&#123;&quot;name&quot;:&quot;Mark E. Mark&quot;,&quot;email&quot;:&quot;mark@thefunkybunch.com&quot;&#125;&#125;</code></li>
+</ol>
+</li>
+<li>visual explanation: <a target="_blank" rel="noopener" href="https://darutk.medium.com/the-simplest-guide-to-oauth-2-0-8c71bd9a15bb">https://darutk.medium.com/the-simplest-guide-to-oauth-2-0-8c71bd9a15bb</a></li>
+<li>another explanation for steps:<ol>
+<li>User wants to request a resource that requires auth</li>
+<li>Authorization server returns an <em>authorization code</em> to the client</li>
+<li>Client then uses that <em>authorization code</em> in order to request an <em>authorization token</em> - e.g. a JWT</li>
+</ol>
+</li>
+</ul>
+<h3 id="Scalability-of-token-cookie-based-authentication"><a href="#Scalability-of-token-cookie-based-authentication" class="headerlink" title="Scalability of token/cookie based authentication"></a>Scalability of token/cookie based authentication</h3><ul>
+<li>in horizontal scaling scenario you have to start replicating servers<ul>
+<li>for <strong>cookie based authentication has a disadvantage of need for central session storage system</strong> that all of your application servers have access to<ul>
+<li>Setting up and maintaining this type of distributed system involves in-depth technical knowledge and subsequently <strong>incurs higher financial costs</strong></li>
+</ul>
+</li>
+<li>for <strong>JWT based authentication our application can scale easily</strong> because we can use tokens to access resources from different servers without worrying if the user was actually logged in on a particular server. You also save costs because you don’t need a dedicated server to store your sessions. Why? Because there are no sessions!</li>
+</ul>
+</li>
+</ul>
+<h2 id="Authorization"><a href="#Authorization" class="headerlink" title="Authorization"></a>Authorization</h2><h3 id="JWT-JSON-Web-Tokens"><a href="#JWT-JSON-Web-Tokens" class="headerlink" title="JWT (JSON Web Tokens)"></a>JWT (JSON Web Tokens)</h3><ul>
+<li>JSON Web Token (JWT) is an open standard that defines a compact and self-contained way for securely transmitting information between parties as a JSON object.</li>
+<li>JWTs can be signed using a secret (with HMAC algorithm) or a public/private key pair using RSA.</li>
+<li>JWTs consist of three parts separated by dots (.), which are:<ul>
+<li>Header<ul>
+<li>consists of two parts: the type of the token, which is JWT, and the hashing algorithm such as HMAC SHA256 or RSA</li>
+<li>JSON is encoded to Base64Url<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;alg&quot;: &quot;HS256&quot;,</span><br><span class="line">  &quot;typ&quot;: &quot;JWT&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>Payload<ul>
+<li>The payload contains all the required information about the user</li>
+<li>do not store passwords here or secret data<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;sub&quot;: &quot;1234567890&quot;,</span><br><span class="line">  &quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">  &quot;admin&quot;: true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>Signature<ul>
+<li>you have to take the encoded header, the encoded payload, a secret, the algorithm specified in the header, and sign that to create signature<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">  base64UrlEncode(header) + &quot;.&quot; +</span><br><span class="line">  base64UrlEncode(payload),</span><br><span class="line">  secret)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>can be sent through an URL, POST parameter, or inside an HTTP header</li>
+<li>JWT sent over as an <code>Authorization: Bearer &lt;token&gt;</code> header is a stateless authentication mechanism as the user state is never saved in the server memory</li>
+</ul>
+<h4 id="Advantages"><a href="#Advantages" class="headerlink" title="Advantages"></a>Advantages</h4><ul>
+<li>They are easy to scale horizontally</li>
+<li>due to its size its transmission is fast</li>
+<li>They are easier to maintain and debug</li>
+<li>They have the ability to create truly RESTful Services</li>
+<li>They have built-in expiration functionality</li>
+<li>JSON Web Tokens are self-contained</li>
+<li>JWT is a <strong>stateless authentication</strong> mechanism as the user state is never saved in the server memory</li>
+<li>doesn’t matter which domains are serving your APIs, as <strong>Cross-Origin Resource Sharing (CORS) won’t be an issue</strong> as it doesn’t use cookies</li>
+<li>a good way of securely transmitting information between parties</li>
+</ul>
+<h4 id="Disadvantages"><a href="#Disadvantages" class="headerlink" title="Disadvantages"></a>Disadvantages</h4><ul>
+<li>(Why JWTs Suck as Session Tokens)[<a target="_blank" rel="noopener" href="https://developer.okta.com/blog/2017/08/17/why-jwts-suck-as-session-tokens]">https://developer.okta.com/blog/2017/08/17/why-jwts-suck-as-session-tokens]</a></li>
+</ul>
+<h4 id="Precautions"><a href="#Precautions" class="headerlink" title="Precautions"></a>Precautions</h4><ul>
+<li>a great care must be taken to prevent security issues and you <strong>should not keep tokens longer than required</strong></li>
+<li><strong>you also should not store sensitive session data in browser storage due to lack of security</strong></li>
+</ul>
+<h4 id="Invalidation"><a href="#Invalidation" class="headerlink" title="Invalidation"></a>Invalidation</h4><ul>
+<li>Simply remove the token from the client</li>
+<li>Create a token blocklist or whitelist</li>
+<li>Just keep token expiry times short and rotate them often</li>
+</ul>
+<h4 id="While-using-cookies"><a href="#While-using-cookies" class="headerlink" title="While using cookies"></a>While using cookies</h4><ul>
+<li>Cookies/session id is not self contained. It is a reference token. During each validation the Gmail server needs to fetch the information corresponding to it.<ul>
+<li>Cookie/session based authentication doesn’t scale well</li>
+</ul>
+</li>
+<li>JWT is self contained. It is a value token. So during each validation the Gmail server does not needs to fetch the information corresponding to it. It is most suitable for Microservices Architecture<ul>
+<li>with JWTs REST API is stateless and therefore without side effects means that maintainability and debugging are made much easier</li>
+<li>CORS - for an API to be served from one server and for the actual application to consume it from another. To make this happen, we need to enable Cross-Origin Resource Sharing (CORS). Since cookies can only be used for the domain from which they originated, they aren’t much help for APIs on different domains than the application. Using JWTs for authentication in this case ensures that the RESTful API is stateless</li>
+</ul>
+</li>
+</ul>
+<h4 id="Use-cases"><a href="#Use-cases" class="headerlink" title="Use cases"></a>Use cases</h4><ul>
+<li>Authorization: This is the most common scenario for using JWT. Once the user is logged in, each subsequent request will include the JWT, allowing the user to access routes, services, and resources that are permitted with that token. Single Sign On is a feature that widely uses JWT nowadays, because of its small overhead and its ability to be easily used across different domains.</li>
+</ul>
+<h3 id="ACL-Roles-and-permissions"><a href="#ACL-Roles-and-permissions" class="headerlink" title="ACL / Roles and permissions"></a>ACL / Roles and permissions</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/38893178/what-is-the-best-way-to-implement-roles-and-permission-in-express-rest-api">Permissions should be handled by defining specific user roles with their access control lists</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/OptimalBits/node_acl"><code>node_acl</code></a> package</li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/accesscontrol"><code>accesscontrol</code></a> package</li>
+</ul>
+<h2 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a>Sources</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://auth0.com/learn/json-web-tokens/">https://auth0.com/learn/json-web-tokens/</a></li>
+<li><a target="_blank" rel="noopener" href="https://betterprogramming.pub/authentication-and-authorization-using-redis-49c5f0e6b311">https://betterprogramming.pub/authentication-and-authorization-using-redis-49c5f0e6b311</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/03/Backend/Authentication-and-Authorization/" data-id="ckqvb9jqd00021tuk018e89yx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Authentication/" rel="tag">Authentication</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Authorization/" rel="tag">Authorization</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Backend/ElasticSearch" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/07/02/Backend/ElasticSearch/" class="article-date">
+  <time datetime="2021-07-02T22:00:00.000Z" itemprop="datePublished">2021-07-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Backend/">Backend</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2021/07/02/Backend/ElasticSearch/">ElasticSearch</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="ElasticSearch"><a href="#ElasticSearch" class="headerlink" title="ElasticSearch"></a>ElasticSearch</h1><h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><ul>
+<li>theory: <a target="_blank" rel="noopener" href="https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-1-164311327557">https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-1-164311327557</a></li>
+<li>In practice in Node.js:<br><a target="_blank" rel="noopener" href="https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-2-4c804427bc94">https://medium.com/better-programming/introduction-to-elasticsearch-using-node-js-part-2-4c804427bc94</a></li>
+<li>Elasticsearch course on Udemy to buy and watch:<br><a target="_blank" rel="noopener" href="https://www.udemy.com/course/elasticsearch-complete-guide/">https://www.udemy.com/course/elasticsearch-complete-guide/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/02/Backend/ElasticSearch/" data-id="ckqvb9jqe00031tuked8s19ml" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Nodejs/Nodejs-Nestjs" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2021/06/30/Nodejs/Nodejs-Nestjs/" class="article-date">
@@ -131,7 +396,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/06/30/Nodejs/Nodejs-Nestjs/" data-id="ckqv84l2x00200hklh0ra237i" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/06/30/Nodejs/Nodejs-Nestjs/" data-id="ckqvb9jri00201tuk277d09sl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
@@ -185,7 +450,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2021/06/29/Nodejs/Nodejs-threads/" data-id="ckqv84l3100280hkl3rjj2dfp" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2021/06/29/Nodejs/Nodejs-threads/" data-id="ckqvb9jrl00281tuk0eg7gvio" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
@@ -248,7 +513,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/12/22/Mobile/Mobile-Swift/" data-id="ckqv84l2v001s0hkl9inm7umg" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/12/22/Mobile/Mobile-Swift/" data-id="ckqvb9jrf001s1tukc8t0f7jr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
@@ -260,14 +525,14 @@
 
 
   
-    <article id="post-Software Engineering/Software-Engineering-notes" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-JavaScript/JavaScript-prototype-creation-example" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" class="article-date">
-  <time datetime="2020-07-18T08:00:00.000Z" itemprop="datePublished">2020-07-18</time>
+    <a href="/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" class="article-date">
+  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a>
+    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Basics/">Basics</a>
   </div>
 
   </div>
@@ -278,7 +543,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/">Software Engineering notes</a>
+      <a class="article-title" href="/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/">JavaScript prototype creation example</a>
     </h1>
   
 
@@ -286,155 +551,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Truths"><a href="#Truths" class="headerlink" title="Truths"></a>Truths</h1><ul>
-<li>Product teams focusing on velocity may argue that in the future they will reach a place where they have time to circle back to fix technical debt. This is never true, there is always pressure. A team needs to consciously decide to make stability a part of value delivery, otherwise lack of stability will become part of the team’s culture.</li>
-<li>A mistake early on in the project regarding the architecture may cost a lot in terms of time spent refactoring the codebase later.</li>
-</ul>
-<h1 id="Codebase-architecture-approaches"><a href="#Codebase-architecture-approaches" class="headerlink" title="Codebase architecture approaches"></a>Codebase architecture approaches</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://alistair.cockburn.us/hexagonal-architecture/">Hexagonal Architecture</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">The Clean Architecture</a>:<ul>
-<li>(Recommended architecture approaches) They all have the same objective, which is the <strong>separation of concerns</strong>. They all achieve this <strong>separation by dividing the software into layers</strong>. Each has at least one layer for business rules, and another for interfaces.</li>
-<li>Independent of Frameworks</li>
-<li>Testable</li>
-<li>Independent of UI</li>
-<li>Independent of Database</li>
-<li>Independent of any external agency</li>
-<li>Overall: The Dependency Rule always applies. Source code dependencies always point inwards. As you move inwards the level of abstraction increases. The outermost circle is low level concrete detail. As you move inwards the software grows more abstract, and encapsulates higher level policies. The inner most circle is the most general.</li>
-</ul>
-</li>
-</ul>
-<h1 id="GoF-Rules"><a href="#GoF-Rules" class="headerlink" title="GoF Rules"></a>GoF Rules</h1><ul>
-<li>“<strong>Program to an ‘interface’</strong>, not an ‘implementation’.” (Gang of Four 1995:18)<ul>
-<li>clients remain unaware of the specific types of objects they use, as long as the object adheres to the interface</li>
-<li>clients remain unaware of the classes that implement these objects; <strong>clients only know about the abstract class(es) defining the interface</strong></li>
-<li>Use of an interface also leads to dynamic binding and polymorphism, which are central features of object-oriented programming.</li>
-</ul>
-</li>
-<li><strong>Composition over inheritance</strong>: “Favor ‘object composition’ over ‘class inheritance’.” (Gang of Four 1995:20)<ul>
-<li>The authors refer to inheritance as white-box reuse, with white-box referring to visibility, because the internals of parent classes are often visible to subclasses. In contrast, the authors refer to object composition (in which objects with well-defined interfaces are used dynamically at runtime by objects obtaining references to other objects) as black-box reuse because no internal details of composed objects need be visible in the code using them.</li>
-<li>The authors discuss the <strong>tension between inheritance and encapsulation</strong> at length and state that in their experience, <strong>designers overuse inheritance</strong> (Gang of Four 1995:20).</li>
-<li>“Because <strong>inheritance exposes a subclass to details of its parent’s implementation, it’s often said that ‘inheritance breaks encapsulation’</strong>“. (Gang of Four 1995:19).</li>
-<li>They <strong>warn that the implementation of a subclass can become so bound up with the implementation of its parent class that any change in the parent’s implementation will force the subclass to change</strong>.</li>
-<li>Furthermore, they claim that a way to avoid this is to inherit only from abstract classes—but then, they point out that there is minimal code reuse.</li>
-<li>Using inheritance is recommended mainly when adding to the functionality of existing components, reusing most of the old code and adding relatively small amounts of new code.</li>
-</ul>
-</li>
-<li>“Dynamic, highly parameterized software is harder to understand and build than more static software.” (Gang of Four 1995:21)</li>
-<li>The authors further distinguish between ‘Aggregation’, where one object ‘has’ or ‘is part of’ another object (implying that an aggregate object and its owner have identical lifetimes) and acquaintance, where one object merely ‘knows of’ another object. <ul>
-<li>Acquaintance is a weaker relationship than aggregation and suggests much looser coupling between objects, which can often be desirable for maximum maintainability in a design.</li>
-</ul>
-</li>
-<li>A primary criticism of Design Patterns is that its patterns are simply workarounds for missing features in C++, replacing elegant abstract features with lengthy concrete patterns, essentially becoming a “human compiler” or “generating by hand the expansions of some macro”.</li>
-</ul>
-<h1 id="Design-Patterns"><a href="#Design-Patterns" class="headerlink" title="Design Patterns"></a>Design Patterns</h1><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Software_design_pattern#Classification_and_list">List of design patterns</a><br><a target="_blank" rel="noopener" href="https://www.raywenderlich.com/470-common-design-patterns-for-android-with-kotlin">Source #1 - Common Design Patterns for Android with Kotlin</a></p>
-<h2 id="Creational-patterns"><a href="#Creational-patterns" class="headerlink" title="Creational patterns"></a>Creational patterns</h2><p>They define how you create objects.</p>
-<ul>
-<li><strong>Builder</strong></li>
-<li><strong>Dependency Injection</strong> - explained below</li>
-<li><strong>Singleton</strong></li>
-</ul>
-<h2 id="Structural-patterns"><a href="#Structural-patterns" class="headerlink" title="Structural patterns"></a>Structural patterns</h2><p>They define how you compose objects.</p>
-<ul>
-<li><strong>Adapter</strong> - this pattern lets two incompatible classes work together by converting the interface of a class into another interface the client expect</li>
-<li><strong>Facade</strong> - The Facade pattern provides a higher-level interface that makes a set of other interfaces easier to use -&gt; for example a repository in Android project can be a facade</li>
-<li><strong>DAO</strong> - a design pattern for writing objects that access data<ul>
-<li>You should use DAOs. The pattern lends itself to <strong>modularized</strong> code. You keep all your persistence logic in one place (separation of concerns, fight leaky abstractions). You allow yourself to test data access separately from the rest of the application. And you allow yourself to test the rest of the application isolated from data access (i.e. you can mock your DAOs).</li>
-</ul>
-</li>
-</ul>
-<h2 id="Behavioral-patterns"><a href="#Behavioral-patterns" class="headerlink" title="Behavioral patterns"></a>Behavioral patterns</h2><p>They define how you coordinate object interactions.</p>
-<ul>
-<li><strong>Command</strong> - Similarly, the Command pattern lets you issue requests without knowing the receiver. You encapsulate a request as an object and send it off; deciding how to complete the request is an entirely separate mechanism.<ul>
-<li><img src="https://koenig-media.raywenderlich.com/uploads/2015/07/EventBus-Publish-Subscribe.png" width="500px"></li>
-<li><a target="_blank" rel="noopener" href="https://www.raywenderlich.com/470-common-design-patterns-for-android-with-kotlin#toc-anchor-010">How to create event bus</a></li>
-</ul>
-</li>
-<li><strong>Observer</strong> - The Observer pattern defines a one-to-many dependency between objects. When one object changes state, all of its dependents are notified and updated automatically.</li>
-<li><strong>Model View Controller</strong></li>
-<li><strong>Model View ViewModel</strong> - The ViewModel object is the “glue” between the model and view layers, but <strong>operates differently than the Controller component. Instead, it exposes commands for the view and binds the view to the model. When the model updates, the corresponding views update as well via the data binding</strong>. Similarly, as the user interacts with the view, the bindings work in the opposite direction to automatically update the model. This reactive pattern removes a lot of glue code.</li>
-</ul>
-<h3 id="Dependency-Injection-amp-Dependency-Inversion-principle-explained"><a href="#Dependency-Injection-amp-Dependency-Inversion-principle-explained" class="headerlink" title="Dependency Injection &amp; Dependency Inversion principle explained"></a>Dependency Injection &amp; Dependency Inversion principle explained</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> child = Child()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>A <code>Parent</code> instance creates its child field when it’s instantiated. The <code>Parent</code> instance is dependent on the concrete implementation of <code>Child</code> and on configuring the child field to use it.</p>
-<p><strong>This presents a coupling or dependency of the <code>Parent</code> class on the <code>Child</code> class</strong>. If the setup of a <code>Child</code> object is complex, all that complexity will be reflected within the <code>Parent</code> class as well. You will need to edit <code>Parent</code> to configure a <code>Child</code> object.</p>
-<p>If the <code>Child</code> class itself depends on a class <code>C</code>, which in turn depends on class <code>D</code>, then all that complexity will propagate throughout the code base and hence result in a tight coupling between the components of the application.</p>
-<p><strong>Dependency Injection is the term used to describe the technique of loosening the coupling</strong> just described. In the simple example above, only one tiny change is needed:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> child: Child)</span><br></pre></td></tr></table></figure>
-<p>Voilà — that’s dependency injection at its core!</p>
-<p>There is also <strong>Dependency Inversion principle</strong>. The gist of the Dependency Inversion principle is that <strong>it is important to depend on abstractions rather than concrete implementations</strong>. In the simple example above, this means changing <code>Child</code> to a Kotlin interface rather than a <code>Kotlin</code> class. With this change, many different types of concrete <code>Child</code> type objects that adhere to the <code>Child</code> interface can be passed into the <code>Parent</code> constructor.</p>
-<p><a target="_blank" rel="noopener" href="https://www.raywenderlich.com/262-dependency-injection-in-android-with-dagger-2-and-kotlin#toc-anchor-003">Source - Dependency Injection in Android with Dagger 2 and Kotlin</a></p>
-<h1 id="Empty-variables-interpretation"><a href="#Empty-variables-interpretation" class="headerlink" title="Empty variables interpretation"></a>Empty variables interpretation</h1><ul>
-<li><code>null</code> means nothing - we want no value</li>
-<li><code>undefined</code> declared but not defined - we want default value</li>
-</ul>
-<h1 id="Qualities-of-well-written-code"><a href="#Qualities-of-well-written-code" class="headerlink" title="Qualities of well written code"></a>Qualities of well written code</h1><p>Write a code like someone after you who you don’t know would read the code.</p>
-<p>Well written code is easy to maintain, easy to test, very cohesive, decoupled and redable.</p>
-<ul>
-<li>readability / understandability (czytelność, zrozumiałość) vs obscurity (zaciemnienie)</li>
-<li>clean, readable and concise code - czysty, czytelny, zwięzły kod</li>
-<li>complexity (złożoność)</li>
-<li>maintainability (utrzymywalność)</li>
-<li>reliability / testability (niezawodność, testowalność)</li>
-<li>reusability - decoupled and reusable code is preferred</li>
-<li>coupling and code interdependence</li>
-<li>performance</li>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/No_Silver_Bullet">https://en.wikipedia.org/wiki/No_Silver_Bullet</a> essential vs accident complexity</li>
-<li>robustness - the ability of a computer system to cope with errors during execution and cope with erroneous input</li>
-<li>concise vs explicit</li>
-<li><strong>abstractions are bad</strong></li>
-</ul>
-<p>PEP20 — The Zen of Python<br><a target="_blank" rel="noopener" href="https://www.python.org/dev/peps/pep-0020/">https://www.python.org/dev/peps/pep-0020</a>/</p>
-<h1 id="System-infrastructure"><a href="#System-infrastructure" class="headerlink" title="System infrastructure"></a>System infrastructure</h1><ul>
-<li>scalability - skalowalność</li>
-<li>performance - wydajność</li>
-<li>stability - stabilność</li>
-<li>reliability - niezawodność</li>
-<li>flexibility - jak łatwo się zmienia np. w przypadku mikroserwisów ilość jednostek jednego komponentu/serwisu, czy np. zmiana usługodawcy</li>
-</ul>
-<h1 id="Terms"><a href="#Terms" class="headerlink" title="Terms"></a>Terms</h1><ul>
-<li>function declaration vs definition, parameter type, return type</li>
-</ul>
-<h2 id="coupling-miara-wspolzaleznosci"><a href="#coupling-miara-wspolzaleznosci" class="headerlink" title="coupling (miara współzależności)"></a>coupling (miara współzależności)</h2><p>In software engineering, <strong>coupling</strong> is <strong>the degree of interdependence between software modules</strong>; a <strong>measure of how closely connected two routines or modules are</strong>; <em>the strength of the relationships</em> between modules.</p>
-<p>Coupling is usually <strong>contrasted with cohesion</strong>. <strong>Low coupling often correlates with high cohesion</strong>, and vice versa. Low coupling is often a sign of a <strong>well-structured computer system and a good design</strong>, and when combined with high cohesion, supports the general goals of high readability and maintainability.</p>
-<h2 id="cohesion-miara-spojnosci"><a href="#cohesion-miara-spojnosci" class="headerlink" title="cohesion (miara spójności)"></a>cohesion (miara spójności)</h2><p>In computer programming, cohesion refers to <strong>the degree to which the elements inside a module belong together</strong>. In one sense, it is a measure of the strength of relationship between the methods and data of a class and some unifying purpose or concept served by that class. In another sense, it is a measure of the strength of relationship between the class’s methods and data themselves.</p>
-<p>Cohesion is an ordinal type of measurement and is usually described as “high cohesion” or “low cohesion”. Modules with high cohesion tend to be preferable, because <strong>high cohesion is associated with several desirable traits of software including robustness, reliability, reusability, and understandability</strong>. In contrast, low cohesion is associated with undesirable traits such as being difficult to maintain, test, reuse, or even understand.</p>
-<h2 id="loose-coupling"><a href="#loose-coupling" class="headerlink" title="loose coupling"></a>loose coupling</h2><p>In computing and systems design a loosely coupled system is one in which each of its components has, or makes use of, <strong>little or no knowledge of the definitions of other separate components</strong>. Subareas include the coupling of classes, interfaces, data, and services. Loose coupling is the opposite of tight coupling.</p>
-<h2 id="big-ball-of-mud"><a href="#big-ball-of-mud" class="headerlink" title="big ball of mud"></a>big ball of mud</h2><p>A <strong>big ball of mud</strong> is a software system that <strong>lacks a perceivable architecture</strong>. Although undesirable from a software engineering point of view, such systems are common in practice due to <strong>business pressures, developer turnover and code entropy</strong>. They are a type of design anti-pattern.</p>
-<h2 id="software-entropy"><a href="#software-entropy" class="headerlink" title="software entropy"></a>software entropy</h2><p>The second law of thermodynamics, in principle, states that a closed system’s disorder cannot be reduced, <strong>it can only remain unchanged or increase</strong>. A measure of this disorder is entropy. This law also seems plausible for software systems; <strong>as a system is modified, its disorder, or entropy, tends to increase. This is known as software entropy</strong>.</p>
-<p>The process of code refactoring can result in stepwise reductions in software entropy.</p>
-<p><strong>Software rot,</strong> also known as code rot, software erosion, software decay or software entropy is either a slow deterioration of software performance over time or its diminishing responsiveness that will eventually lead to software becoming faulty, unusable, or in need of upgrade.</p>
-<h2 id="feature-creep"><a href="#feature-creep" class="headerlink" title="feature creep"></a>feature creep</h2><p><strong>Feature creep is the excessive ongoing expansion or addition of new features in a product,</strong>[1] especially in computer software, videogames and consumer and business electronics. These extra features go beyond the basic function of the product and can result in software bloat and over-complication, rather than simple design.</p>
-<h2 id="software-brittleness"><a href="#software-brittleness" class="headerlink" title="software brittleness"></a>software brittleness</h2><p>In computer programming and software engineering, software brittleness is the increased difficulty in fixing older software that may appear reliable, <strong>but fails badly when presented with unusual data or altered in a seemingly minor way</strong>. </p>
-<h2 id="first-class-functions"><a href="#first-class-functions" class="headerlink" title="first-class functions"></a>first-class functions</h2><p>In computer science, a programming language is said to have first-class functions if it <strong>treats functions as first-class citizens</strong>. This means the language supports <strong>passing functions as arguments to other functions, returning them as the values from other functions, and assigning them to variables or storing them in data structures</strong>.[1] Some programming language theorists require support for anonymous functions (function literals) as well.[2] In languages with first-class functions, the names of functions do not have any special status; they are treated like ordinary variables with a function type.[3]<br>First-class functions are a necessity for the <a target="_blank" rel="noopener" href="https://en.m.wikipedia.org/wiki/Functional_programming">functional programming</a> style, in which the use of <a target="_blank" rel="noopener" href="https://en.m.wikipedia.org/wiki/Higher-order_function">higher-order functions</a> is a standard practice. A simple example of a higher-ordered function is the <a target="_blank" rel="noopener" href="https://en.m.wikipedia.org/wiki/Map_(higher-order_function)">map</a> function, which takes, as its arguments, a function and a list, and returns the list formed by applying the function to each member of the list. For a language to support <em>map</em>, it must support passing a function as an argument.<br>Source <a target="_blank" rel="noopener" href="https://en.m.wikipedia.org/wiki/First-class_function">https://en.m.wikipedia.org/wiki/First-class_function</a></p>
-<h2 id="higher-order-function"><a href="#higher-order-function" class="headerlink" title="higher order function"></a>higher order function</h2><p>a function taking another function as argument is called a higher-order function</p>
-<h1 id="Authorization-vs-Authentication"><a href="#Authorization-vs-Authentication" class="headerlink" title="Authorization vs Authentication"></a>Authorization vs Authentication</h1><p>• <strong>Authentication</strong> describes the process of claiming an identity. That’s what you do when you log in to a service with a username and password, you authenticate yourself.<br>• <strong>Authorization</strong> on the other hand describes permission rules that specify the access rights of individual users and user groups to certain parts of the system.</p>
-<h1 id="Software-problems"><a href="#Software-problems" class="headerlink" title="Software problems"></a>Software problems</h1><ul>
-<li>business pressures</li>
-<li>developer turnover</li>
-<li>code entropy</li>
-<li>developers productivity</li>
-<li>errors tracking and detecting</li>
-<li>infrastructure cost and predicting spikes</li>
-<li>development cost</li>
-<li>enterprise level app - is computer software used to satisfy the needs of an organization rather than individual users</li>
-</ul>
-<h1 id="Languages-features"><a href="#Languages-features" class="headerlink" title="Languages features"></a>Languages features</h1><ul>
-<li>pros if language offers excellent <strong>code analysis support</strong> and <strong>comprehensive editors/IDEs</strong></li>
-<li>pros if language offers <strong>developing</strong>, <strong>refactoring</strong> and <strong>debugging</strong> is fast and easy</li>
-<li>pros if language offers <strong>strict type system</strong> and <strong>compile-time error checks</strong>, C# is more potent than JavaScript</li>
-</ul>
-<h1 id="Uncommon-terms"><a href="#Uncommon-terms" class="headerlink" title="Uncommon terms"></a>Uncommon terms</h1><ul>
-<li><strong>Monkey patching</strong><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Monkey_patch">https://en.wikipedia.org/wiki/Monkey_patch</a><br><a target="_blank" rel="noopener" href="https://www.audero.it/blog/2016/12/05/monkey-patching-javascript/">https://www.audero.it/blog/2016/12/05/monkey-patching-javascript/</a></li>
-<li><strong>Domain-driven design (skrót DDD)</strong> – podejście do tworzenia oprogramowania kładące nacisk na takie definiowanie obiektów i komponentów systemu oraz ich zachowań, aby wiernie odzwierciedlały rzeczywistość. Dopiero po utworzeniu takiego modelu należy rozważyć zagadnienia związane z techniczną realizacją. Podejście to umożliwia modelowanie systemów informatycznych przez ekspertów, którzy znają specyfikę problemu, lecz nie muszą znać się na projektowaniu architektury systemów informatycznych.</li>
-<li><strong>Command–query separation (CQS)</strong> is a principle of imperative computer programming. It was devised by Bertrand Meyer as part of his pioneering work on the Eiffel programming language. It states that every method should either be a command that performs an action, or a query that returns data to the caller, but not both. In other words, Asking a question should not change the answer.[1] More formally, methods should return a value only if they are referentially transparent and hence possess no side effects.</li>
-</ul>
-
+        <p>Stwórzmy nową klasę korzystającą z dziedziczenia prototypowego, a następnie utwórzmy nowy obiekt klasy <code>Person</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) &#125;;</span><br><span class="line"><span class="keyword">new</span> Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Person</span></span><br><span class="line"><span class="comment">// &quot;Matt&quot;</span></span><br></pre></td></tr></table></figure>
+<p>Gdy nie użyjemy operatora <code>new</code> nie jest tworzony nowy obiekt i używany jest kontekst wywołania funkcji, co zwraca błąd:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) &#125;;</span><br><span class="line">Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Window - ta linijka inna, bez new</span></span><br><span class="line"><span class="comment">// VM973:3 Uncaught TypeError: this.hello is not a function</span></span><br><span class="line"><span class="comment">//    at Person (&lt;anonymous&gt;:3:8)</span></span><br><span class="line"><span class="comment">//    at &lt;anonymous&gt;:6:1</span></span><br></pre></td></tr></table></figure>
+<p>Teraz użyjmy arrow function dla funkcji dodanej do prototypu:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="built_in">this</span>.name)  <span class="comment">// ta linijka inna, używamy arrow function </span></span><br><span class="line"><span class="keyword">new</span> Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Person</span></span><br></pre></td></tr></table></figure>
+<p>Jednak nadal otrzymujemy ten sam błąd gdy pominiemy operator <code>new</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">VM231:<span class="number">4</span> Uncaught <span class="built_in">TypeError</span>: <span class="built_in">this</span>.hello is not a <span class="function"><span class="keyword">function</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">Person</span> (<span class="params">&lt;anonymous&gt;:<span class="number">4</span>:<span class="number">8</span></span>)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> &lt;<span class="title">anonymous</span>&gt;:7:1</span></span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/18/Software%20Engineering/Software-Engineering-notes/" data-id="ckqv84l5j008z0hkl6ynw66wh" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" data-id="ckqvb9jr8001e1tuk0awm1v02" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
 
     </footer>
   </div>
@@ -509,7 +640,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/React-MobX-vs-Redux/" data-id="ckqv84l34002g0hkl6y2k5sho" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/React-MobX-vs-Redux/" data-id="ckqvb9jro002g1tuk3flk5akc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li></ul>
@@ -521,9 +652,9 @@
 
 
   
-    <article id="post-JavaScript/JavaScript-prototype-creation-example" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-JavaScript/JavaScript-forin-forof-loops" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" class="article-date">
+    <a href="/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" class="article-date">
   <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
 </a>
     
@@ -539,7 +670,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/">JavaScript prototype creation example</a>
+      <a class="article-title" href="/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/">JavaScript `for..in` `for..of` and other loops</a>
     </h1>
   
 
@@ -547,116 +678,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Stwórzmy nową klasę korzystającą z dziedziczenia prototypowego, a następnie utwórzmy nowy obiekt klasy <code>Person</code>:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) &#125;;</span><br><span class="line"><span class="keyword">new</span> Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Person</span></span><br><span class="line"><span class="comment">// &quot;Matt&quot;</span></span><br></pre></td></tr></table></figure>
-<p>Gdy nie użyjemy operatora <code>new</code> nie jest tworzony nowy obiekt i używany jest kontekst wywołania funkcji, co zwraca błąd:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) &#125;;</span><br><span class="line">Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Window - ta linijka inna, bez new</span></span><br><span class="line"><span class="comment">// VM973:3 Uncaught TypeError: this.hello is not a function</span></span><br><span class="line"><span class="comment">//    at Person (&lt;anonymous&gt;:3:8)</span></span><br><span class="line"><span class="comment">//    at &lt;anonymous&gt;:6:1</span></span><br></pre></td></tr></table></figure>
-<p>Teraz użyjmy arrow function dla funkcji dodanej do prototypu:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.hello();</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.hello = <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="built_in">this</span>.name)  <span class="comment">// ta linijka inna, używamy arrow function </span></span><br><span class="line"><span class="keyword">new</span> Person(<span class="string">&#x27;Matt&#x27;</span>); <span class="comment">// --&gt; wskazuje na Person</span></span><br></pre></td></tr></table></figure>
-<p>Jednak nadal otrzymujemy ten sam błąd gdy pominiemy operator <code>new</code>:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">VM231:<span class="number">4</span> Uncaught <span class="built_in">TypeError</span>: <span class="built_in">this</span>.hello is not a <span class="function"><span class="keyword">function</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">Person</span> (<span class="params">&lt;anonymous&gt;:<span class="number">4</span>:<span class="number">8</span></span>)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> &lt;<span class="title">anonymous</span>&gt;:7:1</span></span><br></pre></td></tr></table></figure>
+        <ul>
+<li><code>for..in</code> - iterates over keys of all objects - loops over enumerable property names of an object.</li>
+<li><code>for..of</code> - iterates over values of iterable objects (Array, TypedArray, String, Map, Set) - does use an object-specific iterator and loops over the values generated by that.</li>
+<li><code>forEach</code> - specific method for arrays</li>
+<li><code>map</code> - specific method for arrays</li>
+</ul>
+<h2 id="Example-with-an-object"><a href="#Example-with-an-object" class="headerlink" title="Example with an object"></a>Example with an object</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123; <span class="number">1</span>: <span class="number">1</span>, <span class="number">2</span>: <span class="literal">true</span>, <span class="number">3</span>: <span class="string">&quot;str&quot;</span> &#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">in</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console logs 1, 2, 3</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console error `Uncaught TypeError: obj is not iterable`</span></span><br><span class="line"></span><br><span class="line">obj[<span class="built_in">Symbol</span>.iterator] = <span class="function"><span class="keyword">function</span>*(<span class="params"></span>) </span>&#123; <span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">in</span> obj) <span class="keyword">yield</span> obj[i] &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console logs 1, true, &quot;str&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Example-with-a-set"><a href="#Example-with-a-set" class="headerlink" title="Example with a set"></a>Example with a set</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pets = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="string">&quot;Cat&quot;</span>, <span class="string">&quot;Dog&quot;</span>, <span class="string">&quot;Hamster&quot;</span>])</span><br><span class="line">pets[<span class="string">&quot;species&quot;</span>] = <span class="string">&quot;mammals&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> pet <span class="keyword">in</span> pets) &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(pet) <span class="comment">// &quot;species&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> pet <span class="keyword">of</span> pets) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(pet) <span class="comment">// &quot;Cat&quot;, &quot;Dog&quot;, &quot;Hamster&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Example-with-for-in-and-enumerable-method"><a href="#Example-with-for-in-and-enumerable-method" class="headerlink" title="Example with for..in and enumerable method"></a>Example with <code>for..in</code> and enumerable method</h2><p>Because <code>for..in</code> loops over all enumerable properties, this means if you add any additional properties to the array’s prototype, then those properties will also appear in the loop.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.decimalfy = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="built_in">this</span>.length; i++) &#123;</span><br><span class="line">    <span class="built_in">this</span>[i] = <span class="built_in">this</span>[i].toFixed(<span class="number">2</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> digits = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> index <span class="keyword">in</span> digits) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(digits[index]) <span class="comment">// it also print decimalfy function</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Above-for-for-of"><a href="#Above-for-for-of" class="headerlink" title="Above for for..of"></a>Above for <code>for..of</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> digits = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> digit <span class="keyword">of</span> digits) &#123;</span><br><span class="line">  <span class="keyword">if</span> (digit % <span class="number">2</span> === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(digit)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// prints 1, 3, 5, 7, 9</span></span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-prototype-creation-example/" data-id="ckqv84l2n001e0hklceaqdlq8" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript/DRAFT-JavaScript-static-classes-methods-properties" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/" class="article-date">
-  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Basics/">Basics</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/">JavaScript static classes, methods &amp; properties</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Static-methods"><a href="#Static-methods" class="headerlink" title="Static methods"></a>Static methods</h1><p>In other words, static methods have no access to data stored in specific objects, so no access to this.<br>Since these methods operate on the class instead of instances of the class, they are called on the class.<br>Static methods can be overriden.<br>You can call a static method from another static method within the same class with this.<br>prototype-based inheritance, super calls, constructors, instance and static methods</p>
-<h1 id="Static-properties"><a href="#Static-properties" class="headerlink" title="Static properties"></a>Static properties</h1><p>static get Leader(){<br>  return new User(‘wat’)<br>}</p>
-<p>Note that static properties are a separate concept from static methods, and are still under development.</p>
-<h1 id="Prototypes-in-JS"><a href="#Prototypes-in-JS" class="headerlink" title="Prototypes in JS"></a>Prototypes in JS</h1><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/7694583">https://stackoverflow.com/a/7694583</a></p>
-<h1 id="Static-methods-1"><a href="#Static-methods-1" class="headerlink" title="Static methods"></a>Static methods</h1><p>function Clazz() {};<br>Clazz.staticMethod = function() {<br>    alert(‘STATIC!!!’);<br>};</p>
-<p>Clazz.prototype.func = function() {<br>    this.constructor.staticMethod();<br>}</p>
-<h1 id="TS-transpiled-class"><a href="#TS-transpiled-class" class="headerlink" title="TS transpiled class"></a>TS transpiled class</h1><p>var Greeter = /** @class */ (function () {<br>    function Greeter(message) {<br>        this.greeting = message;<br>    }<br>    Greeter.prototype.greet = function () {<br>        return “Hello, “ + this.greeting;<br>    };<br>    return Greeter;<br>}());</p>
-<h1 id="Static-variables-vs-instance"><a href="#Static-variables-vs-instance" class="headerlink" title="Static variables vs instance"></a>Static variables vs instance</h1><p>function Animal(name) {<br>    Animal.count = Animal.count+1||1;// static variables, use function name “Animal”<br>    this.name = name; //instance variable, using “this”<br>}</p>
-<h1 id="Static-vs-instance-method"><a href="#Static-vs-instance-method" class="headerlink" title="Static vs instance method"></a>Static vs instance method</h1><p>Animal.showCount = function () {//static method<br>    alert(Animal.count)<br>}</p>
-<p>Animal.prototype.showName=function(){//instance method<br>    alert(this.name);<br>}</p>
-<p>Klasa Parent z dwoma statycznymi metodami:</p>
-<ul>
-<li>obiekt child i parent nie mają dostępu do metod</li>
-<li>metody mogą być wywołane tylko z klasy Child i Parent.sayHello()</li>
-</ul>
-<p>class Parent {<br>  static sayHello() {<br>    this.speak(‘world’);<br>  }</p>
-<p>  static speak(phrase) {<br>     console.log(phrase);<br>  }<br>}</p>
-<p>class Child extends Parent {<br>}</p>
-<p>Parent.sayHello();<br>Child.sayHello();<br>const parent = new Parent();<br>parent.sayHello();<br>const child = new Child()<br>child.sayHello();</p>
-<p>Klasa Parent z niestatycznym sayHello:</p>
-<ul>
-<li>metoda moze być wywołana z obiektów, ale metoda nie ma dostępu do statycznej metody</li>
-<li>metody NIE mogą być wywołane bezpośrednio z klas Child i Parent.sayHello()</li>
-</ul>
-<p>class Parent {<br>  sayHello() {<br>    this.speak(‘world’);<br>  }</p>
-<p>  static speak(phrase) {<br>     console.log(phrase);<br>  }<br>}</p>
-<p>class Child extends Parent {<br>}</p>
-<p>Parent.sayHello();<br>Child.sayHello();<br>const parent = new Parent();<br>parent.sayHello();<br>const child = new Child()<br>child.sayHello();</p>
-<p>Klasa Parent ze statyczną metodą korzystająca ze statycznej metody dziecka:</p>
-<ul>
-<li>Parent nie ma dostępu, ale Child ma</li>
-<li>ani child, ani parent nie mają dostępu do sayHello</li>
-</ul>
-<p>class Parent {<br>  static sayHello() {<br>    this.speak(‘world’);<br>  }<br>}</p>
-<p>class Child extends Parent {<br>  static speak(phrase) {<br>     console.log(phrase);<br>  }<br>}</p>
-<p>Parent.sayHello();<br>Child.sayHello();<br>const parent = new Parent();<br>parent.sayHello();<br>const child = new Child()<br>child.sayHello();</p>
-<p>Klasa Parent z metodą korzystająca ze statycznej metody dziecka:</p>
-<ul>
-<li>ani Child, Parent nie ma dostępu do sayHello</li>
-<li>ani child, ani parent nie ma dostepu do speak</li>
-</ul>
-<p>class Parent {<br>  sayHello() {<br>    this.speak(‘world’);<br>  }<br>}</p>
-<p>class Child extends Parent {<br>  static speak(phrase) {<br>     console.log(phrase);<br>  }<br>}</p>
-<p>Parent.sayHello();<br>Child.sayHello();<br>const parent = new Parent();<br>parent.sayHello();<br>const child = new Child()<br>child.sayHello();</p>
-<p>Klasa Parent z metodą korzystająca z metody dziecka:</p>
-<ul>
-<li>tylko child moze bez bledow wywolac metode sayHello</li>
-</ul>
-<p>class Parent {<br>  sayHello() {<br>    this.speak(‘world’);<br>  }<br>}</p>
-<p>class Child extends Parent {<br>  speak(phrase) {<br>     console.log(phrase);<br>  }<br>}</p>
-<p>Parent.sayHello();<br>Child.sayHello();<br>const parent = new Parent();<br>parent.sayHello();<br>const child = new Child()<br>child.sayHello();</p>
-<p>Wnioski:</p>
-<ul>
-<li>bezpośrednio z klas mamy dostęp do metod statycznych, do innych metod nie</li>
-<li>obiekty natomiast nie mają dostępu do metod statycznych</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/DRAFT-JavaScript-static-classes-methods-properties/" data-id="ckqv84l2f000z0hkl1mpqaxe7" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" data-id="ckqvb9jr400171tuk9haqcut4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
@@ -708,125 +744,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/React-Hooks-TypeScript/" data-id="ckqv84l32002b0hkl7e0icdc3" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/React/React-Hooks-TypeScript/" data-id="ckqvb9jrm002b1tuk8uqy41zi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript/JavaScript-forin-forof-loops" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" class="article-date">
-  <time datetime="2020-07-17T19:25:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/blog/categories/JavaScript/Basics/">Basics</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/">JavaScript `for..in` `for..of` and other loops</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><code>for..in</code> - iterates over keys of all objects - loops over enumerable property names of an object.</li>
-<li><code>for..of</code> - iterates over values of iterable objects (Array, TypedArray, String, Map, Set) - does use an object-specific iterator and loops over the values generated by that.</li>
-<li><code>forEach</code> - specific method for arrays</li>
-<li><code>map</code> - specific method for arrays</li>
-</ul>
-<h2 id="Example-with-an-object"><a href="#Example-with-an-object" class="headerlink" title="Example with an object"></a>Example with an object</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123; <span class="number">1</span>: <span class="number">1</span>, <span class="number">2</span>: <span class="literal">true</span>, <span class="number">3</span>: <span class="string">&quot;str&quot;</span> &#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">in</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console logs 1, 2, 3</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console error `Uncaught TypeError: obj is not iterable`</span></span><br><span class="line"></span><br><span class="line">obj[<span class="built_in">Symbol</span>.iterator] = <span class="function"><span class="keyword">function</span>*(<span class="params"></span>) </span>&#123; <span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">in</span> obj) <span class="keyword">yield</span> obj[i] &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> obj) <span class="built_in">console</span>.log(i) <span class="comment">// console logs 1, true, &quot;str&quot;</span></span><br></pre></td></tr></table></figure>
-<h2 id="Example-with-a-set"><a href="#Example-with-a-set" class="headerlink" title="Example with a set"></a>Example with a set</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pets = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="string">&quot;Cat&quot;</span>, <span class="string">&quot;Dog&quot;</span>, <span class="string">&quot;Hamster&quot;</span>])</span><br><span class="line">pets[<span class="string">&quot;species&quot;</span>] = <span class="string">&quot;mammals&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> pet <span class="keyword">in</span> pets) &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(pet) <span class="comment">// &quot;species&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> pet <span class="keyword">of</span> pets) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(pet) <span class="comment">// &quot;Cat&quot;, &quot;Dog&quot;, &quot;Hamster&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Example-with-for-in-and-enumerable-method"><a href="#Example-with-for-in-and-enumerable-method" class="headerlink" title="Example with for..in and enumerable method"></a>Example with <code>for..in</code> and enumerable method</h2><p>Because <code>for..in</code> loops over all enumerable properties, this means if you add any additional properties to the array’s prototype, then those properties will also appear in the loop.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.decimalfy = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="built_in">this</span>.length; i++) &#123;</span><br><span class="line">    <span class="built_in">this</span>[i] = <span class="built_in">this</span>[i].toFixed(<span class="number">2</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> digits = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> index <span class="keyword">in</span> digits) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(digits[index]) <span class="comment">// it also print decimalfy function</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Above-for-for-of"><a href="#Above-for-for-of" class="headerlink" title="Above for for..of"></a>Above for <code>for..of</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> digits = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> digit <span class="keyword">of</span> digits) &#123;</span><br><span class="line">  <span class="keyword">if</span> (digit % <span class="number">2</span> === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(digit)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// prints 1, 3, 5, 7, 9</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/JavaScript/JavaScript-forin-forof-loops/" data-id="ckqv84l2i00170hklgepz5u7u" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Nodejs/Nodejs-GraphQL-Apollo-links" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/" class="article-date">
-  <time datetime="2020-07-17T18:00:00.000Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/">GraphQL Apollo links</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>self-documentation - you build your types</li>
-<li>types information available to the client coder through introspection with tools like GraphiQL</li>
-<li>specification which forms a standardization</li>
-<li>make everything go through an API gateway which would usually do the auth resolution for all microservices</li>
-</ul>
-<p>GraphCMS:<br><a target="_blank" rel="noopener" href="https://docs.graphcms.com/">https://docs.graphcms.com/</a><br><a target="_blank" rel="noopener" href="https://github.com/GraphCMS/graphcms-examples/blob/master/current/next-apollo-blog/lib/initApollo.js">https://github.com/GraphCMS/graphcms-examples/blob/master/current/next-apollo-blog/lib/initApollo.js</a></p>
-<p>GraphQL example:<br><a target="_blank" rel="noopener" href="https://nec.is/writing/graphql-with-next-js-and-apollo/">https://nec.is/writing/graphql-with-next-js-and-apollo/</a></p>
-<p>Next, Apollo, Postgraphile:<br><a target="_blank" rel="noopener" href="https://github.com/graphile/postgraphile-apollo-server">https://github.com/graphile/postgraphile-apollo-server</a></p>
-<p>Next, Apollo, Graphcool:<br><a target="_blank" rel="noopener" href="https://github.com/adamsoffer/next-apollo-example">https://github.com/adamsoffer/next-apollo-example</a><br><a target="_blank" rel="noopener" href="https://github.com/zeit/next.js/tree/master/examples/with-apollo">https://github.com/zeit/next.js/tree/master/examples/with-apollo</a></p>
-<p>Next &amp; Apollo:<br><a target="_blank" rel="noopener" href="https://github.com/lfades/next-with-apollo">https://github.com/lfades/next-with-apollo</a><br><a target="_blank" rel="noopener" href="https://github.com/adamsoffer/next-apollo">https://github.com/adamsoffer/next-apollo</a></p>
-<p>Next, Express, Apollo:<br><a target="_blank" rel="noopener" href="https://github.com/ooade/next-apollo-auth">https://github.com/ooade/next-apollo-auth</a></p>
-<p>Hasura and Apollo:<br><a target="_blank" rel="noopener" href="https://medium.com/@f71uday/building-production-ready-application-with-hasura-and-apollo-476b18ccb44">https://medium.com/@f71uday/building-production-ready-application-with-hasura-and-apollo-476b18ccb44</a></p>
-<p>Hasura vs Postgraphile:<br><a target="_blank" rel="noopener" href="https://news.ycombinator.com/item?id=17540866">https://news.ycombinator.com/item?id=17540866</a></p>
-<p>Postgraphile:<br><a target="_blank" rel="noopener" href="https://www.graphile.org/postgraphile/">https://www.graphile.org/postgraphile/</a></p>
-<p>Hasura - GraphQL on Postgres:<br><a target="_blank" rel="noopener" href="https://hasura.io/">https://hasura.io/</a></p>
-<p>Graphcool - GraphQL BaaS:<br><a target="_blank" rel="noopener" href="https://www.graph.cool/">https://www.graph.cool/</a></p>
-<p>Prisma - GrapQL on any database:<br><a target="_blank" rel="noopener" href="https://www.prisma.io/with-graphql/">https://www.prisma.io/with-graphql/</a></p>
-<p>Nextjs, Apollo, Prisma:<br><a target="_blank" rel="noopener" href="https://github.com/mbaranovski/nextjs-apollo-oauth-prisma">https://github.com/mbaranovski/nextjs-apollo-oauth-prisma</a></p>
-<p>RAN! React . GraphQL . Next.js Toolkit - bez backendu, przykład z Graphcool:<br><a target="_blank" rel="noopener" href="https://github.com/Sly777/ran">https://github.com/Sly777/ran</a><br><a target="_blank" rel="noopener" href="https://github.com/mshameer/ran-with-prisma">https://github.com/mshameer/ran-with-prisma</a></p>
-<p>Vulcan - React, GraphQL, Meteor:<br><a target="_blank" rel="noopener" href="http://docs.vulcanjs.org/">http://docs.vulcanjs.org/</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2020/07/17/Nodejs/Nodejs-GraphQL-Apollo-links/" data-id="ckqv84l2w001w0hkl1y4j10uu" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
 
     </footer>
   </div>
@@ -871,7 +792,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authentication/" rel="tag">Authentication</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authorization/" rel="tag">Authorization</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Microservices/" rel="tag">Microservices</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/REST-APIs/" rel="tag">REST APIs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/RabbitMQ/" rel="tag">RabbitMQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Security/" rel="tag">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authentication/" rel="tag">Authentication</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authorization/" rel="tag">Authorization</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Design-Patterns/" rel="tag">Design Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Microservices/" rel="tag">Microservices</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/REST-APIs/" rel="tag">REST APIs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/RabbitMQ/" rel="tag">RabbitMQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Security/" rel="tag">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
     </div>
   </div>
 
@@ -881,7 +802,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Authentication/" style="font-size: 10px;">Authentication</a> <a href="/blog/tags/Authorization/" style="font-size: 10px;">Authorization</a> <a href="/blog/tags/Backend/" style="font-size: 20px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 12.86px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/blog/tags/JavaScript/" style="font-size: 18.57px;">JavaScript</a> <a href="/blog/tags/Microservices/" style="font-size: 10px;">Microservices</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 11.43px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 14.29px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 11.43px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 12.86px;">Programming languages</a> <a href="/blog/tags/REST-APIs/" style="font-size: 10px;">REST APIs</a> <a href="/blog/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/blog/tags/React/" style="font-size: 17.14px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.86px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 11.43px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/blog/tags/Redux/" style="font-size: 11.43px;">Redux</a> <a href="/blog/tags/Security/" style="font-size: 10px;">Security</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 15.71px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 11.43px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 11.43px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
+      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Authentication/" style="font-size: 10px;">Authentication</a> <a href="/blog/tags/Authorization/" style="font-size: 10px;">Authorization</a> <a href="/blog/tags/Backend/" style="font-size: 20px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/Design-Patterns/" style="font-size: 10px;">Design Patterns</a> <a href="/blog/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 12.86px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/blog/tags/JavaScript/" style="font-size: 18.57px;">JavaScript</a> <a href="/blog/tags/Microservices/" style="font-size: 10px;">Microservices</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 11.43px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 14.29px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 11.43px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 12.86px;">Programming languages</a> <a href="/blog/tags/REST-APIs/" style="font-size: 10px;">REST APIs</a> <a href="/blog/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/blog/tags/React/" style="font-size: 15.71px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.86px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 11.43px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/blog/tags/Redux/" style="font-size: 11.43px;">Redux</a> <a href="/blog/tags/Security/" style="font-size: 10px;">Security</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 17.14px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 11.43px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 11.43px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
     </div>
   </div>
 
@@ -903,23 +824,23 @@
       <ul>
         
           <li>
+            <a href="/blog/2021/07/07/Software%20Engineering/Design-Patterns/">Design Patterns</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/07/07/Software%20Engineering/Various-terms/">Software Engineering - various terms</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/07/07/Software%20Engineering/Architecture/">Software Engineering - architecture and software design</a>
+          </li>
+        
+          <li>
             <a href="/blog/2021/07/06/React/React-Redux/">MobX Redux</a>
           </li>
         
           <li>
             <a href="/blog/2021/07/05/React/React-code-reusability/">React - code reusability</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2021/07/04/Backend/Message-brokers/">Message brokers</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2021/07/04/Backend/Microservices/">Microservices</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2021/07/03/Backend/Security/">Security</a>
           </li>
         
       </ul>

@@ -85,6 +85,380 @@
 </div>
 
   
+    <article id="post-Software Engineering/DRAFT-Software-Engineering-OOP-SOLID" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-OOP-SOLID/" class="article-date">
+  <time datetime="2019-01-01T09:00:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-OOP-SOLID/">[DRAFT] OOP - SOLID</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a target="_blank" rel="noopener" href="https://blog.bitsrc.io/solid-principles-every-developer-should-know-b3bfa96bb688">Examples with JS code</a></p>
+<h1 id="S-SRP-Single-Responsibility-Principle"><a href="#S-SRP-Single-Responsibility-Principle" class="headerlink" title="S - SRP - Single Responsibility Principle"></a>S - SRP - Single Responsibility Principle</h1><ul>
+<li>class should have just a one purpose - so for example <code>Animal</code> class shouldn’t perform logs to different outputs or shouldn’t perform a role of database of animals</li>
+<li>don’t:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name: <span class="built_in">string</span></span>)</span> &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">getAnimalName</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">saveAnimal</span>(<span class="params">a: Animal</span>)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>do:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name: <span class="built_in">string</span></span>)</span> &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">getAnimalName</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnimalDB</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">getAnimal</span>(<span class="params">a: Animal</span>)</span> &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">saveAnimal</span>(<span class="params">a: Animal</span>)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>animal class shouldn’t be responsible for database management like saving</li>
+</ul>
+<h1 id="O-OCP-Open-Closed-Principle"><a href="#O-OCP-Open-Closed-Principle" class="headerlink" title="O - OCP - Open/Closed Principle"></a>O - OCP - <strong>Open/Closed Principle</strong></h1><ul>
+<li>classes should be open for extensions (new methods) but <strong>closed for modifications</strong> (don’t change method) - I’d say, you can change methods but not the contract what they receive and return</li>
+<li>I’d say this role is more about abstraction and use of inheritance, for example by having a base class <code>Animal</code> with method <code>makeSound</code>, which is going to be implemented by child classes <code>Lion</code> or <code>Snake</code></li>
+<li>don’t:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">AnimalSound</span>(<span class="params">a: <span class="built_in">Array</span>&lt;Animal&gt;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt;= a.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">&#x27;lion&#x27;</span>)</span><br><span class="line">            log(<span class="string">&#x27;roar&#x27;</span>);</span><br><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">&#x27;mouse&#x27;</span>)</span><br><span class="line">            log(<span class="string">&#x27;squeak&#x27;</span>);</span><br><span class="line">        <span class="keyword">if</span>(a[i].name == <span class="string">&#x27;snake&#x27;</span>)</span><br><span class="line">        log(<span class="string">&#x27;hiss&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">AnimalSound(animals);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>You see, for every new animal, a new logic is added to the AnimalSound function. This is quite a simple example. When your application grows and becomes complex, you will see that the <code>if</code> statement would be repeated over and over again in the <code>AnimalSound</code> function each time a new animal is added, all over the application. Do instead:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    makeSound();</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Lion</span> <span class="keyword">extends</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">makeSound</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;roar&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Squirrel</span> <span class="keyword">extends</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">makeSound</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;squeak&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Snake</span> <span class="keyword">extends</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">makeSound</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;hiss&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">AnimalSound</span>(<span class="params">a: <span class="built_in">Array</span>&lt;Animal&gt;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt;= a.length; i++) &#123;</span><br><span class="line">        log(a[i].makeSound());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">AnimalSound(animals);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>another example:</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Discount</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">giveDiscount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.customer == <span class="string">&quot;fav&quot;</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.price * <span class="number">0.2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.customer == <span class="string">&quot;vip&quot;</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.price * <span class="number">0.4</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>do instead:</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Discount</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">giveDiscount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.price * <span class="number">0.2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class VIPDiscount: Discount &#123;</span><br><span class="line">    <span class="function"><span class="title">getDiscount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>.getDiscount() * <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="L-LSP-Liskov-Substitution-Principle"><a href="#L-LSP-Liskov-Substitution-Principle" class="headerlink" title="L - LSP - Liskov Substitution Principle"></a>L - LSP - <strong>Liskov Substitution Principle</strong></h1><ul>
+<li>if something uses a class, it should be able to use the class and the base class / child class of it</li>
+<li>sub-class must be substitutable for its super-class</li>
+<li>PL: nie sprawdzamy typu klasy, wykorzystujemy metody wirtualne i implementujemy je różnie w róznych klasach, ale wywołujemy tak samo</li>
+</ul>
+<h1 id="I-ISP-Interface-Segregation-Principle"><a href="#I-ISP-Interface-Segregation-Principle" class="headerlink" title="I - ISP - Interface Segregation Principle"></a>I - ISP - <strong>Interface Segregation Principle</strong></h1><ul>
+<li>you should write few interfaces instead of a big one interface that contains all the interfaces</li>
+<li>make fine grained interfaces that are client specific</li>
+<li>clients should not be forced to depend upon interfaces that they do not use</li>
+<li>PL: nie tworzymy metod, których nie będziemy mogli zaimplementować w klasach korzystających z interfejsu, np. przykład z <code>draw</code> vs <code>drawCircle</code>, <code>drawTriangle</code></li>
+</ul>
+<h1 id="D-DIP-Dependency-Inversion-Principle"><a href="#D-DIP-Dependency-Inversion-Principle" class="headerlink" title="D - DIP - Dependency Inversion Principle"></a>D - DIP - Dependency Inversion Principle</h1><ul>
+<li>you should create new class by placing in the constructor of it the interface of a class that the new class depends on</li>
+<li>PL: polegamy na interfejsach, nie ich implementacjach - aby można było podmienić lub zamockować</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-OOP-SOLID/" data-id="ckqvb9jrv002v1tukfzsng8z3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Software Engineering/DRAFT-Software-Engineering-PL-C-OOP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-PL-C-OOP/" class="article-date">
+  <time datetime="2019-01-01T09:00:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-PL-C-OOP/">[DRAFT] [PL] C# &amp; OOP</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Poniższe notatki to głównie skrót i spis pojęć z kursu dostępnego na stronie <a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku">https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku</a> i <a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty</a> , uzupełniony o inne źródła.</p>
+<h2 id="Cechy-C"><a href="#Cechy-C" class="headerlink" title="Cechy C#:"></a>Cechy C#:</h2><ul>
+<li>warunki logiczne (boolean conditions)</li>
+<li>garbage collector<ul>
+<li>TODO: jak działa?</li>
+</ul>
+</li>
+<li>standardowe biblioteki<ul>
+<li>TODO: na przykład jakie?</li>
+</ul>
+</li>
+<li>właściwości i zdarzenia (properties, events)</li>
+<li>delegaty oraz zarządzanie zdarzeniami (Delegates, Events Management)</li>
+<li>łatwość używania typów generycznych (Generics)</li>
+<li>kompilacja warunkowa</li>
+<li>wielowątkowość</li>
+<li>LINQ i wyrażenia lambda (lambda expressions)</li>
+<li>deklaracje przestrzeni nazw</li>
+</ul>
+<hr>
+<h1 id="Czesc-1"><a href="#Czesc-1" class="headerlink" title="Część 1"></a>Część 1</h1><p><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku">https://www.plukasiewicz.net/CSharp_dla_poczatkujacych/Ogolnie_o_jezyku</a></p>
+<h2 id="Notatki-z-C"><a href="#Notatki-z-C" class="headerlink" title="Notatki z C#:"></a>Notatki z C#:</h2><ul>
+<li>główna metoda całego programu to <code>Main</code></li>
+</ul>
+<p><strong>Podstawowe części języka:</strong></p>
+<ul>
+<li>instrukcje i wyrażenia</li>
+<li>komentarze</li>
+<li>kompilowanie i wykonywanie</li>
+<li>słowa kluczowe</li>
+</ul>
+<p><strong>Typy:</strong></p>
+<ul>
+<li>typy wartościowe (value types) - w tym również struct</li>
+<li>typy referencyjne (reference types)</li>
+<li>typy wskaźnikowe (pointer types)</li>
+<li>konwersja niejawna (implicit type conversion)</li>
+<li>konwersja jawna (explicit type conversion)</li>
+<li>zmienne, typy integralne (integral types)</li>
+<li>typy zmiennoprzecinkowe (floating point types)</li>
+<li>typy dziesiętne (decimal types)</li>
+<li>typy logiczne (boolean types)</li>
+<li>typy puste (nullable types)</li>
+</ul>
+<p><strong>Stałe i literały:</strong></p>
+<ul>
+<li>Stałe odnoszą się do wartości, których program nie może zmieniać w trakcie wykonywania. Te stałe wartości nazywane są również literałami. Stałe traktowane są jak zwykłe zmienne z zaznaczeniem, że ich wartości nie mogą być modyfikowane.</li>
+<li>literały całkowite (integer literals)</li>
+<li>literały zmiennoprzecinkowe (floating-point literals)</li>
+<li>literały znakowe (character literals)</li>
+<li>literały łańcuchowe (string literals)</li>
+</ul>
+<p><strong>Operatory:</strong></p>
+<ul>
+<li>operatory arytmetyczne</li>
+<li>operatory relacyjne</li>
+<li>operatory logiczne</li>
+<li>operatory bitowe</li>
+<li>operatory przypisania</li>
+<li>różne inne operatory</li>
+</ul>
+<p><strong>Sterowanie:</strong></p>
+<ul>
+<li>instrukcja warunkowa if</li>
+<li>instrukcja warunkowa if..else</li>
+<li>zagnieżdżona instrukcja warunkowa if</li>
+<li>instrukcja wyboru switch</li>
+<li>zagnieżdżona instrukcja wyboru switch</li>
+<li>pętla while</li>
+<li>pętla for</li>
+<li>pętla do..while</li>
+<li>polecenie break</li>
+<li>polecenie continue</li>
+</ul>
+<p><strong>Parametry, inne typy i tablice:</strong></p>
+<ul>
+<li>parametry typu wartościowego, referencyjnego, wyjściowego</li>
+<li>typy puste</li>
+<li>tablice wielowymiarowe</li>
+<li>tablice postrzępione</li>
+<li>klasa <code>Array</code></li>
+</ul>
+<p><strong>Klasy:</strong></p>
+<ul>
+<li><strong>Klasa</strong> może dziedziczyć z jednej klasy, ale może implementować wiele interfejsów</li>
+<li><strong>metody</strong> klasy (methods)</li>
+<li><strong>pola</strong> klasy (fields)</li>
+<li><strong>właściwości</strong> klasy (properties) - Właściwości nie służą do przechowywania wartości. Przy pomocy accesorów <strong>mają dostęp do pól</strong>, które reprezentują.</li>
+</ul>
+<hr>
+<p><strong>Class member, np. pole lub metoda</strong></p>
+<p>Class members, in C#, are the members of a class that represent the data and behavior of a class.</p>
+<p>Class members are members declared in the class and all those (excluding constructors and destructors) declared in all classes in its inheritance hierarchy.</p>
+<p><strong>Class members</strong> can be of the following types:</p>
+<ul>
+<li><strong>Constants</strong> representing constant values</li>
+<li><strong>Fields</strong> representing variables</li>
+<li><strong>Methods</strong> providing services like calculation or other actions on its members</li>
+<li><strong>Properties</strong> that define the class features and include actions to fetch and modify them</li>
+<li><strong>Events</strong> generated to communicate between different classes /objects</li>
+<li><strong>Indexers</strong> that help in accessing class instances similar to arrays</li>
+<li><strong>Operators</strong> that define semantics when used in expressions with class instances</li>
+<li><strong>Instance constructors</strong> to initialize members of class instances</li>
+<li><strong>Static constructor</strong> to initialize the class itself</li>
+<li><strong>Destructors</strong> to execute actions necessary to be performed before class instances are discarded</li>
+<li>Types that are local to the class (nested type)</li>
+</ul>
+<p><strong>Class members are initialized in constructors</strong> which can be overloaded with different signatures. For classes that do not have constructor, <strong>a default constructor that initializes the class members (to default values) will be generated</strong>.</p>
+<p>Source: <a target="_blank" rel="noopener" href="https://www.techopedia.com/definition/25589/class-members-c-sharp">https://www.techopedia.com/definition/25589/class-members-c-sharp</a></p>
+<hr>
+<p><strong>Dalej o klasach:</strong></p>
+<ul>
+<li>instancje klasy</li>
+<li><strong>hermetyzacja/enkapsulacja,</strong> inaczej <strong>data hiding</strong> (or more accurately <strong>encapsulation</strong>)</li>
+<li><strong>modyfikatory dostępu</strong> w C# jako część hermetyzacji - public, private, protected, internal, protected internal</li>
+<li>typy wyliczeniowe <strong>enum</strong> - wartościowy typ danych - wartości, których nie można dziedziczyć oraz przekazać przez dziedzicznie</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">enum</span> DniTygodnia</span><br><span class="line">&#123;</span><br><span class="line">  Poniedzialek = <span class="number">1</span>,</span><br><span class="line">  Wtorek,</span><br><span class="line">  Sroda,</span><br><span class="line">  Czwartek,</span><br><span class="line">  Piatek,</span><br><span class="line">  Sobota,</span><br><span class="line">  Niedziela</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>struktury <strong>struct</strong> - W języku C# struktura to <strong>wartościowy</strong> typ danych.</li>
+</ul>
+<hr>
+<p><strong>Klasy i struktury</strong> mają następujące różnice:</p>
+<ul>
+<li>klasy są typem referencyjnym a struktury typem wartościowym;</li>
+<li>struktury nie wspierają dziedziczenia;</li>
+<li>struktury nie mogą mieć domyślnego konstruktora.</li>
+</ul>
+<hr>
+<p>  <strong>Dalej o klasach:</strong></p>
+<ul>
+<li><strong>konstruktor</strong> i <strong>destruktor</strong> klasy</li>
+<li><strong>statyczne składniki</strong> klasy</li>
+</ul>
+<p>Składniki statyczne możemy zdefiniować za pomocą słowa kluczowego <strong>static</strong>. Jeżeli zadeklarujemy składową jako statyczną nie ważne jak wiele obiektów klasy utworzymy, <strong>istnieje zawsze tylko jedna kopia składowej statycznej.</strong></p>
+<ul>
+<li><strong>klasa statyczna</strong></li>
+</ul>
+<p>Możemy utworzyć statyczną klasę. Klasa taka mówi, iż nie została napisana po to, aby tworzyć nowe obiekty. Nawet, gdybyśmy chcieli utworzyć nowy obiekt klasy statycznej kompilator zgłosi błąd. Mogą być wywołane bez tworzenia instancji danej klasy. </p>
+<ul>
+<li>dziedziczenie - <strong>inheritance</strong></li>
+<li>klasa bazowa i pochodna - <strong>base/parent</strong> and <strong>derived/child class</strong></li>
+<li>polimorfizm - <strong>polymorphism</strong></li>
+<li><strong>statyczny polimorfizm,</strong> tj. przeciążanie metod i przeciążanie operatorów</li>
+<li><strong>polimorfizm dynamiczny, czyli klasy abstrakcyjne i metody wirtualne</strong></li>
+</ul>
+<p>Polimorfizm dynamiczny jest realizowany za pomocą klas abstrakcyjnych oraz metod wirtualnych. Metoda może mieć różne implementacje dla różnych klas.</p>
+<hr>
+<p><strong>Klasa abstrakcyjna</strong>. Klasa taka zawiera abstrakcyjne metody, których implementacja zależy od wykorzystania w poszczególnych klasach pochodnych. </p>
+<p>Poniżej lista zasad, o których należy pamiętać, tworząc klasy abstrakcyjne:</p>
+<ul>
+<li>nie można utworzyć instancji klasy abstrakcyjnej;</li>
+<li>nie można zadeklarować metody abstrakcyjnej poza klasą abstrakcyjną;</li>
+<li>kiedy klasa opatrzona jest modyfikatorem dostępu sealed nie może być dziedziczona. Dodatkowo, klasa abstrakcyjna nie może być zdefiniowana jako sealed.</li>
+</ul>
+<hr>
+<ul>
+<li><strong>metody wirtualne</strong></li>
+</ul>
+<p>Jeżeli masz zdefiniowaną metodę w klasie bazowej, ale chcesz, żeby została zaimplementowana w klasach pochodnych możesz do tego celu zastosować metody wirtualne.</p>
+<ul>
+<li><strong>interfejsy</strong></li>
+</ul>
+<p>Język C# nie obsługuje wielokrotnego dziedziczenia. <strong>Klasa może dziedziczyć po jednej klasie bazowej, ale może implementować wiele interfejsów</strong>.</p>
+<p><strong>Inne cechy C#:</strong></p>
+<ul>
+<li>przestrzenie nazw</li>
+<li>dyrektywy preprocesora</li>
+<li>wyrażenia regularne</li>
+<li>obsługa wyjątków</li>
+<li>odczyt i zapis pliku</li>
+</ul>
+<hr>
+<h1 id="Czesc-2"><a href="#Czesc-2" class="headerlink" title="Część 2"></a>Część 2</h1><p><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Atrybuty</a></p>
+<p><strong>Indeksery:</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Indeksery">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Indeksery</a></li>
+<li><strong>Indeksery</strong> pozwalają na indeksowanie obiektów w taki sam sposób jak ma to miejsce w tablicach.</li>
+<li>przeciążanie indekserów</li>
+</ul>
+<p><strong>Delegaty:</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Delegaty">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Delegaty</a></li>
+<li><strong>Delegaty</strong> to referencyjny typ danych, który przechowuje referencje do metody.</li>
+<li><strong>Delegaty złożone</strong> - Delegat złożony wywołuje dwa delegaty tak jakby były złączone. Operacja taka to tzw. <strong>multicasting</strong>.</li>
+<li>W JS nie ma typu delegatów, przekazujemy funkcje przez referencje do zmiennej.</li>
+</ul>
+<p><strong>Zdarzenia:</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Zdarzenia">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Zdarzenia</a></li>
+<li>Klasa, w której definiujemy nasze zdarzenie to tzw. „<strong>publisher</strong>”. Z kolej klasa, która odbiera to zdarzenie to tzw. „<strong>subscriber</strong>”.</li>
+</ul>
+<p><strong>Kolekcje:</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Kolekcje">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Kolekcje</a></li>
+<li><strong>ArrayList</strong> reprezentuje uporządkowaną kolekcję obiektu, który może być indeksowany indywidualnie. Wykorzystuje klucz do dostępu do elementu kolekcji.</li>
+<li><strong>Kolekcje</strong>: ArrayList, Hashtable, SortedList, Stack, Queue</li>
+</ul>
+<p><strong>Typy generyczne:</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Typy_generyczne">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Typy_generyczne</a></li>
+<li><strong>Typy generyczne</strong> pozwalają na opóźnienie w dostarczeniu specyfikacji typu danych w elementach takich jak klasy czy metody do momentu użycia ich w trakcie wykonywania programu. Innymi słowy, typy generyczne pozwalają na napisanie klasy lub metody, która może działać z każdym typem danych.</li>
+</ul>
+<p><strong>Refleksja:</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Refleksja">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Refleksja</a></li>
+<li>jest możliwe pobranie informacji dotyczących używanych typów w trakcie wykonywania programu – za pomocą <strong>mechanizmu refleksji</strong>.</li>
+</ul>
+<p><strong>Unsafe code:</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Unsafe_code">https://www.plukasiewicz.net/Csharp_dla_zaawansowanych/Unsafe_code</a></li>
+<li><strong>Kod niezabezpieczony</strong> lub też kod <strong>niekontrolowany</strong> to blok <strong>kodu używający wskaźników</strong>.</li>
+</ul>
+<h1 id="Czesc-3"><a href="#Czesc-3" class="headerlink" title="Część 3"></a>Część 3</h1><p>Inne materiały i informacje</p>
+<h2 id="Implicit-Interface-Implementation-vs-Explicit-Interface-Implementation"><a href="#Implicit-Interface-Implementation-vs-Explicit-Interface-Implementation" class="headerlink" title="Implicit Interface Implementation vs Explicit Interface Implementation"></a>Implicit Interface Implementation vs Explicit Interface Implementation</h2><ul>
+<li><strong>Implicit</strong>: you access the interface methods and properties as <strong>if they were part of the class</strong>.</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span> : <span class="title">ITest</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">string</span> Id <span class="comment">// Generated by Implement Interface</span></span><br><span class="line">  &#123;</span><br><span class="line">  <span class="keyword">get</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(); &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Test t = <span class="keyword">new</span> Test();</span><br><span class="line">t.Id; <span class="comment">// OK</span></span><br><span class="line">((ITest)t).Id; <span class="comment">// OK</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>Explicit</strong>: you can only access methods and properties <strong>when treating the class as the implemented interface</strong>.</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span> : <span class="title">ITest</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">string</span> ITest.Id <span class="comment">// Generated by Implement Interface Explicitly</span></span><br><span class="line">  &#123;</span><br><span class="line">  <span class="keyword">get</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(); &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Test t = <span class="keyword">new</span> Test();</span><br><span class="line">t.Id; <span class="comment">// Not OK</span></span><br><span class="line">((ITest)t).Id; <span class="comment">// OK</span></span><br><span class="line"></span><br><span class="line">ITest it = t;</span><br><span class="line">it.Id; <span class="comment">// OK</span></span><br></pre></td></tr></table></figure>
+
+<p><strong><em>It allows you to implement two interfaces that define the same method</em></strong>. However, if you explicitly implement the interface, the methods can only be accessed when the variable is typed to that explicit interface.</p>
+<p>In terms of “when” you have to implement an interface explicitly, it is <strong>when your class already has a method with the same signature</strong> as one of the methods of your interface, or when your class implements <strong>several interfaces that share methods with the same signatures</strong> but incompatible contracts. Source: <a target="_blank" rel="noopener" href="https://softwareengineering.stackexchange.com/questions/136319/whats-the-difference-between-implementing-an-interface-explicitly-or-implicitly">https://softwareengineering.stackexchange.com/questions/136319/whats-the-difference-between-implementing-an-interface-explicitly-or-implicitly</a></p>
+<p>More about explicit interface implementation: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/explicit-interface-implementation">https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/explicit-interface-implementation</a></p>
+<h2 id="Casting-struct-to-interface"><a href="#Casting-struct-to-interface" class="headerlink" title="Casting struct to interface"></a>Casting struct to interface</h2><p>The fact that a struct can implement an interface is well known and so is the fact that casting a value type into an interface <strong>leads to boxing of the value type.</strong> This is because methods in interfaces are defined as virtual and to resolve virtual references, vtable (method table) look up is required. <strong>Since value types do not have pointers to vtable they are first boxed into a reference type</strong> and then the look up happens. <a target="_blank" rel="noopener" href="https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/">https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/</a></p>
+<p>Po polsku, chodzi o to, że kiedy jako <code>struct</code> zaimplementujemy jakiś <code>interface</code> , to <code>struct</code> będzie zapakowany w dodatkowy obiekt. Metody wywoływane na instancji tego <code>struct</code>, który jest rzutowany na <code>interface</code> , na przykład:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Employee employee = <span class="keyword">new</span> Employee(<span class="string">&quot;Cool Guy&quot;</span>, <span class="number">65</span>);</span><br><span class="line">IPromotion p = employee;</span><br><span class="line">Console.WriteLine(employee);</span><br><span class="line">p.promote();</span><br><span class="line">Console.WriteLine(employee);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Cool Guy (65)</span></span><br><span class="line"><span class="comment">//Cool Guy (65)</span></span><br></pre></td></tr></table></figure>
+<p>modyfikują wartości tego dodatkowego obiektu, a nie w oryginalnym obiekcie <code>employee</code>. Jeśli zmienimy <code>struct</code> na <code>class</code> to nie będzie tego boxowania, tworzenia dodatkowego obiektu i wszystko będzie działać jak należy. Wynika to z tego, że:</p>
+<ul>
+<li><strong>casting a value type into an interface leads to boxing of the value type</strong></li>
+<li>This is because methods in interfaces are defined as virtual and to resolve virtual references, vtable (method table) look up is required. Since value types do not have pointers to vtable they are first boxed into a reference type and then the look up happens.</li>
+</ul>
+<p>więcej tutaj: <a target="_blank" rel="noopener" href="https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/">https://blogs.msdn.microsoft.com/abhinaba/2005/10/05/c-structs-and-interface/</a></p>
+<h2 id="Deadlocks"><a href="#Deadlocks" class="headerlink" title="Deadlocks"></a>Deadlocks</h2><ul>
+<li>TODO: jak dochodzi do deadlocków?</li>
+<li><strong>Transaction levels</strong>: snapshot, commitread</li>
+</ul>
+<h2 id="ASP-NET-MVC-ASP-NET-Core-MVC"><a href="#ASP-NET-MVC-ASP-NET-Core-MVC" class="headerlink" title="ASP.NET MVC, ASP.NET Core MVC:"></a>ASP.NET MVC, ASP.NET Core MVC:</h2><ul>
+<li>ASP.NET CORE <a target="_blank" rel="noopener" href="https://docs.microsoft.com/pl-pl/aspnet/core/tutorials/first-mvc-app/?view=aspnetcore-2.2">https://docs.microsoft.com/pl-pl/aspnet/core/tutorials/first-mvc-app/?view=aspnetcore-2.2</a></li>
+<li>ASP.NET <a target="_blank" rel="noopener" href="https://docs.microsoft.com/pl-pl/aspnet/mvc/overview/getting-started/index">https://docs.microsoft.com/pl-pl/aspnet/mvc/overview/getting-started/index</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2019/01/01/Software%20Engineering/DRAFT-Software-Engineering-PL-C-OOP/" data-id="ckqvb9jrw002x1tuk811aforh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Nodejs/Nodejs-scripts" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2018/12/31/Nodejs/Nodejs-scripts/" class="article-date">
@@ -125,7 +499,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://mateuszroth.github.io/blog/2018/12/31/Nodejs/Nodejs-scripts/" data-id="ckqv84l2z00260hklbibs36vt" class="article-share-link">Share</a>
+      <a data-url="https://mateuszroth.github.io/blog/2018/12/31/Nodejs/Nodejs-scripts/" data-id="ckqvb9jrk00261tukge75cjf4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li></ul>
@@ -173,7 +547,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authentication/" rel="tag">Authentication</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authorization/" rel="tag">Authorization</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Microservices/" rel="tag">Microservices</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/REST-APIs/" rel="tag">REST APIs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/RabbitMQ/" rel="tag">RabbitMQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Security/" rel="tag">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authentication/" rel="tag">Authentication</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authorization/" rel="tag">Authorization</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Design-Patterns/" rel="tag">Design Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Microservices/" rel="tag">Microservices</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/REST-APIs/" rel="tag">REST APIs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/RabbitMQ/" rel="tag">RabbitMQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Security/" rel="tag">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
     </div>
   </div>
 
@@ -183,7 +557,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Authentication/" style="font-size: 10px;">Authentication</a> <a href="/blog/tags/Authorization/" style="font-size: 10px;">Authorization</a> <a href="/blog/tags/Backend/" style="font-size: 20px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 12.86px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/blog/tags/JavaScript/" style="font-size: 18.57px;">JavaScript</a> <a href="/blog/tags/Microservices/" style="font-size: 10px;">Microservices</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 11.43px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 14.29px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 11.43px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 12.86px;">Programming languages</a> <a href="/blog/tags/REST-APIs/" style="font-size: 10px;">REST APIs</a> <a href="/blog/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/blog/tags/React/" style="font-size: 17.14px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.86px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 11.43px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/blog/tags/Redux/" style="font-size: 11.43px;">Redux</a> <a href="/blog/tags/Security/" style="font-size: 10px;">Security</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 15.71px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 11.43px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 11.43px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
+      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Authentication/" style="font-size: 10px;">Authentication</a> <a href="/blog/tags/Authorization/" style="font-size: 10px;">Authorization</a> <a href="/blog/tags/Backend/" style="font-size: 20px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/Design-Patterns/" style="font-size: 10px;">Design Patterns</a> <a href="/blog/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 12.86px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/blog/tags/JavaScript/" style="font-size: 18.57px;">JavaScript</a> <a href="/blog/tags/Microservices/" style="font-size: 10px;">Microservices</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 11.43px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 14.29px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 11.43px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 12.86px;">Programming languages</a> <a href="/blog/tags/REST-APIs/" style="font-size: 10px;">REST APIs</a> <a href="/blog/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/blog/tags/React/" style="font-size: 15.71px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.86px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 11.43px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/blog/tags/Redux/" style="font-size: 11.43px;">Redux</a> <a href="/blog/tags/Security/" style="font-size: 10px;">Security</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 17.14px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 11.43px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 11.43px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
     </div>
   </div>
 
@@ -205,23 +579,23 @@
       <ul>
         
           <li>
+            <a href="/blog/2021/07/07/Software%20Engineering/Design-Patterns/">Design Patterns</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/07/07/Software%20Engineering/Various-terms/">Software Engineering - various terms</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/07/07/Software%20Engineering/Architecture/">Software Engineering - architecture and software design</a>
+          </li>
+        
+          <li>
             <a href="/blog/2021/07/06/React/React-Redux/">MobX Redux</a>
           </li>
         
           <li>
             <a href="/blog/2021/07/05/React/React-code-reusability/">React - code reusability</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2021/07/04/Backend/Message-brokers/">Message brokers</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2021/07/04/Backend/Microservices/">Microservices</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2021/07/03/Backend/Security/">Security</a>
           </li>
         
       </ul>

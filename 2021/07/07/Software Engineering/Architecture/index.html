@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Software Engineering - architecture and software design | Software Sensei&#39;s Notes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Truths Product teams focusing on velocity may argue that in the future they will reach a place where they have time to circle back to fix technical debt. This is never true, there is always pressure.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Software Engineering - architecture and software design">
+<meta property="og:url" content="https://mateuszroth.github.io/blog/2021/07/07/Software%20Engineering/Architecture/index.html">
+<meta property="og:site_name" content="Software Sensei&#39;s Notes">
+<meta property="og:description" content="Truths Product teams focusing on velocity may argue that in the future they will reach a place where they have time to circle back to fix technical debt. This is never true, there is always pressure.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-07-07T22:00:00.000Z">
+<meta property="article:modified_time" content="2021-07-08T19:36:21.497Z">
+<meta property="article:author" content="Mateusz Roth">
+<meta property="article:tag" content="Software Engineering">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">
+          <div><img src="https://mateuszroth.pl/img/mateusz@2x1.png" width="100" style="position: relative; top: -20px;" /></div>
+          Software Sensei&#39;s Notes
+        </a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/about-me">About me</a>
+        
+          <a class="main-nav-link" href="/blog/categories/JavaScript/">JavaScript</a>
+        
+          <a class="main-nav-link" href="/blog/categories/Node-js/">Node.js</a>
+        
+          <a class="main-nav-link" href="/blog/categories/React/">React</a>
+        
+          <a class="main-nav-link" href="/blog/categories/Backend/">Backend</a>
+        
+          <a class="main-nav-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Other archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://mateuszroth.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Software Engineering/Architecture" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2021/07/07/Software%20Engineering/Architecture/" class="article-date">
+  <time datetime="2021-07-07T22:00:00.000Z" itemprop="datePublished">2021-07-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>►<a class="article-category-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Software Engineering - architecture and software design
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Truths"><a href="#Truths" class="headerlink" title="Truths"></a>Truths</h1><ul>
+<li>Product teams focusing on velocity may argue that in the future they will reach a place where they have time to circle back to fix technical debt. This is never true, there is always pressure. A team needs to consciously decide to make stability a part of value delivery, otherwise lack of stability will become part of the team’s culture. <a target="_blank" rel="noopener" href="https://productcoalition.com/agile-gone-wrong-725c3f0dd8c0?gi=3fe19950694e">source</a></li>
+<li>A mistake early on in the project regarding the architecture may cost a lot in terms of time spent refactoring the codebase later. <a target="_blank" rel="noopener" href="https://selleo.com/blog/why-choose-nest-js-as-your-backend-framework">source</a></li>
+</ul>
+<h1 id="Qualities-of-well-written-code"><a href="#Qualities-of-well-written-code" class="headerlink" title="Qualities of well written code"></a>Qualities of well written code</h1><p>Write a code like someone after you who you don’t know would read the code.</p>
+<p>Well written code is easy to maintain, easy to test, very cohesive, decoupled and redable.</p>
+<ul>
+<li>readability / understandability (pl. <em>czytelność, zrozumiałość</em>) vs obscurity (pl. <em>zaciemnienie</em>)</li>
+<li>clean, readable and concise code - pl. <em>czysty, czytelny, zwięzły kod</em></li>
+<li>complexity (pl. <em>złożoność</em>)</li>
+<li>maintainability (pl. <em>utrzymywalność</em>)</li>
+<li>reliability / testability (pl. <em>niezawodność, testowalność</em>)</li>
+<li>reusability - decoupled and reusable code is preferred</li>
+<li>coupling and code interdependence</li>
+<li>performance</li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/No_Silver_Bullet">https://en.wikipedia.org/wiki/No_Silver_Bullet</a> essential vs accident complexity</li>
+<li>robustness - the ability of a computer system to cope with errors during execution and cope with erroneous input</li>
+<li>concise vs explicit</li>
+<li>too much <strong>abstractions are bad</strong></li>
+</ul>
+<p>PEP20 — The Zen of Python<br><a target="_blank" rel="noopener" href="https://www.python.org/dev/peps/pep-0020/">https://www.python.org/dev/peps/pep-0020</a>/</p>
+<h1 id="System-infrastructure-qualities"><a href="#System-infrastructure-qualities" class="headerlink" title="System infrastructure qualities"></a>System infrastructure qualities</h1><ul>
+<li>scalability - pl. <em>skalowalność</em></li>
+<li>performance - pl. <em>wydajność</em></li>
+<li>stability - pl. <em>stabilność</em></li>
+<li>reliability - pl. <em>niezawodność</em></li>
+<li>flexibility - pl. <em>jak łatwo się zmienia np. w przypadku mikroserwisów ilość jednostek jednego komponentu/serwisu, czy np. zmiana usługodawcy</em></li>
+</ul>
+<h1 id="Common-software-development-problems"><a href="#Common-software-development-problems" class="headerlink" title="Common software development problems"></a>Common software development problems</h1><ul>
+<li>business pressures</li>
+<li>developer turnover</li>
+<li>code entropy</li>
+<li>developers productivity</li>
+<li>errors tracking and detecting</li>
+<li>infrastructure cost and predicting spikes</li>
+<li>development cost</li>
+<li>enterprise level app - is computer software used to satisfy the needs of an organization rather than individual users</li>
+</ul>
+<h1 id="Languages-features"><a href="#Languages-features" class="headerlink" title="Languages features"></a>Languages features</h1><ul>
+<li>pros if language offers excellent <strong>code analysis support</strong> and <strong>comprehensive editors/IDEs</strong></li>
+<li>pros if <strong>developing</strong>, <strong>refactoring</strong> and <strong>debugging</strong> is fast and easy</li>
+<li>pros if language offers <strong>strict type system</strong> and <strong>compile-time error checks</strong>, C# is more potent than JavaScript</li>
+</ul>
+<h1 id="Codebase-architecture-approaches"><a href="#Codebase-architecture-approaches" class="headerlink" title="Codebase architecture approaches"></a>Codebase architecture approaches</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://alistair.cockburn.us/hexagonal-architecture/">Hexagonal Architecture</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">The Clean Architecture</a>:<ul>
+<li>(Recommended architecture approaches) They all have the same objective, which is the <strong>separation of concerns</strong>. They all achieve this <strong>separation by dividing the software into layers</strong>. Each has at least one layer for business rules, and another for interfaces.</li>
+<li>Independent of Frameworks</li>
+<li>Testable</li>
+<li>Independent of UI</li>
+<li>Independent of Database</li>
+<li>Independent of any external agency</li>
+<li>Overall: The Dependency Rule always applies. Source code dependencies always point inwards. As you move inwards the level of abstraction increases. The outermost circle is low level concrete detail. As you move inwards the software grows more abstract, and encapsulates higher level policies. The inner most circle is the most general.</li>
+</ul>
+</li>
+</ul>
+<h1 id="GoF-Rules"><a href="#GoF-Rules" class="headerlink" title="GoF Rules"></a>GoF Rules</h1><ul>
+<li>“<strong>Program to an ‘interface’</strong>, not an ‘implementation’.” (Gang of Four 1995:18)<ul>
+<li>clients remain unaware of the specific types of objects they use, as long as the object adheres to the interface</li>
+<li>clients remain unaware of the classes that implement these objects; <strong>clients only know about the abstract class(es) defining the interface</strong></li>
+<li>Use of an interface also leads to dynamic binding and polymorphism, which are central features of object-oriented programming.</li>
+</ul>
+</li>
+<li><strong>Composition over inheritance</strong>: “Favor ‘object composition’ over ‘class inheritance’.” (Gang of Four 1995:20)<ul>
+<li>The authors refer to inheritance as white-box reuse, with white-box referring to visibility, because the internals of parent classes are often visible to subclasses. In contrast, the authors refer to object composition (in which objects with well-defined interfaces are used dynamically at runtime by objects obtaining references to other objects) as black-box reuse because no internal details of composed objects need be visible in the code using them.</li>
+<li>The authors discuss the <strong>tension between inheritance and encapsulation</strong> at length and state that in their experience, <strong>designers overuse inheritance</strong> (Gang of Four 1995:20).</li>
+<li>“Because <strong>inheritance exposes a subclass to details of its parent’s implementation, it’s often said that ‘inheritance breaks encapsulation’</strong>“. (Gang of Four 1995:19).</li>
+<li>They <strong>warn that the implementation of a subclass can become so bound up with the implementation of its parent class that any change in the parent’s implementation will force the subclass to change</strong>.</li>
+<li>Furthermore, they claim that a way to avoid this is to inherit only from abstract classes—but then, they point out that there is minimal code reuse.</li>
+<li>Using inheritance is recommended mainly when adding to the functionality of existing components, reusing most of the old code and adding relatively small amounts of new code.</li>
+</ul>
+</li>
+<li>“Dynamic, highly parameterized software is harder to understand and build than more static software.” (Gang of Four 1995:21)</li>
+<li>The authors further distinguish between ‘Aggregation’, where one object ‘has’ or ‘is part of’ another object (implying that an aggregate object and its owner have identical lifetimes) and acquaintance, where one object merely ‘knows of’ another object. <ul>
+<li>Acquaintance is a weaker relationship than aggregation and suggests much looser coupling between objects, which can often be desirable for maximum maintainability in a design.</li>
+</ul>
+</li>
+<li>A primary criticism of Design Patterns is that its patterns are simply workarounds for missing features in C++, replacing elegant abstract features with lengthy concrete patterns, essentially becoming a “human compiler” or “generating by hand the expansions of some macro”.</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://mateuszroth.github.io/blog/2021/07/07/Software%20Engineering/Architecture/" data-id="ckqvb9jru002s1tukbg0ubn1r" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2021/07/07/Software%20Engineering/Various-terms/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Software Engineering - various terms
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2021/07/06/React/React-Redux/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">MobX Redux</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  <div style="
+    padding-top: 10px;
+    text-align: center;
+  ">
+      <img
+        src="https://mateuszroth.pl/img/profile.jpeg"
+        width="150" style="border-radius: 50%; padding-bottom: 10px;" />
+      <div>
+        <a href="https://www.linkedin.com/in/mateuszroth" target="_blank">Linkedin</a> | <a href="https://github.com/mateuszroth" target="_blank">Github</a> | <a href="https://www.facebook.com/mateuszroth" target="_blank">Facebook</a>
+      </div>
+  </div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Backend/">Backend</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/">Frontend</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Frontend/Other/">Other</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Performance/">Performance</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/Tests/">Tests</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/JavaScript/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/">Mobile</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Cordova/">Cordova</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/">Swift</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Mobile/Swift/iOS/">iOS</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/GraphQL/">GraphQL</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Nest-js/">Nest.js</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Node-js/Scripts/">Scripts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/">React</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/Hooks/">Hooks</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/State-management/">State management</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/React/TypeScript/">TypeScript</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/">Software Engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Programming-languages/">Programming languages</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Software-Engineering/Tests/">Tests</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authentication/" rel="tag">Authentication</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Authorization/" rel="tag">Authorization</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Backend/" rel="tag">Backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Cordova/" rel="tag">Cordova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Design-Patterns/" rel="tag">Design Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Elm/" rel="tag">Elm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Frontend/" rel="tag">Frontend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Microservices/" rel="tag">Microservices</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MobX/" rel="tag">MobX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Mobile/" rel="tag">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/OOP/" rel="tag">OOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Objective-C/" rel="tag">Objective C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Programming-languages/" rel="tag">Programming languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/REST-APIs/" rel="tag">REST APIs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/RabbitMQ/" rel="tag">RabbitMQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/React-state-management/" rel="tag">React state management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Reason/" rel="tag">Reason</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Security/" rel="tag">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Software-Engineering/" rel="tag">Software Engineering</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Swift/" rel="tag">Swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tests/" rel="tag">Tests</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/iOS/" rel="tag">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Authentication/" style="font-size: 10px;">Authentication</a> <a href="/blog/tags/Authorization/" style="font-size: 10px;">Authorization</a> <a href="/blog/tags/Backend/" style="font-size: 20px;">Backend</a> <a href="/blog/tags/C/" style="font-size: 10px;">C#</a> <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Cordova/" style="font-size: 10px;">Cordova</a> <a href="/blog/tags/Design-Patterns/" style="font-size: 10px;">Design Patterns</a> <a href="/blog/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/blog/tags/Elm/" style="font-size: 10px;">Elm</a> <a href="/blog/tags/Frontend/" style="font-size: 12.86px;">Frontend</a> <a href="/blog/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/blog/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/blog/tags/JavaScript/" style="font-size: 18.57px;">JavaScript</a> <a href="/blog/tags/Microservices/" style="font-size: 10px;">Microservices</a> <a href="/blog/tags/MobX/" style="font-size: 10px;">MobX</a> <a href="/blog/tags/Mobile/" style="font-size: 11.43px;">Mobile</a> <a href="/blog/tags/Node-js/" style="font-size: 14.29px;">Node.js</a> <a href="/blog/tags/OOP/" style="font-size: 11.43px;">OOP</a> <a href="/blog/tags/Objective-C/" style="font-size: 10px;">Objective C</a> <a href="/blog/tags/Programming-languages/" style="font-size: 12.86px;">Programming languages</a> <a href="/blog/tags/REST-APIs/" style="font-size: 10px;">REST APIs</a> <a href="/blog/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/blog/tags/React/" style="font-size: 15.71px;">React</a> <a href="/blog/tags/React-Hooks/" style="font-size: 12.86px;">React Hooks</a> <a href="/blog/tags/React-state-management/" style="font-size: 11.43px;">React state management</a> <a href="/blog/tags/Reason/" style="font-size: 10px;">Reason</a> <a href="/blog/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/blog/tags/Redux/" style="font-size: 11.43px;">Redux</a> <a href="/blog/tags/Security/" style="font-size: 10px;">Security</a> <a href="/blog/tags/Software-Engineering/" style="font-size: 17.14px;">Software Engineering</a> <a href="/blog/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/blog/tags/Tests/" style="font-size: 11.43px;">Tests</a> <a href="/blog/tags/TypeScript/" style="font-size: 11.43px;">TypeScript</a> <a href="/blog/tags/iOS/" style="font-size: 10px;">iOS</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2021/07/07/Software%20Engineering/Design-Patterns/">Design Patterns</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/07/07/Software%20Engineering/Various-terms/">Software Engineering - various terms</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/07/07/Software%20Engineering/Architecture/">Software Engineering - architecture and software design</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/07/06/React/React-Redux/">MobX Redux</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2021/07/05/React/React-code-reusability/">React - code reusability</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Mateusz Roth<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/about-me" class="mobile-nav-link">About me</a>
+  
+    <a href="/blog/categories/JavaScript/" class="mobile-nav-link">JavaScript</a>
+  
+    <a href="/blog/categories/Node-js/" class="mobile-nav-link">Node.js</a>
+  
+    <a href="/blog/categories/React/" class="mobile-nav-link">React</a>
+  
+    <a href="/blog/categories/Backend/" class="mobile-nav-link">Backend</a>
+  
+    <a href="/blog/categories/Software-Engineering/" class="mobile-nav-link">Software Engineering</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Other archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
