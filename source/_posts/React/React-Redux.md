@@ -1,5 +1,5 @@
 ---
-title: MobX Redux
+title: Redux
 tags:
   - React
   - Redux
