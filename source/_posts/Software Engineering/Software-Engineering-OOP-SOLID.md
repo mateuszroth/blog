@@ -1,5 +1,5 @@
 ---
-title: "[DRAFT] OOP - SOLID"
+title: "OOP - SOLID"
 tags:
   - Software Engineering
 categories:

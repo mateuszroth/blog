@@ -1,5 +1,5 @@
 ---
-title: '[DRAFT] JavaScript Node.js Scripts'
+title: 'JavaScript Node.js Scripts'
 tags:
   - Node.js
   - JavaScript

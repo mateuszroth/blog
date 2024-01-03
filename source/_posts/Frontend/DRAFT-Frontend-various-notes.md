@@ -1,5 +1,5 @@
 ---
-title: '[DRAFT] Frontend - miscellaneous notes'
+title: 'Frontend - miscellaneous notes'
 tags:
   - Frontend
 categories:

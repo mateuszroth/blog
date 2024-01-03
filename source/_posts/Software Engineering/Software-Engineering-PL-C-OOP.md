@@ -1,5 +1,5 @@
 ---
-title: '[DRAFT] [PL] C# & OOP'
+title: '[PL] C# & OOP'
 tags:
   - C#
   - OOP
